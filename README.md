@@ -1,12 +1,22 @@
-# Owlet UI
+# Owlet
 
-A [re-frame](https://github.com/Day8/re-frame) application for the Owlet Project.
+Generated using [Luminus](http://www.luminusweb.net/) version 2.9.11.68
 
 ## Development
 
-> Henceforth, for clarity and accuracy, we'll assume you're on MacOS. The use
-> of other platforms with these tools is certainly possible, and the process is
-> probably quite similar to the exposition below, but it is currently untested.
+### Running the web server
+
+    lein run
+
+### Running the front-end development server
+
+    lein figwheel
+
+### Running the sass watcher
+
+    lein auto sassc once
+
+## Prerequisites
 
 ### Installation
 
@@ -33,8 +43,14 @@ A [re-frame](https://github.com/Day8/re-frame) application for the Owlet Project
 
       brew install git leiningen rlwrap
 
-- Now, to copy the Owlet UI code onto your machine, first `cd` to where you want
-  the Owlet UI directory to be, then [clone](https://help.github.com/articles/cloning-a-repository/)
+  Finally, the SASSC compiler
+
+      brew install sassc
+
+### Clone the repo
+
+- Now, to copy the Owlet code onto your machine, first `cd` to where you want
+  the Owlet directory to be, then [clone](https://help.github.com/articles/cloning-a-repository/)
   this repository:
 
       git clone https://github.com/codefordenver/owlet-ui.git
@@ -43,72 +59,7 @@ A [re-frame](https://github.com/Day8/re-frame) application for the Owlet Project
 
       cd owlet-ui
 
-### Compile Less to CSS
-
-Compile all the app's [Less](http://lesscss.org) files into CSS.
-
-    lein less once
-
-Alternatively, you can have Leiningen automatically recompile any Less file
-whenever it changes.
-
-    lein less auto
-
-This process will continue to watch for modified files until you stop it with
-Control-c.
-
-### Running the application
-
-To run Owlet UI as a developer, you must start it from the command line in a
-terminal. In what follows, we'll assume the current directory is the Owlet UI
-project directory (`owlet-ui`, the directory containing this README.md file),
-so `cd` there, if necessary, and run the following command:
-
-    script/figwheel-repl.sh
-
-When you see "Prompt will show when Figwheel connects to your application",
-browse to <http://localhost:4000>. Once the app has started up, you should
-see the ClojureScript REPL prompt in the terminal:
-
-    ...
-    Prompt will show when Figwheel connects to your application
-    To quit, type: :cljs/quit
-    cljs.user=>
-
-The script has just started a Clojure nREPL. It then used Piggieback to start
-a _ClojureScript_ browser REPL. I.e., each ClojureScript form you enter in the
-REPL will be executed in the context of your application in the browser.
-Figwheel will also automatically compile any ClojureScript file you change as
-soon as you save it. Then it will push the resulting JavaScript to the
-browser, so you'll see the result of your modification right away. To see
-other available options, just provide the `--help` option:
-(The `--` is optional.)
-
-	script/figwheel-repl.sh help
-
-That's it! You're ready to write code in the editor of your choice, save it,
-and see how it changes the app. Enjoy [REPL-Driven Development](http://blog.jayfields.com/2014/01/repl-driven-development.html)
-as you experiment extensively and learn at the REPL.
-
-> The rest of this "Running the application" section extends the above to show how
-> you can employ even more powerful development tools.
-
-#### Optional Terminal Notification on `cljs` build complete
-
-Example using OSX Growl notifier:
-
-- Install `terminal-notifier` with `brew install terminal-notifier`
-
-- Create this file `~/.owlet_repo_ready`
-
-- Add these contents to `~/.owlet_repo_ready`
-
-    ```
-    terminal-notifier -title "OWLET ^OvO^ UI" -subtitle "cljsbuild dev" -message "Build completed successfully" -activate "com.googlecode.iTerm2"
-    ```
-
-- Make it executable `sudo chmod a+x ~/.owlet_repo_ready` 
-
+## Extra development tools
 
 #### Figwheel ClojureScript REPL in Cursive/IntelliJ IDEA
 
@@ -226,7 +177,7 @@ similar to [how we did it in Cursive](#figwheel-clojurescript-repl-in-cursiveint
 
 #### Debugging with Dirac
 
-With a little extra setup, you can work on Owlet UI using the amazing
+With a little extra setup, you can work on Owlet using the amazing
 [Dirac DevTools](https://github.com/binaryage/dirac) browser debugging
 environment. You will still be running the app with Figwheel, so modified
 files will still compile and load automatically, but the browser REPL will be
@@ -253,9 +204,9 @@ version of Chrome is required.
       script/start-chrome-canary.sh
 
   You'll see an empty Chrome window with location http://localhost:4000/. It
-  is empty because we haven't started up Owlet UI server yet.
+  is empty because we haven't started up Owlet server yet.
   > By the way, this command is how you'll need to start up the browser whenever
-  > you work on Owlet UI with Dirac. See [below](#using-dirac).
+  > you work on Owlet with Dirac. See [below](#using-dirac).
 
 - Install the [Dirac DevTools extension](https://chrome.google.com/webstore/detail/dirac-devtools/kbkdngfljkchidcjpnfcgcokkbhlkogi),
   granting it access to your data. You should see a little green icon to the
@@ -269,7 +220,7 @@ version of Chrome is required.
 ##### Using Dirac
 
 Now that Chrome Canary and the Dirac DevTools extension are installed locally
-in the Owlet UI project directory, let's use it with Owlet UI.
+in the Owlet project directory, let's use it with Owlet.
 
 - In the terminal, make sure the current working directory is still the one
   containing this README.md file.
@@ -293,10 +244,10 @@ in the Owlet UI project directory, let's use it with Owlet UI.
 
       script/start-chrome-canary.sh
 
-  You should now see the Owlet UI app running in the window that pops up.
+  You should now see the Owlet app running in the window that pops up.
 
   > Once you start up Chrome Canary in this way, you can leave it open, even
-  > if you restart the Owlet UI app and the REPL.  As always, you can cleanly
+  > if you restart the Owlet app and the REPL.  As always, you can cleanly
   > reload the app with **View -> Force Reload This Page** (Command-Shift-R).
 
 - Click the Dirac DevTools toolbar icon. The Dirac DevTools Console window
@@ -317,7 +268,7 @@ in the Owlet UI project directory, let's use it with Owlet UI.
 - Try out the debugger too. it works just like the Chrome Devtools debugger,
   except that source code is both ClojureScript and the JavaScript it compiles
   to. In the **Sources** tab, drill down to **top -> localhost:4000 ->
-  js/compiled -> out**, click on an Owlet UI .cljs file of interest, then set a
+  js/compiled -> out**, click on an Owlet .cljs file of interest, then set a
   breakpoint that will be hit when you do something in the app's GUI.  When the
   app stops at the breakpoint, look at current variables in the **Scope**
   section of the debugger. Then back in the **Console** tab, enter
@@ -389,24 +340,19 @@ Dirac DevTools console. The console will mirror the expression you entered,
 its result, _and_ any printed side effects.  So just keep Chrome Canary nearby
 and the Dirac DevTools window handy.
 
-## Run tests
+## License
+The ISC License
 
-    lein clean
-    lein doo phantom test once
+Copyright (c) Code for Denver and Contributors
 
-The above command assumes that you have [phantomjs](https://www.npmjs.com/package/phantomjs) installed. However, please note that [doo](https://github.com/bensu/doo) can be configured to run cljs.test in many other JS environments (chrome, ie, safari, opera, slimer, node, rhino, or nashorn).
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-## Production Build
-
-    lein clean
-    lein uberjar
-
-That should compile the clojurescript code first, and then create the standalone jar.
-
-When you run the jar you can set the port the ring server will use by setting the environment variable PORT.
-If it's not set, it will run on port 3000 by default.
-
-If you only want to compile the clojurescript code:
-
-    lein clean
-    lein cljsbuild once min
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
