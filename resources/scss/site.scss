@@ -34,6 +34,53 @@ a:hover {
   }
 }
 
+// information views: about
+.information-wrap {
+  width: 98%;
+  margin: 0 auto;
+  height: 100vh;
+  h3 {
+    font-weight: 700;
+    margin-bottom: 0.9em;
+  }
+  h4 {
+    font-weight: 400;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.2em;
+  }
+  .information-inner-wrap {
+    padding: 0 0 0 23px;
+  }
+  .information-inner {
+    background-color: white;
+    padding: 23px;
+    padding-bottom: 10px;
+    font-size: 1.3em;
+    margin-bottom: 2em;
+  }
+  ol li {
+    line-height: 1.6em;
+  }
+}
+
+.information-title-wrap {
+  mark {
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    padding: 9px 15px !important;
+  }
+  h1 {
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    margin-bottom: 0;
+  }
+  padding-left: 23px;
+  margin-top: 45px;
+}
+
 .rc-typeahead-suggestion {
   background-color: #3B3B3B;
   &:hover {
@@ -307,7 +354,7 @@ mark.white {
   margin-left: 40px;
   h2 {
     font-size: 2.4rem;
-    margin: 1.2em 0;
+    margin-top: 1.2em;
   }
 }
 
@@ -876,7 +923,7 @@ input[type="radio"]:checked + label {
 
 #email-input {
   height: 24px;
-  width: 152px;
+  width: 185px;
   display: inline-block;
   border: none;
   border-radius: 3px;
@@ -892,7 +939,7 @@ input[type="radio"]:checked + label {
 #unsubscribe-button {
   height: 24px;
   width: 90px;
-  margin-left: 44px;
+  margin-left: 10px;
   display: inline-block;
   position: inherit;
   border: none;
@@ -909,7 +956,7 @@ input[type="radio"]:checked + label {
 #email-button {
   width: 65px;
   height: 24px;
-  margin-left: 44px;
+  margin-left: 10px;
   display: inline-block;
   border: none;
   border-radius: 3px;
