@@ -15,11 +15,16 @@
         [:p "From the beginning, Owlet has been heavily shaped by feedback from teachers, and most importantly, the students. We are also "
          [:a {:href "https://blog.mmmanyfold.com/tagged/owlet"} "inspired by powerful ideas"]
          " from computer scientists/educators such as Alan Kay, Simon Papert (constructivism), Kathy Sierra, Linda Liukas, Ted Nelson, Elon Musk, Tim Bell, etc… the list goes on. "]
+        [:br]
+        [:img {:src "../img/logo-cfd.png"
+               :width "40%"}]
         [:p "This project is independently produced and maintained by a team of Code for Denver volunteers, who have been developing it since March 2016. It’s open source and "
          [:a {:href "https://github.com/codefordenver/owlet"} "available on GitHub"] "."][:br]
-        [:h3 "Contact"]
-        [:p "Michelle Lim" [:br]
-         [:a {:href "mailto:elle@mmmanyfold.com"} "elle@mmmanyfold.com"]]]]
+        [:img {:src "../img/logo-contentful.png"
+               :width "37%"}]
+        [:p "Special thanks to "
+         [:a {:href "https://www.contentful.com/"} "Contentful"]
+         " for generously providing us with a pro bono subscription plan! We love Contentful's developer-friendly content management APIs and optimized microservices architecture for creating and delivering digital content."]]]
       [:div.information-inner-wrap.col-xs-12.col-lg-4
        [:div.information-inner
         [:h3 "Contributors"]
@@ -36,4 +41,7 @@
         [:h4 "Content"]
         "Michelle Lim"[:br]
         "Katie Frank"[:br]
-        "Tony Gilbert-Davis"[:br][:br]]]]))
+        "Tony Gilbert-Davis"[:br][:br][:br]
+        [:h3 "Contact"]
+        [:p "Michelle Lim" [:br]
+         [:a {:href "mailto:elle@mmmanyfold.com"} "elle@mmmanyfold.com"]]]]]))
