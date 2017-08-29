@@ -144,7 +144,9 @@ a:hover {
     background-color: #6A2569; }
     #sidebar .menu a {
       color: white;
-      text-decoration: none; }
+      text-decoration: none;
+      display: block;
+      height: 90px; }
     #sidebar .menu .branch-icon {
       margin-top: 10px;
       width: 80px;
@@ -154,6 +156,12 @@ a:hover {
       #sidebar .menu .branch-icon:hover {
         background: url("../img/icon1-nudge.gif");
         background-size: 100%; }
+    #sidebar .menu .about-icon {
+      margin-top: 10px;
+      width: 80px;
+      height: 80px;
+      background: url("../img/icon4.png");
+      background-size: 100%; }
     #sidebar .menu .rc-popover-anchor-wrapper {
       position: absolute;
       left: 0; }

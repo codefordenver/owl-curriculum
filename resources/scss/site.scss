@@ -183,6 +183,8 @@ a:hover {
     a {
       color: white;
       text-decoration: none;
+      display: block;
+      height: 90px;
     }
     .branch-icon {
       margin-top: 10px;
@@ -194,6 +196,13 @@ a:hover {
         background: url('../img/icon1-nudge.gif');
         background-size: 100%;
       }
+    }
+    .about-icon {
+      margin-top: 10px;
+      width: 80px;
+      height: 80px;
+      background: url('../img/icon4.png');
+      background-size: 100%;
     }
     .rc-popover-anchor-wrapper {
       position: absolute;
