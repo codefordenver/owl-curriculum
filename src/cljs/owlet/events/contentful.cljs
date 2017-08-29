@@ -77,6 +77,36 @@
 ; route dispatches
 
 (rf/reg-event-fx
+  :show-about
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :about-view]
+                       [:set-active-document-title! "About"])}))
+
+(rf/reg-event-fx
+  :show-not-found
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :not-found-view]
+                       [:set-active-document-title! "Not Found"])}))
+
+(rf/reg-event-fx
+  :show-settings
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :settings-view]
+                       [:set-active-document-title! "Settings"])}))
+
+(rf/reg-event-fx
+  :show-subscribed
+  (fn [_ [_ route-param]]
+    {:dispatch-n (list [:set-active-view :subscribed-view route-param]
+                       [:set-active-document-title! "Success"])}))
+
+(rf/reg-event-fx
+  :show-unsubscribe
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :unsubscribe-view]
+                       [:set-active-document-title! "Unsubscribe"])}))
+
+(rf/reg-event-fx
   :show-branches
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :branches-view]
@@ -109,6 +139,8 @@
     {:dispatch-n (list [:set-active-view :activity-view]
                        [:set-activity-in-view route-param])}))
 
+
+; search & filter
 
 (rf/reg-event-db
   :filter-activities-by-search-term
