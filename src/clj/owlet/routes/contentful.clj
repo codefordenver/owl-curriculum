@@ -105,13 +105,13 @@
                      (mapv (image-by-id assets))))
       ; Add :skill-
       (assoc-in [:skill-set] (or (some->> activity
-                                :fields
-                                :skills
-                                remove-nil
-                                seq          ; some->> gives nil if empty
-                                (map keywordize-name)
-                                set)
-                           activity))))
+                                  :fields
+                                  :skills
+                                  remove-nil
+                                  seq          ; some->> gives nil if empty
+                                  (map keywordize-name)
+                                  set)
+                              activity))))
 
 (defn- process-activities
   [activities platforms assets]
@@ -187,7 +187,7 @@
 
 (defn- send-confirmation-email [email id subscribing]
   "Sends confirmation email"
-  (let [url (format "http://owlet.codefordenver.org/owlet/webhook/content/confirm?id=%1s" id)
+  (let [url (format "http://owlet.codefordenver.org/api/contentful/webhook/content/confirm?id=%1s" id)
         html (if (= subscribing true)
                (render-file "confirm-email.html" {:url url :un ""})
                (render-file "confirm-email.html" {:url url :un "un"}))

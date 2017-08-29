@@ -6,6 +6,7 @@
             [owlet.components.lpsidebar :refer [lpsidebar-component]]
             [owlet.components.loading :refer [loading-component]]
             [owlet.views.welcome :refer [welcome-view]]
+            [owlet.views.about :refer [about-view]]
             [owlet.components.search-bar :refer [search-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
@@ -21,6 +22,7 @@
 
 (defmulti views identity)
 (defmethod views :welcome-view [] [welcome-view])
+(defmethod views :about-view [] [about-view])
 (defmethod views :filtered-activities-view []
   [filtered-activities-view])
 (defmethod views :not-found-view [] [not-found-view])
