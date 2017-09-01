@@ -38,17 +38,17 @@ a:hover {
 .information-wrap {
   width: 98%;
   margin: 0 auto;
+  margin-top: 45px;
   height: 100vh;
+  h1 {
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
   h3 {
     font-weight: 700;
     margin-bottom: 0.9em;
-  }
-  h4 {
-    font-weight: 400;
-    text-decoration: underline;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.2em;
   }
   .information-inner-wrap {
     padding: 0 0 0 23px;
@@ -60,25 +60,21 @@ a:hover {
     font-size: 1.3em;
     margin-bottom: 2em;
   }
+  .contributors {
+    font-size: 1.1em;
+    h3 {
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+    h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.2em;
+    }
+  }
   ol li {
     line-height: 1.6em;
   }
-}
-
-.information-title-wrap {
-  mark {
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
-    padding: 9px 15px !important;
-  }
-  h1 {
-    font-weight: 700;
-    font-size: 2.4rem;
-    line-height: 2.4rem;
-    margin-bottom: 0;
-  }
-  padding-left: 23px;
-  margin-top: 45px;
 }
 
 .rc-typeahead-suggestion {
@@ -303,11 +299,6 @@ a:hover {
 mark {
   color: white;
   background-color: black;
-}
-
-mark.white {
-  background-color: white;
-  color: black;
   padding: .1em .3em;
 }
 
@@ -512,7 +503,7 @@ mark.white {
     h2 {
       font-weight: 300;
       font-size: 1.3em;
-      line-height: 1.4em;
+      // line-height: 1.4em;
     }
     .branch {
       color: #cffffd;
@@ -556,9 +547,6 @@ mark.white {
 }
 
 .platform-description {
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
-  border-top-right-radius: 7px;
   background-color: white;
   color: black;
   padding: .1em .3em;
@@ -577,6 +565,7 @@ mark.white {
   h2 {
     font-size: 2.4rem;
     margin: 1.2em 0 0 0;
+    text-transform: uppercase;
   }
   h3 {
     font-size: 1.9rem;
@@ -594,22 +583,12 @@ mark.white {
 }
 
 i.back {
-  color: black;
+  color: white;
   padding-bottom: .1em;
   margin-right: 12px;
   &:hover {
     opacity: 0.75;
   }
-}
-
-h2.pushed-left > mark {
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
-}
-
-.not-found > h2 > mark {
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
 }
 
 .pushed-left {
@@ -690,14 +669,13 @@ h2.pushed-left > mark {
     font-size: 0.9em;
   }
   .platform-wrap {
-    margin-top: 5px;
+    margin-top: 10px;
     font-size: 0.6em;
-    text-align: right;
   }
   .platform {
     margin: 3px 0 0 0;
     padding: 5px 6px 4px 6px;
-    font-size: 1.1em;
+    font-size: 1em;
     p {
       margin: 0;
     }
@@ -740,14 +718,10 @@ h2.pushed-left > mark {
 }
 
 .activity-title-wrap {
-  mark {
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
-  }
   h1 {
-    font-weight: 700;
     font-size: 2.4rem;
     margin-bottom: 5px;
+    text-transform: uppercase;
   }
   .author {
     color: #ADADAD;
