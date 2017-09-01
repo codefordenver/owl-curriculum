@@ -203,11 +203,25 @@ a:hover {
     overflow: hidden;
     background-color: #6A2569; }
     .lpsidebar .menu a {
-      color: #cffffd;
-      text-decoration: none; }
-    .lpsidebar .menu img {
-      margin-top: 10px;
-      width: 80px; }
+      margin-top: 20px;
+      color: white;
+      text-decoration: none;
+      display: block; }
+    .lpsidebar .menu div.branch-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+      background: url("../img/icon1.png");
+      background-size: 100%; }
+    .lpsidebar .menu a.branch-icon:hover .branch-icon {
+      background: url("../img/icon1-nudge.gif");
+      background-size: 100%; }
+    .lpsidebar .menu div.about-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+      background: url("../img/icon4.png");
+      background-size: 100%; }
 
 .lpsidebar-wrap {
   position: fixed;
