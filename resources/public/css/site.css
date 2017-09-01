@@ -143,20 +143,20 @@ a:hover {
     overflow: hidden;
     background-color: #6A2569; }
     #sidebar .menu a {
+      margin-top: 20px;
       color: white;
       text-decoration: none;
-      display: block;
-      height: 80px; }
-    #sidebar .menu .branch-icon {
+      display: block; }
+    #sidebar .menu div.branch-icon {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url("../img/icon1-new.png");
+      background: url("../img/icon1.png");
       background-size: 100%; }
-      #sidebar .menu .branch-icon:hover {
-        background: url("../img/icon1-new-nudge.gif");
-        background-size: 100%; }
-    #sidebar .menu .about-icon {
+    #sidebar .menu a.branch-icon:hover .branch-icon {
+      background: url("../img/icon1-nudge.gif");
+      background-size: 100%; }
+    #sidebar .menu div.about-icon {
       margin: 10px;
       width: 60px;
       height: 60px;
