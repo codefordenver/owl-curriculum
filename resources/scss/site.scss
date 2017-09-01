@@ -184,12 +184,12 @@ a:hover {
       color: white;
       text-decoration: none;
       display: block;
-      height: 90px;
+      height: 80px;
     }
     .branch-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url('../img/icon1.png');
       background-size: 100%;
       &:hover {
@@ -198,9 +198,9 @@ a:hover {
       }
     }
     .about-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url('../img/icon4.png');
       background-size: 100%;
     }

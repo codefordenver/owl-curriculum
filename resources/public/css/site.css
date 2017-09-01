@@ -146,20 +146,20 @@ a:hover {
       color: white;
       text-decoration: none;
       display: block;
-      height: 90px; }
+      height: 80px; }
     #sidebar .menu .branch-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url("../img/icon1.png");
       background-size: 100%; }
       #sidebar .menu .branch-icon:hover {
         background: url("../img/icon1-nudge.gif");
         background-size: 100%; }
     #sidebar .menu .about-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url("../img/icon4.png");
       background-size: 100%; }
     #sidebar .menu .rc-popover-anchor-wrapper {
