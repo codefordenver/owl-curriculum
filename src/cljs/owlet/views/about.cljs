@@ -5,10 +5,9 @@
   (fn []
     [:div.information-wrap
       [email-notification]
-      [:div.information-title-wrap
-        [:h1 [:mark.white "What is Owlet?"]]]
       [:div.information-inner-wrap.col-xs-12.col-lg-8
        [:div.information-inner
+        [:h1 [:mark "What is Owlet?"]]
         [:h3 "Free, self-guided projects for creative learning"]
         [:p "Owlet is a collection of self-guided activities designed for middle school students to learn technology skills through creative exploration. It's free and available to everyone, especially teachers looking for new ideas and students (of any age) looking to learn."]
         [:p "We originally developed this platform to meet the specific needs of a small group of new technology teachers working in Denver Public Schools (DPS) via OpenWorld Learning (OWL), a local non-profit. We set out to create a platform that addressed their particular challenges in terms of curriculum content creation, delivery, accessibility, and keeping middle school   students engaged (no small feat)."]
@@ -26,22 +25,22 @@
          [:a {:href "https://www.contentful.com/"} "Contentful"]
          " for generously providing us with a pro bono subscription plan! We love Contentful's developer-friendly content management APIs and optimized microservices architecture for creating and delivering digital content."]]]
       [:div.information-inner-wrap.col-xs-12.col-lg-4
-       [:div.information-inner
-        [:h3 "Contributors"]
-        [:h4 "Project Leads"]
+       [:div.information-inner.contributors
+        [:h3 [:mark "Contributors"]]
+        [:h4 "Project Leads:"]
         "Michelle Lim"[:br]
         "David Viramontes"[:br][:br]
-        [:h4 "Software Development"]
+        [:h4 "Software Development:"]
         "David Viramontes"[:br]
         "Michelle Lim"[:br]
         "Tyler Perkins"[:br]
         "Zaden Ruggiero-Boune"[:br][:br]
-        [:h4 "Graphic Design"]
+        [:h4 "Graphic Design:"]
         "Trinh Nguyen"[:br][:br]
-        [:h4 "Content"]
+        [:h4 "Content:"]
         "Michelle Lim"[:br]
         "Katie Frank"[:br]
         "Tony Gilbert-Davis"[:br][:br][:br]
-        [:h3 "Contact"]
+        [:h3 [:mark "Contact"]]
         [:p "Michelle Lim" [:br]
          [:a {:href "mailto:elle@mmmanyfold.com"} "elle@mmmanyfold.com"]]]]]))

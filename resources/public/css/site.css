@@ -24,16 +24,16 @@ a:hover {
 .information-wrap {
   width: 98%;
   margin: 0 auto;
+  margin-top: 45px;
   height: 100vh; }
+  .information-wrap h1 {
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase; }
   .information-wrap h3 {
     font-weight: 700;
     margin-bottom: 0.9em; }
-  .information-wrap h4 {
-    font-weight: 400;
-    text-decoration: underline;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.2em; }
   .information-wrap .information-inner-wrap {
     padding: 0 0 0 23px; }
   .information-wrap .information-inner {
@@ -42,21 +42,17 @@ a:hover {
     padding-bottom: 10px;
     font-size: 1.3em;
     margin-bottom: 2em; }
+  .information-wrap .contributors {
+    font-size: 1.1em; }
+    .information-wrap .contributors h3 {
+      font-weight: 300;
+      text-transform: uppercase; }
+    .information-wrap .contributors h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.2em; }
   .information-wrap ol li {
     line-height: 1.6em; }
-
-.information-title-wrap {
-  padding-left: 23px;
-  margin-top: 45px; }
-  .information-title-wrap mark {
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
-    padding: 9px 15px !important; }
-  .information-title-wrap h1 {
-    font-weight: 700;
-    font-size: 2.4rem;
-    line-height: 2.4rem;
-    margin-bottom: 0; }
 
 .rc-typeahead-suggestion {
   background-color: #3B3B3B; }
@@ -242,11 +238,7 @@ a:hover {
 
 mark {
   color: white;
-  background-color: black; }
-
-mark.white {
-  background-color: white;
-  color: black;
+  background-color: black;
   padding: .1em .3em; }
 
 .box-shadow, .box {
@@ -410,8 +402,7 @@ mark.white {
         background-position: bottom right !important; }
     .branches .branchwrap h2 {
       font-weight: 300;
-      font-size: 1.3em;
-      line-height: 1.4em; }
+      font-size: 1.3em; }
     .branches .branchwrap .branch {
       color: #cffffd;
       text-decoration: none; }
@@ -445,9 +436,6 @@ mark.white {
   align-items: flex-start; }
 
 .platform-description {
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
-  border-top-right-radius: 7px;
   background-color: white;
   color: black;
   padding: .1em .3em;
@@ -462,7 +450,8 @@ mark.white {
   margin: 15px 20px 0 25px; }
   .branch-activities-wrap h2 {
     font-size: 2.4rem;
-    margin: 1.2em 0 0 0; }
+    margin: 1.2em 0 0 0;
+    text-transform: uppercase; }
   .branch-activities-wrap h3 {
     font-size: 1.9rem;
     margin-bottom: 1em; }
@@ -474,19 +463,11 @@ mark.white {
   margin-left: 21px; }
 
 i.back {
-  color: black;
+  color: white;
   padding-bottom: .1em;
   margin-right: 12px; }
   i.back:hover {
     opacity: 0.75; }
-
-h2.pushed-left > mark {
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px; }
-
-.not-found > h2 > mark {
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px; }
 
 .pushed-left {
   padding-left: 15px; }
@@ -555,13 +536,12 @@ h2.pushed-left > mark {
     margin-top: 10px;
     font-size: 0.9em; }
   .activity-thumbnail-wrap .platform-wrap {
-    margin-top: 5px;
-    font-size: 0.6em;
-    text-align: right; }
+    margin-top: 10px;
+    font-size: 0.6em; }
   .activity-thumbnail-wrap .platform {
     margin: 3px 0 0 0;
     padding: 5px 6px 4px 6px;
-    font-size: 1.1em; }
+    font-size: 1em; }
     .activity-thumbnail-wrap .platform p {
       margin: 0; }
   .activity-thumbnail-wrap .tag {
@@ -595,13 +575,10 @@ h2.pushed-left > mark {
 .activity-title-wrap {
   margin-top: 18px;
   margin-bottom: 15px; }
-  .activity-title-wrap mark {
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px; }
   .activity-title-wrap h1 {
-    font-weight: 700;
     font-size: 2.4rem;
-    margin-bottom: 5px; }
+    margin-bottom: 5px;
+    text-transform: uppercase; }
   .activity-title-wrap .author {
     color: #ADADAD; }
 
