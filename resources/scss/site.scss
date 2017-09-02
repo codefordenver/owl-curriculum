@@ -177,26 +177,26 @@ a:hover {
     overflow: hidden;
     background-color: $purple;
     a {
+      margin-top: 20px;
       color: white;
       text-decoration: none;
       display: block;
-      height: 90px;
     }
-    .branch-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+    div.branch-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url('../img/icon1.png');
       background-size: 100%;
-      &:hover {
-        background: url('../img/icon1-nudge.gif');
-        background-size: 100%;
-      }
     }
-    .about-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+    a.branch-icon:hover .branch-icon {
+      background: url('../img/icon1-nudge.gif');
+      background-size: 100%;
+    }
+    div.about-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url('../img/icon4.png');
       background-size: 100%;
     }
@@ -251,12 +251,28 @@ a:hover {
     overflow: hidden;
     background-color: $purple;
     a {
-      color: #cffffd;
+      margin-top: 20px;
+      color: white;
       text-decoration: none;
+      display: block;
     }
-    img {
-      margin-top: 10px;
-      width: 80px;
+    div.branch-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+      background: url('../img/icon1.png');
+      background-size: 100%;
+    }
+    a.branch-icon:hover .branch-icon {
+      background: url('../img/icon1-nudge.gif');
+      background-size: 100%;
+    }
+    div.about-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+      background: url('../img/icon4.png');
+      background-size: 100%;
     }
   }
 }

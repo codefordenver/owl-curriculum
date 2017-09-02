@@ -139,23 +139,23 @@ a:hover {
     overflow: hidden;
     background-color: #6A2569; }
     #sidebar .menu a {
+      margin-top: 20px;
       color: white;
       text-decoration: none;
-      display: block;
-      height: 90px; }
-    #sidebar .menu .branch-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+      display: block; }
+    #sidebar .menu div.branch-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url("../img/icon1.png");
       background-size: 100%; }
-      #sidebar .menu .branch-icon:hover {
-        background: url("../img/icon1-nudge.gif");
-        background-size: 100%; }
-    #sidebar .menu .about-icon {
-      margin-top: 10px;
-      width: 80px;
-      height: 80px;
+    #sidebar .menu a.branch-icon:hover .branch-icon {
+      background: url("../img/icon1-nudge.gif");
+      background-size: 100%; }
+    #sidebar .menu div.about-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
       background: url("../img/icon4.png");
       background-size: 100%; }
     #sidebar .menu .rc-popover-anchor-wrapper {
@@ -199,11 +199,25 @@ a:hover {
     overflow: hidden;
     background-color: #6A2569; }
     .lpsidebar .menu a {
-      color: #cffffd;
-      text-decoration: none; }
-    .lpsidebar .menu img {
-      margin-top: 10px;
-      width: 80px; }
+      margin-top: 20px;
+      color: white;
+      text-decoration: none;
+      display: block; }
+    .lpsidebar .menu div.branch-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+      background: url("../img/icon1.png");
+      background-size: 100%; }
+    .lpsidebar .menu a.branch-icon:hover .branch-icon {
+      background: url("../img/icon1-nudge.gif");
+      background-size: 100%; }
+    .lpsidebar .menu div.about-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+      background: url("../img/icon4.png");
+      background-size: 100%; }
 
 .lpsidebar-wrap {
   position: fixed;
