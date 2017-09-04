@@ -158,6 +158,9 @@ a:hover {
       height: 60px;
       background: url("../img/icon4.png");
       background-size: 100%; }
+    #sidebar .menu a.about-icon:hover .about-icon {
+      background: url("../img/icon4-hover.png");
+      background-size: 100%; }
     #sidebar .menu .rc-popover-anchor-wrapper {
       position: absolute;
       left: 0; }

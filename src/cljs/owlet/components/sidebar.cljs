@@ -17,5 +17,5 @@
        [login-component]]
       [:a.navigation.branch-icon {:href "#/branches"}
        [:div.branch-icon]]
-      [:a.navigation.branch-icon {:href "#/about"}
+      [:a.navigation.about-icon {:href "#/about"}
        [:div.about-icon]]]]))

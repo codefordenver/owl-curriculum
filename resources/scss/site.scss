@@ -200,6 +200,10 @@ a:hover {
       background: url('../img/icon4.png');
       background-size: 100%;
     }
+    a.about-icon:hover .about-icon {
+      background: url('../img/icon4-hover.png');
+      background-size: 100%;
+    }
     .rc-popover-anchor-wrapper {
       position: absolute;
       left: 0;
