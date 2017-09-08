@@ -531,6 +531,26 @@ mark {
   background-color: #493b68;
 }
 
+#jsdisabled {
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+#jsdisabled-text {
+  position: absolute;
+  top: 48vh;
+  right: 10%;
+  color: white;
+  font-size: 4vw;
+  line-height: 4vh;
+  width: 80%;
+}
+
 /* main content */
 
 #main {
