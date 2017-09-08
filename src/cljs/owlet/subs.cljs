@@ -17,8 +17,9 @@
 (rf/reg-sub
   :my-background-image-url
   (fn [db]
-    (or (get-in db [:my-identity :private :background-image-url])
-        config/default-header-bg-image)))
+    (if (get-in db [:my-identity :private :background-image-url])
+        (str "url(" (get-in db [:my-identity :private :background-image-url]) ")")
+        nil)))
 
 (rf/reg-sub
   :library-activities
