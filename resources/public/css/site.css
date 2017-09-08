@@ -221,6 +221,9 @@ a:hover {
       height: 60px;
       background: url("../img/icon4.png");
       background-size: 100%; }
+    .lpsidebar .menu div.about-icon:hover {
+      background: url("../img/icon4-hover.png");
+      background-size: 100%; }
 
 .lpsidebar-wrap {
   position: fixed;
