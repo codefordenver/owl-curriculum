@@ -17,9 +17,9 @@
 (rf/reg-sub
   :my-background-image-url
   (fn [db]
-    (if (get-in db [:my-identity :private :background-image-url])
-        (str "url(" (get-in db [:my-identity :private :background-image-url]) ")")
-        nil)))
+    (if-let [background (get-in db [:my-identity :private :background-image-url])]
+      (str "url(" background ")")
+      nil)))
 
 (rf/reg-sub
   :library-activities
