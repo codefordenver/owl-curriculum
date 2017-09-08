@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,700');
 
 $font-stack: "Rubik", sans-serif;
-$purple: #6A2569;
+$purple: #32254B;
 $dark-gray: rgb(12, 23, 27);
 $light-gray: #C8C8C8;
 $aqua: #65D2C0;
@@ -463,6 +463,11 @@ mark {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
+  background: #6A2569;
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
 }
 
 .outer-height-wrap {

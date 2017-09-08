@@ -59,8 +59,7 @@
          [:div.outer-height-wrap
           [search-bar]
           [:div.inner-height-wrap
-             [:div.content {:style {:background-image (str "url(" @src ")")
-                                    :background-size  "cover"}}
+             [:div.content {:style {:background-size  "cover"}}
                 [upload-image-component]
                 [:button#change-header-btn
                  {:type     "button"
