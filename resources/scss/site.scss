@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,700');
 
 $font-stack: "Rubik", sans-serif;
-$purple: #6A2569;
+$purple: #32254B;
 $dark-gray: rgb(12, 23, 27);
 $light-gray: #C8C8C8;
 $aqua: #65D2C0;
@@ -186,19 +186,61 @@ a:hover {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon1.png');
-      background-size: 100%;
     }
-    a.branch-icon:hover .branch-icon {
-      background: url('../img/icon1-nudge.gif');
+    div.branch-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon1.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.branch-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1-nudge.gif");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.branch-icon:hover div.branch-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.branch-icon:hover div.branch-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
     div.about-icon {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon4.png');
+    }
+    div.about-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon4.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4-hover.png");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
     .rc-popover-anchor-wrapper {
       position: absolute;
@@ -260,19 +302,61 @@ a:hover {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon1.png');
-      background-size: 100%;
     }
-    a.branch-icon:hover .branch-icon {
-      background: url('../img/icon1-nudge.gif');
+    div.branch-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon1.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.branch-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1-nudge.gif");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.branch-icon:hover div.branch-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.branch-icon:hover div.branch-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
     div.about-icon {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon4.png');
+    }
+    div.about-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon4.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4-hover.png");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
   }
 }
@@ -447,6 +531,26 @@ mark {
   background-color: #493b68;
 }
 
+#jsdisabled {
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+#jsdisabled-text {
+  position: absolute;
+  top: 48vh;
+  right: 10%;
+  color: white;
+  font-size: 4vw;
+  line-height: 4vh;
+  width: 80%;
+}
+
 /* main content */
 
 #main {
@@ -459,6 +563,11 @@ mark {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
+  background: #6A2569;
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
 }
 
 .outer-height-wrap {

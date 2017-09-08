@@ -4,7 +4,6 @@
 (defn about-view []
   (fn []
     [:div.information-wrap
-      [email-notification]
       [:div.information-inner-wrap.col-xs-12.col-lg-8
        [:div.information-inner
         [:h1 [:mark "What is Owlet?"]]

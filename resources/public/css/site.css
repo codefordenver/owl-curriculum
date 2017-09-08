@@ -112,7 +112,7 @@ a:hover {
 #sidebar {
   z-index: 3;
   text-align: center;
-  background-color: #6A2569;
+  background-color: #32254B;
   color: #cffffd;
   top: 0;
   bottom: 0;
@@ -137,7 +137,7 @@ a:hover {
   #sidebar .menu {
     padding-top: 10px;
     overflow: hidden;
-    background-color: #6A2569; }
+    background-color: #32254B; }
     #sidebar .menu a {
       margin-top: 20px;
       color: white;
@@ -146,18 +146,53 @@ a:hover {
     #sidebar .menu div.branch-icon {
       margin: 10px;
       width: 60px;
-      height: 60px;
-      background: url("../img/icon1.png");
-      background-size: 100%; }
-    #sidebar .menu a.branch-icon:hover .branch-icon {
-      background: url("../img/icon1-nudge.gif");
-      background-size: 100%; }
+      height: 60px; }
+    #sidebar .menu div.branch-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1.png");
+      background-size: 100%;
+      width: 60px;
+      height: 60px; }
+    #sidebar .menu div.branch-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1-nudge.gif");
+      background-size: 100%;
+      opacity: 0; }
+    #sidebar .menu a.branch-icon:hover div.branch-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0; }
+    #sidebar .menu a.branch-icon:hover div.branch-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px; }
     #sidebar .menu div.about-icon {
       margin: 10px;
       width: 60px;
-      height: 60px;
-      background: url("../img/icon4.png");
-      background-size: 100%; }
+      height: 60px; }
+    #sidebar .menu div.about-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4.png");
+      background-size: 100%;
+      width: 60px;
+      height: 60px; }
+    #sidebar .menu div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4-hover.png");
+      background-size: 100%;
+      opacity: 0; }
+    #sidebar .menu a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0; }
+    #sidebar .menu a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px; }
     #sidebar .menu .rc-popover-anchor-wrapper {
       position: absolute;
       left: 0; }
@@ -165,14 +200,14 @@ a:hover {
       opacity: 0.75; }
 
 #sidebar-wrap {
-  background-color: #6A2569; }
+  background-color: #32254B; }
 
 .lpsidebar {
   position: fixed;
   z-index: 3;
   transition: all 0.3s;
   text-align: center;
-  background-color: #6A2569;
+  background-color: #32254B;
   color: #cffffd;
   top: 0;
   bottom: 0;
@@ -197,7 +232,7 @@ a:hover {
   .lpsidebar .menu {
     padding-top: 10px;
     overflow: hidden;
-    background-color: #6A2569; }
+    background-color: #32254B; }
     .lpsidebar .menu a {
       margin-top: 20px;
       color: white;
@@ -206,18 +241,53 @@ a:hover {
     .lpsidebar .menu div.branch-icon {
       margin: 10px;
       width: 60px;
-      height: 60px;
-      background: url("../img/icon1.png");
-      background-size: 100%; }
-    .lpsidebar .menu a.branch-icon:hover .branch-icon {
-      background: url("../img/icon1-nudge.gif");
-      background-size: 100%; }
+      height: 60px; }
+    .lpsidebar .menu div.branch-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1.png");
+      background-size: 100%;
+      width: 60px;
+      height: 60px; }
+    .lpsidebar .menu div.branch-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1-nudge.gif");
+      background-size: 100%;
+      opacity: 0; }
+    .lpsidebar .menu a.branch-icon:hover div.branch-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0; }
+    .lpsidebar .menu a.branch-icon:hover div.branch-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px; }
     .lpsidebar .menu div.about-icon {
       margin: 10px;
       width: 60px;
-      height: 60px;
-      background: url("../img/icon4.png");
-      background-size: 100%; }
+      height: 60px; }
+    .lpsidebar .menu div.about-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4.png");
+      background-size: 100%;
+      width: 60px;
+      height: 60px; }
+    .lpsidebar .menu div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4-hover.png");
+      background-size: 100%;
+      opacity: 0; }
+    .lpsidebar .menu a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0; }
+    .lpsidebar .menu a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px; }
 
 .lpsidebar-wrap {
   position: fixed;
@@ -358,6 +428,25 @@ mark {
 #bottom {
   background-color: #493b68; }
 
+#jsdisabled {
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  text-align: center; }
+
+#jsdisabled-text {
+  position: absolute;
+  top: 48vh;
+  right: 10%;
+  color: white;
+  font-size: 4vw;
+  line-height: 4vh;
+  width: 80%; }
+
 /* main content */
 #main {
   display: flex;
@@ -367,7 +456,12 @@ mark {
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
-  padding-top: 50px; }
+  padding-top: 50px;
+  background: #6A2569;
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 ); }
 
 .outer-height-wrap {
   height: 100vh;
@@ -763,7 +857,7 @@ input[type="radio"]:checked + label {
   border-radius: 3px;
   padding: 5px;
   color: #C8C8C8;
-  background-color: #6A2569;
+  background-color: #32254B;
   outline: 0; }
   #unsubscribe-button:active {
     outline: 0; }
@@ -778,7 +872,7 @@ input[type="radio"]:checked + label {
   padding: 5px;
   color: #C8C8C8;
   font-size: 0.9em;
-  background-color: #6A2569;
+  background-color: #32254B;
   outline: 0; }
   #email-button:active {
     outline: 0; }
