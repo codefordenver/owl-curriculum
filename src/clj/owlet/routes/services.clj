@@ -25,4 +25,31 @@
 				param to get all entries for given space"
         (ok {:metadata   {},
              :activities [],
-             :platforms  []})))))
+             :platforms  []})))
+
+    (context "/webhook" []
+
+      :tags ["Webhooks"]
+
+      ;; TODO: (david) document returns
+
+      (context "/content" []
+
+        (GET "/confirm" []
+         :query-params [id]
+         :summary "Confirmation route, gets hit by the front end")
+
+        (POST "/email" []
+          :query-params [payload]
+          :summary "Sends email to list of subscribers")
+
+        (PUT "/subscribe" []
+          :query-params [email]
+          :summary
+          "handles new subscription request -checks list of subs b4 adding to list; ie no duplicates")
+
+        (PUT "/unsubscribe" []
+          :query-params [email]
+          :summary
+          "handles new subscription request -checks list of subs b4 adding to list; ie no duplicates")))))
+
