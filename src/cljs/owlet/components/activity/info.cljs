@@ -33,10 +33,14 @@
           :popover [re-com/popover-content-wrapper
                     :close-button? false
                     :body "Click for more info"]]
-       [:span (cond (true? platform-free) " > FREE"
-                    (false? platform-free) " > $")
-              (when platform-download
-                    " | download required")]]
+       [:span.platform-details
+          " > "
+          (cond (true? platform-free) "FREE"
+                (false? platform-free) [:span {:style {:color "green"
+                                                       :font-weight "bold"}} "$"])
+          (when platform-download
+                [:span " | " [:span {:style {:font-weight "bold"}} "download required"]])]]
+     [:br]
      [set-as-showdown "<b>Summary</b><br>" summary]
      (when why
       [set-as-showdown "<b>Why?</b><br>" why])

@@ -25,7 +25,7 @@
                  [:div {:style {:margin-left "15px"}}
                   [:h3 {:style {:margin-bottom "15px"
                                 :margin-top "40px"}}
-                    [:mark.white [:b "Activities"]]]]]
+                    [:mark.white "Activities"]]]]
               ; filtering by branch or skill
               [:div {:style {:text-align "right"}}
                  [:mark.white {:style {:background-color "rgba(255,255,255,0.65)"
