@@ -21,6 +21,9 @@ a:hover {
   .btn:focus:active {
     outline: none; }
 
+b {
+  font-weight: 700; }
+
 .information-wrap {
   width: 98%;
   margin: 0 auto;
@@ -612,7 +615,7 @@ span.platform-details {
   font-size: 0.9em;
   background-color: white;
   padding: 10px 10px 9px 10px;
-  margin-bottom: 1.5em;
+  margin: .75em 0;
   overflow-y: auto; }
   @media (max-width: 1187px) {
     .activity-thumbnail-wrap {
@@ -668,7 +671,10 @@ span.platform-details {
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em; }
-  .activity-wrap b {
+  .activity-wrap span.h3 {
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: inherit;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 2em; }

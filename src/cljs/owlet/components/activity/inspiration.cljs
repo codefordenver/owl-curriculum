@@ -3,6 +3,6 @@
 
 (defn activity-inspiration [inspiration]
   [:div.activity-inspiration-wrap.box-shadow
-   [:b "Inspiration"]
+   [:span.h3 "Inspiration"]
    [:div {"dangerouslySetInnerHTML"
           #js{:__html (.makeHtml showdown inspiration)}}]])

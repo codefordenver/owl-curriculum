@@ -39,11 +39,11 @@
                     :body "Click for more info"]]
        [:span.platform-details
           " > "
-          (cond (true? platform-free) "FREE"
+          (cond (true? platform-free) [:b "FREE"]
                 (false? platform-free) [:span {:style {:color "green"
                                                        :font-weight "bold"}} "$"])
           (when platform-download
-                [:span " | " [:span {:style {:font-weight "bold"}} "download required"]])]]
+                [:span " | " [:b "download required"]])]]
       [:div.summary summary]
       (when skills
         (for [skill skills]
