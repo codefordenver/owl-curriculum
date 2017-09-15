@@ -22,7 +22,7 @@
        [:div.activity-thumbnail {:style {:background-image (str "url('" image "')")}}
         [:mark.title title]]]
       [:div.platform-wrap
-       [:b "Platform: "][:br]
+       [:b "PLATFORM"][:br]
        [re-com/popover-anchor-wrapper
           :showing? showing?
           :position :below-right

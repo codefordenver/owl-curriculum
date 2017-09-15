@@ -650,8 +650,8 @@ span.platform-details {
     margin-top: 20px;
     font-size: 0.9em; }
   .activity-thumbnail-wrap .platform-wrap {
-    margin-top: 10px;
-    font-size: 0.6em; }
+    margin-top: 15px;
+    font-size: 0.65em; }
   .activity-thumbnail-wrap .platform {
     margin: 3px 0 0 0;
     padding: 5px 6px 4px 6px;
@@ -659,7 +659,7 @@ span.platform-details {
     .activity-thumbnail-wrap .platform p {
       margin: 0; }
   .activity-thumbnail-wrap span.platform-details {
-    font-size: 0.85em; }
+    font-size: 0.8em; }
   .activity-thumbnail-wrap .tag {
     margin: 10px 10px 0px 0px;
     font-size: 0.55em; }
