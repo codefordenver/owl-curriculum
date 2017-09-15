@@ -1,44 +1,29 @@
 (ns owlet.routes.services
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
+            [cheshire.core :as json]
             [schema.core :as s]))
 
 (defapi service-routes
-  {:swagger {:ui "/swagger-ui"
+
+  {:swagger {:ui   "/api/docs"
              :spec "/swagger.json"
-             :data {:info {:version "1.0.0"
-                           :title "Sample API"
-                           :description "Sample Services"}}}}
-  
+             :data {:info {:version     "0.0.1"
+                           :title       "Owlet API"
+                           :description "Services & Webhooks"}}}}
+
   (context "/api" []
-    :tags ["thingie"]
 
-    (GET "/plus" []
-      :return       Long
-      :query-params [x :- Long, {y :- Long 1}]
-      :summary      "x+y with query-parameters. y defaults to 1."
-      (ok (+ x y)))
+    :tags ["API"]
 
-    (POST "/minus" []
-      :return      Long
-      :body-params [x :- Long, y :- Long]
-      :summary     "x-y with body-parameters."
-      (ok (- x y)))
+    (context "/content" []
 
-    (GET "/times/:x/:y" []
-      :return      Long
-      :path-params [x :- Long, y :- Long]
-      :summary     "x*y with path-parameters"
-      (ok (* x y)))
-
-    (POST "/divide" []
-      :return      Double
-      :form-params [x :- Long, y :- Long]
-      :summary     "x/y with form-parameters"
-      (ok (/ x y)))
-
-    (GET "/power" []
-      :return      Long
-      :header-params [x :- Long, y :- Long]
-      :summary     "x^y with header-parameters"
-      (ok (long (Math/pow x y))))))
+      (GET "/space" []
+        :query-params [space-id, library-view :- Boolean]
+        :summary
+        "Asynchronously GETs all entries for given,
+				optionally pass library-view=true
+				param to get all entries for given space"
+        (ok {:metadata   {},
+             :activities [],
+             :platforms  []})))))
