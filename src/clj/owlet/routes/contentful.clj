@@ -8,7 +8,8 @@
             [org.httpkit.client :as http]
             [mailgun.mail :as mail]
             [cheshire.core :as json]
-            [camel-snake-kebab.core :refer [->kebab-case]]))
+            [camel-snake-kebab.core :refer [->kebab-case]]
+            [owlet.constants :as constants]))
 
 (def creds {:key    (System/getenv "MMM_MAILGUN_API_KEY")
             :domain "mg.codefordenver.org"})
@@ -198,7 +199,7 @@
                          :subject "Please confirm your email address"
                          :html    html})]
     (when (= (:status mail-transact!) 200)
-      (prn "Sent confirmation email to " email))))
+      (prn (str "Sent confirmation email to " email)))))
 
 (defn handle-activity-publish
   "Sends email to list of subscribers"
@@ -262,13 +263,13 @@
       (if (= status 200)
         (if-let [existing-user (some #(when (= (:email %) email) %) (vals coll))]
           (if (:confirmed existing-user)
-            (ok "Already subscribed.")
+            (ok constants/subscribed)
             (let [id (-> (filter (comp #{{:email email :confirmed false}} coll)
                                  (keys coll))
                          first
                          name)]
               (send-confirmation-email email id true)
-              (ok "Re-sent confirmation email.")))
+              (ok constants/confirmation-resent)))
           (let [id (epoch)
                 {:keys [status body]}
                 @(http/put (subscriber-endpoint id)
@@ -277,7 +278,7 @@
             (if (= status 200)
               (do
                 (send-confirmation-email email id true)
-                (ok "Sent confirmation email."))
+                (ok constants/confirmation-sent))
               (internal-server-error status))))
         (internal-server-error status)))))
 
@@ -295,8 +296,8 @@
                          first
                          name)]
               (send-confirmation-email email id false)
-              (ok "Sent confirmation email."))
-            (ok "Not Subscribed.")))
+              (ok constants/confirmation-sent))
+            (ok constants/not-subscribed)))
         (internal-server-error)))))
 
 (defroutes routes
