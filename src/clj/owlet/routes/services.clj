@@ -1,7 +1,6 @@
 (ns owlet.routes.services
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
-            [cheshire.core :as json]
             [schema.core :as s]))
 
 (defapi service-routes
