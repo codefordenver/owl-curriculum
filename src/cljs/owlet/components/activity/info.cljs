@@ -12,6 +12,8 @@
         platform-name (:name platform)
         platform-search-name (:search-name platform)
         platform-color (:color platform)
+        platform-download (:requiresDownload platform)
+        platform-free (:free platform)
         set-as-showdown (fn [title field & [class]]
                           [:div {:class class
                                  "dangerouslySetInnerHTML"
@@ -20,17 +22,21 @@
      [:div
        [:b "Platform"] [:br]
        [re-com/popover-anchor-wrapper
-        :showing? showing?
-        :position :below-left
-        :anchor [:button.platform.btn
-                 {:on-click #(rf/dispatch [:show-platform platform-search-name])
-                  :style {:background-color platform-color}
-                  :on-mouse-over (handler-fn (reset! showing? true))
-                  :on-mouse-out  (handler-fn (reset! showing? false))}
-                 platform-name]
-        :popover [re-com/popover-content-wrapper
-                  :close-button? false
-                  :body "Click for more info"]]]
+          :showing? showing?
+          :position :below-right
+          :anchor [:button.platform.btn
+                   {:on-click #(rf/dispatch [:show-platform platform-search-name])
+                    :style {:background-color platform-color}
+                    :on-mouse-over (handler-fn (reset! showing? true))
+                    :on-mouse-out  (handler-fn (reset! showing? false))}
+                   platform-name]
+          :popover [re-com/popover-content-wrapper
+                    :close-button? false
+                    :body "Click for more info"]]
+       [:span (cond (true? platform-free) " > FREE"
+                    (false? platform-free) " > $")
+              (if platform-download
+                  " | download required")]]
      [set-as-showdown "<b>Summary</b><br>" summary]
      (when why
       [set-as-showdown "<b>Why?</b><br>" why])

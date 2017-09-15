@@ -90,7 +90,9 @@
                                 (get-in % [:sys :id]))
                          (hash-map :name (get-in % [:fields :name])
                                    :search-name (str (->kebab-case (get-in % [:fields :name])))
-                                   :color (get-in % [:fields :color])))
+                                   :color (get-in % [:fields :color])
+                                   :requiresDownload (get-in % [:fields :requiresDownload])
+                                   :free (get-in % [:fields :free])))
                       platforms))
       ; Adds preview img. URL at [.. :sys :url]
       (update-in [:fields :preview :sys]
