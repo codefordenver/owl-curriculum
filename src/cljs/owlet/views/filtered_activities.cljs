@@ -16,7 +16,7 @@
          (let [{:keys [display-name activities & description]} filtered-activities]
            [:div
             [:h2.pushed-left [:mark [back] display-name]]
-            (if description
+            (when description
               ; filtering by platform
               [:div
                  [:div {:class "platform-description"
@@ -25,15 +25,7 @@
                  [:div {:style {:margin-left "15px"}}
                   [:h3 {:style {:margin-bottom "15px"
                                 :margin-top "40px"}}
-                    [:mark.white [:b "Activities"]]]]]
-              ; filtering by branch or skill
-              [:div {:style {:text-align "right"}}
-                 [:mark.white {:style {:background-color "rgba(255,255,255,0.65)"
-                                       :margin-right "15px"
-                                       :padding ".15em .35em .15em .4em"
-                                       :font-weight "500"
-                                       :font-size "1.02em"}}
-                  "* = software required"]])
+                    [:mark.white "Activities"]]]])
             [:div.flexcontainer-wrap
              (if (seq activities)
                (for [activity activities

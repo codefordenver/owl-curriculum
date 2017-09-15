@@ -43,7 +43,7 @@
      (fn []
        (let [images (prepare-image-items image-items)]
          [:div.activity-gallery-wrap
-           [:h4 [:mark "See what other people made..."]]
+           [:h4 [:mark "See what other students made..."]]
            [:div {:class "img-gallery"
                   :item-scope "true"
                   :item-type "http://schema.org/ImageGallery"}

@@ -34,6 +34,10 @@ a:hover {
   }
 }
 
+b {
+  font-weight: 700;
+}
+
 // information views: about
 .information-wrap {
   width: 98%;
@@ -743,13 +747,13 @@ i.back {
   }
 }
 
-.rc-popover-anchor-wrapper {
-  margin-bottom: 15px;
-}
-
 .rc-popover-wrapper, .rc-popover-point {
   min-height: 0;
   height: 0;
+}
+
+span.platform-details {
+  margin-left: 2px;
 }
 
 .activity-thumbnail-wrap {
@@ -758,9 +762,12 @@ i.back {
   @media (max-width: 1187px) {
     font-size: 0.8em;
   }
+  @media (max-width: 500px) {
+    margin-left: 15px;
+  }
   background-color: white;
   padding: 10px 10px 9px 10px;
-  margin-bottom: 1.5em;
+  margin: .75em 0;
   overflow-y: auto;
   .activity-thumbnail {
     position: relative;
@@ -789,12 +796,12 @@ i.back {
     }
   }
   .summary {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 0.9em;
   }
   .platform-wrap {
-    margin-top: 10px;
-    font-size: 0.6em;
+    margin-top: 15px;
+    font-size: 0.65em;
   }
   .platform {
     margin: 3px 0 0 0;
@@ -803,6 +810,9 @@ i.back {
     p {
       margin: 0;
     }
+  }
+  span.platform-details {
+    font-size: 0.8em;
   }
   .tag {
     margin: 10px 10px 0px 0px;
@@ -818,7 +828,10 @@ i.back {
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em;
-  b {
+  span.h3 {
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: inherit;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 2em;
@@ -857,6 +870,9 @@ i.back {
 .activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
   padding: 10px 12px 2px 15px;
+  span.platform-details {
+    font-size: 0.75em;
+  }
 }
 
 .activity-challenge-wrap {

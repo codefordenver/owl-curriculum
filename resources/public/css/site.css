@@ -21,6 +21,9 @@ a:hover {
   .btn:focus:active {
     outline: none; }
 
+b {
+  font-weight: 700; }
+
 .information-wrap {
   width: 98%;
   margin: 0 auto;
@@ -600,23 +603,26 @@ i.back {
   .platform:hover {
     opacity: 0.75; }
 
-.rc-popover-anchor-wrapper {
-  margin-bottom: 15px; }
-
 .rc-popover-wrapper, .rc-popover-point {
   min-height: 0;
   height: 0; }
+
+span.platform-details {
+  margin-left: 2px; }
 
 .activity-thumbnail-wrap {
   border-radius: 7px;
   font-size: 0.9em;
   background-color: white;
   padding: 10px 10px 9px 10px;
-  margin-bottom: 1.5em;
+  margin: .75em 0;
   overflow-y: auto; }
   @media (max-width: 1187px) {
     .activity-thumbnail-wrap {
       font-size: 0.8em; } }
+  @media (max-width: 500px) {
+    .activity-thumbnail-wrap {
+      margin-left: 15px; } }
   .activity-thumbnail-wrap .activity-thumbnail {
     position: relative;
     overflow: hidden;
@@ -641,17 +647,19 @@ i.back {
       text-transform: uppercase;
       font-size: 1.1em; }
   .activity-thumbnail-wrap .summary {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 0.9em; }
   .activity-thumbnail-wrap .platform-wrap {
-    margin-top: 10px;
-    font-size: 0.6em; }
+    margin-top: 15px;
+    font-size: 0.65em; }
   .activity-thumbnail-wrap .platform {
     margin: 3px 0 0 0;
     padding: 5px 6px 4px 6px;
     font-size: 1em; }
     .activity-thumbnail-wrap .platform p {
       margin: 0; }
+  .activity-thumbnail-wrap span.platform-details {
+    font-size: 0.8em; }
   .activity-thumbnail-wrap .tag {
     margin: 10px 10px 0px 0px;
     font-size: 0.55em; }
@@ -663,7 +671,10 @@ i.back {
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em; }
-  .activity-wrap b {
+  .activity-wrap span.h3 {
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: inherit;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 2em; }
@@ -693,6 +704,8 @@ i.back {
 .activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
   padding: 10px 12px 2px 15px; }
+  .activity-info-wrap span.platform-details, .activity-inspiration-wrap span.platform-details, .activity-challenge-wrap span.platform-details {
+    font-size: 0.75em; }
 
 .activity-challenge-wrap {
   margin: 2em 0;
