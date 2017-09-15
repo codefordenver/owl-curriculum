@@ -5,7 +5,7 @@
 
 (defapi service-routes
 
-  {:swagger {:ui   "/api/docs"
+  {:swagger {:ui   "/docs/api"
              :spec "/swagger.json"
              :data {:info {:version     "0.0.1"
                            :title       "Owlet API"
@@ -52,4 +52,3 @@
           :query-params [email]
           :summary
           "handles new subscription request -checks list of subs b4 adding to list; ie no duplicates")))))
-
