@@ -35,8 +35,8 @@
                     :body "Click for more info"]]
        [:span (cond (true? platform-free) " > FREE"
                     (false? platform-free) " > $")
-              (if platform-download
-                  " | download required")]]
+              (when platform-download
+                    " | download required")]]
      [set-as-showdown "<b>Summary</b><br>" summary]
      (when why
       [set-as-showdown "<b>Why?</b><br>" why])

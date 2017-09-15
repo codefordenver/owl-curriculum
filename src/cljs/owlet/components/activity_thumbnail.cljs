@@ -39,8 +39,8 @@
                     :body "Click for more info"]]
        [:span (cond (true? platform-free) " > FREE"
                     (false? platform-free) " > $")
-              (if platform-download
-                  " | download required")]]
+              (when platform-download
+                    " | download required")]]
       [:div.summary summary]
       (when skills
         (for [skill skills]
