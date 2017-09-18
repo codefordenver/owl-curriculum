@@ -1098,6 +1098,20 @@ input[type="radio"]:checked + label {
   }
 }
 
+#confirm {
+  color: white;
+}
+#confirm-message {
+  position: absolute;
+  left: calc(50vw - 135px);
+  display: block;
+  width: 430px;
+}
+.g-recaptcha {
+  position: absolute;
+  top: 74px;
+  left: calc(50vw - 71px);
+}
 /* no gutters! */
 
 .no-gutter {
