@@ -63,8 +63,7 @@
           [:div.inner-height-wrap
              [:div.content {:style {:background-image (when-not (or (= @active-view :about-view)
                                                                     (= @active-view :confirm-view))
-                                                        @src)
-                                    :background-size  "cover"}}
+                                                        @src)}}
                 [upload-image-component]
                 [:button#change-header-btn
                  {:type     "button"
