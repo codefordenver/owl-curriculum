@@ -950,12 +950,16 @@ span.platform-details {
 /* buttons and inputs */
 
 #change-bg-btn {
-  width: 35px;
-  height: 35px;
+  width: 45px;
+  height: 45px;
   position: absolute;
   right: 8px;
   top: 58px;
   opacity: 0.6;
+  border-radius: 50%;
+  font-size: 1.25em;
+  padding: 6px;
+  z-index: 1;
   &:hover {
     opacity: 1;
   }

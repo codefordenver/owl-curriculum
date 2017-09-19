@@ -68,10 +68,7 @@
                   [:button#change-bg-btn
                    {:type     "button"
                     :class    "btn btn-secondary"
-                    :style    {:border-radius "50%"
-                               :font-size "1em"
-                               :padding   "6px"
-                               :display   (if @is-user-logged-in?
+                    :style    {:display (if @is-user-logged-in?
                                             "block"
                                             "none")}
                     :on-click #(rf/dispatch [:show-bg-img-upload true])}
