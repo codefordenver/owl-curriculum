@@ -61,8 +61,9 @@
          [:div.outer-height-wrap
           [search-bar]
           [:div.inner-height-wrap
-             [:div.content {:style {:background (when-not (= @active-view :about-view)
-                                                  @src)
+             [:div.content {:style {:background-image (when-not (or (= @active-view :about-view)
+                                                                    (= @active-view :confirm-view))
+                                                        @src)
                                     :background-size  "cover"}}
                 [upload-image-component]
                 [:button#change-header-btn

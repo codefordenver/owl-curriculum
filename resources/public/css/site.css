@@ -898,14 +898,21 @@ input[type="radio"]:checked + label {
 
 #confirm-message {
   position: absolute;
+  top: 70px;
   left: calc(50vw - 135px);
   display: block;
   width: 430px; }
+  @media (max-width: 767px) {
+    #confirm-message {
+      left: calc(50vw - 215px); } }
 
 .g-recaptcha {
   position: absolute;
-  top: 74px;
+  top: 110px;
   left: calc(50vw - 71px); }
+  @media (max-width: 767px) {
+    .g-recaptcha {
+      left: calc(50vw - 151px); } }
 
 /* no gutters! */
 .no-gutter {

@@ -1103,14 +1103,21 @@ input[type="radio"]:checked + label {
 }
 #confirm-message {
   position: absolute;
+  top: 70px;
   left: calc(50vw - 135px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 215px);
+  }
   display: block;
   width: 430px;
 }
 .g-recaptcha {
   position: absolute;
-  top: 74px;
+  top: 110px;
   left: calc(50vw - 71px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 151px);
+  }
 }
 /* no gutters! */
 
