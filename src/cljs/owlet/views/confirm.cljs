@@ -20,8 +20,7 @@
                        [:span#confirm-message "Please check the box below to confirm your subscription"]
                        [:div.g-recaptcha
                          {:data-sitekey "6LdKwjAUAAAAAOXp-DRhuRXN77yKgZ9vDTR5gcxl"
-                          :data-callback "captcha_data_callback"
-                          :data-expired-callback "captcha_data_expired_callback"}]]]
+                          :data-callback "captcha_data_callback"}]]]
 
       (reagent/create-class
        {:component-did-mount (fn [this]
