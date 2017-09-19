@@ -19,8 +19,10 @@
 
 (defn unsubscribe-response [response]
   (cond
-    (= "Sent confirmation email." response) (reset! res 2)
-    (= "Not Subscribed." response) (reset! res 1)
+    (or
+      (= constants/confirmation-sent response)
+      (= constants/confirmation-resent response)) (reset! res 2)
+    (= constants/not-subscribed response) (reset! res 1)
     :else (reset! res 0)))
 
 (defn unsubscribe [email]
@@ -44,6 +46,6 @@
           "Unsubscribe"]
          (when @msg
            (cond
-             (= @res 2) [:p.refresh {:style {:color "green"}} "Almost there!  Check your email to confirm."]
-             (= @res 1) [:p.refresh {:style {:color "yellow"}} "You are not  subscribed."]
+             (= @res 2) [:p.refresh {:style {:color "green"}} "Almost there! Check your email to confirm."]
+             (= @res 1) [:p.refresh {:style {:color "yellow"}} "You are not subscribed."]
              (= @res 0) [:p.refresh {:style {:color "red"}} "Unsuccessful. Please try again."]))]])))
