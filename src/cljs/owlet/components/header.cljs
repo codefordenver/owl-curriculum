@@ -16,7 +16,7 @@
                             :background-size "cover"
                             :z-index "-1"}}
        [upload-image-component]
-       [:button#change-header-btn
+       [:button#change-bg-btn
         {:type     "button"
          :class    "btn btn-secondary"
          :style    {:font-size "1em"

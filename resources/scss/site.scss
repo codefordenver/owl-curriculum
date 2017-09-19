@@ -949,11 +949,12 @@ span.platform-details {
 
 /* buttons and inputs */
 
-#change-header-btn {
-  top: 110px;
+#change-bg-btn {
+  width: 35px;
+  height: 35px;
   position: absolute;
-  right: 0;
-  top: 50px;
+  right: 8px;
+  top: 58px;
   opacity: 0.6;
   &:hover {
     opacity: 1;
