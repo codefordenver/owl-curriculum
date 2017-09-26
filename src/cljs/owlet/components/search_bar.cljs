@@ -93,5 +93,5 @@
             :rigid? true
             :data-source suggestions-for-search
             :model search-model
-            :placeholder "Search..."
+            :placeholder "What would you like to learn today? How about HTML, or LED circuits?"
             :render-suggestion suggestion-renderer]]))}))

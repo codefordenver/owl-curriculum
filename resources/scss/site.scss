@@ -100,15 +100,20 @@ b {
   width: 100%;
   z-index: 1;
   .search {
-    border-color: black;
+    border-color: $light-gray;
     border-radius: 0 3.5px;
     background-color: black;
+    color: $light-gray;
     height: 50px;
     font-size: 1.2em;
-    color: white;
     transition: all 0.3s;
+    background-image:url('../img/search-icon.png');
+    background-size: auto 45%;
+    background-repeat:no-repeat;
+    background-position:left center;outline:0;
+    padding-left: 38px;
     &:focus {
-      border-color: white;
+      border-color: $aqua;
       color: white;
       background-color: black;
     }
@@ -675,9 +680,10 @@ mark {
 }
 
 .platform-description {
+  width: 75%;
   background-color: white;
   color: black;
-  padding: .1em .3em;
+  padding: .2em .3em;
   margin: 0 15px 30px 15px;
   a:hover {
     color: cornflowerblue;
@@ -692,7 +698,7 @@ mark {
   margin: 15px 20px 0 25px;
   h2 {
     font-size: 2.4rem;
-    margin: 1.2em 0 0 0;
+    margin: 1.2em 0 .1em 0;
     text-transform: uppercase;
   }
   h3 {
@@ -727,6 +733,7 @@ i.back {
   cursor: pointer;
   text-transform: uppercase;
   border-radius: 25px;
+  border: 1px solid #564B82;
   margin: 5px;
   padding: 7px 7px 6px 7px;
   font-weight: normal;
@@ -734,6 +741,16 @@ i.back {
   background-color: #564B82;
   &:hover {
     background-color: #483C6C;
+  }
+}
+
+.tag.inactive {
+  color: #564B82;
+  background-color: white;
+  border: 1px solid #564B82;
+  &:hover {
+    background-color: #564B82;
+    color: white;
   }
 }
 

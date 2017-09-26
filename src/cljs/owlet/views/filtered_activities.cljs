@@ -31,5 +31,5 @@
                (for [activity activities
                      :let [fields (:fields activity)
                            entry-id (get-in activity [:sys :id])]]
-                 ^{:key [entry-id (gensym "key-")]} [activity-thumbnail fields entry-id])
+                 ^{:key [entry-id (gensym "key-")]} [activity-thumbnail fields entry-id display-name])
               [:p.no-activities [:mark (str "Nothing yet, but we're working on it.")]])]])))]))

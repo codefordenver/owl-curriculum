@@ -73,15 +73,21 @@ b {
   width: 100%;
   z-index: 1; }
   .search-bar-wrap .search {
-    border-color: black;
+    border-color: #C8C8C8;
     border-radius: 0 3.5px;
     background-color: black;
+    color: #C8C8C8;
     height: 50px;
     font-size: 1.2em;
-    color: white;
-    transition: all 0.3s; }
+    transition: all 0.3s;
+    background-image: url("../img/search-icon.png");
+    background-size: auto 45%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    outline: 0;
+    padding-left: 38px; }
     .search-bar-wrap .search:focus {
-      border-color: white;
+      border-color: #65D2C0;
       color: white;
       background-color: black; }
   .search-bar-wrap .hidden-search {
@@ -547,9 +553,10 @@ mark {
   align-items: flex-start; }
 
 .platform-description {
+  width: 75%;
   background-color: white;
   color: black;
-  padding: .1em .3em;
+  padding: .2em .3em;
   margin: 0 15px 30px 15px; }
   .platform-description a:hover {
     color: cornflowerblue; }
@@ -561,7 +568,7 @@ mark {
   margin: 15px 20px 0 25px; }
   .branch-activities-wrap h2 {
     font-size: 2.4rem;
-    margin: 1.2em 0 0 0;
+    margin: 1.2em 0 .1em 0;
     text-transform: uppercase; }
   .branch-activities-wrap h3 {
     font-size: 1.9rem;
@@ -587,6 +594,7 @@ i.back {
   cursor: pointer;
   text-transform: uppercase;
   border-radius: 25px;
+  border: 1px solid #564B82;
   margin: 5px;
   padding: 7px 7px 6px 7px;
   font-weight: normal;
@@ -594,6 +602,14 @@ i.back {
   background-color: #564B82; }
   .tag:hover {
     background-color: #483C6C; }
+
+.tag.inactive {
+  color: #564B82;
+  background-color: white;
+  border: 1px solid #564B82; }
+  .tag.inactive:hover {
+    background-color: #564B82;
+    color: white; }
 
 .platform {
   font-size: 1em;

@@ -3,9 +3,10 @@
             [re-com.popover]
             [cljsjs.bootstrap]
             [re-frame.core :as rf]
+            [clojure.string :refer [lower-case]]
             [reagent.core :as reagent]))
 
-(defn activity-thumbnail [fields entry-id]
+(defn activity-thumbnail [fields entry-id display-name]
   (let [preview-image-url (get-in fields [:preview :sys :url])
         image (or preview-image-url "img/default-thumbnail.png")
         {:keys [title summary platform skills]} fields
@@ -48,5 +49,8 @@
       (when skills
         (for [skill skills]
           ^{:key (gensym "skill-")}
-          [:div.tag {:on-click #(rf/dispatch [:show-skill skill])}
-            [:span skill]]))]]))
+          (if (= (lower-case skill) (lower-case display-name))
+            [:div.tag {:on-click #(rf/dispatch [:show-skill skill])}
+              [:span skill]]
+            [:div.tag.inactive {:on-click #(rf/dispatch [:show-skill skill])}
+              [:span skill]])))]]))
