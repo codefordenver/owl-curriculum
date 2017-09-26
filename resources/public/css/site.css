@@ -73,15 +73,21 @@ b {
   width: 100%;
   z-index: 1; }
   .search-bar-wrap .search {
-    border-color: black;
+    border-color: #C8C8C8;
     border-radius: 0 3.5px;
     background-color: black;
+    color: #C8C8C8;
     height: 50px;
     font-size: 1.2em;
-    color: white;
-    transition: all 0.3s; }
+    transition: all 0.3s;
+    background-image: url("../img/search-icon.png");
+    background-size: auto 45%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    outline: 0;
+    padding-left: 38px; }
     .search-bar-wrap .search:focus {
-      border-color: white;
+      border-color: #65D2C0;
       color: white;
       background-color: black; }
   .search-bar-wrap .hidden-search {

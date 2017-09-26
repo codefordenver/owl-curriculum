@@ -100,15 +100,20 @@ b {
   width: 100%;
   z-index: 1;
   .search {
-    border-color: black;
+    border-color: $light-gray;
     border-radius: 0 3.5px;
     background-color: black;
+    color: $light-gray;
     height: 50px;
     font-size: 1.2em;
-    color: white;
     transition: all 0.3s;
+    background-image:url('../img/search-icon.png');
+    background-size: auto 45%;
+    background-repeat:no-repeat;
+    background-position:left center;outline:0;
+    padding-left: 38px;
     &:focus {
-      border-color: white;
+      border-color: $aqua;
       color: white;
       background-color: black;
     }
