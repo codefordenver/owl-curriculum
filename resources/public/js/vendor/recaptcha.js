@@ -1,3 +1,3 @@
-window.recaptchaCallback = function (id) {
-  console.log(id);
+window.recaptchaCallback = function () {
+  owlet.views.confirm.data_callback();
 }
