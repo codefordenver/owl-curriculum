@@ -14,7 +14,7 @@
     {% style "/css/site.css" %}
     <script>
         window.klipse_settings = {
-            selector_eval_js: '.language-klipse-eval-js', // css selector for the html elements you want to klipsify
+            selector_eval_python_client: '.language-klipse-python', // css selector for the html elements you want to klipsify
         };
     </script>
   </head>
@@ -22,8 +22,9 @@
   <body>
 
     <div id="app">
-    <noscript id="jsdisabled"><span id="jsdisabled-text">Please <a href="http://www.enable-javascript.com/">enable javascript</a> to use Owlet</span></noscript>
-    <div id="disqus_thread" class="invisible"></div></div>
+      <noscript id="jsdisabled"><span id="jsdisabled-text">Please <a href="http://www.enable-javascript.com/">enable javascript</a> to use Owlet</span></noscript>
+      <div id="disqus_thread" class="invisible"></div>
+    </div>
 
     <script type="text/javascript">
         var context = "{{servlet-context}}";
