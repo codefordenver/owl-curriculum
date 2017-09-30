@@ -907,12 +907,12 @@ input[type="radio"]:checked + label {
     #confirm-message {
       left: calc(50vw - 215px); } }
 
-.g-recaptcha {
+#g-recaptcha {
   position: absolute;
   top: 110px;
   left: calc(50vw - 71px); }
   @media (max-width: 767px) {
-    .g-recaptcha {
+    #g-recaptcha {
       left: calc(50vw - 151px); } }
 
 /* no gutters! */

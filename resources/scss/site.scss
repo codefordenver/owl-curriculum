@@ -1112,7 +1112,7 @@ input[type="radio"]:checked + label {
   display: block;
   width: 430px;
 }
-.g-recaptcha {
+#g-recaptcha {
   position: absolute;
   top: 110px;
   left: calc(50vw - 71px);
