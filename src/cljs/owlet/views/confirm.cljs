@@ -12,7 +12,7 @@
                      :callback ifn?))
 
 (defn re-captcha [dom-id callback]
-  (if (.getElementById js/document dom-id)
+  (when (.getElementById js/document dom-id)
     (.render js/grecaptcha dom-id
              #js {:sitekey "6LdKwjAUAAAAAOXp-DRhuRXN77yKgZ9vDTR5gcxl"
                   :callback callback})))
