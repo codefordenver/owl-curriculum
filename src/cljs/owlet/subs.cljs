@@ -60,4 +60,4 @@
 
 (reg-getter :route-params [:app :route-params])
 
-(reg-getter :subscriber-email [:app :route-opts])
+(reg-getter :subscriber-info [:app :route-opts])

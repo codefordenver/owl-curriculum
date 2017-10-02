@@ -577,6 +577,7 @@ mark {
   background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
   background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  background-size: cover !important;
 }
 
 .outer-height-wrap {
@@ -1136,6 +1137,27 @@ input[type="radio"]:checked + label {
   }
 }
 
+#confirm {
+  color: white;
+}
+#confirm-message {
+  position: absolute;
+  top: 70px;
+  left: calc(50vw - 135px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 215px);
+  }
+  display: block;
+  width: 430px;
+}
+#g-recaptcha {
+  position: absolute;
+  top: 110px;
+  left: calc(50vw - 71px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 151px);
+  }
+}
 /* no gutters! */
 
 .no-gutter {
