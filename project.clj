@@ -79,8 +79,8 @@
             [lein-auto "0.1.2"]
             [lein-kibit "0.1.2"]]
 
-  :sassc [{:src "resources/scss/site.scss"
-           :output-to "resources/public/css/site.css"
+  :sassc [{:src "resources/scss/owlet.scss"
+           :output-to "resources/public/css/owlet.css"
            :style "nested"
            :import-path "resources/scss"}]
 
@@ -98,7 +98,8 @@
 
   :profiles
   {:uberjar {:omit-source true
-             :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+             :prep-tasks ["compile" ["cljsbuild" "once" "min"]
+                                    ["sassc" "once"]]
              :cljsbuild
              {:builds
               {:min
