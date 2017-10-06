@@ -11,7 +11,7 @@
   "proxy front end request"
   [_]
   (let [headers {:Authorization OWLET_GITHUB_TOKEN}
-        {:keys [status body]} @(http/get "https://api.github.com/repos/codefordenver/owlet/stats/code_frequency" headers)]
+        {:keys [status body]} @(http/get "https://api.github.com/repos/codefordenver/owlet/stats/commit_activity" headers)]
     (when (= status 200)
       (ok {:status status
            :body   (json/parse-string body true)}))))
