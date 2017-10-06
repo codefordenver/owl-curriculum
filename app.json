@@ -21,6 +21,9 @@
   "buildpacks": [
     {
       "url": "heroku/clojure"
+    },
+    {
+      "url": "https://github.com/djmattyg007/heroku-buildpack-sassc"
     }
   ]
 }
