@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,700');
 
 $font-stack: "Rubik", sans-serif;
-$purple: #6A2569;
+$purple: #32254B;
 $dark-gray: rgb(12, 23, 27);
 $light-gray: #C8C8C8;
 $aqua: #65D2C0;
@@ -32,6 +32,10 @@ a:hover {
   &:active {
     outline: none;
   }
+}
+
+b {
+  font-weight: 700;
 }
 
 // information views: about
@@ -96,15 +100,20 @@ a:hover {
   width: 100%;
   z-index: 1;
   .search {
-    border-color: black;
+    border-color: $light-gray;
     border-radius: 0 3.5px;
     background-color: black;
+    color: $light-gray;
     height: 50px;
     font-size: 1.2em;
-    color: white;
     transition: all 0.3s;
+    background-image:url('../img/search-icon.png');
+    background-size: auto 45%;
+    background-repeat:no-repeat;
+    background-position:left center;outline:0;
+    padding-left: 38px;
     &:focus {
-      border-color: white;
+      border-color: $aqua;
       color: white;
       background-color: black;
     }
@@ -186,19 +195,61 @@ a:hover {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon1.png');
-      background-size: 100%;
     }
-    a.branch-icon:hover .branch-icon {
-      background: url('../img/icon1-nudge.gif');
+    div.branch-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon1.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.branch-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1-nudge.gif");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.branch-icon:hover div.branch-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.branch-icon:hover div.branch-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
     div.about-icon {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon4.png');
+    }
+    div.about-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon4.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4-hover.png");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
     .rc-popover-anchor-wrapper {
       position: absolute;
@@ -260,19 +311,61 @@ a:hover {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon1.png');
-      background-size: 100%;
     }
-    a.branch-icon:hover .branch-icon {
-      background: url('../img/icon1-nudge.gif');
+    div.branch-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon1.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.branch-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon1-nudge.gif");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.branch-icon:hover div.branch-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.branch-icon:hover div.branch-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
     div.about-icon {
       margin: 10px;
       width: 60px;
       height: 60px;
-      background: url('../img/icon4.png');
+    }
+    div.about-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon4.png');
       background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon4-hover.png");
+      background-size: 100%;
+      opacity: 0;
+    }
+    a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+      width: 60px;
+      height: 60px;
     }
   }
 }
@@ -447,6 +540,26 @@ mark {
   background-color: #493b68;
 }
 
+#jsdisabled {
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+#jsdisabled-text {
+  position: absolute;
+  top: 48vh;
+  right: 10%;
+  color: white;
+  font-size: 4vw;
+  line-height: 4vh;
+  width: 80%;
+}
+
 /* main content */
 
 #main {
@@ -459,6 +572,12 @@ mark {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
+  background: #6A2569;
+  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
+  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  background-size: cover !important;
 }
 
 .outer-height-wrap {
@@ -562,9 +681,10 @@ mark {
 }
 
 .platform-description {
+  width: 75%;
   background-color: white;
   color: black;
-  padding: .1em .3em;
+  padding: .2em .3em;
   margin: 0 15px 30px 15px;
   a:hover {
     color: cornflowerblue;
@@ -579,7 +699,7 @@ mark {
   margin: 15px 20px 0 25px;
   h2 {
     font-size: 2.4rem;
-    margin: 1.2em 0 0 0;
+    margin: 1.2em 0 .1em 0;
     text-transform: uppercase;
   }
   h3 {
@@ -614,6 +734,7 @@ i.back {
   cursor: pointer;
   text-transform: uppercase;
   border-radius: 25px;
+  border: 1px solid #564B82;
   margin: 5px;
   padding: 7px 7px 6px 7px;
   font-weight: normal;
@@ -621,6 +742,16 @@ i.back {
   background-color: #564B82;
   &:hover {
     background-color: #483C6C;
+  }
+}
+
+.tag.inactive {
+  color: #564B82;
+  background-color: white;
+  border: 1px solid #564B82;
+  &:hover {
+    background-color: #564B82;
+    color: white;
   }
 }
 
@@ -634,13 +765,13 @@ i.back {
   }
 }
 
-.rc-popover-anchor-wrapper {
-  margin-bottom: 15px;
-}
-
 .rc-popover-wrapper, .rc-popover-point {
   min-height: 0;
   height: 0;
+}
+
+span.platform-details {
+  margin-left: 2px;
 }
 
 .activity-thumbnail-wrap {
@@ -649,9 +780,12 @@ i.back {
   @media (max-width: 1187px) {
     font-size: 0.8em;
   }
+  @media (max-width: 500px) {
+    margin-left: 15px;
+  }
   background-color: white;
   padding: 10px 10px 9px 10px;
-  margin-bottom: 1.5em;
+  margin: .75em 0;
   overflow-y: auto;
   .activity-thumbnail {
     position: relative;
@@ -680,12 +814,12 @@ i.back {
     }
   }
   .summary {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 0.9em;
   }
   .platform-wrap {
-    margin-top: 10px;
-    font-size: 0.6em;
+    margin-top: 15px;
+    font-size: 0.65em;
   }
   .platform {
     margin: 3px 0 0 0;
@@ -694,6 +828,9 @@ i.back {
     p {
       margin: 0;
     }
+  }
+  span.platform-details {
+    font-size: 0.8em;
   }
   .tag {
     margin: 10px 10px 0px 0px;
@@ -709,7 +846,10 @@ i.back {
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em;
-  b {
+  span.h3 {
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: inherit;
     font-weight: 700;
     text-transform: uppercase;
     line-height: 2em;
@@ -748,6 +888,9 @@ i.back {
 .activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
   padding: 10px 12px 2px 15px;
+  span.platform-details {
+    font-size: 0.75em;
+  }
 }
 
 .activity-challenge-wrap {
@@ -824,12 +967,17 @@ i.back {
 
 /* buttons and inputs */
 
-#change-header-btn {
-  top: 110px;
+#change-bg-btn {
+  width: 45px;
+  height: 45px;
   position: absolute;
-  right: 0;
-  top: 50px;
+  right: 8px;
+  top: 58px;
   opacity: 0.6;
+  border-radius: 50%;
+  font-size: 1.25em;
+  padding: 6px;
+  z-index: 1;
   &:hover {
     opacity: 1;
   }
@@ -989,6 +1137,27 @@ input[type="radio"]:checked + label {
   }
 }
 
+#confirm {
+  color: white;
+}
+#confirm-message {
+  position: absolute;
+  top: 70px;
+  left: calc(50vw - 135px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 215px);
+  }
+  display: block;
+  width: 430px;
+}
+#g-recaptcha {
+  position: absolute;
+  top: 110px;
+  left: calc(50vw - 71px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 151px);
+  }
+}
 /* no gutters! */
 
 .no-gutter {

@@ -2,7 +2,8 @@
   (:require [re-frame.core :as rf]
             [reagent.core :as reagent]
             [ajax.core :as ajax :refer [GET POST PUT]]
-            [owlet.config :as config]))
+            [owlet.config :as config]
+            [owlet.constants :as constants]))
 
 (defonce email-endpoint
          (str config/server-url
@@ -21,10 +22,10 @@
 (defn subscription-response [response]
   (cond
 
-    (or (= "Re-sent confirmation email." response)
-        (= "Sent confirmation email." response)) (reset! res 2)
+    (or (= constants/confirmation-resent response)
+        (= constants/confirmation-sent response)) (reset! res 2)
 
-    (= "Already subscribed." response) (reset! res 1)
+    (= constants/subscribed response) (reset! res 1)
 
     :else (reset! res 0)))
 

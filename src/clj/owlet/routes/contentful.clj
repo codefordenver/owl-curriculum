@@ -8,7 +8,8 @@
             [org.httpkit.client :as http]
             [mailgun.mail :as mail]
             [cheshire.core :as json]
-            [camel-snake-kebab.core :refer [->kebab-case]]))
+            [camel-snake-kebab.core :refer [->kebab-case]]
+            [owlet.constants :as constants]))
 
 (def creds {:key    (System/getenv "MMM_MAILGUN_API_KEY")
             :domain "mg.codefordenver.org"})
@@ -90,7 +91,9 @@
                                 (get-in % [:sys :id]))
                          (hash-map :name (get-in % [:fields :name])
                                    :search-name (str (->kebab-case (get-in % [:fields :name])))
-                                   :color (get-in % [:fields :color])))
+                                   :color (get-in % [:fields :color])
+                                   :requiresDownload (get-in % [:fields :requiresDownload])
+                                   :free (get-in % [:fields :free])))
                       platforms))
       ; Adds preview img. URL at [.. :sys :url]
       (update-in [:fields :preview :sys]
@@ -176,7 +179,8 @@
             @(http/put (subscriber-endpoint id)
                        {:body (json/encode
                                 {:email (:email subscriber)
-                                 :confirmed (not confirmed?)})})]
+                                 :confirmed (when-not (= nil confirmed?)
+                                              confirmed?)})})]
         (if (= 200 status)
           (redirect (if confirmed?
                       (str owlet-url "/#/unsubscribed/" (:email subscriber))
@@ -187,7 +191,7 @@
 
 (defn- send-confirmation-email [email id subscribing]
   "Sends confirmation email"
-  (let [url (format "http://owlet.codefordenver.org/api/contentful/webhook/content/confirm?id=%1s" id)
+  (let [url (format "http://owlet.codefordenver.org/#/confirm/%1s" id)
         html (if (= subscribing true)
                (render-file "confirm-email.html" {:url url :un ""})
                (render-file "confirm-email.html" {:url url :un "un"}))
@@ -198,7 +202,7 @@
                          :subject "Please confirm your email address"
                          :html    html})]
     (when (= (:status mail-transact!) 200)
-      (prn "Sent confirmation email to " email))))
+      (prn (str "Sent confirmation email to " email)))))
 
 (defn handle-activity-publish
   "Sends email to list of subscribers"
@@ -262,13 +266,13 @@
       (if (= status 200)
         (if-let [existing-user (some #(when (= (:email %) email) %) (vals coll))]
           (if (:confirmed existing-user)
-            (ok "Already subscribed.")
+            (ok constants/subscribed)
             (let [id (-> (filter (comp #{{:email email :confirmed false}} coll)
                                  (keys coll))
                          first
                          name)]
               (send-confirmation-email email id true)
-              (ok "Re-sent confirmation email.")))
+              (ok constants/confirmation-resent)))
           (let [id (epoch)
                 {:keys [status body]}
                 @(http/put (subscriber-endpoint id)
@@ -277,7 +281,7 @@
             (if (= status 200)
               (do
                 (send-confirmation-email email id true)
-                (ok "Sent confirmation email."))
+                (ok constants/confirmation-sent))
               (internal-server-error status))))
         (internal-server-error status)))))
 
@@ -295,8 +299,8 @@
                          first
                          name)]
               (send-confirmation-email email id false)
-              (ok "Sent confirmation email."))
-            (ok "Not Subscribed.")))
+              (ok constants/confirmation-sent))
+            (ok constants/not-subscribed)))
         (internal-server-error)))))
 
 (defroutes routes

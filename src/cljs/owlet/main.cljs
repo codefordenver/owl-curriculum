@@ -11,6 +11,7 @@
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
             [owlet.views.branches :refer [branches-view]]
+            [owlet.views.confirm :refer [confirm-view]]
             [owlet.views.subscribed :refer [subscribed-view]]
             [owlet.views.unsubscribe :refer [unsubscribe-view]]
             [owlet.views.settings :refer [settings-view]]
@@ -28,6 +29,7 @@
 (defmethod views :not-found-view [] [not-found-view])
 (defmethod views :activity-view [] [activity-view])
 (defmethod views :branches-view [] [branches-view])
+(defmethod views :confirm-view [] [confirm-view])
 (defmethod views :subscribed-view [] [subscribed-view])
 (defmethod views :unsubscribe-view [] [unsubscribe-view])
 (defmethod views :settings-view [] [settings-view])
@@ -59,19 +61,21 @@
          [:div.outer-height-wrap
           [search-bar]
           [:div.inner-height-wrap
-             [:div.content {:style {:background-image (str "url(" @src ")")
-                                    :background-size  "cover"}}
+             [:div.content {:style {:background-image (when-not (or (= @active-view :about-view)
+                                                                    (= @active-view :confirm-view))
+                                                        @src)
+                                    :background-size "cover"}}
+                (when-not (or (= @active-view :about-view)
+                              (= @active-view :confirm-view))
+                  [:button#change-bg-btn
+                   {:type     "button"
+                    :class    "btn btn-secondary"
+                    :style    {:display (if @is-user-logged-in?
+                                            "block"
+                                            "none")}
+                    :on-click #(rf/dispatch [:show-bg-img-upload true])}
+                   [:i.fa.fa-pencil]])
                 [upload-image-component]
-                [:button#change-header-btn
-                 {:type     "button"
-                  :class    "btn btn-secondary"
-                  :style    {:font-size "1em"
-                             :padding   "6px"
-                             :display   (if @is-user-logged-in?
-                                          "block"
-                                          "none")}
-                  :on-click #(rf/dispatch [:show-bg-img-upload true])}
-                 [:i.fa.fa-pencil-square-o]]
                 (when @loading?
                   [loading-component])
                 [show-view @active-view]]]]]))))

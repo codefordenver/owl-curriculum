@@ -22,7 +22,10 @@
   (defroute "/settings" []
             (rf/dispatch [:get-content-from-contentful :show-settings]))
 
-  (defroute "/subscribed/:email" {:as params}
+  (defroute "/confirm/:sub-info" {:as params} []
+            (rf/dispatch [:set-active-view :confirm-view params]))
+
+  (defroute "/subscribed/:sub-info" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-subscribed params]))
 
   (defroute "/unsubscribe" []
