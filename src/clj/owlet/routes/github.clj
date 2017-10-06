@@ -13,8 +13,10 @@
   (let [headers {:Authorization OWLET_GITHUB_TOKEN}
         {:keys [status body]} @(http/get "https://api.github.com/repos/codefordenver/owlet/stats/commit_activity" headers)]
     (when (= status 200)
-      (ok {:status status
-           :body   (json/parse-string body true)}))))
+      (let [stats (json/parse-string body true)
+            weeks-and-total (map #(select-keys % [:total :week]) stats)]
+        (ok {:status status
+             :body weeks-and-total})))))
 
 
 (defroutes routes
