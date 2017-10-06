@@ -179,8 +179,8 @@
             @(http/put (subscriber-endpoint id)
                        {:body (json/encode
                                 {:email (:email subscriber)
-                                 :confirmed (when-not (= nil confirmed?)
-                                              confirmed?)})})]
+                                 :confirmed (when-not (nil? confirmed?)
+                                              (not confirmed?))})})]
         (if (= 200 status)
           (redirect (if confirmed?
                       (str owlet-url "/#/unsubscribed/" (:email subscriber))
