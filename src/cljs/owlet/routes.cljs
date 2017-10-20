@@ -19,6 +19,9 @@
   (defroute "/about" []
             (rf/dispatch [:get-content-from-contentful :show-about]))
 
+  (defroute "/interactive" []
+            (rf/dispatch [:set-active-view :interactive-view]))
+
   (defroute "/settings" []
             (rf/dispatch [:get-content-from-contentful :show-settings]))
 

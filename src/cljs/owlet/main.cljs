@@ -7,6 +7,7 @@
             [owlet.components.loading :refer [loading-component]]
             [owlet.views.welcome :refer [welcome-view]]
             [owlet.views.about :refer [about-view]]
+            [owlet.views.interactive :refer [interactive-view]]
             [owlet.components.search-bar :refer [search-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
@@ -23,6 +24,7 @@
 (defmulti views identity)
 (defmethod views :welcome-view [] [welcome-view])
 (defmethod views :about-view [] [about-view])
+(defmethod views :interactive-view [] [interactive-view])
 (defmethod views :filtered-activities-view []
   [filtered-activities-view])
 (defmethod views :not-found-view [] [not-found-view])
