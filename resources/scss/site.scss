@@ -965,6 +965,15 @@ span.platform-details {
   }
 }
 
+/* interactive components */
+
+pre {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
 /* buttons and inputs */
 
 #change-bg-btn {
@@ -1018,23 +1027,6 @@ button {
     color: #fff;
     background-color: $aqua;
   }
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-label {
-  background-color: white;
-  color: #00A79D;
-  padding: 10px;
-  width: 30%;
-  text-align: center;
-}
-
-input[type="radio"]:checked + label {
-  background-color: #00A79D;
-  color: white;
 }
 
 #email-wrap {
@@ -1157,18 +1149,6 @@ input[type="radio"]:checked + label {
   @media (max-width: 767px) {
     left: calc(50vw - 151px);
   }
-}
-/* no gutters! */
-
-.no-gutter {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.no-gutter [class*='col-']:not(:first-child),
-.no-gutter [class*='col-']:not(:last-child) {
-  padding-right: 0;
-  padding-left: 0;
 }
 
 .embed-container {
