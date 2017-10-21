@@ -1,21 +1,36 @@
 (ns owlet.views.about
   (:require [owlet.components.email-notification :refer [email-notification]]
             [cljsjs.chartist]
-            [reagent.core :as reagent]))
+            [reagent.core :as reagent]
+            [ajax.core :refer [GET]]
+            [owlet.config :as config]))
+
+(def stats-endpoint "/api/github/stats")
+
+(defn create-chart [chart-data]
+  (.Line js/Chartist
+        "#chart"
+        (clj->js @chart-data)
+        #js {:high (apply max (:series @chart-data))
+             :low 0
+             :axisY {:onlyInteger true
+                     :offset 20}
+             :scaleOverride true
+             :scaleStepWidth 30}))
+
+(defn handle-stats [response]
+  (let [res (js->clj (clj->js response) :keywordize-keys true)
+        labels (get-in res [:body :labels])
+        totals (get-in res [:body :totals])]
+    (create-chart (reagent/atom {:labels labels
+                                 :series [totals]}))))
 
 (defn about-view []
   (reagent/create-class
     {:component-did-mount
-     (fn []
-       (let [chart-data {:labels ["June" "July" "August" "September" "October"]
-                         :series [[10, 4, 3, 8, 7]]}]
-         (.Line js/Chartist
-               "#chart"
-               (clj->js chart-data)
-               #js {:high 15
-                    :low 0
-                    :axisY {:onlyInteger true
-                            :offset 20}})))
+      (fn []
+        (GET stats-endpoint {:handler handle-stats
+                             :format :json}))
      :reagent-render
      (fn []
        [:div.information-wrap
