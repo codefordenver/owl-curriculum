@@ -25,7 +25,6 @@
     (when (= status 200)
       (reset! stored-labels [])
       (let [stats (json/parse-string body true)
-            weeks-and-total (map #(select-keys % [:total :week]) stats)
             labels (mapv (fn [l]
                             (let [label (f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get l :week) 1000)))]
                               (if-not (in? @stored-labels label)
