@@ -13,8 +13,7 @@
 
 (def stored-labels (atom []))
 
-(defn in?
-  [coll x]
+(defn in? [coll x]
   (some #(= x %) coll))
 
 (defn proxy-github-request
@@ -26,7 +25,7 @@
       (reset! stored-labels [])
       (let [stats (json/parse-string body true)
             labels (mapv (fn [l]
-                            (let [label (f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get l :week) 1000)))]
+                            (let [label (f/unparse (f/formatter "MMM YY") (c/from-long (* (get l :week) 1000)))]
                               (if-not (in? @stored-labels label)
                                 (do
                                   (reset! stored-labels (conj @stored-labels label))
