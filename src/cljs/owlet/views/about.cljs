@@ -14,16 +14,14 @@
         #js {:high (apply max (:series @chart-data))
              :low 0
              :axisY {:onlyInteger true
-                     :offset 20}
-             :scaleOverride true
-             :scaleStepWidth 30}))
+                     :offset 20}}))
 
 (defn handle-stats [response]
   (let [res (js->clj (clj->js response) :keywordize-keys true)
         labels (get-in res [:body :labels])
         totals (get-in res [:body :totals])]
     (create-chart (reagent/atom {:labels labels
-                                 :series [totals]}))))
+                                 :series totals}))))
 
 (defn about-view []
   (reagent/create-class

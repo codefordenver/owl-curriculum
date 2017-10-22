@@ -11,9 +11,11 @@
 
 (def OWLET_GITHUB_TOKEN (System/getenv "OWLET_GITHUB_TOKEN"))
 
-(def match (atom false))
+(def stored-labels (atom []))
 
-(def clean-labels (atom []))
+(defn in?
+  [coll x]
+  (some #(= x %) coll))
 
 (defn proxy-github-request
   "proxy front end request"
@@ -21,23 +23,20 @@
   (let [headers {:Authorization OWLET_GITHUB_TOKEN}
         {:keys [status body]} @(http/get "https://api.github.com/repos/codefordenver/owlet/stats/commit_activity" headers)]
     (when (= status 200)
+      (reset! stored-labels [])
       (let [stats (json/parse-string body true)
             weeks-and-total (map #(select-keys % [:total :week]) stats)
-            labels (mapv #(f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get % :week) 1000))) (map #(select-keys % [:week]) stats))
-            totals (map #(get % :total) stats)
-            labels-no-dups (dedupe labels)]
-        (doseq [l labels-no-dups]
-          (reset! match false)
-          (doseq [label labels
-                  :when (= l label)]
-            (if (not @match)
-              (do
-                (reset! match true)
-                (reset! clean-labels (conj @clean-labels label)))
-              (do
-                (reset! clean-labels (conj @clean-labels ""))))))
+            labels (mapv (fn [l]
+                            (let [label (f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get l :week) 1000)))]
+                              (if-not (in? @stored-labels label)
+                                (do
+                                  (reset! stored-labels (conj @stored-labels label))
+                                  label)
+                                ""))) (map #(select-keys % [:week]) stats))
+
+            totals (map #(get % :total) stats)]
         (ok {:status status
-             :body {:labels @clean-labels, :totals totals}})))))
+             :body {:labels labels, :totals [totals]}})))))
 
 
 (defroutes routes
