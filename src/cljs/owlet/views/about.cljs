@@ -1,27 +1,31 @@
 (ns owlet.views.about
   (:require [owlet.components.email-notification :refer [email-notification]]
-            [cljsjs.chartist]
+            [cljsjs.chartjs]
             [reagent.core :as reagent]
             [ajax.core :refer [GET]]
             [owlet.config :as config]))
 
 (def stats-endpoint "/api/github/stats")
 
-(defn create-chart [chart-data]
-  (.Line js/Chartist
-        "#chart"
-        (clj->js @chart-data)
-        #js {:high (apply max (:series @chart-data))
-             :low 0
-             :axisY {:onlyInteger true
-                     :offset 20}}))
+(defn create-chart [labels data]
+  (let [ctx (.getContext (.getElementById js/document "chart") "2d")]
+    (js/Chart.
+         ctx
+         (clj->js {:type "line"
+                   :data {:labels labels
+                          :datasets [{:label "Commits"
+                                      :backgroundColor "rgba(220, 0, 0, 1)"
+                                      :borderColor "rgba(220, 0, 0, 1)"
+                                      :data data
+                                      :fill false
+                                      :lineTension 0
+                                      :pointRadius 0}]}}))))
 
 (defn handle-stats [response]
   (let [res (js->clj (clj->js response) :keywordize-keys true)
         labels (get-in res [:body :labels])
-        totals (get-in res [:body :totals])]
-    (create-chart (reagent/atom {:labels labels
-                                 :series totals}))))
+        data (get-in res [:body :totals])]
+    (create-chart labels data)))
 
 (defn about-view []
   (reagent/create-class
@@ -47,7 +51,7 @@
                   :width "40%"}]
            [:p "This project is independently produced and maintained by a team of Code for Denver volunteers, who have been developing it since March 2016. It’s open source and "
             [:a {:href "https://github.com/codefordenver/owlet"} "available on GitHub"] "."][:br]
-           [:div#chart]
+           [:canvas#chart]
            [:img {:src "../img/logo-contentful.png"
                   :width "37%"}]
            [:p "Special thanks to "

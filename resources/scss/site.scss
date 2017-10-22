@@ -81,22 +81,6 @@ b {
   }
 }
 
-.ct-line {
-  stroke-width: 2px;
-}
-
-.ct-point {
-  stroke-width: 6px;
-}
-
-.ct-label.ct-horizontal.ct-end {
-    font-size: 12px;
-    text-align: center;
-    @media (max-width: 700px) {
-      display: none;
-    }
-}
-
 .rc-typeahead-suggestion {
   background-color: #3B3B3B;
   &:hover {
