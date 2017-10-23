@@ -11,6 +11,11 @@
 
 (def OWLET_GITHUB_TOKEN (System/getenv "OWLET_GITHUB_TOKEN"))
 
+(defn in? [coll x]
+   (some #(= x %) coll))
+
+(def stored-labels (atom []))
+
 (defn proxy-github-request
   "proxy front end request"
   [_]
@@ -19,7 +24,13 @@
     (when (= status 200)
       (reset! stored-labels [])
       (let [stats (json/parse-string body true)
-            labels (mapv #(f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get % :week) 1000))) (map #(select-keys % [:week]) stats))
+            labels (mapv (fn [l]
+                            (let [label (f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get l :week) 1000)))]
+                              (if-not (in? @stored-labels label)
+                                (do
+                                  (reset! stored-labels (conj @stored-labels label))
+                                  label)
+                                ""))) (map #(select-keys % [:week]) stats))
             totals (map #(get % :total) stats)]
         (ok {:status status
              :body {:labels labels, :totals totals}})))))

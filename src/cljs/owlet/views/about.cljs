@@ -7,19 +7,31 @@
 
 (def stats-endpoint "/api/github/stats")
 
+(def hide-labels? (reagent/atom (<= (.-innerWidth js/window) 640)))
+(def prev-hidden? (reagent/atom (<= (.-innerWidth js/window) 640)))
+
 (defn create-chart [labels data]
   (let [ctx (.getContext (.getElementById js/document "chart") "2d")]
-    (js/Chart.
-         ctx
-         (clj->js {:type "line"
-                   :data {:labels labels
-                          :datasets [{:label "Commits"
-                                      :backgroundColor "rgba(220, 0, 0, 1)"
-                                      :borderColor "rgba(220, 0, 0, 1)"
-                                      :data data
-                                      :fill false
-                                      :lineTension 0
-                                      :pointRadius 0}]}}))))
+       (def chart (js/Chart.
+                    ctx
+                    (clj->js {:type "line"
+                              :data {:labels labels
+                                     :datasets [{:label "Commits"
+                                                 :backgroundColor "rgba(220, 0, 0, 1)"
+                                                 :borderColor "rgba(220, 0, 0, 1)"
+                                                 :data data
+                                                 :fill false
+                                                 :lineTension 0
+                                                 :pointRadius 0}]}
+                              :options {:scaleShowValues true
+                                        :scales {:xAxes [{:ticks {:autoSkip @hide-labels?}}]}}})))))
+
+(defn on-resize []
+    (reset! hide-labels? (<= (.-innerWidth js/window) 640))
+    (when (not= @prev-hidden? @hide-labels?)
+      (reset! prev-hidden? (<= (.-innerWidth js/window) 640))
+      (set! (-> (aget (-> chart .-options .-scales .-xAxes) 0) .-ticks .-autoSkip) @hide-labels?)
+      (.update chart)))
 
 (defn handle-stats [response]
   (let [res (js->clj (clj->js response) :keywordize-keys true)
@@ -31,6 +43,7 @@
   (reagent/create-class
     {:component-did-mount
       (fn []
+        (set! (.-onresize js/window) on-resize)
         (GET stats-endpoint {:handler handle-stats
                              :format :json}))
      :reagent-render
@@ -51,7 +64,8 @@
                   :width "40%"}]
            [:p "This project is independently produced and maintained by a team of Code for Denver volunteers, who have been developing it since March 2016. It’s open source and "
             [:a {:href "https://github.com/codefordenver/owlet"} "available on GitHub"] "."][:br]
-           [:canvas#chart]
+           [:div#chart-parent
+            [:canvas#chart]]
            [:img {:src "../img/logo-contentful.png"
                   :width "37%"}]
            [:p "Special thanks to "
