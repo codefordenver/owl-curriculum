@@ -7,7 +7,7 @@
 
 (def stats-endpoint "/api/github/stats")
 
-(def hide-labels? (reagent/atom (<= (.-innerWidth js/window) 640)))
+(def hide-labels? (reagent/atom (<= (.-innerWidth js/window) 800)))
 (def prev-hidden? (reagent/atom @hide-labels?))
 
 (defn create-chart [labels data]
@@ -32,10 +32,10 @@
         reduced (get-in res [:body :reduced-labels])
         data (get-in res [:body :totals])]
     (set! (.-onresize js/window) (fn []
-                                   (let [w (.-width (.getElementById js/document "chart"))]
-                                     (reset! hide-labels? (<= w 600))
+                                   (let [w (.-innerWidth js/window)]
+                                     (reset! hide-labels? (<= w 800))
                                      (when (not= @prev-hidden? @hide-labels?)
-                                       (reset! prev-hidden? (<= w 600))
+                                       (reset! prev-hidden? (<= w 800))
                                        (set! (-> chart .-data .-labels .-length) 0)
                                        (if (true? @hide-labels?)
                                          (doseq [l reduced]
