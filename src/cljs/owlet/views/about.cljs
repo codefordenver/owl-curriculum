@@ -24,6 +24,7 @@
                                                  :lineTension 0
                                                  :pointRadius 0}]}
                               :options {:scaleShowValues true
+                                        :legend {:onClick nil}
                                         :scales {:xAxes [{:ticks {:autoSkip false}}]}}})))))
 
 (defn handle-stats [response]
