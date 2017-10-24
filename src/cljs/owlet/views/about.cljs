@@ -30,9 +30,9 @@
 
 (defn on-resize []
     (let [w (.-width (.getElementById js/document "chart"))]
-      (reset! hide-labels? (<= w 630))
+      (reset! hide-labels? (<= w 600))
       (when (not= @prev-hidden? @hide-labels?)
-        (reset! prev-hidden? (<= w 630))
+        (reset! prev-hidden? (<= w 600))
         (set! (-> chart .-data .-labels .-length) 0)
         (if (true? @hide-labels?)
           (doseq [l @reduced-labels]
