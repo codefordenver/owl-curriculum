@@ -8,7 +8,9 @@
 (def stats-endpoint "/api/github/stats")
 
 (def hide-labels? (reagent/atom (<= (.-innerWidth js/window) 640)))
-(def prev-hidden? (reagent/atom (<= (.-innerWidth js/window) 640)))
+(def prev-hidden? (reagent/atom @hide-labels?))
+(def labels (reagent/atom []))
+(def reduced-labels (reagent/atom []))
 
 (defn create-chart [labels data]
   (let [ctx (.getContext (.getElementById js/document "chart") "2d")]
@@ -24,20 +26,31 @@
                                                  :lineTension 0
                                                  :pointRadius 0}]}
                               :options {:scaleShowValues true
-                                        :scales {:xAxes [{:ticks {:autoSkip @hide-labels?}}]}}})))))
+                                        :scales {:xAxes [{:ticks {:autoSkip false}}]}}})))))
 
 (defn on-resize []
-    (reset! hide-labels? (<= (.-innerWidth js/window) 640))
-    (when (not= @prev-hidden? @hide-labels?)
-      (reset! prev-hidden? (<= (.-innerWidth js/window) 640))
-      (set! (-> (aget (-> chart .-options .-scales .-xAxes) 0) .-ticks .-autoSkip) @hide-labels?)
-      (.update chart)))
+    (let [w (.-width (.getElementById js/document "chart"))]
+      (reset! hide-labels? (<= w 630))
+      (when (not= @prev-hidden? @hide-labels?)
+        (reset! prev-hidden? (<= w 630))
+        (set! (-> chart .-data .-labels .-length) 0)
+        (if (true? @hide-labels?)
+          (doseq [l @reduced-labels]
+            (.push (-> chart .-data .-labels) l))
+          (doseq [l @labels]
+            (.push (-> chart .-data .-labels) l)))
+        (.update chart))))
 
 (defn handle-stats [response]
   (let [res (js->clj (clj->js response) :keywordize-keys true)
-        labels (get-in res [:body :labels])
+        all (get-in res [:body :labels])
+        reduced (get-in res [:body :reduced-labels])
         data (get-in res [:body :totals])]
-    (create-chart labels data)))
+    (reset! labels all)
+    (reset! reduced-labels reduced)
+    (if @hide-labels?
+      (create-chart @reduced-labels data)
+      (create-chart @labels data))))
 
 (defn about-view []
   (reagent/create-class
@@ -64,8 +77,7 @@
                   :width "40%"}]
            [:p "This project is independently produced and maintained by a team of Code for Denver volunteers, who have been developing it since March 2016. It’s open source and "
             [:a {:href "https://github.com/codefordenver/owlet"} "available on GitHub"] "."][:br]
-           [:div#chart-parent
-            [:canvas#chart]]
+           [:canvas#chart]
            [:img {:src "../img/logo-contentful.png"
                   :width "37%"}]
            [:p "Special thanks to "
