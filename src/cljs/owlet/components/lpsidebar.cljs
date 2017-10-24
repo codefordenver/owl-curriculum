@@ -27,9 +27,12 @@
          [:div.menu
           [:div.login {:on-click #(toggle-lpsidebar)}
            [login-component]]
-          [:a.navigation {:href     "#/branches"
-                          :on-click #(toggle-lpsidebar)}
-           [:img {:src "img/icon1.png"}]]]
+          [:a.navigation.branch-icon {:href     "#/branches"
+                                      :on-click #(toggle-lpsidebar)}
+           [:div.branch-icon]]
+          [:a.navigation.about-icon {:href     "#/about"
+                                     :on-click #(toggle-lpsidebar)}
+           [:div.about-icon]]]
          (if @lpsidebar-state
            [:img#lpsidebar-opened.lpsidebar-toggle.hidden-md-up {:style {:left position?}
                                                                  :src      "img/owlet-tab-opened.png"

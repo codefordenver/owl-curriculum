@@ -6,7 +6,8 @@
             [reagent.core :as reagent]))
 
 (defn sidebar-component []
-  (let [showing? (reagent/atom false)]
+  (let [showing-branch? (reagent/atom false)
+        showing-about? (reagent/atom false)]
     [:div#sidebar
      [:div#owlet-logo-div
       [:a#owlet-image {:href "#"}
@@ -14,14 +15,7 @@
      [:div.menu
       [:div.login
        [login-component]]
-      [:a.navigation {:href "#/branches"}
-       [re-com/popover-anchor-wrapper
-         :showing? showing?
-         :position :below-right
-         :anchor [:div.branch-icon
-                  {:on-mouse-over (handler-fn (reset! showing? true))
-                   :on-mouse-out  (handler-fn (reset! showing? false))}]
-         :popover [re-com/popover-content-wrapper
-                   :close-button? false
-                   :popover-color "black"
-                   :body "Go to activities"]]]]]))
+      [:a.navigation.branch-icon {:href "#/branches"}
+       [:div.branch-icon]]
+      [:a.navigation.about-icon {:href "#/about"}
+       [:div.about-icon]]]]))

@@ -14,16 +14,22 @@
             (rf/dispatch [:set-active-view :welcome-view]))
 
   (defroute "/404" []
-            (rf/dispatch [:set-active-view :not-found-view]))
+            (rf/dispatch [:get-content-from-contentful :show-not-found]))
 
   (defroute "/about" []
-            (rf/dispatch [:set-active-view :about-view]))
+            (rf/dispatch [:get-content-from-contentful :show-about]))
+
+  (defroute "/interactive" []
+            (rf/dispatch [:set-active-view :interactive-view]))
 
   (defroute "/settings" []
-            (rf/dispatch [:set-active-view :settings-view]))
+            (rf/dispatch [:get-content-from-contentful :show-settings]))
 
-  (defroute "/subscribed/:email" {:as params}
-            (rf/dispatch [:set-active-view :subscribed-view params]))
+  (defroute "/confirm/:sub-info" {:as params} []
+            (rf/dispatch [:set-active-view :confirm-view params]))
+
+  (defroute "/subscribed/:sub-info" {:as params}
+            (rf/dispatch [:get-content-from-contentful :show-subscribed params]))
 
   (defroute "/unsubscribe" []
             (rf/dispatch [:set-active-view :unsubscribe-view]))

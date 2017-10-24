@@ -2,17 +2,17 @@
 
 Generated using [Luminus](http://www.luminusweb.net/) version 2.9.11.68
 
-## Development
+## To run the app locally:
 
-### Running the web server
+### Run the web server
 
     lein run
 
-### Running the front-end development server
+### Run the front-end development server
 
     lein figwheel
 
-### Running the sass watcher
+### Run the sass watcher
 
     lein auto sassc once
 

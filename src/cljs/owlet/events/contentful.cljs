@@ -77,6 +77,36 @@
 ; route dispatches
 
 (rf/reg-event-fx
+  :show-about
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :about-view]
+                       [:set-active-document-title! "About"])}))
+
+(rf/reg-event-fx
+  :show-not-found
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :not-found-view]
+                       [:set-active-document-title! "Not Found"])}))
+
+(rf/reg-event-fx
+  :show-settings
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :settings-view]
+                       [:set-active-document-title! "Settings"])}))
+
+(rf/reg-event-fx
+  :show-subscribed
+  (fn [_ [_ route-param]]
+    {:dispatch-n (list [:set-active-view :subscribed-view route-param]
+                       [:set-active-document-title! "Success"])}))
+
+(rf/reg-event-fx
+  :show-unsubscribe
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :unsubscribe-view]
+                       [:set-active-document-title! "Unsubscribe"])}))
+
+(rf/reg-event-fx
   :show-branches
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :branches-view]
@@ -110,6 +140,8 @@
                        [:set-activity-in-view route-param])}))
 
 
+; search & filter
+
 (rf/reg-event-db
   :filter-activities-by-search-term
   (fn [db [_ term]]
@@ -129,13 +161,12 @@
         ;; by skill
         ;; --------
 
-        (let [filtered-set (filter #(when (contains? (:skill-set %) search-term) %) activities)
-              skills (:skills db)
-              lowercase-skills (map str/locale-lower skills)
-              skill-index (.indexOf lowercase-skills (string/lower-case term))
-              display-name (nth skills skill-index)]
+        (let [filtered-set (filter #(when (contains? (:skill-set %) search-term) %) activities)]
           (if (seq filtered-set)
-            (do
+            (let [skills (:skills db)
+                  lowercase-skills (map str/locale-lower skills)
+                  skill-index (.indexOf lowercase-skills (string/lower-case term))
+                  display-name (nth skills skill-index)]
               (set-path (str "skill/" (->kebab-case term)))
               (assoc db :activities-by-filter (hash-map :activities filtered-set
                                                         :display-name (str/capital display-name))))

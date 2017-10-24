@@ -42,7 +42,6 @@
                  [yogthos/config "0.8"]       ; For env in owlet-ui.server
                  [ring "1.4.0"]               ; For owlet-ui.server & .handler
                  [cljsjs/jquery "2.2.2-0"]
-                 [cljs-ajax "0.5.4"]
                  [cljsjs/auth0 "7.0.4-0"]
                  [cljsjs/auth0-lock "10.4.0-0"]
                  [cljsjs/bootstrap "3.3.6-1"]

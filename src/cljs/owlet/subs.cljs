@@ -17,8 +17,8 @@
 (rf/reg-sub
   :my-background-image-url
   (fn [db]
-    (or (get-in db [:my-identity :private :background-image-url])
-        config/default-header-bg-image)))
+    (when-let [background (get-in db [:my-identity :private :background-image-url])]
+      (str "url(" background ")"))))
 
 (rf/reg-sub
   :library-activities
@@ -60,4 +60,4 @@
 
 (reg-getter :route-params [:app :route-params])
 
-(reg-getter :subscriber-email [:app :route-opts])
+(reg-getter :subscriber-info [:app :route-opts])
