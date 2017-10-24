@@ -9,8 +9,6 @@
 
 (def hide-labels? (reagent/atom (<= (.-innerWidth js/window) 640)))
 (def prev-hidden? (reagent/atom @hide-labels?))
-(def labels (reagent/atom []))
-(def reduced-labels (reagent/atom []))
 
 (defn create-chart [labels data]
   (let [ctx (.getContext (.getElementById js/document "chart") "2d")]
@@ -28,35 +26,31 @@
                               :options {:scaleShowValues true
                                         :scales {:xAxes [{:ticks {:autoSkip false}}]}}})))))
 
-(defn on-resize []
-    (let [w (.-width (.getElementById js/document "chart"))]
-      (reset! hide-labels? (<= w 600))
-      (when (not= @prev-hidden? @hide-labels?)
-        (reset! prev-hidden? (<= w 600))
-        (set! (-> chart .-data .-labels .-length) 0)
-        (if (true? @hide-labels?)
-          (doseq [l @reduced-labels]
-            (.push (-> chart .-data .-labels) l))
-          (doseq [l @labels]
-            (.push (-> chart .-data .-labels) l)))
-        (.update chart))))
-
 (defn handle-stats [response]
   (let [res (js->clj (clj->js response) :keywordize-keys true)
         all (get-in res [:body :labels])
         reduced (get-in res [:body :reduced-labels])
         data (get-in res [:body :totals])]
-    (reset! labels all)
-    (reset! reduced-labels reduced)
+    (set! (.-onresize js/window) (fn []
+                                   (let [w (.-width (.getElementById js/document "chart"))]
+                                     (reset! hide-labels? (<= w 600))
+                                     (when (not= @prev-hidden? @hide-labels?)
+                                       (reset! prev-hidden? (<= w 600))
+                                       (set! (-> chart .-data .-labels .-length) 0)
+                                       (if (true? @hide-labels?)
+                                         (doseq [l reduced]
+                                           (.push (-> chart .-data .-labels) l))
+                                         (doseq [l all]
+                                           (.push (-> chart .-data .-labels) l)))
+                                       (.update chart)))))
     (if @hide-labels?
-      (create-chart @reduced-labels data)
-      (create-chart @labels data))))
+      (create-chart reduced data)
+      (create-chart all data))))
 
 (defn about-view []
   (reagent/create-class
     {:component-did-mount
       (fn []
-        (set! (.-onresize js/window) on-resize)
         (GET stats-endpoint {:handler handle-stats
                              :format :json}))
      :reagent-render
