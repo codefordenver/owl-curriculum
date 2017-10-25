@@ -3,7 +3,8 @@
             [re-frame.core :as rf]
             [reagent.core :as reagent]
             [ajax.core :as ajax :refer [GET POST PUT]]
-            [owlet.config :as config]))
+            [owlet.config :as config]
+            [owlet.constants :as constants]))
 
 (defonce email-endpoint
          (str config/server-url
