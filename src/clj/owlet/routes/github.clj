@@ -11,7 +11,7 @@
 
 (def OWLET_GITHUB_TOKEN (System/getenv "OWLET_GITHUB_TOKEN"))
 
-(defn get-labels [weeks]
+(defn get-week-labels [weeks]
   (map #(f/unparse (f/formatter "MMM YYYY") (c/from-long (* % 1000))) weeks))
 
 (defn proxy-github-request
@@ -22,7 +22,7 @@
     (when (= status 200)
       (let [stats (json/parse-string body true)
             weeks (map :week stats)
-            labels (get-labels weeks)
+            labels (get-week-labels weeks)
             totals (map :total stats)
             deduped (dedupe labels)]
         (ok {:status status
