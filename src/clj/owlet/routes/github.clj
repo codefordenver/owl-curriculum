@@ -11,7 +11,15 @@
 
 (def OWLET_GITHUB_TOKEN (System/getenv "OWLET_GITHUB_TOKEN"))
 
-(defn get-week-labels [weeks]
+(defn replace-dups [coll]
+  (let [frequencies (frequencies coll)
+        distinct-coll (distinct coll)]
+    (flatten (map (fn [label]
+                    (let [freq (get frequencies label)]
+                        (concat [label] (repeat (- freq 1) ""))))
+                  distinct-coll))))
+
+(defn get-month-labels [weeks]
   (map #(f/unparse (f/formatter "MMM YYYY") (c/from-long (* % 1000))) weeks))
 
 (defn proxy-github-request
@@ -22,12 +30,15 @@
     (when (= status 200)
       (let [stats (json/parse-string body true)
             weeks (map :week stats)
-            labels (get-week-labels weeks)
+            labels (replace-dups (get-month-labels weeks))
             totals (map :total stats)
-            deduped (dedupe labels)]
+            every-other-month (take-nth 2 (distinct labels))]
+
         (ok {:status status
-             :body   {:labels         (interleave (take (count labels) (repeat "")) deduped)
-                      :reduced-labels deduped
+             :body   {:labels         labels
+                      :reduced-labels (map #(if-not (.contains every-other-month %)
+                                               ""
+                                               %) labels)
                       :totals         totals}})))))
 
 (defroutes routes
