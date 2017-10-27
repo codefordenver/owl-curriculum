@@ -27,11 +27,10 @@
                                         :legend {:onClick nil}
                                         :scales {:xAxes [{:ticks {:autoSkip false}}]}}})))))
 
-(defn handle-stats [response]
-  (let [res (js->clj (clj->js response) :keywordize-keys true)
-        all (get-in res [:body :labels])
-        reduced (get-in res [:body :reduced-labels])
-        data (get-in res [:body :totals])]
+(defn handle-stats [res]
+  (let [all (-> res :body :labels)
+        reduced (-> res :body :reduced-labels)
+        data (-> res :body :totals)]
     (set! (.-onresize js/window) (fn []
                                    (let [w (.-innerWidth js/window)]
                                      (reset! hide-labels? (<= w 800))
@@ -50,10 +49,13 @@
 
 (defn about-view []
   (reagent/create-class
+
     {:component-did-mount
-      (fn []
-        (GET stats-endpoint {:handler handle-stats
-                             :format :json}))
+      #(GET stats-endpoint
+            {:handler handle-stats
+             :keywords? true
+             :response-format :json})
+
      :reagent-render
      (fn []
        [:div.information-wrap

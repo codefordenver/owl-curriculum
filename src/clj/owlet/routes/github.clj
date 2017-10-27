@@ -11,19 +11,8 @@
 
 (def OWLET_GITHUB_TOKEN (System/getenv "OWLET_GITHUB_TOKEN"))
 
-(defn in? [coll x]
-   (some #(= x %) coll))
-
-(defn get-labels [stats]
-  (mapv (fn [l]
-         (let [label (f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get l :week) 1000)))]
-           (if-not (in? @stored-labels label)
-             (do
-               (reset! stored-labels (conj @stored-labels label))
-               label)
-             ""))) (map #(select-keys % [:week]) stats)))
-
-(def stored-labels (atom []))
+(defn get-week-labels [weeks]
+  (map #(f/unparse (f/formatter "MMM YYYY") (c/from-long (* % 1000))) weeks))
 
 (defn proxy-github-request
   "proxy front end request"
@@ -31,16 +20,15 @@
   (let [headers {:Authorization OWLET_GITHUB_TOKEN}
         {:keys [status body]} @(http/get "https://api.github.com/repos/codefordenver/owlet/stats/commit_activity" headers)]
     (when (= status 200)
-      (reset! stored-labels [])
       (let [stats (json/parse-string body true)
-            labels (get-labels stats)
-            totals (map #(get % :total) stats)]
-        (reset! stored-labels (mapv #(f/unparse (f/formatter "MMM YYYY") (c/from-long (* (get % :week) 1000))) (map #(select-keys % [:week]) stats)))
-        (reset! stored-labels (take-nth 2 (drop 1 (dedupe @stored-labels))))
-        (let [reduced-labels (get-labels stats)]
-          (ok {:status status
-               :body {:labels labels, :reduced-labels reduced-labels, :totals totals}}))))))
-
+            weeks (map :week stats)
+            labels (get-week-labels weeks)
+            totals (map :total stats)
+            deduped (dedupe labels)]
+        (ok {:status status
+             :body   {:labels         (interleave (take (count labels) (repeat "")) deduped)
+                      :reduced-labels deduped
+                      :totals         totals}})))))
 
 (defroutes routes
            (GET "/stats" {params :params} proxy-github-request))
