@@ -31,13 +31,19 @@
 
 (rf/reg-event-fx
   :get-content-from-contentful-success
-  (fn [{db :db} [_ route-args {activities :activities metadata :metadata platforms :platforms}]]
+  (fn [{db :db} [_ route-args {activities :activities
+                               klipse-activities :klipse-activities
+                               metadata :metadata
+                               platforms :platforms}]]
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
           branches (:branches metadata)
           skills (:skills metadata)
           activities (map #(update-in % [:skill-set] (partial (comp set map) keyword))
                         activities)
+          ; TODO: better way to do this without repetition?
+          klipse-activities (map #(update-in % [:skill-set] (partial (comp set map) keyword))
+                              klipse-activities)
           activity-titles (remove-nil (map #(get-in % [:fields :title]) activities))
           branches-template (->> (mapv (fn [branch]
                                          (hash-map (keywordize-name branch)
@@ -47,6 +53,7 @@
                                             :preview-urls []})) branches)
                               (into {}))
 
+          ; TODO: refactor to include Klipse Activities
           activities-by-branch (->> (mapv (fn [branch]
                                             (let [[branch-key branch-vals] branch]
                                               (let [display-name (:display-name branch-vals)
@@ -67,6 +74,7 @@
       {:db (assoc db
             :activity-platforms (map #(:fields %) platforms)
             :activities activities
+            :klipse-activities klipse-activities
             :activity-branches branches
             :skills skills
             :activities-by-branch activities-by-branch

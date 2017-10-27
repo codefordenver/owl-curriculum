@@ -3,5 +3,4 @@
 
 (defn interactive-view []
   [:div
-   [klipse-component "language-klipse-python" "x = 1 + 1\nprint(x)"]
-   [klipse-component "language-klipse-eval-js" "var x = 1 + 1\nconsole.log(x)"]])
+   [klipse-component "language-klipse-python" "print('hello world')"]])

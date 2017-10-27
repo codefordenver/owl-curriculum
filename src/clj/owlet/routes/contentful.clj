@@ -31,8 +31,8 @@
 
 (add-filter! :kebab #(->kebab-case %))
 
-(defn- get-activity-metadata
-  "GET all branches in Activity model for owlet-activities-2 space"
+(defn- get-space-metadata
+  "GET all content types in owlet-activities-3 space"
   [space-id headers]
   (http/get (format "https://api.contentful.com/spaces/%1s/content_types" space-id) headers))
 
@@ -44,6 +44,7 @@
   (http/get (format "https://cdn.contentful.com/spaces/%1s/assets/%2s" space-id asset-id)
             {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}))
 
+; TODO: refactor to get skills and branches from Klipse Activity model too
 (defn- process-metadata
   [metadata]
   (let [body (json/parse-string metadata true)
@@ -134,15 +135,17 @@
         opts2 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}]
     (let [{:keys [status body]}
           @(http/get (format "https://cdn.contentful.com/spaces/%1s/entries?" space-id) opts2)
-          metadata (get-activity-metadata space-id opts1)]
+          metadata (get-space-metadata space-id opts1)]
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
               platforms (filter-entries "platform" (:items entries))
-              activities (filter-entries "activity" (:items entries))]
+              activities (filter-entries "activity" (:items entries))
+              klipse-activities (filter-entries "klipseActivity" (:items entries))]
           (ok {:metadata (process-metadata (:body @metadata))
                :activities (process-activities activities platforms assets)
-               :platforms platforms}))
+               :platforms platforms
+               :klipse-activities (process-activities klipse-activities platforms assets)}))
         (not-found status)))))
 
 (defn- compose-new-activity-email
