@@ -6,8 +6,7 @@
             [cheshire.core :as json]
             [clj-time.core :as t]
             [clj-time.coerce :as c]
-            [clj-time.format :as f]
-            [reagent.core :as reagent]))
+            [clj-time.format :as f]))
 
 (def OWLET_GITHUB_TOKEN (System/getenv "OWLET_GITHUB_TOKEN"))
 
