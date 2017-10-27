@@ -30,15 +30,16 @@
     (when (= status 200)
       (let [stats (json/parse-string body true)
             weeks (map :week stats)
-            labels (replace-dups (get-month-labels weeks))
+            labels (get-month-labels weeks)
+            labels-no-dups (replace-dups labels)
             totals (map :total stats)
             every-other-month (take-nth 2 (distinct labels))]
 
         (ok {:status status
-             :body   {:labels         labels
+             :body   {:labels         labels-no-dups
                       :reduced-labels (map #(if-not (.contains every-other-month %)
                                                ""
-                                               %) labels)
+                                               %) labels-no-dups)
                       :totals         totals}})))))
 
 (defroutes routes
