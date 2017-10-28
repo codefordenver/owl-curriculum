@@ -35,8 +35,6 @@
                  [org.clojure/clojure "1.9.0-alpha15"]
                  [org.clojure/clojurescript "1.9.456"]
                  [org.clojure/tools.nrepl "0.2.13"]   ; Dirac needs recent vers.
-                 [binaryage/devtools "RELEASE"]
-                 [binaryage/dirac "RELEASE"]
                  [secretary "1.2.3"]
                  [compojure "1.5.2"]
                  [yogthos/config "0.8"]       ; For env in owlet-ui.server
@@ -140,7 +138,8 @@
                     {:source-paths ["src/cljc" "src/cljs" "env/dev/cljs"]
                      :figwheel {:on-jsload "owlet.core/mount-root"}
                      :compiler
-                     {:main "owlet.app"
+                     {:preloads [devtools.preload dirac.runtime.preload]
+                      :main "owlet.app"
                       :asset-path "/js/out"
                       :output-to "target/cljsbuild/public/js/app.js"
                       :output-dir "target/cljsbuild/public/js/out"
@@ -171,7 +170,9 @@
    :profiles/dev {}
    :profiles/test {}
    :dirac       ; Abitrary key, used in `lein with-profile +dirac repl`.
-   {:repl-options {:nrepl-middleware
+   {:dependencies [[binaryage/dirac "RELEASE"]]
+
+    :repl-options {:nrepl-middleware
                    [dirac.nrepl/middleware]
 
                    :timeout
