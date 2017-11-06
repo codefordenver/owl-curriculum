@@ -62,7 +62,8 @@
                  [environ "1.0.2"]
                  [metosin/compojure-api "1.1.9"]
                  [nilenso/mailgun "0.2.3"]
-                 [funcool/cuerdas "2.0.3"]]
+                 [funcool/cuerdas "2.0.3"]
+                 [cljsjs/chartjs "2.6.0-0"]]
 
   :min-lein-version "2.0.0"
 
@@ -136,7 +137,7 @@
                   :cljsbuild
                   {:builds
                    {:app
-                    {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
+                    {:source-paths ["src/cljc" "src/cljs" "env/dev/cljs"]
                      :figwheel {:on-jsload "owlet.core/mount-root"}
                      :compiler
                      {:main "owlet.app"
