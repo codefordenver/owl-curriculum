@@ -1,15 +1,16 @@
-(ns owlet.views.klipse-activity
-  (:require [owlet.components.interactive.klipse :refer [klipse-component]]
-            [owlet.components.activity.title :refer [activity-title]]
+(ns owlet.views.ro-activity
+  (:require [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.activity.embed :refer [activity-embed]]
             [owlet.components.activity.info :refer [activity-info]]
             [owlet.components.activity.inspiration :refer [activity-inspiration]]
             [owlet.components.activity.challenge :refer [activity-challenge]]
+            [owlet.components.activity.image-gallery :refer [activity-image-gallery]]
             [owlet.components.back :refer [back]]
             [re-frame.core :as rf]
             [owlet.components.activity.comments :refer [activity-comments]]))
 
-(defn klipse-activity-view []
+(defn ro-activity-view 
+  "Read-only activity" []
   (let [activity @(rf/subscribe [:activity-in-view])]
     (if-not activity
       [:div.branch-activities-wrap
@@ -30,23 +31,17 @@
                         inspiration
                         preRequisites
                         platform
-                        language 
-                        code]} fields]
+                        image-gallery-items]} fields]
             (rf/dispatch [:set-active-document-title! title])
             [:div.activity
              [:div.activity-wrap
               [:div.activity-header.col-xs-12
                [activity-title title author]]
-              [:div.activity-content.col-xs-12.col-lg-6
-               [activity-embed embed skills preview]]
-              [:div.activity-content.col-xs-12.col-lg-6
-               [klipse-component 
-                (case language
-                  "Python" "language-klipse-python"
-                  "Javascript" "language-klipse-eval-js"
-                  "Clojure" "language-klipse") 
-                code]]
-              [:div.activity-content.col-xs-12.col-lg-6
+              [:div.activity-content.col-xs-12.col-lg-8
+               [activity-embed embed skills preview]
+               (when (seq image-gallery-items)
+                [activity-image-gallery image-gallery-items])]
+              [:div.activity-content.col-xs-12.col-lg-4
                [activity-info platform  summary why preRequisites materials]
                (when challenge
                 [activity-challenge challenge])
