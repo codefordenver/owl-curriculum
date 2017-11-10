@@ -19,9 +19,6 @@
   (defroute "/about" []
             (rf/dispatch [:get-content-from-contentful :show-about]))
 
-  (defroute "/interactive" []
-            (rf/dispatch [:set-active-view :interactive-view]))
-
   (defroute "/settings" []
             (rf/dispatch [:get-content-from-contentful :show-settings]))
 
@@ -45,6 +42,9 @@
 
   (defroute "/activity/#!:activity" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-activity (:activity params)]))
+
+  (defroute "/klipse/#!:klipse" {:as params}
+            (rf/dispatch [:get-content-from-contentful :show-klipse (:klipse params)]))
 
   (defroute "*" []
             (let [uri (-> js/window .-location .-href)]
