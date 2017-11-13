@@ -53,7 +53,7 @@ Generated using [Luminus](http://www.luminusweb.net/) version 2.9.11.68
   the Owlet directory to be, then [clone](https://help.github.com/articles/cloning-a-repository/)
   this repository:
 
-      git clone https://github.com/codefordenver/owlet-ui.git
+      git clone https://github.com/codefordenver/owlet.git
 
 - Now if you do `ls`, you should see a new directory, `owlet-ui`. Go there:
 
