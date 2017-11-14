@@ -45,7 +45,7 @@
                  [cljsjs/auth0 "7.0.4-0"]
                  [cljsjs/auth0-lock "10.4.0-0"]
                  [cljsjs/bootstrap "3.3.6-1"]
-                 [cljsjs/firebase "4.0.0-0"]
+                 [cljsjs/firebase "4.4.0-0"]
                  [cljsjs/showdown "1.4.2-0"]
                  [org.clojure/core.async "0.3.442"]
                  [camel-snake-kebab "0.4.0"]
@@ -175,7 +175,7 @@
                    [dirac.nrepl/middleware]
 
                    :timeout
-                   600000         ; Wait up to 10 minutes for compilation.
+                   180000
 
                    :init
                    (do (require 'figwheel-sidecar.repl-api)
