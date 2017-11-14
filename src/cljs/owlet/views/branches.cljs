@@ -16,7 +16,7 @@
     [:div.branches
      [email-notification]
      [:section
-      [:h1#title [:mark "HELLO WORLD"]]
+      [:h1#title [:mark "Get started by choosing a branch below"]]
       [:br]
       (let [color-pairs (pair-color (sort @activity-branches))]
         (doall

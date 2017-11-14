@@ -792,6 +792,16 @@ pre {
   margin-top: 2em;
   margin-bottom: 2em; }
 
+.CodeMirror {
+  padding: 10px; }
+
+.CodeMirror:first-child {
+  font-weight: bold; }
+
+.CodeMirror:nth-child(2) {
+  background-color: #FF0076;
+  color: yellow; }
+
 /* buttons and inputs */
 #change-bg-btn {
   width: 45px;

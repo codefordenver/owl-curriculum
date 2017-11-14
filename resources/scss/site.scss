@@ -5,6 +5,7 @@ $purple: #32254B;
 $dark-gray: rgb(12, 23, 27);
 $light-gray: #C8C8C8;
 $aqua: #65D2C0;
+$magenta: #FF0076;
 
 body {
   font: 100% $font-stack;
@@ -972,6 +973,19 @@ pre {
   margin: 0 auto;
   margin-top: 2em;
   margin-bottom: 2em;
+}
+
+.CodeMirror {
+  padding: 10px;
+}
+
+.CodeMirror:first-child {
+  font-weight: bold;
+}
+
+.CodeMirror:nth-child(2) {
+  background-color: $magenta;
+  color: yellow;
 }
 
 /* buttons and inputs */
