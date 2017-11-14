@@ -986,6 +986,15 @@ pre {
 .CodeMirror:nth-child(2) {
   background-color: $magenta;
   color: yellow;
+
+  pre:nth-child(2) {
+    margin-top: 10px;
+  }
+
+  .cm-number,
+  .cm-variable {
+    color: yellow;
+  }
 }
 
 /* buttons and inputs */

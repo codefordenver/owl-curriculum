@@ -801,6 +801,11 @@ pre {
 .CodeMirror:nth-child(2) {
   background-color: #FF0076;
   color: yellow; }
+  .CodeMirror:nth-child(2) pre:nth-child(2) {
+    margin-top: 10px; }
+  .CodeMirror:nth-child(2) .cm-number,
+  .CodeMirror:nth-child(2) .cm-variable {
+    color: yellow; }
 
 /* buttons and inputs */
 #change-bg-btn {
