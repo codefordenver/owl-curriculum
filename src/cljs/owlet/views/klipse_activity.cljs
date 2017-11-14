@@ -30,7 +30,7 @@
                         inspiration
                         preRequisites
                         platform
-                        language 
+                        language
                         code]} fields]
             (rf/dispatch [:set-active-document-title! title])
             [:div.activity
@@ -40,12 +40,7 @@
               [:div.activity-content.col-xs-12.col-lg-6
                [activity-embed embed skills preview]]
               [:div.activity-content.col-xs-12.col-lg-6
-               [klipse-component 
-                (case language
-                  "Python" "language-klipse-python"
-                  "Javascript" "language-klipse-eval-js"
-                  "Clojure" "language-klipse") 
-                code]]
+               [klipse-component language code]]
               [:div.activity-content.col-xs-12.col-lg-6
                [activity-info platform  summary why preRequisites materials]
                (when challenge
