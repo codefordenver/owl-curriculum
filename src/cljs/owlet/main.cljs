@@ -12,6 +12,7 @@
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
             [owlet.views.branches :refer [branches-view]]
+            [owlet.views.confirm :refer [confirm-view]]
             [owlet.views.subscribed :refer [subscribed-view]]
             [owlet.views.unsubscribe :refer [unsubscribe-view]]
             [owlet.views.settings :refer [settings-view]]
@@ -30,6 +31,7 @@
 (defmethod views :not-found-view [] [not-found-view])
 (defmethod views :activity-view [] [activity-view])
 (defmethod views :branches-view [] [branches-view])
+(defmethod views :confirm-view [] [confirm-view])
 (defmethod views :subscribed-view [] [subscribed-view])
 (defmethod views :unsubscribe-view [] [unsubscribe-view])
 (defmethod views :settings-view [] [settings-view])

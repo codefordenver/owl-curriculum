@@ -42,7 +42,6 @@
                  [yogthos/config "0.8"]       ; For env in owlet-ui.server
                  [ring "1.4.0"]               ; For owlet-ui.server & .handler
                  [cljsjs/jquery "2.2.2-0"]
-                 [cljs-ajax "0.5.4"]
                  [cljsjs/auth0 "7.0.4-0"]
                  [cljsjs/auth0-lock "10.4.0-0"]
                  [cljsjs/bootstrap "3.3.6-1"]
@@ -63,7 +62,8 @@
                  [environ "1.0.2"]
                  [metosin/compojure-api "1.1.9"]
                  [nilenso/mailgun "0.2.3"]
-                 [funcool/cuerdas "2.0.3"]]
+                 [funcool/cuerdas "2.0.3"]
+                 [cljsjs/chartjs "2.6.0-0"]]
 
   :min-lein-version "2.0.0"
 
@@ -137,7 +137,7 @@
                   :cljsbuild
                   {:builds
                    {:app
-                    {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
+                    {:source-paths ["src/cljc" "src/cljs" "env/dev/cljs"]
                      :figwheel {:on-jsload "owlet.core/mount-root"}
                      :compiler
                      {:main "owlet.app"
