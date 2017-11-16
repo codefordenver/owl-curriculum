@@ -26,7 +26,7 @@
   ; See https://firebase.google.com/docs/reference/js/firebase.app.App.html .
   (.initializeApp js/firebase
                   (clj->js firebase-app-init)         ; Options.
-                  "owlet.firebase/firebase-app"))  ; Just a name.
+                  "owlet.firebase/firebase-app"))     ; Just a name.
 
 
 (def timestamp-placeholder
@@ -218,8 +218,9 @@
   ; [db-ref v & event-id-args]
   ;
   ; Asynchronously assigns the given clojure value at the given Firebase
-  ; database reference. If an event vector is given as the third argument,
-  ; it will be dispatched upon completion.
+  ; database reference. Any remaining arguments provided will become the
+  ; contents of an event vector to be dispatched upon completion. E.g.
+  ; [:given-event-id "an arg for handler"] would be dispatched.
   ;
   ; Note that the Clojure value v must pass precondition legal-db-value?. If
   ; it is nil, the location corresponding to the ref will be deleted. The same
@@ -242,9 +243,10 @@
   ;
   ; Asynchronously merges the key/values of the given associative Clojure value
   ; v (say a map or vector) into the given Firebase database reference. Any
-  ; values at keys not present in the Clojure value will not be changed. If an
-  ; event vector is given as the third argument, it will be dispatched upon
-  ; completion.
+  ; values at keys not present in the Clojure value will not be changed. Any
+  ; remaining arguments provided will become the contents of an event vector to
+  ; be dispatched upon completion. E.g. [:given-event-id "an arg for handler"]
+  ; would be dispatched.
   ;
   ; Note that the Clojure value v must pass precondition legal-db-value?. If it
   ; is nil, the location corresponding to the ref will be deleted. The same
@@ -340,8 +342,8 @@
                       #(when %
                          (.log js/console
                                (str "owlet.firebase/note-presence-changes \n"
-                                    "calling firebase.database.OnDisconnect's"
-                                    ".update():\n"
+                                    "calling firebase.database.OnDisconnect's "
+                                    "update():\n"
                                     (.toString %))))))]
 
      (.on (-> db-ref .-root (.child ".info/connected"))
@@ -362,8 +364,8 @@
               (update-presence-info db-ref offline-vals)))
 
           ; Log any error:
-          #(js/console.log (str "owlet.firebase/on-presence-change \n"
-                                "calling firebase.database.Reference's .on():\n"
+          #(js/console.log (str "owlet.firebase/on-presence-change calling \n"
+                                "firebase.database.Reference's .on():\n"
                                 (.toString %)))))))
 
 
@@ -372,14 +374,14 @@
   continuously updated to changes in your re-frame app. Argument db-ref is the
   ref of the node to be updated. It is essentially \"subscribed\" to the
   registered subscription defined by a vector of the subscription-args. The
-  resulting reaction will be polled as if it were dereferrenced in the hiccup
+  resulting reaction will be polled as if it were dereferenced in the hiccup
   code of a component definition. Whenever it changes, its new value will be
   uploaded to the Firebase node. Note that the upload happens immediately with
   initial data.
 
   Important: For this function to work, you need to make sure that function
-  owlet.async/repeatedly-run has been called with no arguments and is
-  running. This is the polling mechanism.
+  owlet.async/repeatedly-run has been called with no arguments and is running.
+  This is the polling mechanism.
 
   This function is the inverse of on-change, sending data to the outside world.
   To send data to the user, we set up components that receive data from
@@ -521,13 +523,13 @@
                                         rf/dispatch)))]
       (and progress-pct-atom
            [:next (fn [task-snapshot]
-                    ; What to do after each batch of bytes has been transfered.
+                    ; What to do after each batch of bytes has been transferred.
                     ; Argument is a firebase.storage.UploadTaskSnapshot. See
                     ; https://firebase.google.com/docs/reference/js/firebase.storage.UploadTaskSnapshot
-                    (let [total      (.-totalBytes task-snapshot)
-                          transfered (.-bytesTransferred task-snapshot)]
+                    (let [total       (.-totalBytes task-snapshot)
+                          transferred (.-bytesTransferred task-snapshot)]
                       (reset! progress-pct-atom
-                              (js/Math.round (* 100 (/ transfered total))))))])
+                              (js/Math.round (* 100 (/ transferred total))))))])
       (and error-atom
            [:error (fn [error]
                      (reset! error-atom (.-message error)))]))))
