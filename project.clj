@@ -78,10 +78,7 @@
             [lein-cljsbuild "1.1.5"]
             [lein-sassc "0.10.4"]
             [lein-auto "0.1.2"]
-            [lein-kibit "0.1.2"]
-            ]
-            
- 
+            [lein-kibit "0.1.2"]]
 
   :sassc [{:src "resources/scss/site.scss"
            :output-to "resources/public/css/site.css"
