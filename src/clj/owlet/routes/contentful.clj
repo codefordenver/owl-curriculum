@@ -207,20 +207,35 @@
     (when (= (:status mail-transact!) 200)
       (prn (str "Sent confirmation email to " email)))))
 
+(defn is-new-activity?
+  "return whether or not this activity is being published for the first time"
+  [activity]
+  (let [revision (get-in activity [:sys :revision])
+        activity-type (get-in activity [:sys :contentType :sys :id])]
+    (and (or (= "activity" activity-type)
+             (= "klipseActivity" activity-type))
+         ;; checking that this is the first published version of this activity content
+         (= 1 revision))))
+
+
+(defn make-email-recipients
+  "returns a list of subscribers delimited by a comma"
+  [users]
+  (let [values (map val users)
+        emails (for [user values
+                     :when (:confirmed user)]
+                 (:email user))]
+    (clojure.string/join "," emails)))
+
 (defn handle-activity-publish
   "Sends email to list of subscribers"
   [req]
-  (let [payload (:params req)
-        is-new-activity?
-        (and (= "activity" (get-in payload [:sys :contentType :sys :id]))
-             (= 1 (get-in payload [:sys :revision])))]
-    (if is-new-activity?
+  (let [payload (:params req)]
+    (if (is-new-activity? payload)
       (let [{:keys [status body]} @(http/get subscribers-endpoint)]
         (if (= 200 status)
-          (let [json (json/parse-string body true)
-                users (map val json)
-                emails (for [user users :when (:confirmed user)] (:email user))
-                subscribers (clojure.string/join "," emails)]
+          (let [users (json/parse-string body true)
+                subscribers (make-email-recipients users)]
             (let [space-id (get-in payload [:sys :space :sys :id])
                   asset-id (get-in payload [:fields :preview :en-US :sys :id])
                   {:keys [status body]} @(get-asset-by-id space-id asset-id)]
