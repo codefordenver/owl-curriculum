@@ -104,6 +104,8 @@
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
                 {:output-to "target/cljsbuild/public/js/app.js"
+                 :language-in :ecmascript6
+                 :language-out :ecmascript3
                  :optimizations :advanced
                  :closure-defines {goog.DEBUG false}
                  :pretty-print false
@@ -138,7 +140,7 @@
                     {:source-paths ["src/cljc" "src/cljs" "env/dev/cljs"]
                      :figwheel {:on-jsload "owlet.core/mount-root"}
                      :compiler
-                     {:preloads [devtools.preload dirac.runtime.preload]
+                     {:preloads [devtools.preload]
                       :main "owlet.app"
                       :asset-path "/js/out"
                       :output-to "target/cljsbuild/public/js/app.js"
@@ -171,7 +173,11 @@
    :profiles/test {}
    :dirac       ; Abitrary key, used in `lein with-profile +dirac repl`.
    {:dependencies [[binaryage/dirac "RELEASE"]]
-
+    :cljsbuild
+     {:builds
+       {:app
+         {:compiler
+           {:preloads [devtools.preload dirac.runtime.preload]}}}}
     :repl-options {:nrepl-middleware
                    [dirac.nrepl/middleware]
 
