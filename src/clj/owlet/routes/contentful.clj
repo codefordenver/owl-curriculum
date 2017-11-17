@@ -208,7 +208,7 @@
       (prn (str "Sent confirmation email to " email)))))
 
 (defn is-new-activity?
-  "return weather or not this activity is the first one to be published"
+  "return whether or not this activity is being published for the first time"
   [activity]
   (let [revision (get-in activity [:sys :revision])
         activity-type (get-in activity [:sys :contentType :sys :id])]
