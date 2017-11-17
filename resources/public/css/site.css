@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,700');
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,700");
 body {
   font: 100% "Rubik", sans-serif;
   font-weight: 300;
@@ -80,7 +80,7 @@ b {
     height: 50px;
     font-size: 1.2em;
     transition: all 0.3s;
-    background-image: url('../img/search-icon.png');
+    background-image: url("../img/search-icon.png");
     background-size: auto 45%;
     background-repeat: no-repeat;
     background-position: left center;
@@ -159,7 +159,7 @@ b {
     #sidebar .menu div.branch-icon::before {
       content: "";
       display: inline-block;
-      background-image: url('../img/icon1.png');
+      background-image: url("../img/icon1.png");
       background-size: 100%;
       width: 60px;
       height: 60px; }
@@ -184,7 +184,7 @@ b {
     #sidebar .menu div.about-icon::before {
       content: "";
       display: inline-block;
-      background-image: url('../img/icon4.png');
+      background-image: url("../img/icon4.png");
       background-size: 100%;
       width: 60px;
       height: 60px; }
@@ -254,7 +254,7 @@ b {
     .lpsidebar .menu div.branch-icon::before {
       content: "";
       display: inline-block;
-      background-image: url('../img/icon1.png');
+      background-image: url("../img/icon1.png");
       background-size: 100%;
       width: 60px;
       height: 60px; }
@@ -279,7 +279,7 @@ b {
     .lpsidebar .menu div.about-icon::before {
       content: "";
       display: inline-block;
-      background-image: url('../img/icon4.png');
+      background-image: url("../img/icon4.png");
       background-size: 100%;
       width: 60px;
       height: 60px; }
@@ -427,7 +427,7 @@ mark {
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    background: url('../img/landing.png');
+    background: url("../img/landing.png");
     background-size: auto 100%;
     background-position: center; } }
 
@@ -792,20 +792,6 @@ pre {
   margin-top: 2em;
   margin-bottom: 2em; }
 
-.CodeMirror {
-  padding: 10px; }
-
-.CodeMirror:first-child {
-  font-weight: bold; }
-
-.CodeMirror:nth-child(2) {
-  background-color: #FF0076;
-  color: yellow; }
-  .CodeMirror:nth-child(2) pre:nth-child(2) {
-    margin-top: 10px; }
-  .CodeMirror:nth-child(2) .cm-number, .CodeMirror:nth-child(2) .cm-variable {
-    color: yellow; }
-
 /* buttons and inputs */
 #change-bg-btn {
   width: 45px;
@@ -932,7 +918,6 @@ button {
 @keyframes refresh {
   0% {
     opacity: 0; }
-
   100% {
     opacity: 1; } }
 
@@ -963,7 +948,9 @@ button {
   height: 0;
   overflow: hidden; }
 
-.embed-container iframe, .embed-container object, .embed-container embed {
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
   position: absolute;
   top: 0;
   left: 0;
@@ -1020,21 +1007,18 @@ progress {
 @-webkit-keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
-
   to {
     background-position: 0 0; } }
 
 @-o-keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
-
   to {
     background-position: 0 0; } }
 
 @keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
-
   to {
     background-position: 0 0; } }
 
@@ -1062,14 +1046,16 @@ progress {
   -o-transition: width .6s ease;
   transition: width .6s ease; }
 
-.progress-striped .progress-bar, .progress-bar-striped {
+.progress-striped .progress-bar,
+.progress-bar-striped {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   -webkit-background-size: 40px 40px;
   background-size: 40px 40px; }
 
-.progress.active .progress-bar, .progress-bar.active {
+.progress.active .progress-bar,
+.progress-bar.active {
   -webkit-animation: progress-bar-stripes 2s linear infinite;
   -o-animation: progress-bar-stripes 2s linear infinite;
   animation: progress-bar-stripes 2s linear infinite; }
