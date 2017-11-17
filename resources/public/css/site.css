@@ -10,6 +10,10 @@ h1 {
   margin-top: 10px;
   line-height: 1.55em; }
 
+h2 {
+  margin-top: 10px;
+  margin-bottom: 15px; }
+
 h4 {
   font-weight: lighter; }
 
@@ -720,7 +724,8 @@ span.platform-details {
 
 .activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
-  padding: 10px 12px 2px 15px; }
+  padding: 10px 12px 2px 15px;
+  margin-bottom: 30px; }
   .activity-info-wrap span.platform-details, .activity-inspiration-wrap span.platform-details, .activity-challenge-wrap span.platform-details {
     font-size: 0.75em; }
 

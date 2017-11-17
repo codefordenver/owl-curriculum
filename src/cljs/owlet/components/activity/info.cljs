@@ -20,6 +20,7 @@
                                         #js{:__html (.makeHtml showdown (str title field))}}])]
     [:div.activity-info-wrap.box-shadow
      [:div
+       [:h2 [:mark "About this Activity"]]
        [:span.h3 "Platform"] [:br]
        [re-com/popover-anchor-wrapper
           :showing? showing?

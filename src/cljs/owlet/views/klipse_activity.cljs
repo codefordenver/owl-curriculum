@@ -25,9 +25,7 @@
                         skills
                         summary
                         preview
-                        challenge
                         materials
-                        inspiration
                         preRequisites
                         platform
                         language
@@ -43,10 +41,6 @@
                [:h2 {:style {:text-align "center" :margin-top "50px"}} [:mark "Let's give it a try!"]]
                [klipse-component language code]]
               [:div.activity-content.col-xs-12
-               [activity-info platform  summary why preRequisites materials]
-               (when challenge
-                [activity-challenge challenge])
-               (when inspiration
-                [activity-inspiration inspiration])]
+               [activity-info platform  summary why preRequisites materials]]
               [:div.activity-content.col-xs-12
                 [activity-comments]]]]))))))
