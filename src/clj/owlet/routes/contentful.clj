@@ -207,14 +207,20 @@
     (when (= (:status mail-transact!) 200)
       (prn (str "Sent confirmation email to " email)))))
 
+;; return wheather or not this activity is the first one to be published
+(defn is-new-activity? [activity]
+    (let [revision (get-in activity [:sys :revision])
+          activity-type (get-in activity [:sys :contentType :sys :id])]
+      (and (or (= "activity" activity-type)
+               (= "klipseActivity" activity-type))
+           ;; checking that this is the first published version of this activity content
+           (= 1 revision))))
+
 (defn handle-activity-publish
   "Sends email to list of subscribers"
   [req]
-  (let [payload (:params req)
-        is-new-activity?
-        (and (= "activity" (get-in payload [:sys :contentType :sys :id]))
-             (= 1 (get-in payload [:sys :revision])))]
-    (if is-new-activity?
+  (let [payload (:params req)]
+    (if (is-new-activity? payload)
       (let [{:keys [status body]} @(http/get subscribers-endpoint)]
         (if (= 200 status)
           (let [json (json/parse-string body true)
