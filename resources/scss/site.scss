@@ -5,6 +5,7 @@ $purple: #32254B;
 $dark-gray: rgb(12, 23, 27);
 $light-gray: #C8C8C8;
 $aqua: #65D2C0;
+$magenta: #FF0076;
 
 body {
   font: 100% $font-stack;
@@ -577,6 +578,7 @@ mark {
   background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
   background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  background-size: cover !important;
 }
 
 .outer-height-wrap {
@@ -964,6 +966,37 @@ span.platform-details {
   }
 }
 
+/* interactive components */
+
+pre {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.CodeMirror {
+  padding: 10px;
+}
+
+.CodeMirror:first-child {
+  font-weight: bold;
+}
+
+.CodeMirror:nth-child(2) {
+  background-color: $magenta;
+  color: yellow;
+
+  pre:nth-child(2) {
+    margin-top: 10px;
+  }
+
+  .cm-number,
+  .cm-variable {
+    color: yellow;
+  }
+}
+
 /* buttons and inputs */
 
 #change-bg-btn {
@@ -1017,23 +1050,6 @@ button {
     color: #fff;
     background-color: $aqua;
   }
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-label {
-  background-color: white;
-  color: #00A79D;
-  padding: 10px;
-  width: 30%;
-  text-align: center;
-}
-
-input[type="radio"]:checked + label {
-  background-color: #00A79D;
-  color: white;
 }
 
 #email-wrap {
@@ -1136,17 +1152,26 @@ input[type="radio"]:checked + label {
   }
 }
 
-/* no gutters! */
-
-.no-gutter {
-  margin-left: 0;
-  margin-right: 0;
+#confirm {
+  color: white;
 }
-
-.no-gutter [class*='col-']:not(:first-child),
-.no-gutter [class*='col-']:not(:last-child) {
-  padding-right: 0;
-  padding-left: 0;
+#confirm-message {
+  position: absolute;
+  top: 70px;
+  left: calc(50vw - 135px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 215px);
+  }
+  display: block;
+  width: 430px;
+}
+#g-recaptcha {
+  position: absolute;
+  top: 110px;
+  left: calc(50vw - 71px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 151px);
+  }
 }
 
 .embed-container {
