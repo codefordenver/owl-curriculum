@@ -75,8 +75,8 @@
            (comp :id :sys)
            #(hash-map
               :url (get-in % [:fields :file :url])
-              :w   (get-in % [:fields :file :details :image :width])
-              :h   (get-in % [:fields :file :details :image :height]))))
+              :w (get-in % [:fields :file :details :image :width])
+              :h (get-in % [:fields :file :details :image :height]))))
        (into {})))
 
 (defn- keywordize-name [name]
@@ -105,17 +105,17 @@
       ; Adds :image-gallery-items
       (assoc-in [:fields :image-gallery-items]
                 (->> (get-in activity [:fields :imageGallery])
-                     (map (comp :id :sys))        ; Gallery image ids.
+                     (map (comp :id :sys))                            ; Gallery image ids.
                      (mapv (image-by-id assets))))
       ; Add :skill-
       (assoc-in [:skill-set] (or (some->> activity
-                                  :fields
-                                  :skills
-                                  remove-nil
-                                  seq          ; some->> gives nil if empty
-                                  (map keywordize-name)
-                                  set)
-                              activity))))
+                                          :fields
+                                          :skills
+                                          remove-nil
+                                          seq                                    ; some->> gives nil if empty
+                                          (map keywordize-name)
+                                          set)
+                                 activity))))
 
 (defn- process-activities
   [activities platforms assets]
@@ -126,7 +126,7 @@
 (defn handle-get-all-entries-for-given-space
 
   "asynchronously GET all entries for given space
-  optionally pass library-view=true param to get all entries for given space"
+	optionally pass library-view=true param to get all entries for given space"
 
   [req]
 
@@ -143,9 +143,9 @@
               activities (concat (filter-entries "activity" (:items entries))
                                  (filter-entries "klipseActivity" (:items entries)))]
 
-          (ok {:metadata (process-metadata (:body @metadata))
+          (ok {:metadata   (process-metadata (:body @metadata))
                :activities (process-activities activities platforms assets)
-               :platforms platforms}))
+               :platforms  platforms}))
         (not-found status)))))
 
 (defn- compose-new-activity-email
@@ -161,13 +161,13 @@
         description (-> activity :fields :summary :en-US)
         subject (format "New Owlet Activity Published: %s by %s" title author)
         url (format "http://owlet.codefordenver.org/#/activity/#!%s" id)
-        html (render-file "activity-email.html" {:activity-id id
-                                                        :activity-image-url image-url
-                                                        :activity-title title
-                                                        :platform-color platform-color
-                                                        :platform-name platform-name
-                                                        :activity-description description
-                                                        :skill-names skills})]
+        html (render-file "activity-email.html" {:activity-id          id
+                                                 :activity-image-url   image-url
+                                                 :activity-title       title
+                                                 :platform-color       platform-color
+                                                 :platform-name        platform-name
+                                                 :activity-description description
+                                                 :skill-names          skills})]
     (hash-map :subject subject
               :html html)))
 
@@ -181,7 +181,7 @@
             {:keys [status body]}
             @(http/put (subscriber-endpoint id)
                        {:body (json/encode
-                                {:email (:email subscriber)
+                                {:email     (:email subscriber)
                                  :confirmed (when-not (nil? confirmed?)
                                               (not confirmed?))})})]
         (if (= 200 status)
@@ -274,7 +274,7 @@
 (defn handle-activity-subscribe
 
   "handles new subscription request
-   -checks list of subs b4 adding to list; ie no duplicates"
+	 -checks list of subs b4 adding to list; ie no duplicates"
 
   [req]
 
@@ -294,7 +294,7 @@
           (let [id (epoch)
                 {:keys [status body]}
                 @(http/put (subscriber-endpoint id)
-                           {:body (json/encode {:email email
+                           {:body (json/encode {:email     email
                                                 :confirmed false})})]
             (if (= status 200)
               (do
