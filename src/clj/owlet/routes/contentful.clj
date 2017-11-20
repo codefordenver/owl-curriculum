@@ -240,7 +240,7 @@
   "Fetch, process & return activity with activity image thumbnail, provides default if none is found"
   [activity]
   (let [space-id (get-in activity [:sys :space :sys :id])
-        default-thumbnail-url "http://owlet.codefordenver.org/img/default-thumbnail.png"]
+        default-thumbnail-url "owlet.codefordenver.org/img/default-thumbnail.png"]
     (if-let [asset-id (get-in activity [:fields :preview :en-US :sys :id])]
       (let [{:keys [status body]} @(get-asset-by-id space-id asset-id)]
         (if (= 200 status)
@@ -277,6 +277,7 @@
             activity (-> activity-payload
                          (get-activity-image-thumbnail)
                          (get-platform-metadata-for-activity))]
+        (prn activity)
         (let [{:keys [subject html]} (compose-new-activity-email activity)
               mail-transaction (mail/send-mail creds
                                                {:from    "owlet@mmmanyfold.com"
