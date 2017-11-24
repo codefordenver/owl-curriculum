@@ -61,6 +61,8 @@ Generated using [Luminus](http://www.luminusweb.net/) version 2.9.11.68
 
 ## Extra development tools
 
+#### [Our codebase (mostly) follows this style guide.](https://github.com/bbatsov/clojure-style-guide/blob/master/README.md)
+
 #### Figwheel ClojureScript REPL in Cursive/IntelliJ IDEA
 
 To work on this project, all you really need is a terminal, a browser, and any
