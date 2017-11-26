@@ -55,11 +55,13 @@ Generated using [Luminus](http://www.luminusweb.net/) version 2.9.11.68
 
       git clone https://github.com/codefordenver/owlet.git
 
-- Now if you do `ls`, you should see a new directory, `owlet-ui`. Go there:
+- Now if you do `ls`, you should see a new directory, `owlet`. Go there:
 
-      cd owlet-ui
+      cd owlet
 
 ## Extra development tools
+
+#### [Our codebase (mostly) follows this style guide.](https://github.com/bbatsov/clojure-style-guide/blob/master/README.md)
 
 #### Figwheel ClojureScript REPL in Cursive/IntelliJ IDEA
 
@@ -78,7 +80,7 @@ with just a couple keystrokes.
 To get started with IntelliJ IDEA and Cursive, follow the
 [Cursive installation instructions](https://cursive-ide.com/userguide/).
 Then [Import an existing Leiningen project](https://cursive-ide.com/userguide/leiningen.html),
-namely owlet-ui.
+namely owlet.
 
 To configure the Cursive REPL connected to our running app, we need to create a
 [Run/Debug Configuration](https://www.jetbrains.com/help/idea/2016.1/run-debug-configuration.html).
@@ -160,7 +162,7 @@ similar to [how we did it in Cursive](#figwheel-clojurescript-repl-in-cursiveint
 
       lein repl :connect
 
-  You should now have a Clojure REPL with prompt, `owlet-ui.server=>`.
+  You should now have a Clojure REPL with prompt, `owlet.server=>`.
 
 - As with Cursive,
   enter the following Clojure code at the prompt:
@@ -234,7 +236,7 @@ in the Owlet project directory, let's use it with Owlet.
   waiting for the browser client:
 
       ...
-      owlet-ui.server=>
+      owlet.server=>
       Dirac Agent v0.8.8
       Connected to nREPL server at nrepl://localhost:8230.
       Agent is accepting connections at ws://localhost:8231.
