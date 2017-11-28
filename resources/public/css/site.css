@@ -797,6 +797,11 @@ pre {
   margin-top: 2em;
   margin-bottom: 2em; }
 
+/* hides loading component when
+klipse-container is present */
+.klipse-container + .loading {
+  display: none; }
+
 .CodeMirror {
   padding: 10px; }
 
@@ -992,7 +997,10 @@ button {
 /* Loading Icon */
 .loading {
   width: 100px;
-  height: 100px; }
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em; }
 
 .loading__ring {
   position: absolute;
