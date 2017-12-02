@@ -687,8 +687,9 @@ span.platform-details {
 
 /* activity view */
 .activity-wrap {
-  width: 98%;
+  width: 96%;
   margin: 0 auto;
+  padding-top: 10px;
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em; }
@@ -792,10 +793,13 @@ span.platform-details {
 
 /* interactive components */
 pre {
-  width: 80%;
-  margin: 0 auto;
+  width: 100%;
   margin-top: 2em;
-  margin-bottom: 2em; }
+  margin-bottom: 4em;
+  margin-right: 0 !important; }
+  @media screen and (max-width: 991px) {
+    pre {
+      width: 100%; } }
 
 /* hides loading component when
 klipse-container is present */
