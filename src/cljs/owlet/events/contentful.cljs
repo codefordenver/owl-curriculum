@@ -26,7 +26,8 @@
         {:http-xhrio {:method          :get
                       :uri             space-endpoint
                       :response-format (ajax/json-response-format {:keywords? true})
-                      :on-success      [:get-content-from-contentful-success route-args]}}
+                      :on-success      [:get-content-from-contentful-success route-args]
+                      :on-failure      [:get-content-from-contentful-failure]}}
         {:dispatch [route-dispatch route-param]}))))
 
 (rf/reg-event-fx

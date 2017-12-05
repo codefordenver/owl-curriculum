@@ -61,3 +61,8 @@
 (reg-getter :route-params [:app :route-params])
 
 (reg-getter :subscriber-info [:app :route-opts])
+
+(rf/reg-sub
+  :on-app-failure
+  (fn [db _]
+    (:on-app-failure db)))
