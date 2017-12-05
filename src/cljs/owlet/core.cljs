@@ -1,6 +1,7 @@
 (ns owlet.core
     (:require [reagent.core :as reagent]
               [re-frame.core :as rf]
+              [dirac.runtime :as dirac]
               [owlet.events.contentful]
               [owlet.events.auth]
               [owlet.events.app]
@@ -13,7 +14,8 @@
 (defn dev-setup []
   (when config/debug?
     (enable-console-print!)
-    (enable-re-frisk!)))
+    (enable-re-frisk!)
+    (dirac/install!)))
 
 (defn mount-root []
   (rf/clear-subscription-cache!)

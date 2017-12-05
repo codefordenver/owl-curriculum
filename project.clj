@@ -35,6 +35,7 @@
                  [org.clojure/clojure "1.9.0-alpha15"]
                  [org.clojure/clojurescript "1.9.456"]
                  [org.clojure/tools.nrepl "0.2.13"]   ; Dirac needs recent vers.
+                 [binaryage/dirac "RELEASE"]
                  [secretary "1.2.3"]
                  [compojure "1.5.2"]
                  [yogthos/config "0.8"]       ; For env in owlet-ui.server
@@ -172,12 +173,12 @@
    :profiles/dev {}
    :profiles/test {}
    :dirac       ; Abitrary key, used in `lein with-profile +dirac repl`.
-   {:dependencies [[binaryage/dirac "RELEASE"]]
+   {:dependencies [[binaryage/devtools "0.9.4"]]
     :cljsbuild
      {:builds
        {:app
          {:compiler
-           {:preloads [devtools.preload dirac.runtime.preload]}}}}
+           {:preloads [devtools.preload]}}}}
     :repl-options {:nrepl-middleware
                    [dirac.nrepl/middleware]
 
