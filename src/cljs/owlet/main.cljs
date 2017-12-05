@@ -5,6 +5,7 @@
             [owlet.components.sidebar :refer [sidebar-component]]
             [owlet.components.lpsidebar :refer [lpsidebar-component]]
             [owlet.components.loading :refer [loading-component]]
+            [owlet.components.error :refer [error]]
             [owlet.views.welcome :refer [welcome-view]]
             [owlet.views.about :refer [about-view]]
             [owlet.views.interactive :refer [interactive-view]]
@@ -62,6 +63,7 @@
           [sidebar-component]]
          [:div.outer-height-wrap
           [search-bar]
+          [error]
           [:div.inner-height-wrap
              [:div.content {:style {:background-image (when-not (or (= @active-view :about-view)
                                                                     (= @active-view :confirm-view))

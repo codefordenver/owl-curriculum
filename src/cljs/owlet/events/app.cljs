@@ -117,3 +117,8 @@
     (when-let [activity-match (some #(when (= (get-in % [:sys :id]) activity-id) %)
                                   (or (:activities db) all-activities))]
       (assoc db :activity-in-view activity-match))))
+
+(rf/reg-event-db :get-content-from-contentful-failure
+  (fn [db [_ res]]
+    (assoc db :on-app-failure {:show? true
+                               :msg :was-not-able-to-retrive-content})))
