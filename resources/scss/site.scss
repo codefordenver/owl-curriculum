@@ -3,6 +3,7 @@
 $font-stack: "Rubik", sans-serif;
 $purple: #32254B;
 $dark-gray: rgb(12, 23, 27);
+$medium-gray: #222F33;
 $light-gray: #C8C8C8;
 $aqua: #65D2C0;
 $magenta: #FF0076;
@@ -578,11 +579,7 @@ mark {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
-  background: #6A2569;
-  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
-  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
-  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  background: url('../img/cfd-bg.jpg');
   background-size: cover !important;
 }
 
@@ -1070,12 +1067,12 @@ button {
 
 #email-wrap {
   transition: height 0.3s;
-  width: 281px;
+  width: 313px;
   padding: 10px;
   color: $light-gray;
   border-radius: 7px 0;
   background: $dark-gray;
-  font-size: 0.8em;
+  font-size: 0.9em;
   position: fixed;
   bottom: 0;
   right: 0;
@@ -1099,13 +1096,13 @@ button {
 }
 
 #email-input {
-  height: 24px;
-  width: 185px;
+  height: 28px;
+  width: 205px;
   display: inline-block;
   border: none;
   border-radius: 3px;
   padding-left: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: $medium-gray;
   color: $light-gray;
   outline: 0;
   &:active {
@@ -1114,8 +1111,8 @@ button {
 }
 
 #unsubscribe-button {
-  height: 24px;
-  width: 90px;
+  height: 28px;
+  width: 100px;
   margin-left: 10px;
   display: inline-block;
   position: inherit;
@@ -1131,15 +1128,14 @@ button {
 }
 
 #email-button {
-  width: 65px;
-  height: 24px;
+  width: 77px;
+  height: 28px;
   margin-left: 10px;
   display: inline-block;
   border: none;
   border-radius: 3px;
   padding: 5px;
   color: $light-gray;
-  font-size: 0.9em;
   background-color: $purple;
   outline: 0;
   &:active {
@@ -1148,10 +1144,15 @@ button {
 }
 
 .email-unsubscribe {
+  font-size: 0.75em;
   padding: 10px;
   margin: 30px 0;
-  background-color: $dark-gray;
-  width: 306px;
+  width: 335px;
+  #email-input {
+    background-color: white;
+    border: 1px $medium-gray solid;
+    color: $medium-gray;
+  }
 }
 
 .refresh {

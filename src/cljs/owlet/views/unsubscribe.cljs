@@ -1,6 +1,5 @@
 (ns owlet.views.unsubscribe
-  (:require [owlet.components.back :refer [back]]
-            [re-frame.core :as rf]
+  (:require [re-frame.core :as rf]
             [reagent.core :as reagent]
             [ajax.core :as ajax :refer [GET POST PUT]]
             [owlet.config :as config]
@@ -35,18 +34,20 @@
 (defn unsubscribe-view []
   (let [email (reagent/atom nil)]
     (fn []
-      [:div.not-found
-       [:h2 [:mark.white.box-shadow [back] "Sorry to see you go"]]
-       [:h3 [:mark.white "Enter your email address to unsubscribe"]]
-       [:div.email-unsubscribe
-         [:input#email-input {:type        "text"
-                              :placeholder "Email address"
-                              :on-change   #(reset! email (-> % .-target .-value))
-                              :value       @email}]
-         [:button#unsubscribe-button {:on-click #(unsubscribe @email)}
-          "Unsubscribe"]
-         (when @msg
-           (cond
-             (= @res 2) [:p.refresh {:style {:color "green"}} "Almost there! Check your email to confirm."]
-             (= @res 1) [:p.refresh {:style {:color "yellow"}} "You are not subscribed."]
-             (= @res 0) [:p.refresh {:style {:color "red"}} "Unsuccessful. Please try again."]))]])))
+      [:div.information-wrap
+       [:div.information-inner-wrap.col-xs-12.col-xl-7
+        [:div.information-inner
+         [:h2 [:mark "Sorry to see you go!"]]
+         [:h3 "Enter your email address to unsubscribe:"]
+         [:div.email-unsubscribe
+           [:input#email-input {:type        "text"
+                                :placeholder "Email address"
+                                :on-change   #(reset! email (-> % .-target .-value))
+                                :value       @email}]
+           [:button#unsubscribe-button {:on-click #(unsubscribe @email)}
+            "Unsubscribe"]
+           (when @msg
+             (cond
+               (= @res 2) [:p.refresh {:style {:color "green"}} "Almost there! Check your email to confirm."]
+               (= @res 1) [:p.refresh {:style {:color "yellow"}} "You are not subscribed."]
+               (= @res 0) [:p.refresh {:style {:color "red"}} "Unsuccessful. Please try again."]))]]]])))

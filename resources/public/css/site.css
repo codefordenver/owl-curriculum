@@ -470,11 +470,7 @@ mark {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
-  background: #6A2569;
-  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
-  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
-  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  background: url("../img/cfd-bg.jpg");
   background-size: cover !important; }
 
 .outer-height-wrap {
@@ -868,12 +864,12 @@ button {
 
 #email-wrap {
   transition: height 0.3s;
-  width: 281px;
+  width: 313px;
   padding: 10px;
   color: #C8C8C8;
   border-radius: 7px 0;
   background: #0c171b;
-  font-size: 0.8em;
+  font-size: 0.9em;
   position: fixed;
   bottom: 0;
   right: 0;
@@ -892,21 +888,21 @@ button {
   margin-bottom: 0; }
 
 #email-input {
-  height: 24px;
-  width: 185px;
+  height: 28px;
+  width: 205px;
   display: inline-block;
   border: none;
   border-radius: 3px;
   padding-left: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #222F33;
   color: #C8C8C8;
   outline: 0; }
   #email-input:active {
     outline: 0; }
 
 #unsubscribe-button {
-  height: 24px;
-  width: 90px;
+  height: 28px;
+  width: 100px;
   margin-left: 10px;
   display: inline-block;
   position: inherit;
@@ -920,25 +916,28 @@ button {
     outline: 0; }
 
 #email-button {
-  width: 65px;
-  height: 24px;
+  width: 77px;
+  height: 28px;
   margin-left: 10px;
   display: inline-block;
   border: none;
   border-radius: 3px;
   padding: 5px;
   color: #C8C8C8;
-  font-size: 0.9em;
   background-color: #32254B;
   outline: 0; }
   #email-button:active {
     outline: 0; }
 
 .email-unsubscribe {
+  font-size: 0.75em;
   padding: 10px;
   margin: 30px 0;
-  background-color: #0c171b;
-  width: 306px; }
+  width: 335px; }
+  .email-unsubscribe #email-input {
+    background-color: white;
+    border: 1px #222F33 solid;
+    color: #222F33; }
 
 .refresh {
   animation: refresh 1s 1;
