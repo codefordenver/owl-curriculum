@@ -809,7 +809,7 @@ klipse-container is present */
   font-weight: bold; }
 
 .CodeMirror:nth-child(2) {
-  background-color: #FF0076;
+  background-color: #65D2C0;
   color: yellow; }
   .CodeMirror:nth-child(2) pre:nth-child(2) {
     margin-top: 10px; }
