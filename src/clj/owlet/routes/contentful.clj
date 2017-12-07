@@ -31,8 +31,8 @@
 
 (add-filter! :kebab #(->kebab-case %))
 
-(defn- get-activity-metadata
-  "GET all branches in Activity model for owlet-activities-2 space"
+(defn- get-space-metadata
+  "GET all content types in owlet-activities-3 space"
   [space-id headers]
   (http/get (format "https://api.contentful.com/spaces/%1s/content_types" space-id) headers))
 
@@ -44,6 +44,7 @@
   (http/get (format "https://cdn.contentful.com/spaces/%1s/assets/%2s" space-id asset-id)
             {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}))
 
+; TODO: refactor to get skills and branches from Klipse Activity model too
 (defn- process-metadata
   [metadata]
   (let [body (json/parse-string metadata true)
@@ -74,8 +75,8 @@
            (comp :id :sys)
            #(hash-map
               :url (get-in % [:fields :file :url])
-              :w   (get-in % [:fields :file :details :image :width])
-              :h   (get-in % [:fields :file :details :image :height]))))
+              :w (get-in % [:fields :file :details :image :width])
+              :h (get-in % [:fields :file :details :image :height]))))
        (into {})))
 
 (defn- keywordize-name [name]
@@ -104,17 +105,17 @@
       ; Adds :image-gallery-items
       (assoc-in [:fields :image-gallery-items]
                 (->> (get-in activity [:fields :imageGallery])
-                     (map (comp :id :sys))        ; Gallery image ids.
+                     (map (comp :id :sys))                            ; Gallery image ids.
                      (mapv (image-by-id assets))))
       ; Add :skill-
       (assoc-in [:skill-set] (or (some->> activity
-                                  :fields
-                                  :skills
-                                  remove-nil
-                                  seq          ; some->> gives nil if empty
-                                  (map keywordize-name)
-                                  set)
-                              activity))))
+                                          :fields
+                                          :skills
+                                          remove-nil
+                                          seq                                    ; some->> gives nil if empty
+                                          (map keywordize-name)
+                                          set)
+                                 activity))))
 
 (defn- process-activities
   [activities platforms assets]
@@ -125,7 +126,7 @@
 (defn handle-get-all-entries-for-given-space
 
   "asynchronously GET all entries for given space
-  optionally pass library-view=true param to get all entries for given space"
+	optionally pass library-view=true param to get all entries for given space"
 
   [req]
 
@@ -134,15 +135,18 @@
         opts2 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}]
     (let [{:keys [status body]}
           @(http/get (format "https://cdn.contentful.com/spaces/%1s/entries?" space-id) opts2)
-          metadata (get-activity-metadata space-id opts1)]
+          metadata (get-space-metadata space-id opts1)]
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
               platforms (filter-entries "platform" (:items entries))
-              activities (filter-entries "activity" (:items entries))]
-          (ok {:metadata (process-metadata (:body @metadata))
+              activities (concat (filter-entries "klipseActivity" (:items entries))
+                                 (filter-entries "activity" (:items entries)))]
+
+
+          (ok {:metadata   (process-metadata (:body @metadata))
                :activities (process-activities activities platforms assets)
-               :platforms platforms}))
+               :platforms  platforms}))
         (not-found status)))))
 
 (defn- compose-new-activity-email
@@ -158,13 +162,13 @@
         description (-> activity :fields :summary :en-US)
         subject (format "New Owlet Activity Published: %s by %s" title author)
         url (format "http://owlet.codefordenver.org/#/activity/#!%s" id)
-        html (render-file "activity-email.html" {:activity-id id
-                                                        :activity-image-url image-url
-                                                        :activity-title title
-                                                        :platform-color platform-color
-                                                        :platform-name platform-name
-                                                        :activity-description description
-                                                        :skill-names skills})]
+        html (render-file "activity-email.html" {:activity-id          id
+                                                 :activity-image-url   image-url
+                                                 :activity-title       title
+                                                 :platform-color       platform-color
+                                                 :platform-name        platform-name
+                                                 :activity-description description
+                                                 :skill-names          skills})]
     (hash-map :subject subject
               :html html)))
 
@@ -178,7 +182,7 @@
             {:keys [status body]}
             @(http/put (subscriber-endpoint id)
                        {:body (json/encode
-                                {:email (:email subscriber)
+                                {:email     (:email subscriber)
                                  :confirmed (when-not (nil? confirmed?)
                                               (not confirmed?))})})]
         (if (= 200 status)
@@ -204,59 +208,93 @@
     (when (= (:status mail-transact!) 200)
       (prn (str "Sent confirmation email to " email)))))
 
+(defn is-new-activity?
+  "return whether or not this activity is being published for the first time"
+  [activity]
+  (let [revision (get-in activity [:sys :revision])
+        activity-type (get-in activity [:sys :contentType :sys :id])]
+    (and (or (= "activity" activity-type)
+             (= "klipseActivity" activity-type))
+         ;; checking that this is the first published version of this activity content
+         (= 1 revision))))
+
+
+(defn make-email-recipients
+  "Returns a list of subscribers delimited by a comma"
+  [users]
+  (let [values (map val users)
+        emails (for [user values
+                     :when (:confirmed user)]
+                 (:email user))]
+    (clojure.string/join "," emails)))
+
+(defn get-subscribers-from-firebase
+  "Returns a list of subscribers from firebase endpoint"
+  [endpoint]
+  (let [{:keys [status body]} @(http/get endpoint)]
+    (if (= 200 status)
+      (let [users->json (json/parse-string body true)]
+        (make-email-recipients users->json))
+      (internal-server-error "Unable to retrieve subscribers from firebase endpoint"))))
+
+(defn get-activity-image-thumbnail
+  "Fetch, process & return activity with activity image thumbnail, provides default if none is found"
+  [activity]
+  (let [space-id (get-in activity [:sys :space :sys :id])
+        default-thumbnail-url "owlet.codefordenver.org/img/default-thumbnail.png"]
+    (if-let [asset-id (get-in activity [:fields :preview :en-US :sys :id])]
+      (let [{:keys [status body]} @(get-asset-by-id space-id asset-id)]
+        (if (= 200 status)
+          (let [body (json/parse-string body true)
+                asset-url (get-in body [:fields :file :url])]
+               (-> activity
+                   (assoc-in [:fields :preview :sys :url] asset-url)))
+          (internal-server-error (str "Unable to retrieve activity thumbnail with asset-id:" asset-id))))
+      ;; return with default thumbnail
+      (-> activity
+          (assoc-in [:fields :preview :sys :url] default-thumbnail-url)))))
+
+(defn get-platform-metadata-for-activity
+  "Fetch, process & return activity metadata details"
+  [activity]
+  (let [space-id (get-in activity [:sys :space :sys :id])
+        entry-id (get-in activity [:fields :platformRef :en-US :sys :id])]
+    (let [{:keys [status body]} @(get-entry-by-id space-id entry-id)]
+      (if (= 200 status)
+        (let [body (json/parse-string body true)
+              platform-name (get-in body [:fields :name])
+              platform-color (get-in body [:fields :color])]
+          (-> activity
+              (assoc-in [:fields :platform :name] platform-name)
+              (assoc-in [:fields :platform :color] platform-color)))
+        (internal-server-error "Unable to retrieve activity's entry metadata")))))
+
 (defn handle-activity-publish
   "Sends email to list of subscribers"
   [req]
-  (let [payload (:params req)
-        is-new-activity?
-        (and (= "activity" (get-in payload [:sys :contentType :sys :id]))
-             (= 1 (get-in payload [:sys :revision])))]
-    (if is-new-activity?
-      (let [{:keys [status body]} @(http/get subscribers-endpoint)]
-        (if (= 200 status)
-          (let [json (json/parse-string body true)
-                users (map val json)
-                emails (for [user users :when (:confirmed user)] (:email user))
-                subscribers (clojure.string/join "," emails)]
-            (let [space-id (get-in payload [:sys :space :sys :id])
-                  asset-id (get-in payload [:fields :preview :en-US :sys :id])
-                  {:keys [status body]} @(get-asset-by-id space-id asset-id)]
-              (if (= 200 status)
-                (let [body (json/parse-string body true)
-                      asset-url (get-in body [:fields :file :url])
-                      payload
-                      (-> payload
-                          (assoc-in [:fields :preview :sys :url] asset-url))]
-                  (let [entry-id (get-in payload [:fields :platformRef :en-US :sys :id])
-                        {:keys [status body]} @(get-entry-by-id space-id entry-id)]
-                    (if (= 200 status)
-                      (let [body (json/parse-string body true)
-                            platform-name (get-in body [:fields :name])
-                            platform-color (get-in body [:fields :color])
-                            payload
-                            (-> payload
-                                (assoc-in [:fields :platform :name] platform-name)
-                                (assoc-in [:fields :platform :color] platform-color))]
-                        (let [{:keys [subject html]} (compose-new-activity-email payload)
-                              mail-transact!
-                              (mail/send-mail creds
-                                              {:from    "owlet@mmmanyfold.com"
-                                               :to      "owlet@mmmanyfold.com"
-                                               :bcc     subscribers
-                                               :subject subject
-                                               :html    html})]
-                          (if (= (:status mail-transact!) 200)
-                            (ok "Emailed Subscribers Successfully.")
-                            (internal-server-error mail-transact!))))
-                      (internal-server-error status))))
-                (internal-server-error status))))
-          (internal-server-error status)))
+  (let [activity-payload (:params req)]
+    (if (is-new-activity? activity-payload)
+      (let [subscribers (get-subscribers-from-firebase subscribers-endpoint)
+            activity (-> activity-payload
+                         (get-activity-image-thumbnail)
+                         (get-platform-metadata-for-activity))]
+        (prn activity)
+        (let [{:keys [subject html]} (compose-new-activity-email activity)
+              mail-transaction (mail/send-mail creds
+                                               {:from    "owlet@mmmanyfold.com"
+                                                :to      "owlet@mmmanyfold.com"
+                                                :bcc     subscribers
+                                                :subject subject
+                                                :html    html})]
+          (if (= (:status mail-transaction) 200)
+            (ok "Emailed Subscribers Successfully.")
+            (internal-server-error mail-transaction))))
       (ok "Not a new activity."))))
 
 (defn handle-activity-subscribe
 
   "handles new subscription request
-   -checks list of subs b4 adding to list; ie no duplicates"
+	 -checks list of subs b4 adding to list; ie no duplicates"
 
   [req]
 
@@ -276,7 +314,7 @@
           (let [id (epoch)
                 {:keys [status body]}
                 @(http/put (subscriber-endpoint id)
-                           {:body (json/encode {:email email
+                           {:body (json/encode {:email     email
                                                 :confirmed false})})]
             (if (= status 200)
               (do

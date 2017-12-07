@@ -32,7 +32,9 @@
 
 (rf/reg-event-fx
   :get-content-from-contentful-success
-  (fn [{db :db} [_ route-args {activities :activities metadata :metadata platforms :platforms}]]
+  (fn [{db :db} [_ route-args {activities :activities
+                               metadata :metadata
+                               platforms :platforms}]]
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
           branches (:branches metadata)
@@ -140,6 +142,11 @@
     {:dispatch-n (list [:set-active-view :activity-view]
                        [:set-activity-in-view route-param])}))
 
+(rf/reg-event-fx
+  :show-klipse
+  (fn [_ [_ route-param]]
+    {:dispatch-n (list [:set-active-view :klipse-activity-view]
+                       [:set-activity-in-view route-param])}))
 
 ; search & filter
 

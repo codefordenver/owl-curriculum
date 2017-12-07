@@ -113,9 +113,9 @@
 
 (rf/reg-event-db
   :set-activity-in-view
-  (fn [db [_ activity-id all-activities]]
+  (fn [db [_ activity-id]]
     (when-let [activity-match (some #(when (= (get-in % [:sys :id]) activity-id) %)
-                                  (or (:activities db) all-activities))]
+                                (:activities db))]
       (assoc db :activity-in-view activity-match))))
 
 (rf/reg-event-db :get-content-from-contentful-failure

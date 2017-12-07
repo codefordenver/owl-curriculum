@@ -10,6 +10,10 @@ h1 {
   margin-top: 10px;
   line-height: 1.55em; }
 
+h2 {
+  margin-top: 10px;
+  margin-bottom: 15px; }
+
 h4 {
   font-weight: lighter; }
 
@@ -466,11 +470,7 @@ mark {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
-  background: #6A2569;
-  background: -moz-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
-  background: -webkit-linear-gradient(top, #1A0F2E 0%, #493B68 100%);
-  background: linear-gradient(to bottom, #1A0F2E 0%, #493B68 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1A0F2E', endColorstr='#493B68',GradientType=0 );
+  background: url("../img/cfd-bg.jpg");
   background-size: cover !important; }
 
 .outer-height-wrap {
@@ -683,8 +683,9 @@ span.platform-details {
 
 /* activity view */
 .activity-wrap {
-  width: 98%;
+  width: 96%;
   margin: 0 auto;
+  padding-top: 10px;
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em; }
@@ -720,7 +721,8 @@ span.platform-details {
 
 .activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
-  padding: 10px 12px 2px 15px; }
+  padding: 10px 12px 2px 15px;
+  margin-bottom: 30px; }
   .activity-info-wrap span.platform-details, .activity-inspiration-wrap span.platform-details, .activity-challenge-wrap span.platform-details {
     font-size: 0.75em; }
 
@@ -787,10 +789,33 @@ span.platform-details {
 
 /* interactive components */
 pre {
-  width: 80%;
-  margin: 0 auto;
+  width: 100%;
   margin-top: 2em;
-  margin-bottom: 2em; }
+  margin-bottom: 4em;
+  margin-right: 0 !important; }
+  @media screen and (max-width: 991px) {
+    pre {
+      width: 100%; } }
+
+/* hides loading component when
+klipse-container is present */
+.klipse-container + .loading {
+  display: none; }
+
+.CodeMirror {
+  padding: 10px; }
+
+.CodeMirror:first-child {
+  font-weight: bold; }
+
+.CodeMirror:nth-child(2) {
+  background-color: #65D2C0;
+  color: yellow; }
+  .CodeMirror:nth-child(2) pre:nth-child(2) {
+    margin-top: 10px; }
+  .CodeMirror:nth-child(2) .cm-number,
+  .CodeMirror:nth-child(2) .cm-variable {
+    color: yellow; }
 
 /* buttons and inputs */
 #change-bg-btn {
@@ -839,12 +864,12 @@ button {
 
 #email-wrap {
   transition: height 0.3s;
-  width: 281px;
+  width: 313px;
   padding: 10px;
   color: #C8C8C8;
   border-radius: 7px 0;
   background: #0c171b;
-  font-size: 0.8em;
+  font-size: 0.9em;
   position: fixed;
   bottom: 0;
   right: 0;
@@ -863,21 +888,21 @@ button {
   margin-bottom: 0; }
 
 #email-input {
-  height: 24px;
-  width: 185px;
+  height: 28px;
+  width: 205px;
   display: inline-block;
   border: none;
   border-radius: 3px;
   padding-left: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #222F33;
   color: #C8C8C8;
   outline: 0; }
   #email-input:active {
     outline: 0; }
 
 #unsubscribe-button {
-  height: 24px;
-  width: 90px;
+  height: 28px;
+  width: 100px;
   margin-left: 10px;
   display: inline-block;
   position: inherit;
@@ -891,25 +916,28 @@ button {
     outline: 0; }
 
 #email-button {
-  width: 65px;
-  height: 24px;
+  width: 77px;
+  height: 28px;
   margin-left: 10px;
   display: inline-block;
   border: none;
   border-radius: 3px;
   padding: 5px;
   color: #C8C8C8;
-  font-size: 0.9em;
   background-color: #32254B;
   outline: 0; }
   #email-button:active {
     outline: 0; }
 
 .email-unsubscribe {
+  font-size: 0.75em;
   padding: 10px;
   margin: 30px 0;
-  background-color: #0c171b;
-  width: 306px; }
+  width: 335px; }
+  .email-unsubscribe #email-input {
+    background-color: white;
+    border: 1px #222F33 solid;
+    color: #222F33; }
 
 .refresh {
   animation: refresh 1s 1;
@@ -972,7 +1000,10 @@ button {
 /* Loading Icon */
 .loading {
   width: 100px;
-  height: 100px; }
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em; }
 
 .loading__ring {
   position: absolute;

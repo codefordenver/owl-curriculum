@@ -49,6 +49,9 @@
   (defroute "/activity/#!:activity" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-activity (:activity params)]))
 
+  (defroute "/klipse/#!:klipse" {:as params}
+            (rf/dispatch [:get-content-from-contentful :show-klipse (:klipse params)]))
+
   (defroute "*" []
             (let [uri (-> js/window .-location .-href)]
               (if (re-find #"%23" uri)

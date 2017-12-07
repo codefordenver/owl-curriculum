@@ -48,9 +48,10 @@
       [:div.summary summary]
       (when skills
         (for [skill skills]
-          ^{:key (gensym "skill-")}
           (if (= (lower-case skill) (lower-case display-name))
+            ^{:key (gensym "skill-")}
             [:div.tag {:on-click #(rf/dispatch [:show-skill skill])}
               [:span skill]]
+            ^{:key (gensym "skill-")}
             [:div.tag.inactive {:on-click #(rf/dispatch [:show-skill skill])}
               [:span skill]])))]]))
