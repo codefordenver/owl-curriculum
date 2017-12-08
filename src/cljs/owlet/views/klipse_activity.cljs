@@ -39,7 +39,7 @@
                [activity-embed embed skills preview]]
               [:div.activity-content.col-xs-12.col-lg-6
                [:h2 {:style {:margin-top "40px"}}
-                [:mark "Give it a try:"]]
+                [:mark "Edit this code:"]]
                [klipse-component language code]]
               [:div.activity-content.col-xs-12
                [activity-info platform  summary why preRequisites materials]]
