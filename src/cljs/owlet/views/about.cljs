@@ -16,7 +16,7 @@
                     ctx
                     (clj->js {:type "line"
                               :data {:labels labels
-                                     :datasets [{:label "Commits"
+                                     :datasets [{:label "# of GitHub commits* per week"
                                                  :backgroundColor "rgba(220, 0, 0, 1)"
                                                  :borderColor "rgba(220, 0, 0, 1)"
                                                  :data data
@@ -75,6 +75,10 @@
            [:p "This project is independently produced and maintained by a team of Code for Denver volunteers, who have been developing it since March 2016. It’s open source and "
             [:a {:href "https://github.com/codefordenver/owlet"} "available on GitHub"] "."][:br]
            [:canvas#chart]
+           [:p {:style {:font-size "0.5em"
+                        :font-family "arial, sans-serif"
+                        :color "gray"}}
+              "*In the git workflow, a \"commit\" is an individual contribution to a project's codebase."][:br]
            [:img {:src "../img/logo-contentful.png"
                   :width "37%"}]
            [:p "Special thanks to "
@@ -90,13 +94,14 @@
            "David Viramontes"[:br]
            "Michelle Lim"[:br]
            "Tyler Perkins"[:br]
-           "Zaden Ruggiero-Boune"[:br][:br]
+           "Zaden Ruggiero-Boune"[:br]
+           "Kyu Han"[:br]
+           "Katie Scruggs"[:br][:br]
            [:h4 "Graphic Design:"]
            "Trinh Nguyen"[:br][:br]
-           [:h4 "Content:"]
+           [:h4 "Content Creation:"]
            "Michelle Lim"[:br]
-           "Katie Frank"[:br]
-           "Tony Gilbert-Davis"[:br][:br][:br]
+           "Katie Scruggs"[:br][:br][:br]
            [:h3 [:mark "Contact"]]
            [:p "Michelle Lim" [:br]
             [:a {:href "mailto:elle@mmmanyfold.com"} "elle@mmmanyfold.com"]]]]])}))
