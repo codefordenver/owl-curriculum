@@ -53,7 +53,7 @@
                  [cljsjs/google-analytics "2015.04.13-0"]
                  [cljsjs/photoswipe "4.1.1-0"]
                  [re-com "1.0.0"]
-                 [re-frisk "0.4.4"]
+                 [re-frisk "0.5.3"]
                  [day8.re-frame/http-fx "0.1.3"]
                  [ring-middleware-format "0.7.0"]
                  [ring-webjars "0.1.1"]
