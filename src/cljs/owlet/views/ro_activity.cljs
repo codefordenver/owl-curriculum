@@ -23,7 +23,7 @@
                         title
                         embed
                         author
-                        skills
+                        tags
                         summary
                         preview
                         challenge
@@ -38,7 +38,7 @@
               [:div.activity-header.col-xs-12
                [activity-title title author]]
               [:div.activity-content.col-xs-12.col-lg-8
-               [activity-embed embed skills preview]
+               [activity-embed embed tags preview]
                (when (seq image-gallery-items)
                 [activity-image-gallery image-gallery-items])]
               [:div.activity-content.col-xs-12.col-lg-4

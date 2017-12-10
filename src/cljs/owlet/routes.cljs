@@ -37,8 +37,8 @@
   (defroute "/branches" []
             (rf/dispatch [:get-content-from-contentful :show-branches]))
 
-  (defroute "/skill/:skill" {:as params}
-            (rf/dispatch [:get-content-from-contentful :show-skill (:skill params)]))
+  (defroute "/tag/:tag" {:as params}
+            (rf/dispatch [:get-content-from-contentful :show-tag (:tag params)]))
 
   (defroute "/platform/:platform" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-platform (:platform params)]))

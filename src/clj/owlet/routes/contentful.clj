@@ -44,7 +44,7 @@
   (http/get (format "https://cdn.contentful.com/spaces/%1s/assets/%2s" space-id asset-id)
             {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}))
 
-; TODO: refactor to get skills and branches from Klipse Activity model too
+; TODO: refactor to get tags and branches from Klipse Activity model too
 (defn- process-metadata
   [metadata]
   (let [body (json/parse-string metadata true)
@@ -56,9 +56,9 @@
                                  [:items :validations])
                          first
                          :in))
-        skills (pluck-prop "skills")
+        tags (pluck-prop "tags")
         branches (pluck-prop "branch")]
-    {:skills   skills
+    {:tags   tags
      :branches branches}))
 
 (defn- filter-entries [content-type items]
@@ -107,10 +107,10 @@
                 (->> (get-in activity [:fields :imageGallery])
                      (map (comp :id :sys))                            ; Gallery image ids.
                      (mapv (image-by-id assets))))
-      ; Add :skill-
-      (assoc-in [:skill-set] (or (some->> activity
+      ; Add :tag-
+      (assoc-in [:tag-set] (or (some->> activity
                                           :fields
-                                          :skills
+                                          :tags
                                           remove-nil
                                           seq                                    ; some->> gives nil if empty
                                           (map keywordize-name)
@@ -158,7 +158,7 @@
         image-url (-> activity :fields :preview :sys :url)
         platform-color (-> activity :fields :platform :color)
         platform-name (-> activity :fields :platform :name)
-        skills (-> activity :fields :skills :en-US)
+        tags (-> activity :fields :tags :en-US)
         description (-> activity :fields :summary :en-US)
         subject (format "New Owlet Activity Published: %s by %s" title author)
         url (format "http://owlet.codefordenver.org/#/activity/#!%s" id)
@@ -168,7 +168,7 @@
                                                  :platform-color       platform-color
                                                  :platform-name        platform-name
                                                  :activity-description description
-                                                 :skill-names          skills})]
+                                                 :tag-names          tags})]
     (hash-map :subject subject
               :html html)))
 

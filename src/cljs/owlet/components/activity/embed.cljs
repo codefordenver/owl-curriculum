@@ -6,7 +6,7 @@
   [iframe-code]
   (.replace iframe-code (js/RegExp. "/\\\"/g,'\\''")))
 
-(defn activity-embed [embed skills preview]
+(defn activity-embed [embed tags preview]
   (let [preview-url (-> preview :sys :url)]
     [:div.activity-embed-wrap.box-shadow
      (if-not embed
@@ -15,11 +15,11 @@
        [:div.embed-container
         {"dangerouslySetInnerHTML"
          #js{:__html (generic-responsive-iframe embed)}}])
-     (when skills
-       [:div.activity-skills-wrap
-        [:div.skills
-          "SKILLS: "]
-        (for [skill skills]
-         ^{:key (gensym "skill-")}
-          [:div.tag {:on-click #(rf/dispatch [:show-skill skill])}
-            [:span skill]])])]))
+     (when tags
+       [:div.activity-tags-wrap
+        [:div.tags
+          "TAGS: "]
+        (for [tag tags]
+         ^{:key (gensym "tag-")}
+          [:div.tag {:on-click #(rf/dispatch [:show-tag tag])}
+            [:span tag]])])]))

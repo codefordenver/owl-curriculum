@@ -52,7 +52,7 @@
 
 (reg-getter :app-title [:app :title])
 
-(reg-getter :skills [:skills])
+(reg-getter :tags [:tags])
 
 (reg-getter :activity-titles [:activity-titles])
 
