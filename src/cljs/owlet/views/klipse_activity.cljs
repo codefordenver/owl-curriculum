@@ -22,7 +22,7 @@
                         title
                         embed
                         author
-                        skills
+                        tags
                         summary
                         preview
                         materials
@@ -36,7 +36,7 @@
               [:div.activity-header.col-xs-12
                [activity-title title author]]
               [:div.activity-content.col-xs-12.col-lg-6
-               [activity-embed embed skills preview]]
+               [activity-embed embed tags preview]]
               [:div.activity-content.col-xs-12.col-lg-6
                [:h2 {:style {:margin-top "40px"}}
                 [:mark "Edit this code:"]]

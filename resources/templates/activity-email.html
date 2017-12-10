@@ -24,10 +24,10 @@
       <div style="color: black;margin-top: 10px;font-size: 0.9em;">
         {{activity-description}}
       </div>
-      {% for skill-name in skill-names %}
-      <a href="http://owlet.codefordenver.org/#/skill/{{skill-name|lower}}" style="display: inline-block;">
+      {% for tag-name in tag-names %}
+      <a href="http://owlet.codefordenver.org/#/tag/{{tag-name|lower}}" style="display: inline-block;">
         <div onmouseover="this.style.backgroundColor='#483C6C'" onmouseout="this.style.backgroundColor='#564B82'" style="vertical-align: baseline;color: white;cursor: pointer;text-transform: uppercase;border-radius: 25px;margin: 10px 10px 0px 0px;padding: 7px 7px 6px 7px;font-weight: normal;font-size: 0.55em;background-color: #564B82;display: inline-block;line-height: 1;">
-          <span>{{skill-name}}</span>
+          <span>{{tag-name}}</span>
         </div>
       </a>
       {% endfor %}

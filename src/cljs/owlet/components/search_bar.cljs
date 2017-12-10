@@ -55,11 +55,11 @@
      :reagent-render
       (fn []
         (let [branches (rf/subscribe [:activity-branches])
-              skills (rf/subscribe [:skills])
+              tags (rf/subscribe [:tags])
               activity-titles (rf/subscribe [:activity-titles])
               activity-platforms (rf/subscribe [:activity-platforms])
               platform-names (map #(:name %) @activity-platforms)
-              search-collections (concat @skills @branches @activity-titles platform-names)
+              search-collections (concat @tags @branches @activity-titles platform-names)
               result-formatter #(-> {:term %})
               suggestion-renderer #(:term %)
               special-char-pattern (re-pattern "[^A-Za-z0-9]")

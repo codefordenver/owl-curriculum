@@ -9,7 +9,7 @@
 (defn activity-thumbnail [fields entry-id display-name]
   (let [preview-image-url (get-in fields [:preview :sys :url])
         image (or preview-image-url "img/default-thumbnail.png")
-        {:keys [title summary platform skills]} fields
+        {:keys [title summary platform tags]} fields
         platform-name (:name platform)
         platform-search-name (:search-name platform)
         platform-color (:color platform)
@@ -46,12 +46,12 @@
           (when platform-download
                 [:span " | " [:b "download required"]])]]
       [:div.summary summary]
-      (when skills
-        (for [skill skills]
-          (if (= (lower-case skill) (lower-case display-name))
-            ^{:key (gensym "skill-")}
-            [:div.tag {:on-click #(rf/dispatch [:show-skill skill])}
-              [:span skill]]
-            ^{:key (gensym "skill-")}
-            [:div.tag.inactive {:on-click #(rf/dispatch [:show-skill skill])}
-              [:span skill]])))]]))
+      (when tags
+        (for [tag tags]
+          (if (= (lower-case tag) (lower-case display-name))
+            ^{:key (gensym "tag-")}
+            [:div.tag {:on-click #(rf/dispatch [:show-tag tag])}
+              [:span tag]]
+            ^{:key (gensym "tag-")}
+            [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag tag])}
+              [:span tag]])))]]))

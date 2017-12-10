@@ -738,7 +738,7 @@ span.platform-details {
 .activity-embed-wrap {
   margin-bottom: 30px; }
 
-.activity-skills-wrap {
+.activity-tags-wrap {
   padding: 5px;
   background-color: #0c171b;
   color: white;
@@ -748,7 +748,7 @@ span.platform-details {
   align-items: center;
   -webkit-flex-flow: row nowrap;
   flex-flow: row nowrap; }
-  .activity-skills-wrap .skills {
+  .activity-tags-wrap .tags {
     padding: 2px 5px 0 12px;
     letter-spacing: 2px;
     font-weight: 400; }

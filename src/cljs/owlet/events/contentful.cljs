@@ -38,8 +38,8 @@
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
           branches (:branches metadata)
-          skills (:skills metadata)
-          activities (map #(update-in % [:skill-set] (partial (comp set map) keyword))
+          tags (:tags metadata)
+          activities (map #(update-in % [:tag-set] (partial (comp set map) keyword))
                         activities)
           activity-titles (remove-nil (map #(get-in % [:fields :title]) activities))
           branches-template (->> (mapv (fn [branch]
@@ -71,7 +71,7 @@
             :activity-platforms (map #(:fields %) platforms)
             :activities activities
             :activity-branches branches
-            :skills skills
+            :tags tags
             :activities-by-branch activities-by-branch
             :activity-titles activity-titles)
        :dispatch [route-dispatch route-param]})))
@@ -130,9 +130,9 @@
                        [:set-active-document-title! route-param])}))
 
 (rf/reg-event-fx
-  :show-skill
+  :show-tag
   (fn [_ [_ route-param]]
-    {:dispatch-n (list [:set-active-view :filtered-activities-view "skill"]
+    {:dispatch-n (list [:set-active-view :filtered-activities-view "tag"]
                        [:filter-activities-by-search-term route-param]
                        [:set-active-document-title! route-param])}))
 
@@ -166,16 +166,16 @@
           (set-path (str "branch/" (->kebab-case term)))
           (assoc db :activities-by-filter filtered-set))
 
-        ;; by skill
+        ;; by tag
         ;; --------
 
-        (let [filtered-set (filter #(when (contains? (:skill-set %) search-term) %) activities)]
+        (let [filtered-set (filter #(when (contains? (:tag-set %) search-term) %) activities)]
           (if (seq filtered-set)
-            (let [skills (:skills db)
-                  lowercase-skills (map str/locale-lower skills)
-                  skill-index (.indexOf lowercase-skills (string/lower-case term))
-                  display-name (nth skills skill-index)]
-              (set-path (str "skill/" (->kebab-case term)))
+            (let [tags (:tags db)
+                  lowercase-tags (map str/locale-lower tags)
+                  tag-index (.indexOf lowercase-tags (string/lower-case term))
+                  display-name (nth tags tag-index)]
+              (set-path (str "tag/" (->kebab-case term)))
               (assoc db :activities-by-filter (hash-map :activities filtered-set
                                                         :display-name (str/capital display-name))))
 
