@@ -17,41 +17,46 @@
         platform-free (:free platform)
         route-param (first (keys @(rf/subscribe [:route-params])))
         showing? (reagent/atom false)]
-    [:div.col-xs-12.col-md-6.col-lg-4
-     [:div.activity-thumbnail-wrap.box-shadow
-      [:a {:href (str "#/activity/#!" entry-id)}
-       [:div.activity-thumbnail {:style {:background-image (str "url('" image "')")}}
-        [:mark.title title]]]
-      [:div.platform-wrap
-       [:b "PLATFORM"][:br]
-       [re-com/popover-anchor-wrapper
-          :showing? showing?
-          :position :below-right
-          :anchor [:div.platform.btn
-                   {:on-click #(rf/dispatch [:show-platform platform-search-name])
-                    :style {:background-color platform-color}
-                    :on-mouse-over (when (not= route-param :platform)
-                                     (handler-fn (reset! showing? true)))
-                    :on-mouse-out  (when (not= route-param :platform)
-                                     (handler-fn (reset! showing? false)))}
-                   platform-name]
-          :popover [re-com/popover-content-wrapper
-                    :close-button? false
-                    :body "Click for more info"]]
-       [:span.platform-details
-          " > "
-          (cond (true? platform-free) [:b "FREE"]
-                (false? platform-free) [:span {:style {:color "green"
-                                                       :font-weight "bold"}} "$"])
-          (when platform-download
-                [:span " | " [:b "download required"]])]]
-      [:div.summary summary]
-      (when tags
+
+    [:div {:key (str entry-id), :class "col-xs-12 col-md-6 col-lg-4"}
+      (into
+       ; The list of tags will be appended to the following [:div...] so that
+       ; the :key ids will be noticed by Reagent/React. Otherwise, you'll see
+       ; a screenful of warnings in the browser's console.
+       [:div.activity-thumbnail-wrap.box-shadow
+        [:a {:href (str "#/activity/#!" entry-id)}
+         [:div.activity-thumbnail {:style {:background-image (str "url('" image "')")}}
+          [:mark.title title]]]
+        [:div.platform-wrap
+         [:b "PLATFORM"][:br]
+         [re-com/popover-anchor-wrapper
+            :showing? showing?
+            :position :below-right
+            :anchor [:div.platform.btn
+                     {:on-click #(rf/dispatch [:show-platform platform-search-name])
+                      :style {:background-color platform-color}
+                      :on-mouse-over (when (not= route-param :platform)
+                                       (handler-fn (reset! showing? true)))
+                      :on-mouse-out  (when (not= route-param :platform)
+                                       (handler-fn (reset! showing? false)))}
+                     platform-name]
+            :popover [re-com/popover-content-wrapper
+                      :close-button? false
+                      :body "Click for more info"]]
+         [:span.platform-details
+            " > "
+            (cond (true? platform-free) [:b "FREE"]
+                  (false? platform-free) [:span {:style {:color "green"
+                                                         :font-weight "bold"}} "$"])
+            (when platform-download
+                  [:span " | " [:b "download required"]])]]
+        [:div.summary summary]
+
         (for [tag tags]
-          (if (= (lower-case tag) (lower-case display-name))
-            ^{:key (gensym "tag-")}
-            [:div.tag {:on-click #(rf/dispatch [:show-tag tag])}
-              [:span tag]]
-            ^{:key (gensym "tag-")}
-            [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag tag])}
-              [:span tag]])))]]))
+          [:div {:class    (if (= (lower-case tag) (lower-case display-name))
+                              "tag"
+                              "tag inactive")
+                 :key      tag
+                 :on-click #(rf/dispatch [:show-tag tag])}
+           [:span tag]])])]))
+

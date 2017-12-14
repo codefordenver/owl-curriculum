@@ -16,6 +16,7 @@
          (let [{:keys [display-name activities & description]} filtered-activities]
            [:div
             [:h2.pushed-left [:mark [back] display-name]]
+
             (when description
               ; filtering by platform
               [:div
@@ -26,10 +27,17 @@
                   [:h3 {:style {:margin-bottom "15px"
                                 :margin-top "40px"}}
                     [:mark.white "Activities"]]]])
-            [:div.flexcontainer-wrap
-             (if (seq activities)
-               (for [activity activities
-                     :let [fields (:fields activity)
-                           entry-id (get-in activity [:sys :id])]]
-                 ^{:key [entry-id (gensym "key-")]} [activity-thumbnail fields entry-id display-name])
-              [:p.no-activities [:mark (str "Nothing yet, but we're working on it.")]])]])))]))
+
+            (into [:div.flexcontainer-wrap]
+                  ; The React :key property of each of these activity-thumbnail
+                  ; components will not be noticed unless the components are
+                  ; in a vector, i.e., [:div.flexcontainer-wrap ...].
+                  (-> (for [activity activities]
+                        (let [fields (:fields activity)
+                              entry-id (get-in activity [:sys :id])]
+                          [activity-thumbnail fields entry-id display-name]))
+                      seq
+                      (or [   ; If there were no activities, append this one
+                              ; [:p...] component instead:
+                           [:p.no-activities
+                            [:mark (str "Nothing yet, but we're working on it.")]]])))])))]))
