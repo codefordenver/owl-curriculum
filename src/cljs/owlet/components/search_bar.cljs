@@ -87,8 +87,7 @@
                                      current-activity (when (not (nil? @(rf/subscribe [:activity-in-view])))
                                                           (string/lower-case (get-in @(rf/subscribe [:activity-in-view]) [:fields :title])))
                                      active-view  (when (not (nil? @(rf/subscribe [:active-view])))
-                                                     (string/lower-case (name @(rf/subscribe [:active-view]))))
-                                     search (aget (js/document.getElementsByClassName "form-control") 0)]
+                                                     (string/lower-case (name @(rf/subscribe [:active-view]))))]
                                  (if (>= platform-index 0)
                                    (if (and (= current-filter (nth platform-names platform-index))
                                             (= active-view "filtered-activities-view"))
