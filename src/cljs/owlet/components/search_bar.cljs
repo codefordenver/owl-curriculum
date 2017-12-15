@@ -33,6 +33,11 @@
 (defn change-scroll! [n]
   (swap! scroll-delta swap-scroll n))
 
+(defn reset-search []
+  (let [search (aget (js->clj (js/document.getElementsByClassName "form-control")) 0)]
+    (set! (.-value search) "")
+    (.blur search)))
+
 (defn check-scroll [contentNodeRef]
   (update-scroll! (.-scrollTop contentNodeRef))
   (let [delta (apply - @scroll-delta)
@@ -76,10 +81,23 @@
               change-handler (fn [t]
                                (let [platform-search-names (map #(->kebab-case (:name %)) @activity-platforms)
                                      platform-names (map #(:name %) @activity-platforms)
-                                     platform-index (.indexOf platform-names (:term t))]
+                                     platform-index (.indexOf platform-names (:term t))
+                                     current-filter (string/lower-case (:display-name @(rf/subscribe [:activities-by-filter])))
+                                     current-activity (string/lower-case (get-in @(rf/subscribe [:activity-in-view ]) [:fields :title]))
+                                     active-view (string/lower-case (name @(rf/subscribe [:active-view])))
+                                     search (aget (js->clj (js/document.getElementsByClassName "form-control")) 0)]
                                  (if (>= platform-index 0)
-                                   (rf/dispatch [:filter-activities-by-search-term (nth platform-search-names platform-index)])
-                                   (rf/dispatch [:filter-activities-by-search-term (:term t)]))))]
+                                   (do
+                                     (if (and (= current-filter (nth platform-names platform-index))
+                                              (= active-view "filtered-activities-view"))
+                                       (js/setTimeout #(reset-search) 100)
+                                       (rf/dispatch [:filter-activities-by-search-term (nth platform-search-names platform-index)])))
+                                   (do
+                                     (if (or (and (= current-activity (string/lower-case (:term t)))
+                                                  (= active-view "activity-view"))
+                                             (= (string/lower-case (:term t)) current-filter))
+                                       (js/setTimeout #(reset-search) 100)
+                                       (rf/dispatch [:filter-activities-by-search-term (:term t)]))))))]
           [:div.search-bar-wrap {:on-blur #(toggle-suggestions)
                                  :on-focus #(toggle-suggestions)
                                  :on-click #(swap! search-classes disj "hidden-search")}
