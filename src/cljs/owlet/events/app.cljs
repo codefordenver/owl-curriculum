@@ -30,7 +30,7 @@
   :set-active-view
   (fn [db [_ active-view opts]]
     (let [sub-info (:sub-info opts)
-          search (aget (js->clj (js/document.getElementsByClassName "form-control")) 0)]
+          search (aget (js/document.getElementsByClassName "form-control") 0)]
       (when-not (nil? search)
         (set! (.-value search) "")
         (.blur search))

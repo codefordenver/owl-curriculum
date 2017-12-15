@@ -19,7 +19,7 @@
 (def swap-scroll (comp (partial drop-last) conj))
 
 (defn toggle-suggestions []
-  (if-let [suggestions (aget (js->clj (js/document.getElementsByClassName "rc-typeahead-suggestions-container")) 0)]
+  (if-let [suggestions (aget (js/document.getElementsByClassName "rc-typeahead-suggestions-container") 0)]
     (let [hidden (.-hidden suggestions)]
       (when-not (nil? suggestions)
         (set! (.-hidden suggestions) (not hidden))))))
@@ -34,14 +34,14 @@
   (swap! scroll-delta swap-scroll n))
 
 (defn reset-search []
-  (let [search (aget (js->clj (js/document.getElementsByClassName "form-control")) 0)]
+  (let [search (aget (js/document.getElementsByClassName "form-control") 0)]
     (set! (.-value search) "")
     (.blur search)))
 
 (defn check-scroll [contentNodeRef]
   (update-scroll! (.-scrollTop contentNodeRef))
   (let [delta (apply - @scroll-delta)
-        search (aget (js->clj (js/document.getElementsByClassName "form-control")) 0)]
+        search (aget (js/document.getElementsByClassName "form-control") 0)]
     (when (>= delta 50)
       (do
         (swap! search-classes conj "hidden-search")
@@ -55,7 +55,7 @@
   (reagent/create-class
     {:component-did-mount
       (fn []
-        (let [contentNodeRef (aget (js->clj (js/document.getElementsByClassName "content")) 0)]
+        (let [contentNodeRef (aget (js/document.getElementsByClassName "content") 0)]
           (.addEventListener contentNodeRef "scroll" #(check-scroll contentNodeRef))))
      :reagent-render
       (fn []
@@ -82,22 +82,23 @@
                                (let [platform-search-names (map #(->kebab-case (:name %)) @activity-platforms)
                                      platform-names (map #(:name %) @activity-platforms)
                                      platform-index (.indexOf platform-names (:term t))
-                                     current-filter (string/lower-case (:display-name @(rf/subscribe [:activities-by-filter])))
-                                     current-activity (string/lower-case (get-in @(rf/subscribe [:activity-in-view ]) [:fields :title]))
-                                     active-view (string/lower-case (name @(rf/subscribe [:active-view])))
-                                     search (aget (js->clj (js/document.getElementsByClassName "form-control")) 0)]
+                                     current-filter (when (not (nil? @(rf/subscribe [:activities-by-filter])))
+                                                       (string/lower-case (:display-name @(rf/subscribe [:activities-by-filter]))))
+                                     current-activity (when (not (nil? @(rf/subscribe [:activity-in-view])))
+                                                          (string/lower-case (get-in @(rf/subscribe [:activity-in-view]) [:fields :title])))
+                                     active-view  (when (not (nil? @(rf/subscribe [:active-view])))
+                                                     (string/lower-case (name @(rf/subscribe [:active-view]))))
+                                     search (aget (js/document.getElementsByClassName "form-control") 0)]
                                  (if (>= platform-index 0)
-                                   (do
-                                     (if (and (= current-filter (nth platform-names platform-index))
-                                              (= active-view "filtered-activities-view"))
-                                       (js/setTimeout #(reset-search) 100)
-                                       (rf/dispatch [:filter-activities-by-search-term (nth platform-search-names platform-index)])))
-                                   (do
-                                     (if (or (and (= current-activity (string/lower-case (:term t)))
-                                                  (= active-view "activity-view"))
-                                             (= (string/lower-case (:term t)) current-filter))
-                                       (js/setTimeout #(reset-search) 100)
-                                       (rf/dispatch [:filter-activities-by-search-term (:term t)]))))))]
+                                   (if (and (= current-filter (nth platform-names platform-index))
+                                            (= active-view "filtered-activities-view"))
+                                     (js/setTimeout #(reset-search) 100)
+                                     (rf/dispatch [:filter-activities-by-search-term (nth platform-search-names platform-index)]))
+                                   (if (or (and (= current-activity (string/lower-case (:term t)))
+                                                (= active-view "activity-view"))
+                                           (= (string/lower-case (:term t)) current-filter))
+                                     (js/setTimeout #(reset-search) 100)
+                                     (rf/dispatch [:filter-activities-by-search-term (:term t)])))))]
           [:div.search-bar-wrap {:on-blur #(toggle-suggestions)
                                  :on-focus #(toggle-suggestions)
                                  :on-click #(swap! search-classes disj "hidden-search")}
