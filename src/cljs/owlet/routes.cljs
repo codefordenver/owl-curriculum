@@ -11,6 +11,7 @@
   ;; --------------------
   ;; define routes here
   (defroute "/" []
+            (rf/dispatch [:get-content-from-contentful])
             (rf/dispatch [:set-active-view :welcome-view]))
 
   (defroute "/404" []
