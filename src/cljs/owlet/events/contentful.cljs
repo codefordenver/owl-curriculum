@@ -74,7 +74,8 @@
             :tags tags
             :activities-by-branch activities-by-branch
             :activity-titles activity-titles)
-       :dispatch [route-dispatch route-param]})))
+       :dispatch-n (list [route-dispatch route-param]
+                         [:set-loading-state! false])})))
 
 
 ; route dispatches
