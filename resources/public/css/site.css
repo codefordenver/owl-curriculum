@@ -799,22 +799,27 @@ pre {
 
 /* hides loading component when
 klipse-container is present */
-.klipse-container + .loading {
+.klipse-separator + .loading {
   display: none; }
 
 .CodeMirror {
   padding: 10px; }
 
-.CodeMirror:first-child {
-  font-weight: bold; }
+.klipse-result .CodeMirror-line:first-child {
+  font-weight: bold;
+  text-transform: uppercase; }
+  .klipse-result .CodeMirror-line:first-child span {
+    background-color: black;
+    color: white;
+    padding: 5px !important; }
 
-.CodeMirror:nth-child(2) {
+.klipse-result .CodeMirror {
   background-color: #65D2C0;
   color: yellow; }
-  .CodeMirror:nth-child(2) pre:nth-child(2) {
-    margin-top: 10px; }
-  .CodeMirror:nth-child(2) .cm-number,
-  .CodeMirror:nth-child(2) .cm-variable {
+  .klipse-result .CodeMirror .CodeMirror-line:nth-child(2) {
+    margin-top: 25px; }
+  .klipse-result .CodeMirror .cm-number,
+  .klipse-result .CodeMirror .cm-variable {
     color: yellow; }
 
 /* buttons and inputs */
