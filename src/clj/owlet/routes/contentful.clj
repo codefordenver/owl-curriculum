@@ -115,7 +115,7 @@
                                           seq                                    ; some->> gives nil if empty
                                           (map keywordize-name)
                                           set)
-                                 activity))))
+                               activity))))
 
 (defn- process-activities
   [activities platforms assets]

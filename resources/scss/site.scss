@@ -984,7 +984,7 @@ pre {
 
 /* hides loading component when
 klipse-container is present */
-.klipse-container + .loading {
+.klipse-separator + .loading {
   display: none;
 }
 
@@ -992,16 +992,22 @@ klipse-container is present */
   padding: 10px;
 }
 
-.CodeMirror:first-child {
+.klipse-result .CodeMirror-line:first-child {
   font-weight: bold;
+  text-transform: uppercase;
+  span {
+    background-color: black;
+    color: white;
+    padding: 5px !important;
+  }
 }
 
-.CodeMirror:nth-child(2) {
+.klipse-result .CodeMirror {
   background-color: $aqua;
   color: yellow;
 
-  pre:nth-child(2) {
-    margin-top: 10px;
+  .CodeMirror-line:nth-child(2) {
+    margin-top: 25px;
   }
 
   .cm-number,
