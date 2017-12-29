@@ -1011,9 +1011,14 @@ klipse-container is present */
   }
 
   .cm-number,
-  .cm-variable {
+  .cm-variable,
+  .cm-keyword {
     color: yellow;
   }
+}
+
+.CodeMirror-selected {
+  min-width: 0;
 }
 
 /* buttons and inputs */
