@@ -112,4 +112,5 @@
             :data-source suggestions-for-search
             :model search-model
             :placeholder "What would you like to learn today? How about HTML, or LED circuits?"
-            :render-suggestion suggestion-renderer]]))}))
+            :render-suggestion suggestion-renderer
+            :disabled? @(rf/subscribe [:loading-state])]]))}))

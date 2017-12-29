@@ -25,6 +25,10 @@
   (fn [_ _]
     db/default-db))
 
+(rf/reg-event-db
+  :set-loading-state!
+  (fn [db [_ state]]
+    (assoc-in db [:app :loading?] state)))
 
 (rf/reg-event-db
   :set-active-view

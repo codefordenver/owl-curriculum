@@ -46,7 +46,7 @@
     (get-in db [:activity-in-view])))
 
 (rf/reg-sub
-  :set-loading-state?
+  :loading-state
   (fn [db]
     (get-in db [:app :loading?])))
 

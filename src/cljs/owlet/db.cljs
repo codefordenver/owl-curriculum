@@ -5,7 +5,7 @@
 (def default-db
   "initial app state"
   {:active-view                  nil
-   :app                          {:loading?     nil
+   :app                          {:loading?     true
                                   :route-params {}
                                   :route-opts nil
                                   :title        (str config/project-name " " "^OvO^")}

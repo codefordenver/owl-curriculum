@@ -50,7 +50,7 @@
   (fb/on-auth-change fb/firebase-auth-object :firebase-auth-change)
 
   (let [active-view (rf/subscribe [:active-view])
-        loading? (rf/subscribe [:set-loading-state?])
+        loading? (rf/subscribe [:loading-state])
         src (rf/subscribe [:my-background-image-url])
         is-user-logged-in? (rf/subscribe [:my-id])]
     (fn []
