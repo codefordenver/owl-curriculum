@@ -819,6 +819,7 @@ klipse-container is present */
   .klipse-result .CodeMirror .CodeMirror-line:nth-child(2) {
     margin-top: 25px; }
   .klipse-result .CodeMirror .cm-number,
+  .klipse-result .CodeMirror .cm-string,
   .klipse-result .CodeMirror .cm-variable,
   .klipse-result .CodeMirror .cm-keyword {
     color: yellow; }
