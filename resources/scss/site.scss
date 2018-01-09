@@ -984,7 +984,7 @@ pre {
 
 /* hides loading component when
 klipse-container is present */
-.klipse-separator + .loading {
+.klipse-result + .loading {
   display: none;
 }
 
