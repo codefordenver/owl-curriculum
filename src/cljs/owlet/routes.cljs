@@ -20,20 +20,17 @@
   (defroute "/about" []
             (rf/dispatch [:get-content-from-contentful :show-about]))
 
-  (defroute "/interactive" []
-            (rf/dispatch [:set-active-view :interactive-view]))
-
   (defroute "/settings" []
             (rf/dispatch [:get-content-from-contentful :show-settings]))
 
   (defroute "/confirm/:sub-info" {:as params} []
-            (rf/dispatch [:set-active-view :confirm-view params]))
+            (rf/dispatch [:get-content-from-contentful :show-confirm params]))
 
   (defroute "/subscribed/:sub-info" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-subscribed params]))
 
   (defroute "/unsubscribe" []
-            (rf/dispatch [:set-active-view :unsubscribe-view]))
+            (rf/dispatch [:get-content-from-contentful :show-unsubscribe]))
 
   (defroute "/branches" []
             (rf/dispatch [:get-content-from-contentful :show-branches]))
@@ -52,6 +49,9 @@
 
   (defroute "/klipse/#!:klipse" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-klipse (:klipse params)]))
+
+  (defroute "/activity/hello-world" []
+            (rf/dispatch [:get-content-from-contentful :show-klipse-scroll]))
 
   (defroute "*" []
             (let [uri (-> js/window .-location .-href)]

@@ -19,7 +19,7 @@
 (defn- reset-background-color! [element color]
   (! element.style.background color))
 
-(defn klipse-component [language code]
+(defn klipse-component [language code & [inline?]]
   (let [evaled? (reagent/atom false)]
     (reagent/create-class
       {:component-did-mount
@@ -50,7 +50,7 @@
                             "Clojure" "language-klipse")
                    :style {:display "none"}}
             (let [pattern #"\\n"]
-              (if (re-find pattern code)
+              (if (and (nil? inline?) (re-find pattern code))
                 (string/replace code pattern "\n")
                 code))]
            [loading-component]]])})))
