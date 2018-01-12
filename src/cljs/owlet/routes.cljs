@@ -24,13 +24,13 @@
             (rf/dispatch [:get-content-from-contentful :show-settings]))
 
   (defroute "/confirm/:sub-info" {:as params} []
-            (rf/dispatch [:set-active-view :confirm-view params]))
+            (rf/dispatch [:get-content-from-contentful :show-confirm params]))
 
   (defroute "/subscribed/:sub-info" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-subscribed params]))
 
   (defroute "/unsubscribe" []
-            (rf/dispatch [:set-active-view :unsubscribe-view]))
+            (rf/dispatch [:get-content-from-contentful :show-unsubscribe]))
 
   (defroute "/branches" []
             (rf/dispatch [:get-content-from-contentful :show-branches]))
@@ -51,7 +51,7 @@
             (rf/dispatch [:get-content-from-contentful :show-klipse (:klipse params)]))
 
   (defroute "/klipse-scroll" []
-            (rf/dispatch [:set-active-view :klipse-activity-scroll-view]))
+            (rf/dispatch [:get-content-from-contentful :show-klipse-scroll]))
 
   (defroute "*" []
             (let [uri (-> js/window .-location .-href)]

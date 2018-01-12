@@ -99,6 +99,12 @@
                        [:set-active-document-title! "Settings"])}))
 
 (rf/reg-event-fx
+  :show-confirm
+  (fn [_ [_ route-param]]
+    {:dispatch-n (list [:set-active-view :confirm-view route-param]
+                       [:set-active-document-title! "Success"])}))
+
+(rf/reg-event-fx
   :show-subscribed
   (fn [_ [_ route-param]]
     {:dispatch-n (list [:set-active-view :subscribed-view route-param]
@@ -148,6 +154,12 @@
   (fn [_ [_ route-param]]
     {:dispatch-n (list [:set-active-view :klipse-activity-view]
                        [:set-activity-in-view route-param])}))
+
+(rf/reg-event-fx
+  :show-klipse-scroll
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :klipse-activity-scroll-view]
+                       [:set-active-document-title! "Klipse Activity Scroll"])}))
 
 ; search & filter
 

@@ -26,6 +26,10 @@ h2 {
   margin-bottom: 15px;
 }
 
+h3 {
+  margin: 10px 0 15px 0;
+}
+
 h4 {
   font-weight: lighter;
 }
@@ -972,10 +976,16 @@ span.platform-details {
 
 /* interactive components */
 
+div.code {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
 pre {
   width: 100%;
   margin-top: 2em;
-  margin-bottom: 4em;
   margin-right: 0 !important;
   @media screen and (max-width: 991px) {
     width: 100%;
@@ -983,8 +993,12 @@ pre {
 }
 
 /* hides loading component when
-klipse-container is present */
-.klipse-result + .loading {
+klipse-separator is present */
+.klipse-separator + .loading {
+  display: none;
+}
+
+.klipse-container {
   display: none;
 }
 
@@ -1013,13 +1027,17 @@ klipse-container is present */
   .cm-number,
   .cm-string,
   .cm-variable,
-  .cm-keyword {
+  .cm-keyword,
+  .cm-error {
     color: yellow;
   }
 }
 
 .CodeMirror-selected {
   min-width: 0;
+}
+.CodeMirror-cursor {
+  min-height: 0;
 }
 
 /* buttons and inputs */
