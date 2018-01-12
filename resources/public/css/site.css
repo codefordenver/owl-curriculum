@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700");
 body {
   font: 100% "Rubik", sans-serif;
   font-weight: 300;
@@ -19,6 +19,16 @@ h3 {
 
 h4 {
   font-weight: lighter; }
+  h4 b {
+    font-weight: 500; }
+
+h5 {
+  font-weight: normal;
+  margin: 10px 0 15px 0; }
+
+li {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em; }
 
 a:hover {
   text-decoration: none; }
@@ -791,10 +801,16 @@ span.platform-details {
       height: 76px; } }
 
 /* interactive components */
-div.code {
+div.code-block {
   font-family: monospace;
   background-color: #eee;
   padding: 0.5em;
+  margin-bottom: 1em; }
+
+span.inline-code {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 0.2em 0.25em 0.05em 0.2em;
   margin-bottom: 1em; }
 
 pre {
