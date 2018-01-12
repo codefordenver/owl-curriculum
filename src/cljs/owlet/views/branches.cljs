@@ -8,7 +8,7 @@
 ;; move into data model
 
 (defn- pair-color [activity-branches]
-  (let [colors ["#FF563E" "#00cbb2" "#3d8142" "#41bba2" "#e1bb00" "#254e68" "#dd0067" "#d37fe6" "#e00000"]]
+  (let [colors ["#FF563E" "#3d8142" "#254e68" "#e1bb00" "#41bba2" "#dd0067" "#d37fe6" "#e00000"]]
     (map vector colors activity-branches)))
 
 (defn branches-view []
