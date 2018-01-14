@@ -10,6 +10,7 @@
             [owlet.views.about :refer [about-view]]
             [owlet.views.klipse-activity :refer [klipse-activity-view]]
             [owlet.views.klipse-activity-scroll :refer [klipse-activity-scroll-view]]
+            [owlet.views.create-klipse-panel-activity :refer [create-klipse-panel-activity-view]]
             [owlet.components.search-bar :refer [search-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
@@ -29,6 +30,7 @@
 (defmethod views :about-view [] [about-view])
 (defmethod views :klipse-activity-view [] [klipse-activity-view])
 (defmethod views :klipse-activity-scroll-view [] [klipse-activity-scroll-view])
+(defmethod views :create-klipse-panel-activity-view [] [create-klipse-panel-activity-view])
 (defmethod views :filtered-activities-view []
   [filtered-activities-view])
 (defmethod views :not-found-view [] [not-found-view])

@@ -50,6 +50,9 @@
   (defroute "/klipse/#!:klipse" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-klipse (:klipse params)]))
 
+  (defroute "/create/klipse-panel-activity" []
+            (rf/dispatch [:get-content-from-contentful :show-create-klipse-panel-activity]))
+
   (defroute "/activity/hello-world" []
             (rf/dispatch [:get-content-from-contentful :show-klipse-scroll]))
 
