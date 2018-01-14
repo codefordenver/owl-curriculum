@@ -16,31 +16,46 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h5 { font-weight: normal }
+input, textarea, button { border-radius: 4px }
+
+h1, h2, h5 { font-weight: 400 }
+h3, h4 { font-weight: 300 }
 
 h1 {
   margin-top: 10px;
   line-height: 1.55em;
+  input {
+    background: none;
+    color: white;
+    line-height: 1.3em;
+    padding-left: 0.3em;
+  }
 }
 
 h2 {
   margin-top: 10px;
   margin-bottom: 15px;
+  textarea {
+    width: 94%;
+    padding-left: 0.15em;
+  }
 }
 
 h3 {
   margin: 10px 0 15px 0;
 }
 
-h4 {
-  font-weight: lighter;
-  b {
-    font-weight: 500;
-  }
+h4 b {
+  font-weight: 500;
 }
 
 h5 {
   margin: 10px 0 15px 0;
+  input {
+    background: none;
+    color: inherit;
+    padding-left: 0.3em;
+  }
 }
 
 li {
@@ -995,6 +1010,11 @@ div.code-block {
   background-color: #eee;
   padding: 0.5em;
   margin-bottom: 1em;
+  textarea {
+    width: 100%;
+    padding: 0.2em;
+    background: none;
+  }
 }
 
 span.inline-code {
@@ -1082,6 +1102,17 @@ klipse-separator is present */
 
 button {
   font-size: 1rem;
+}
+
+button.add-panel {
+  margin: 0.1em 0 3em 0;
+  font-size: 1.4em;
+  font-weight: 400;
+  background-color: white;
+  color: $dark-gray;
+  border-radius: 4px;
+  border: 4px $aqua solid;
+  padding: 0.2em 0.5em 0.2em 0.3em;
 }
 
 .login {
