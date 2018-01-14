@@ -29,8 +29,7 @@
 (defmethod views :about-view [] [about-view])
 (defmethod views :klipse-activity-view [] [klipse-activity-view])
 (defmethod views :klipse-activity-scroll-view [] [klipse-activity-scroll-view])
-(defmethod views :filtered-activities-view []
-  [filtered-activities-view])
+(defmethod views :filtered-activities-view [] [filtered-activities-view])
 (defmethod views :not-found-view [] [not-found-view])
 (defmethod views :activity-view [] [activity-view])
 (defmethod views :branches-view [] [branches-view])
@@ -69,7 +68,7 @@
           [:div.inner-height-wrap
              [:div.content {:style {:background-image (when-not (or (= @active-view :about-view)
                                                                     (= @active-view :confirm-view))
-                                                        @src)
+                                                        (str "url(" @src ")"))
                                     :background-size "cover"}}
                 (when-not (or (= @active-view :about-view)
                               (= @active-view :confirm-view))
