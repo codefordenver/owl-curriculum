@@ -14,10 +14,7 @@
 
 (reg-getter :showing-bg-img-upload [:showing-bg-img-upload])
 
-(rf/reg-sub
-  :my-background-image-url
-  (fn [db]
-    (get-in db [:my-identity :private :background-image-url])))
+(reg-getter :my-background-image-url [:my-identity :private :background-image-url])
 
 (rf/reg-sub
   :library-activities
