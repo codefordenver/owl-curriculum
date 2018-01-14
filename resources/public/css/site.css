@@ -169,8 +169,19 @@ b {
       color: white;
       text-decoration: none;
       display: block; }
+    #sidebar .menu div.settings-icon {
+      margin: 10px;
+      width: 60px;
+      height: 60px; }
     #sidebar .menu div.branch-icon {
       margin: 10px;
+      width: 60px;
+      height: 60px; }
+    #sidebar .menu div.settings-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url("../img/icon3.png");
+      background-size: 100%;
       width: 60px;
       height: 60px; }
     #sidebar .menu div.branch-icon::before {

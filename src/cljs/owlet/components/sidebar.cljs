@@ -11,7 +11,7 @@
      [login-component]]
     [:a.navigation.branch-icon {:href "#/branches"}
      [:div.branch-icon]]
-    [:a.navigation.about-icon {:href "#/settings"}
-     [:div.about-icon]]
+    [:a.navigation.settings-icon {:href "#/settings"}
+     [:div.settings-icon]]
     [:a.navigation.about-icon {:href "#/about"}
      [:div.about-icon]]]])
