@@ -19,13 +19,29 @@
 (defn- reset-background-color! [element color]
   (! element.style.background color))
 
+(defn handle-klipse-evaled [e]
+  (let [output-wrapper-div (? e.detail.result-element.display.wrapper)
+        detail (? e.detail.result)
+        [result _] (js->clj detail)
+        result->key (keyword result)]
+    (if (= result->key :ok)
+      (reset-background-color! output-wrapper-div ok-color)
+      (reset-background-color! output-wrapper-div err-color))))
+
 (defn klipse-component [language code & [inline?]]
   (let [evaled? (reagent/atom false)]
     (reagent/create-class
-      {:component-did-mount
+      {:component-will-unmount
+       (fn []
+         (when-let [klipse-container (js/document.querySelector klipse-container-class)]
+           (. klipse-container
+             (removeEventListener "klipse-snippet-evaled" handle-klipse-evaled)))
+         (.remove (js/document.querySelector "#klipse-script")))
+       :component-did-mount
        (fn []
          (let [tag (js/document.createElement "script")]
            (-> tag (.setAttribute "src" klipse-plugin-path))
+           (-> tag (.setAttribute "id" "klipse-script"))
            (js/document.body.appendChild tag)
            (js/setTimeout #(reset! evaled? true) 5000)))
        :reagent-render
@@ -34,20 +50,12 @@
           (when @evaled?
             (let [klipse-container (js/document.querySelector klipse-container-class)]
               (. klipse-container
-                 (addEventListener "klipse-snippet-evaled"
-                                   (fn [e]
-                                     (let [output-wrapper-div (? e.detail.result-element.display.wrapper)
-                                           detail (? e.detail.result)
-                                           [result _] (js->clj detail)
-                                           result->key (keyword result)]
-                                       (if (= result->key :ok)
-                                         (reset-background-color! output-wrapper-div ok-color)
-                                         (reset-background-color! output-wrapper-div err-color))))))))
+                (addEventListener "klipse-snippet-evaled" handle-klipse-evaled))))
           [:pre
-           [:code {:class (case language
-                            "Python" "language-klipse-python"
-                            "Javascript" "language-klipse-eval-js"
-                            "Clojure" "language-klipse")
+           [:code {:class (case (string/lower-case language)
+                            "python" "language-klipse-python"
+                            "javascript" "language-klipse-eval-js"
+                            "clojure" "language-klipse")
                    :style {:display "none"}}
             (let [pattern #"\\n"]
               (if (and (nil? inline?) (re-find pattern code))

@@ -6,7 +6,7 @@ body {
   font-size: 1.2rem;
   overflow-x: hidden; }
 
-input, textarea, button {
+input, textarea, button, select {
   border-radius: 4px; }
 
 h1, h2, h5 {
@@ -15,33 +15,15 @@ h1, h2, h5 {
 h3, h4 {
   font-weight: 300; }
 
+h2, h3, h5 {
+  margin: 10px 0 15px 0; }
+
 h1 {
   margin-top: 10px;
   line-height: 1.55em; }
-  h1 input {
-    background: none;
-    color: white;
-    line-height: 1.3em;
-    padding-left: 0.3em;
-    width: 84%; }
-
-h2 {
-  margin-top: 10px;
-  margin-bottom: 15px; }
-
-h3 {
-  margin: 10px 0 15px 0; }
 
 h4 b {
   font-weight: 500; }
-
-h5 {
-  margin: 10px 0 15px 0; }
-  h5 input {
-    background: none;
-    color: inherit;
-    padding-left: 0.3em;
-    width: 10em; }
 
 li {
   margin-top: 0.3em;
@@ -125,7 +107,9 @@ b {
       color: white;
       background-color: black; }
   .search-bar-wrap .hidden-search {
-    height: 1.2em; }
+    height: 1.2em;
+    padding-top: 0;
+    padding-bottom: 0; }
   @media (max-width: 767px) {
     .search-bar-wrap {
       margin-left: 31px; } }
@@ -730,7 +714,7 @@ span.platform-details {
     margin-bottom: 0; }
 
 .activity-header {
-  margin: 10px 0; }
+  margin: 10px 0 20px 0; }
 
 .activity-content, .activity-header {
   word-wrap: break-word;
@@ -847,7 +831,7 @@ span.inline-code {
   word-break: break-all; }
 
 .klipse-component {
-  margin-top: 2em;
+  margin-top: 0.5em;
   /* hides loading component when
   klipse-separator is present */ }
   .klipse-component pre {
@@ -892,6 +876,19 @@ span.inline-code {
   .klipse-component .CodeMirror-cursor {
     min-height: 0; }
 
+.activity-title-wrap h1 input {
+  background: none;
+  color: white;
+  line-height: 1.3em;
+  padding-left: 0.3em;
+  width: 84%; }
+
+.activity-title-wrap h5 input {
+  background: none;
+  color: inherit;
+  padding-left: 0.3em;
+  width: 10em; }
+
 .panel-heading {
   margin-left: -15px;
   margin-top: -10px;
@@ -907,6 +904,23 @@ span.inline-code {
   padding: 0.1em 0.3em;
   margin-right: 0.25em;
   font-size: 1.25em; }
+
+.create-activity-buttons button {
+  font-size: 1.4em;
+  font-weight: 400;
+  border: 4px #65D2C0 solid; }
+
+.create-activity-buttons .add-panel {
+  margin: 0.1em 0 2em 0;
+  background-color: white;
+  color: #0c171b;
+  padding: 0.2em 0.4em 0.2em 0.35em; }
+
+.create-activity-buttons .save-activity {
+  margin: 0.1em 0 3em 0;
+  background-color: #0c171b;
+  color: white;
+  padding: 0.2em 0.4em 0.2em 0.45em; }
 
 /* buttons and inputs */
 #change-bg-btn {
@@ -926,16 +940,6 @@ span.inline-code {
 
 button {
   font-size: 1rem; }
-
-button.add-panel {
-  margin: 0.1em 0 3em 0;
-  font-size: 1.4em;
-  font-weight: 400;
-  background-color: white;
-  color: #0c171b;
-  border-radius: 4px;
-  border: 4px #65D2C0 solid;
-  padding: 0.2em 0.5em 0.2em 0.3em; }
 
 .login {
   margin-top: 10px;

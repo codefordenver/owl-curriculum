@@ -23,7 +23,9 @@
         (for [n (range @panel-number)]
           ^{:key (inc n)}
           [create-klipse-panel-component (inc n)])
-        [:button.add-panel
-         {:style {:margin-bottom "3em"}
-          :on-click #(swap! panel-number inc)}
-         "+ Add another panel"]]]])))
+        [:div.create-activity-buttons
+         [:button.add-panel
+          {:on-click #(swap! panel-number inc)}
+          "+ Add another panel"][:br]
+         [:button.save-activity
+          "Save Activity"]]]]])))

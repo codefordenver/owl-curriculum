@@ -3,8 +3,13 @@
             [reagent.core :as reagent]
             [cljsjs.simplemde]))
 
+(defn remount-klipse [remount?]
+  (js/setTimeout #(swap! remount? not) 100))
+
 (defn create-klipse-panel-component [panel-number]
-  (let [text-id-base (str "panel-" panel-number "-text-")]
+  (let [text-id-base (str "panel-" panel-number "-text-")
+        language (reagent/atom "")
+        remount? (reagent/atom true)]
     (reagent/create-class
       {:component-did-mount
        (fn []
@@ -22,9 +27,28 @@
                             :rows "2"
                             :placeholder "Heading"}]]]]
          [:div.panel-text
-            [:textarea {:id (str text-id-base "1")
-                        :placeholder "Optional text (markdown)"}]]
-         [klipse-component "Python" "# Code editor"]
+          [:textarea {:id (str text-id-base "1")
+                      :placeholder "Optional text (markdown)"}]]
+         [:span {:style {:font-weight "500"
+                         :margin "0 0.2em"}}
+                "Choose Language: "]
+         [:select {:id (str "panel-" panel-number "-language")
+                   :value @language
+                   :on-change (fn [e]
+                                (when (not= @language (-> e .-target .-value))
+                                  (swap! remount? not)
+                                  (remount-klipse remount?))
+                                (reset! language (-> e .-target .-value)))}
+          [:option {:value ""} "Select Language"]
+          [:option {:value "python"} "Python"]
+          [:option {:value "javascript"} "JavaScript"]
+          [:option {:value "clojure"} "Clojure"]]
+         (when @remount?
+           (case @language
+             "python" [klipse-component @language "# code editor"]
+             "javascript" [klipse-component @language "// code editor"]
+             "clojure" [klipse-component @language ";; code editor"]
+             "" [:p ""]))
          [:div.panel-text
-            [:h5 [:textarea {:id (str text-id-base "2")
-                             :placeholder "Optional text (markdown)"}]]]])})))
+          [:textarea {:id (str text-id-base "2")
+                      :placeholder "Optional text (markdown)"}]]])})))
