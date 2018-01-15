@@ -2,10 +2,10 @@
   (:require [owlet.components.interactive.klipse :refer [klipse-component]]
             [cljsjs.simplemde]))
 
-(defn create-klipse-panel-component [order]
+(defn create-klipse-panel-component [panel-number]
   [:div.activity-info-wrap.box-shadow
    [:div.panel-heading.flexcontainer-wrap
-    [:div.panel-order order]
+    [:div.panel-number (str panel-number)]
     [:div {:style {:width "82%"}}
      [:h2 [:textarea {:rows "2"
                       :placeholder "Heading"}]]]]

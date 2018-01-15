@@ -1,7 +1,6 @@
 (ns owlet.components.activity.image-gallery
   (:require [cljsjs.photoswipe]
-            [cljsjs.photoswipe-ui-default]
-            [reagent.core :as reagent :refer [atom]]))
+            [cljsjs.photoswipe-ui-default]))
 
 (defn prepare-image-items [image-items]
   ; TODO: pass in image width and height
