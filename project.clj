@@ -64,7 +64,8 @@
                  [metosin/compojure-api "1.1.9"]
                  [nilenso/mailgun "0.2.3"]
                  [funcool/cuerdas "2.0.3"]
-                 [cljsjs/chartjs "2.6.0-0"]]
+                 [cljsjs/chartjs "2.6.0-0"]
+                 [cljsjs/simplemde "1.11.2-0"]]
 
   :min-lein-version "2.0.0"
 

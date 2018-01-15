@@ -161,6 +161,12 @@
     {:dispatch-n (list [:set-active-view :klipse-activity-scroll-view]
                        [:set-active-document-title! "Klipse Activity Scroll"])}))
 
+(rf/reg-event-fx
+  :show-create-klipse-panel-activity
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :create-klipse-panel-activity-view]
+                       [:set-active-document-title! "Klipse Activity Scroll"])}))
+
 ; search & filter
 
 (rf/reg-event-db
