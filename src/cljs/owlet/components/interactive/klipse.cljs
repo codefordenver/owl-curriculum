@@ -30,7 +30,7 @@
            (js/setTimeout #(reset! evaled? true) 5000)))
        :reagent-render
        (fn [language code]
-         [:div
+         [:div.klipse-component
           (when @evaled?
             (let [klipse-container (js/document.querySelector klipse-container-class)]
               (. klipse-container

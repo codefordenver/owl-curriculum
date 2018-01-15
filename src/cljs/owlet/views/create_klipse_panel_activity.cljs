@@ -21,7 +21,7 @@
                    :placeholder "Author"}]]]]
        [:div.activity-content.col-sm-12.col-lg-7
         (for [n (range @panel-number)]
-          ^{:keys n}
+          ^{:key (inc n)}
           [create-klipse-panel-component (inc n)])
         [:button.add-panel
          {:style {:margin-bottom "3em"}

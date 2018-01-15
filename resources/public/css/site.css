@@ -834,50 +834,63 @@ span.inline-code {
   padding: 0.2em 0.25em 0.05em 0.2em;
   margin-bottom: 1em; }
 
-pre {
-  width: 100%;
-  margin-top: 2em;
-  margin-right: 0 !important; }
-  @media screen and (max-width: 991px) {
-    pre {
-      width: 100%; } }
-
-/* hides loading component when
-klipse-separator is present */
-.klipse-separator + .loading {
-  display: none; }
-
-.klipse-container {
-  display: none; }
-
 .CodeMirror {
-  padding: 10px; }
+  min-height: inherit; }
 
-.klipse-result .CodeMirror-line:first-child {
-  font-weight: bold;
-  text-transform: uppercase; }
-  .klipse-result .CodeMirror-line:first-child span {
-    background-color: black;
-    color: white;
-    padding: 5px !important; }
+.panel-text .CodeMirror-scroll {
+  min-height: 100px; }
 
-.klipse-result .CodeMirror {
-  background-color: #65D2C0;
-  color: yellow; }
-  .klipse-result .CodeMirror .CodeMirror-line:nth-child(2) {
-    margin-top: 25px; }
-  .klipse-result .CodeMirror .cm-number,
-  .klipse-result .CodeMirror .cm-string,
-  .klipse-result .CodeMirror .cm-variable,
-  .klipse-result .CodeMirror .cm-keyword,
-  .klipse-result .CodeMirror .cm-error {
+.panel-text .CodeMirror-line {
+  word-break: normal; }
+
+.panel-text .CodeMirror-wrap pre code {
+  word-break: break-all; }
+
+.klipse-component {
+  margin-top: 2em;
+  /* hides loading component when
+  klipse-separator is present */ }
+  .klipse-component pre {
+    width: 100%;
+    margin-right: 0 !important; }
+    @media screen and (max-width: 991px) {
+      .klipse-component pre {
+        width: 100%; } }
+  .klipse-component .CodeMirror-scroll {
+    min-height: inherit; }
+  .klipse-component .CodeMirror {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; }
+    .klipse-component .CodeMirror .CodeMirror-code .cm-comment {
+      background: none; }
+  .klipse-component .klipse-separator + .loading {
+    display: none; }
+  .klipse-component .klipse-container {
+    display: none; }
+  .klipse-component .CodeMirror {
+    padding: 10px; }
+  .klipse-component .klipse-result .CodeMirror-line:first-child {
+    font-weight: bold;
+    text-transform: uppercase; }
+    .klipse-component .klipse-result .CodeMirror-line:first-child span {
+      background-color: black;
+      color: white;
+      padding: 5px !important; }
+  .klipse-component .klipse-result .CodeMirror {
+    background-color: #65D2C0;
     color: yellow; }
-
-.CodeMirror-selected {
-  min-width: 0; }
-
-.CodeMirror-cursor {
-  min-height: 0; }
+    .klipse-component .klipse-result .CodeMirror .CodeMirror-line:nth-child(2) {
+      margin-top: 25px; }
+    .klipse-component .klipse-result .CodeMirror .cm-number,
+    .klipse-component .klipse-result .CodeMirror .cm-string,
+    .klipse-component .klipse-result .CodeMirror .cm-variable,
+    .klipse-component .klipse-result .CodeMirror .cm-keyword,
+    .klipse-component .klipse-result .CodeMirror .cm-error {
+      color: yellow; }
+  .klipse-component .CodeMirror-selected {
+    min-width: 0; }
+  .klipse-component .CodeMirror-cursor {
+    min-height: 0; }
 
 .panel-heading {
   margin-left: -15px;
@@ -892,7 +905,7 @@ klipse-separator is present */
   background-color: black;
   color: white;
   padding: 0.1em 0.3em;
-  margin-right: 0.2em;
+  margin-right: 0.25em;
   font-size: 1.25em; }
 
 /* buttons and inputs */

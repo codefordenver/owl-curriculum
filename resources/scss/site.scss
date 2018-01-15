@@ -1022,61 +1022,91 @@ span.inline-code {
   margin-bottom: 1em;
 }
 
-pre {
-  width: 100%;
-  margin-top: 2em;
-  margin-right: 0 !important;
-  @media screen and (max-width: 991px) {
-    width: 100%;
-  }
-}
-
-/* hides loading component when
-klipse-separator is present */
-.klipse-separator + .loading {
-  display: none;
-}
-
-.klipse-container {
-  display: none;
-}
-
 .CodeMirror {
-  padding: 10px;
+  min-height: inherit;
 }
 
-.klipse-result .CodeMirror-line:first-child {
-  font-weight: bold;
-  text-transform: uppercase;
-  span {
-    background-color: black;
-    color: white;
-    padding: 5px !important;
+.panel-text {
+  .CodeMirror-scroll {
+    min-height: 100px;
+  }
+  .CodeMirror-line {
+    word-break: normal;
+  }
+  .CodeMirror-wrap pre code {
+    word-break: break-all;
   }
 }
 
-.klipse-result .CodeMirror {
-  background-color: $aqua;
-  color: yellow;
-
-  .CodeMirror-line:nth-child(2) {
-    margin-top: 25px;
+.klipse-component {
+  margin-top: 2em;
+  pre {
+    width: 100%;
+    margin-right: 0 !important;
+    @media screen and (max-width: 991px) {
+      width: 100%;
+    }
   }
 
-  .cm-number,
-  .cm-string,
-  .cm-variable,
-  .cm-keyword,
-  .cm-error {
+  .CodeMirror-scroll {
+    min-height: inherit;
+  }
+
+  .CodeMirror {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    .CodeMirror-code .cm-comment {
+      background: none;
+    }
+  }
+
+  /* hides loading component when
+  klipse-separator is present */
+  .klipse-separator + .loading {
+    display: none;
+  }
+
+  .klipse-container {
+    display: none;
+  }
+
+  .CodeMirror {
+    padding: 10px;
+  }
+
+  .klipse-result .CodeMirror-line:first-child {
+    font-weight: bold;
+    text-transform: uppercase;
+    span {
+      background-color: black;
+      color: white;
+      padding: 5px !important;
+    }
+  }
+
+  .klipse-result .CodeMirror {
+    background-color: $aqua;
     color: yellow;
-  }
-}
 
-.CodeMirror-selected {
-  min-width: 0;
-}
-.CodeMirror-cursor {
-  min-height: 0;
+    .CodeMirror-line:nth-child(2) {
+      margin-top: 25px;
+    }
+
+    .cm-number,
+    .cm-string,
+    .cm-variable,
+    .cm-keyword,
+    .cm-error {
+      color: yellow;
+    }
+  }
+
+  .CodeMirror-selected {
+    min-width: 0;
+  }
+  .CodeMirror-cursor {
+    min-height: 0;
+  }
 }
 
 .panel-heading {
@@ -1094,7 +1124,7 @@ klipse-separator is present */
   background-color: black;
   color: white;
   padding: 0.1em 0.3em;
-  margin-right: 0.2em;
+  margin-right: 0.25em;
   font-size: 1.25em;
 }
 
