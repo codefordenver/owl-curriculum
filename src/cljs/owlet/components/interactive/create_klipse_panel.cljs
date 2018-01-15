@@ -8,7 +8,7 @@
 
 (defn create-klipse-panel-component [panel-number]
   (let [text-id-base (str "panel-" panel-number "-text-")
-        language (reagent/atom "")
+        language (reagent/atom "python")
         remount? (reagent/atom true)]
     (reagent/create-class
       {:component-did-mount
@@ -30,8 +30,8 @@
           [:textarea {:id (str text-id-base "1")
                       :placeholder "Optional text (markdown)"}]]
          [:span {:style {:font-weight "500"
-                         :margin "0 0.2em"}}
-                "Choose Language: "]
+                         :margin "0 0.3em 0 0.05em"}}
+                [:mark "Code Evaluator"]]
          [:select {:id (str "panel-" panel-number "-language")
                    :value @language
                    :on-change (fn [e]
@@ -39,16 +39,17 @@
                                   (swap! remount? not)
                                   (remount-klipse remount?))
                                 (reset! language (-> e .-target .-value)))}
-          [:option {:value ""} "Select Language"]
+          [:option {:value ""} "None"]
           [:option {:value "python"} "Python"]
           [:option {:value "javascript"} "JavaScript"]
           [:option {:value "clojure"} "Clojure"]]
-         (when @remount?
-           (case @language
-             "python" [klipse-component @language "# code editor"]
-             "javascript" [klipse-component @language "// code editor"]
-             "clojure" [klipse-component @language ";; code editor"]
-             "" [:p ""]))
+         [:div.panel-klipse
+          (when @remount?
+            (case @language
+              "python" [klipse-component @language "# type here"]
+              "javascript" [klipse-component @language "// type here"]
+              "clojure" [klipse-component @language ";; type here"]
+              "" [:h2 ""]))]
          [:div.panel-text
           [:textarea {:id (str text-id-base "2")
                       :placeholder "Optional text (markdown)"}]]])})))

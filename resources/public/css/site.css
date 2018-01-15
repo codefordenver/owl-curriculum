@@ -854,7 +854,7 @@ span.inline-code {
   .klipse-component .CodeMirror {
     padding: 10px; }
   .klipse-component .klipse-result .CodeMirror-line:first-child {
-    font-weight: bold;
+    font-weight: 500;
     text-transform: uppercase; }
     .klipse-component .klipse-result .CodeMirror-line:first-child span {
       background-color: black;
