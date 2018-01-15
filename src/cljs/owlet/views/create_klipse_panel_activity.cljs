@@ -1,5 +1,6 @@
 (ns owlet.views.create-klipse-panel-activity
   (:require [owlet.components.interactive.create-klipse-panel :refer [create-klipse-panel-component]]
+            [owlet.components.interactive.create-activity-response :refer [create-activity-response-component]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]
             [reagent.core :as reagent]))
@@ -26,6 +27,7 @@
         [:div.create-activity-buttons
          [:button.add-panel
           {:on-click #(swap! panel-number inc)}
-          "+ Add another panel"][:br]
+          "+ Add another panel"]
          [:button.save-activity
-          "Save Activity"]]]]])))
+          "Save Activity"]]]]
+      [create-activity-response-component :ok]])))

@@ -1121,6 +1121,10 @@ span.inline-code {
   font-size: 1.25em;
 }
 
+.panel-klipse {
+  margin-top: 0.5em;
+}
+
 .create-activity-buttons {
   button {
     font-size: 1.4em;
@@ -1128,13 +1132,13 @@ span.inline-code {
     border: 4px $aqua solid;
   }
   .add-panel {
-    margin: 0.1em 0 2em 0;
+    margin: 0.1em 0 1.5em 0;
     background-color: white;
     color: $dark-gray;
     padding: 0.2em 0.4em 0.2em 0.35em;
   }
   .save-activity {
-    margin: 0.1em 0 3em 0;
+    margin: 0.1em 0 3em 1em;
     background-color: $dark-gray;
     color: white;
     padding: 0.2em 0.4em 0.2em 0.45em;
