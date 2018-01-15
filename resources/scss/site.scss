@@ -206,8 +206,21 @@ b {
       text-decoration: none;
       display: block;
     }
+    div.settings-icon  {
+      margin: 10px;
+      width: 60px;
+      height: 60px;
+    }
     div.branch-icon {
       margin: 10px;
+      width: 60px;
+      height: 60px;
+    }
+    div.settings-icon::before {
+      content: "";
+      display: inline-block;
+      background-image: url('../img/icon3.png');
+      background-size: 100%;
       width: 60px;
       height: 60px;
     }
