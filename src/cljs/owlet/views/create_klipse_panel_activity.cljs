@@ -6,7 +6,7 @@
 (defn create-klipse-panel-activity-view []
   [:div.activity
    [:div.activity-wrap
-    [:div.activity-header.col-xs-12
+    [:div.activity-header.col-sm-12.col-lg-7
      [:div.activity-title-wrap
       [:h1 [:mark.white.box-shadow [back]
             [:input {:type "text"
@@ -18,6 +18,5 @@
                 :placeholder "Author"}]]]]
     [:div.activity-content.col-sm-12.col-lg-7
      [create-klipse-panel-component 1]
-     [create-klipse-panel-component 2]
      ;TODO: When clicked, call [create-klipse-panel-component] with the next number in sequence
      [:button.add-panel {:style {:margin-bottom "3em"}} "+ Add another panel"]]]])

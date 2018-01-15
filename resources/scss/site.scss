@@ -29,16 +29,13 @@ h1 {
     color: white;
     line-height: 1.3em;
     padding-left: 0.3em;
+    width: 84%;
   }
 }
 
 h2 {
   margin-top: 10px;
   margin-bottom: 15px;
-  textarea {
-    width: 94%;
-    padding-left: 0.15em;
-  }
 }
 
 h3 {
@@ -55,6 +52,7 @@ h5 {
     background: none;
     color: inherit;
     padding-left: 0.3em;
+    width: 10em;
   }
 }
 
@@ -924,7 +922,7 @@ span.platform-details {
 
 .activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
-  padding: 10px 12px 2px 15px;
+  padding: 10px 12px 10px 15px;
   margin-bottom: 30px;
   span.platform-details {
     font-size: 0.75em;
@@ -1012,7 +1010,7 @@ div.code-block {
   margin-bottom: 1em;
   textarea {
     width: 100%;
-    padding: 0.2em;
+    padding: 0.3em 0.2em;
     background: none;
   }
 }
@@ -1079,6 +1077,25 @@ klipse-separator is present */
 }
 .CodeMirror-cursor {
   min-height: 0;
+}
+
+.panel-heading {
+  margin-left: -15px;
+  margin-top: -10px;
+  align-items: flex-start;
+  textarea {
+    width: 100%;
+    font-weight: 500;
+    padding-left: 0.15em;
+  }
+}
+
+.panel-order {
+  background-color: black;
+  color: white;
+  padding: 0.1em 0.3em;
+  margin-right: 0.2em;
+  font-size: 1.25em;
 }
 
 /* buttons and inputs */
