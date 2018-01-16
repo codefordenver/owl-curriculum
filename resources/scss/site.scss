@@ -121,7 +121,7 @@ b {
   position: fixed;
   color: white;
   width: 100%;
-  z-index: 10000 !important;
+  z-index: 10;
   .search {
     border-color: $light-gray;
     border-radius: 0 3.5px;
@@ -278,7 +278,7 @@ b {
 
 .lpsidebar {
   position: fixed;
-  z-index: 3;
+  z-index: 100;
   transition: all 0.3s;
   text-align: center;
   background-color: $purple;
@@ -374,11 +374,11 @@ b {
   bottom: 0;
   left: 0;
   width: 0;
-  z-index: 3;
+  z-index: 100;
 }
 
 .lpsidebar-toggle {
-  z-index: 3;
+  z-index: 100;
   cursor: pointer;
   border-left: 1px solid #6A2569;
   transition: all 0.3s;
