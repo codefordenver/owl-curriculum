@@ -170,67 +170,41 @@ b {
       color: white;
       text-decoration: none;
       display: block; }
-    #sidebar .menu div.settings-icon {
-      margin: 10px;
-      width: 60px;
-      height: 60px; }
-    #sidebar .menu div.branch-icon {
-      margin: 10px;
-      width: 60px;
-      height: 60px; }
-    #sidebar .menu div.settings-icon::before {
-      content: "";
-      display: inline-block;
-      background-image: url("../img/icon3.png");
-      background-size: 100%;
-      width: 60px;
-      height: 60px; }
-    #sidebar .menu div.branch-icon::before {
-      content: "";
-      display: inline-block;
-      background-image: url("../img/icon1.png");
-      background-size: 100%;
-      width: 60px;
-      height: 60px; }
-    #sidebar .menu div.branch-icon::after {
-      content: "";
-      display: inline-block;
-      background-image: url("../img/icon1-nudge.gif");
-      background-size: 100%;
-      opacity: 0; }
-    #sidebar .menu a.branch-icon:hover div.branch-icon::before {
-      opacity: 0;
-      width: 0;
-      height: 0; }
-    #sidebar .menu a.branch-icon:hover div.branch-icon::after {
-      opacity: 1;
-      width: 60px;
-      height: 60px; }
+    #sidebar .menu div.branch-icon,
+    #sidebar .menu div.settings-icon,
     #sidebar .menu div.about-icon {
-      margin: 10px;
-      width: 60px;
-      height: 60px; }
-    #sidebar .menu div.about-icon::before {
+      margin: 10px; }
+    #sidebar .menu div.branch-icon::before, #sidebar .menu div.branch-icon::after,
+    #sidebar .menu div.settings-icon::before,
+    #sidebar .menu div.about-icon::before, #sidebar .menu div.about-icon::after {
       content: "";
       display: inline-block;
-      background-image: url("../img/icon4.png");
-      background-size: 100%;
+      background-size: 100%; }
+    #sidebar .menu div.branch-icon, #sidebar .menu div.branch-icon::before, #sidebar .menu a.branch-icon:hover div.branch-icon::after,
+    #sidebar .menu div.settings-icon, #sidebar .menu div.settings-icon::before,
+    #sidebar .menu div.about-icon, #sidebar .menu div.about-icon::before, #sidebar .menu a.about-icon:hover div.about-icon::after {
       width: 60px;
       height: 60px; }
-    #sidebar .menu div.about-icon::after {
-      content: "";
-      display: inline-block;
-      background-image: url("../img/icon4-hover.png");
-      background-size: 100%;
+    #sidebar .menu div.branch-icon::after, #sidebar .menu a.branch-icon:hover div.branch-icon::before,
+    #sidebar .menu div.about-icon::after, #sidebar .menu a.about-icon:hover div.about-icon::before {
       opacity: 0; }
+    #sidebar .menu div.settings-icon::before {
+      background-image: url("../img/icon3.png"); }
+    #sidebar .menu div.branch-icon::before {
+      background-image: url("../img/icon1.png"); }
+    #sidebar .menu div.branch-icon::after {
+      background-image: url("../img/icon1-nudge.gif"); }
+    #sidebar .menu a.branch-icon:hover div.branch-icon::before,
     #sidebar .menu a.about-icon:hover div.about-icon::before {
-      opacity: 0;
       width: 0;
       height: 0; }
+    #sidebar .menu a.branch-icon:hover div.branch-icon::after,
     #sidebar .menu a.about-icon:hover div.about-icon::after {
-      opacity: 1;
-      width: 60px;
-      height: 60px; }
+      opacity: 1; }
+    #sidebar .menu div.about-icon::before {
+      background-image: url("../img/icon4.png"); }
+    #sidebar .menu div.about-icon::after {
+      background-image: url("../img/icon4-hover.png"); }
     #sidebar .menu .rc-popover-anchor-wrapper {
       position: absolute;
       left: 0; }
@@ -276,56 +250,41 @@ b {
       color: white;
       text-decoration: none;
       display: block; }
-    .lpsidebar .menu div.branch-icon {
-      margin: 10px;
-      width: 60px;
-      height: 60px; }
-    .lpsidebar .menu div.branch-icon::before {
-      content: "";
-      display: inline-block;
-      background-image: url("../img/icon1.png");
-      background-size: 100%;
-      width: 60px;
-      height: 60px; }
-    .lpsidebar .menu div.branch-icon::after {
-      content: "";
-      display: inline-block;
-      background-image: url("../img/icon1-nudge.gif");
-      background-size: 100%;
-      opacity: 0; }
-    .lpsidebar .menu a.branch-icon:hover div.branch-icon::before {
-      opacity: 0;
-      width: 0;
-      height: 0; }
-    .lpsidebar .menu a.branch-icon:hover div.branch-icon::after {
-      opacity: 1;
-      width: 60px;
-      height: 60px; }
+    .lpsidebar .menu div.branch-icon,
+    .lpsidebar .menu div.settings-icon,
     .lpsidebar .menu div.about-icon {
-      margin: 10px;
-      width: 60px;
-      height: 60px; }
-    .lpsidebar .menu div.about-icon::before {
+      margin: 10px; }
+    .lpsidebar .menu div.branch-icon::before, .lpsidebar .menu div.branch-icon::after,
+    .lpsidebar .menu div.settings-icon::before,
+    .lpsidebar .menu div.about-icon::before, .lpsidebar .menu div.about-icon::after {
       content: "";
       display: inline-block;
-      background-image: url("../img/icon4.png");
-      background-size: 100%;
+      background-size: 100%; }
+    .lpsidebar .menu div.branch-icon, .lpsidebar .menu div.branch-icon::before, .lpsidebar .menu a.branch-icon:hover div.branch-icon::after,
+    .lpsidebar .menu div.settings-icon, .lpsidebar .menu div.settings-icon::before,
+    .lpsidebar .menu div.about-icon, .lpsidebar .menu div.about-icon::before, .lpsidebar .menu a.about-icon:hover div.about-icon::after {
       width: 60px;
       height: 60px; }
-    .lpsidebar .menu div.about-icon::after {
-      content: "";
-      display: inline-block;
-      background-image: url("../img/icon4-hover.png");
-      background-size: 100%;
+    .lpsidebar .menu div.branch-icon::after, .lpsidebar .menu a.branch-icon:hover div.branch-icon::before,
+    .lpsidebar .menu div.about-icon::after, .lpsidebar .menu a.about-icon:hover div.about-icon::before {
       opacity: 0; }
+    .lpsidebar .menu div.settings-icon::before {
+      background-image: url("../img/icon3.png"); }
+    .lpsidebar .menu div.branch-icon::before {
+      background-image: url("../img/icon1.png"); }
+    .lpsidebar .menu div.branch-icon::after {
+      background-image: url("../img/icon1-nudge.gif"); }
+    .lpsidebar .menu a.branch-icon:hover div.branch-icon::before,
     .lpsidebar .menu a.about-icon:hover div.about-icon::before {
-      opacity: 0;
       width: 0;
       height: 0; }
+    .lpsidebar .menu a.branch-icon:hover div.branch-icon::after,
     .lpsidebar .menu a.about-icon:hover div.about-icon::after {
-      opacity: 1;
-      width: 60px;
-      height: 60px; }
+      opacity: 1; }
+    .lpsidebar .menu div.about-icon::before {
+      background-image: url("../img/icon4.png"); }
+    .lpsidebar .menu div.about-icon::after {
+      background-image: url("../img/icon4-hover.png"); }
 
 .lpsidebar-wrap {
   position: fixed;
