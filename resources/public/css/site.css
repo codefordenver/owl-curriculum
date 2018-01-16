@@ -326,6 +326,11 @@ mark {
   background-color: black;
   padding: .1em .3em; }
 
+mark.white {
+  color: gray;
+  background-color: white;
+  padding: .1em .3em; }
+
 .box-shadow, .box {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.3); }
 
@@ -702,10 +707,11 @@ span.platform-details {
   margin-bottom: 15px; }
   .activity-title-wrap h1 {
     font-size: 2.4rem;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     text-transform: uppercase; }
   .activity-title-wrap .author {
-    color: #ADADAD; }
+    color: #ADADAD;
+    margin-top: 0; }
 
 .activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;

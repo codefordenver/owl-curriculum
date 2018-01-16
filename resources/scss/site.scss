@@ -408,6 +408,12 @@ mark {
   padding: .1em .3em;
 }
 
+mark.white {
+  color: gray;
+  background-color: white;
+  padding: .1em .3em;
+}
+
 .box-shadow, .box {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }
@@ -869,11 +875,12 @@ span.platform-details {
 .activity-title-wrap {
   h1 {
     font-size: 2.4rem;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     text-transform: uppercase;
   }
   .author {
     color: #ADADAD;
+    margin-top: 0;
   }
   margin-top: 18px;
   margin-bottom: 15px;

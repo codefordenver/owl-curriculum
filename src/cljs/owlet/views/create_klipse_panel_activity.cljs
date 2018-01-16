@@ -14,14 +14,14 @@
       [:div.activity-wrap
        [:div.activity-header.col-sm-12.col-lg-7
         [:div.activity-title-wrap
-         [:h1 [:mark.white.box-shadow [back]
+         [:h1 [:mark [back]
                [:input {:type "text"
                         :name "title"
                         :placeholder "Activity Title"}]]]
-         [:h5.author "Created by: "
-          [:input {:type "text"
-                   :name "author"
-                   :placeholder "Author"}]]]]
+         [:h5.author [:mark.white "Created by: "
+                      [:input {:type "text"
+                               :name "author"
+                               :placeholder "Author"}]]]]]
        [:div.activity-content.col-sm-12.col-lg-7
         (for [n (range @panel-number)]
           ^{:key (inc n)}
