@@ -30,6 +30,10 @@
           [:a.navigation.branch-icon {:href     "#/branches"
                                       :on-click #(toggle-lpsidebar)}
            [:div.branch-icon]]
+          (when @(rf/subscribe [:my-id])
+            [:a.navigation.settings-icon {:href "#/settings"
+                                          :on-click #(toggle-lpsidebar)}
+             [:div.settings-icon]])
           [:a.navigation.about-icon {:href     "#/about"
                                      :on-click #(toggle-lpsidebar)}
            [:div.about-icon]]]

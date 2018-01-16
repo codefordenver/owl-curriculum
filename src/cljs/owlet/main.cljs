@@ -10,6 +10,7 @@
             [owlet.views.about :refer [about-view]]
             [owlet.views.klipse-activity :refer [klipse-activity-view]]
             [owlet.views.klipse-activity-scroll :refer [klipse-activity-scroll-view]]
+            [owlet.views.create-klipse-panel-activity :refer [create-klipse-panel-activity-view]]
             [owlet.components.search-bar :refer [search-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
@@ -29,8 +30,8 @@
 (defmethod views :about-view [] [about-view])
 (defmethod views :klipse-activity-view [] [klipse-activity-view])
 (defmethod views :klipse-activity-scroll-view [] [klipse-activity-scroll-view])
-(defmethod views :filtered-activities-view []
-  [filtered-activities-view])
+(defmethod views :filtered-activities-view [] [filtered-activities-view])
+(defmethod views :create-klipse-panel-activity-view [] [create-klipse-panel-activity-view])
 (defmethod views :not-found-view [] [not-found-view])
 (defmethod views :activity-view [] [activity-view])
 (defmethod views :branches-view [] [branches-view])
@@ -67,10 +68,11 @@
           [search-bar]
           [error]
           [:div.inner-height-wrap
-             [:div.content {:style {:background-image (when-not (or (= @active-view :about-view)
-                                                                    (= @active-view :confirm-view))
-                                                        @src)
-                                    :background-size "cover"}}
+             [:div.content (when @src
+                             {:style {:background-image (when-not (or (= @active-view :about-view)
+                                                                      (= @active-view :confirm-view))
+                                                          (str "url('" @src "')"))
+                                      :background-size "cover"}})
                 (when-not (or (= @active-view :about-view)
                               (= @active-view :confirm-view))
                   [:button#change-bg-btn

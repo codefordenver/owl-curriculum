@@ -10,9 +10,9 @@
     [:div.branch-activities-wrap
      [email-notification]
      (if-not filtered-activities
-       [:h2.pushed-left [:mark.white [:b "Loading..."]]]
+       [:h2.pushed-left [:mark [:b "Loading..."]]]
        (if (= filtered-activities "error")
-         [:h2.pushed-left [:mark.white.box [back] [:b "Nothing here. Try a different search above."]]]
+         [:h2.pushed-left [:mark.box [back] [:b "Nothing here. Try a different search above."]]]
          (let [{:keys [display-name activities & description]} filtered-activities]
            [:div
             [:h2.pushed-left [:mark [back] display-name]]
@@ -25,7 +25,7 @@
                  [:div {:style {:margin-left "15px"}}
                   [:h3 {:style {:margin-bottom "15px"
                                 :margin-top "40px"}}
-                    [:mark.white "Activities"]]]])
+                    [:mark "Activities"]]]])
             [:div.flexcontainer-wrap
              (if (seq activities)
                (for [activity activities
