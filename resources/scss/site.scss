@@ -73,7 +73,6 @@ b {
   .information-inner {
     background-color: white;
     padding: 23px;
-    padding-bottom: 10px;
     font-size: 1.3em;
     margin-bottom: 2em;
   }
@@ -93,6 +92,17 @@ b {
     line-height: 1.6em;
   }
 }
+
+// settings view
+
+.settings-section {
+  margin-top: 2em;
+  h3 {
+    margin-bottom: 0;
+  }
+}
+
+// search
 
 .rc-typeahead-suggestion {
   background-color: #3B3B3B;
@@ -1199,7 +1209,7 @@ button {
   border-color: $aqua;
   &:hover {
     color: #5EFFE4;
-    background-color: transparent;
+    background-color: $purple;
   }
 }
 

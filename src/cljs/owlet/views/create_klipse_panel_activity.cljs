@@ -3,9 +3,11 @@
             [owlet.components.interactive.create-activity-response :refer [create-activity-response-component]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]
-            [reagent.core :as reagent]))
+            [owlet.views.login-only :refer [login-only-view]]
+            [reagent.core :as reagent]
+            [re-frame.core :as rf]))
 
-(defn create-klipse-panel-activity-view []
+(defn create-klipse-panel-activity []
  (let [panel-number (reagent/atom 1)]
    (fn []
      [:div.activity
@@ -31,3 +33,8 @@
          [:button.save-activity
           "Save Activity"]]]]
       [create-activity-response-component :ok]])))
+
+(defn create-klipse-panel-activity-view []
+  (if @(rf/subscribe [:my-id])
+    [create-klipse-panel-activity]
+    [login-only-view]))
