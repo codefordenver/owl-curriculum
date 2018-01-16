@@ -12,11 +12,6 @@
             (clojure.string/replace cleaned-iframe iframe-url post-message-url)))
         cleaned-iframe)))
 
-(defn post-message-handler [e]
-  (let [data (.-data e)
-        slideshow (.querySelector js/document "iframe")]
-    (prn data)))
-
 (defn activity-embed [embed tags preview]
   (let [preview-url (-> preview :sys :url)
         activity @(rf/subscribe [:activity-in-view])
