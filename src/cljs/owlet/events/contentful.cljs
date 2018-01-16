@@ -156,10 +156,16 @@
                        [:set-activity-in-view route-param])}))
 
 (rf/reg-event-fx
-  :show-klipse-scroll
+  :show-temp-hello-world
   (fn [_ _]
-    {:dispatch-n (list [:set-active-view :klipse-activity-scroll-view]
-                       [:set-active-document-title! "Klipse Activity Scroll"])}))
+    {:dispatch-n (list [:set-active-view :temp-hello-world-view]
+                       [:set-active-document-title! "Hello world!"])}))
+
+(rf/reg-event-fx
+  :show-temp-print-errors
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :temp-print-errors-view]
+                       [:set-active-document-title! "Hello world!"])}))
 
 (rf/reg-event-fx
   :show-create-klipse-panel-activity
