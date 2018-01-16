@@ -43,7 +43,15 @@
            (-> tag (.setAttribute "src" klipse-plugin-path))
            (-> tag (.setAttribute "id" "klipse-script"))
            (js/document.body.appendChild tag)
-           (js/setTimeout #(reset! evaled? true) 5000)))
+           (js/setTimeout
+             (fn []
+               (let [nodeList (js/Array.prototype.slice.call (js/document.querySelectorAll ".temp-err .klipse-component pre .klipse-result .CodeMirror"))]
+                 (reset! evaled? true)
+                 ;; temporary hack to force magenta bg for klipse ouput
+                 ;; that has intentional errors on load
+                 (doseq [n nodeList]
+                   (! n.style.background err-color))))
+             5000)))
        :reagent-render
        (fn [language code]
          [:div.klipse-component

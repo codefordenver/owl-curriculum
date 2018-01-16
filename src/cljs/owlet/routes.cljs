@@ -54,7 +54,10 @@
             (rf/dispatch [:get-content-from-contentful :show-create-klipse-panel-activity]))
 
   (defroute "/activity/hello-world" []
-            (rf/dispatch [:get-content-from-contentful :show-klipse-scroll]))
+            (rf/dispatch [:get-content-from-contentful :show-temp-hello-world]))
+
+  (defroute "/activity/print-errors" []
+            (rf/dispatch [:get-content-from-contentful :show-temp-print-errors]))
 
   (defroute "*" []
             (let [uri (-> js/window .-location .-href)]

@@ -1,9 +1,9 @@
-(ns owlet.views.klipse-activity-scroll
+(ns owlet.views.temp-activities.hello-world
   (:require [owlet.components.interactive.klipse :refer [klipse-component]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]))
 
-(defn klipse-activity-scroll-view []
+(defn temp-hello-world-view []
   [:div.activity
    [:div.activity-wrap
     [:div.activity-header.col-xs-12
