@@ -27,8 +27,14 @@
                       :uri             space-endpoint
                       :response-format (ajax/json-response-format {:keywords? true})
                       :on-success      [:get-content-from-contentful-success route-args]
-                      :on-failure      [:get-content-from-contentful-failure]}}
+                      :on-failure      [:get-content-from-contentful-failure route-args]}}
         {:dispatch [route-dispatch route-param]}))))
+
+(rf/reg-event-db :get-content-from-contentful-failure
+  (fn [db _]
+    (assoc db :on-app-failure
+      {:show? true
+       :msg "Not able to retrieve content from contentful: Possibly missing ENV variables"})))
 
 (rf/reg-event-fx
   :get-content-from-contentful-success
@@ -77,8 +83,7 @@
        :dispatch-n (list [route-dispatch route-param]
                          [:set-loading-state! false])})))
 
-
-; route dispatches
+; route dispatchers
 
 (rf/reg-event-fx
   :show-about
