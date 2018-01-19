@@ -2,7 +2,8 @@
   (:require [reagent.core :refer [atom]]
             [re-com.core :refer [checkbox]]
             [re-frame.core :as rf]
-            [owlet.views.login-only :refer [login-only-view]]))
+            [owlet.views.login-only :refer [login-only-view]]
+            [owlet.helpers :refer [keywordize-name]]))
 
 (defn settings [roles]
   [:div.information-wrap
@@ -37,6 +38,11 @@
                  "Coding, Multi-Panel"]
                " — Python, JavaScript, and/or Clojure ["
                [:a {:href "#/activity/hello-world"} "Example"]
+               "]"]
+          [:li [:a {:href "#/create/klipse-slides-activity"}
+                 "Coding, Slides"]
+               " — Python, JavaScript, and/or Clojure ["
+               [:a {:href "#/activity/#!34hdwSOWpiEEWSWaqQGcGC"} "Example"]
                "]"]]]])]]]])
 
 

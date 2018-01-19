@@ -140,13 +140,15 @@
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
               platforms (filter-entries "platform" (:items entries))
+              tags (filter-entries "tag" (:items entries))
               activities (concat (filter-entries "klipseActivity" (:items entries))
                                  (filter-entries "activity" (:items entries)))]
 
 
           (ok {:metadata   (process-metadata (:body @metadata))
                :activities (process-activities activities platforms assets)
-               :platforms  platforms}))
+               :platforms  platforms
+               :tags tags}))
         (not-found status)))))
 
 (defn- compose-new-activity-email

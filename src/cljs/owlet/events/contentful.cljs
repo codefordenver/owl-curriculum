@@ -34,11 +34,11 @@
   :get-content-from-contentful-success
   (fn [{db :db} [_ route-args {activities :activities
                                metadata :metadata
-                               platforms :platforms}]]
+                               platforms :platforms
+                               tags :tags}]]
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
           branches (:branches metadata)
-          tags (:tags metadata)
           activities (map #(update-in % [:tag-set] (partial (comp set map) keyword))
                         activities)
           activity-titles (remove-nil (map #(get-in % [:fields :title]) activities))
@@ -71,7 +71,7 @@
             :activity-platforms (map #(:fields %) platforms)
             :activities activities
             :activity-branches branches
-            :tags tags
+            :tags (map #(:fields %) tags)
             :activities-by-branch activities-by-branch
             :activity-titles activity-titles)
        :dispatch-n (list [route-dispatch route-param]
@@ -171,7 +171,13 @@
   :show-create-klipse-panel-activity
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :create-klipse-panel-activity-view]
-                       [:set-active-document-title! "Klipse Activity Scroll"])}))
+                       [:set-active-document-title! "Create Klipse Panel Activity"])}))
+
+(rf/reg-event-fx
+  :show-create-klipse-slides-activity
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :create-klipse-slides-activity-view]
+                       [:set-active-document-title! "Create Klipse Slides Activity"])}))
 
 ; search & filter
 

@@ -4,7 +4,8 @@
   (:require [secretary.core :as secretary]
             [goog.events :as events]
             [goog.history.EventType :as EventType]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [owlet.helpers :refer [keywordize-name]]))
 
 (defn app-routes []
   (secretary/set-config! :prefix "#")
@@ -50,8 +51,8 @@
   (defroute "/klipse/#!:klipse" {:as params}
             (rf/dispatch [:get-content-from-contentful :show-klipse (:klipse params)]))
 
-  (defroute "/create/klipse-panel-activity" []
-            (rf/dispatch [:get-content-from-contentful :show-create-klipse-panel-activity]))
+  (defroute "/create/:type" {:as params}
+            (rf/dispatch [:get-content-from-contentful (keywordize-name (str "show-create-" (:type params)))]))
 
   (defroute "/activity/hello-world" []
             (rf/dispatch [:get-content-from-contentful :show-temp-hello-world]))
