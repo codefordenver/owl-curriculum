@@ -17,11 +17,6 @@
 (reg-getter :my-background-image-url [:my-identity :private :background-image-url])
 
 (rf/reg-sub
-  :library-activities
-  (fn [db]
-    (get-in db [:activities])))
-
-(rf/reg-sub
   :activity-branches
   (fn [db]
     (get-in db [:activity-branches])))
