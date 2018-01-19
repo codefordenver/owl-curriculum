@@ -139,6 +139,7 @@
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
+              branches (filter-entries "branch" (:items entries))
               platforms (filter-entries "platform" (:items entries))
               tags (filter-entries "tag" (:items entries))
               activities (concat (filter-entries "klipseActivity" (:items entries))
@@ -147,8 +148,9 @@
 
           (ok {:metadata   (process-metadata (:body @metadata))
                :activities (process-activities activities platforms assets)
+               :branches   branches
                :platforms  platforms
-               :tags tags}))
+               :tags       tags}))
         (not-found status)))))
 
 (defn- compose-new-activity-email
