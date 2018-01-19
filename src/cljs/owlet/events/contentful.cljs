@@ -83,8 +83,7 @@
        :dispatch-n (list [route-dispatch route-param]
                          [:set-loading-state! false])})))
 
-
-; route dispatches
+; route dispatchers
 
 (rf/reg-event-fx
   :show-about
