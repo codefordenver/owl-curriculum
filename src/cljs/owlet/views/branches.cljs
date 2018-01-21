@@ -13,7 +13,7 @@
       [:br]
       (doall
         (for [b @activity-branches
-                :let [pair (vector (:color b) (:name b))
+                :let [pair (vector (get-in b [:fields :color]) (get-in b [:fields :name]))
                       branch-key (->kebab-case (-> pair
                                                    second
                                                    keyword))]]

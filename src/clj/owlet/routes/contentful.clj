@@ -84,8 +84,19 @@
 
 (def remove-nil (partial remove nil?))
 
-(defn- process-activity [activity platforms assets]
+(defn- process-activity [activity branches tags platforms assets]
   (-> activity
+      ; Adds :branches data using :branchRefs
+      (assoc-in [:fields :branches]
+              (map
+                (fn [branchRef]
+                  (first
+                    (map
+                      (fn [branch]
+                        (:fields branch))
+                      (filterv #(= (get-in branchRef [:sys :id]) (get-in % [:sys :id])) branches))))
+                (get-in activity [:fields :branchRefs])))
+
       ; Adds :platform data using :platformRef
       (assoc-in [:fields :platform]
                 (some #(when (= (get-in activity [:fields :platformRef :sys :id])
@@ -118,9 +129,9 @@
                                activity))))
 
 (defn- process-activities
-  [activities platforms assets]
+  [activities branches tags platforms assets]
   (for [activity activities]
-    (process-activity activity platforms assets)))
+    (process-activity activity branches tags platforms assets)))
 
 
 (defn handle-get-all-entries-for-given-space
@@ -145,9 +156,8 @@
               activities (concat (filter-entries "klipseActivity" (:items entries))
                                  (filter-entries "activity" (:items entries)))]
 
-
           (ok {:metadata   (process-metadata (:body @metadata))
-               :activities (process-activities activities platforms assets)
+               :activities (process-activities activities branches tags platforms assets)
                :branches   branches
                :platforms  platforms
                :tags       tags}))

@@ -36,20 +36,17 @@
                                metadata :metadata
                                platforms :platforms
                                tags :tags
-                               raw-branches :branches}]]
+                               branches :branches}]]
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
-          branches (map #(conj (:fields %) (hash-map :id (get-in % [:sys :id]))) raw-branches)
           activities (map #(update-in % [:tag-set] (partial (comp set map) keyword))
                         activities)
           activity-titles (remove-nil (map #(get-in % [:fields :title]) activities))
           branches-template (->> (mapv (fn [branch]
-                                         (let [branch-name (:name branch)
-                                               id (:id branch)]
+                                         (let [branch-name (get-in branch [:fields :name])]
                                            (hash-map (keywordize-name branch-name)
                                              {:activities   []
                                               :display-name branch-name
-                                              :id           id
                                               :count        0
                                               :preview-urls []}))) branches)
                                  (into {}))
@@ -57,12 +54,11 @@
           activities-by-branch (->> (mapv (fn [branch]
                                             (let [[branch-key branch-vals] branch]
                                              (let [display-name (:display-name branch-vals)
-                                                   id (:id branch-vals)
                                                    matches (filterv (fn [activity]
-                                                                      (let [activity-branch-ids (map #(get-in % [:sys :id]) (get-in activity [:fields :branches1]))]
-                                                                        (some #(= % id)
-                                                                          activity-branch-ids)))
-                                                             activities)
+                                                                      (let [activity-branch-names (map #(:name %) (get-in activity [:fields :branches]))]
+                                                                        (some #(= display-name %) activity-branch-names)))
+
+                                                              activities)
                                                    preview-urls (mapv #(get-in % [:fields :preview :sys :url]) matches)]
                                                (if (seq matches)
                                                  (hash-map branch-key
