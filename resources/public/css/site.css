@@ -891,9 +891,11 @@ span.inline-code {
 .panel-klipse {
   margin-top: 0.5em; }
 
-#select-platform .display-flex, #select-tags .display-flex {
+#select-platform .display-flex, #select-tags .display-flex, #select-branch {
   display: block;
-  background-color: white; }
+  background-color: white;
+  padding-bottom: 10px;
+  margin-bottom: 10px; }
 
 .panel-validation {
   margin-bottom: 14px; }
