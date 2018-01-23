@@ -1,14 +1,15 @@
-(ns owlet.views.create-klipse-panel-activity
-  (:require [owlet.components.interactive.create-klipse-panel :refer [create-klipse-panel-component]]
+(ns owlet.views.create-klipse-slides-activity
+  (:require [owlet.components.interactive.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             [owlet.components.interactive.create-activity-response :refer [create-activity-response-component]]
+            [owlet.components.creation.select-platform :refer [select-platform]]
+            [owlet.components.creation.select-platforms :refer [select-tags]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]
-            [owlet.components.creation.select-branch :refer [select-branch]]
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
             [re-frame.core :as rf]))
 
-(defn create-klipse-panel-activity []
+(defn create-klipse-slides-activity []
  (let [panel-number (reagent/atom 1)]
    (fn []
      [:div.activity
@@ -24,19 +25,21 @@
                                :name "author"
                                :placeholder "Author"}]]]]]
        [:div.activity-content.col-sm-12.col-lg-7
-        [select-branch]
-        (for [n (range @panel-number)]
-          ^{:key (inc n)}
-          [create-klipse-panel-component (inc n)])
+        [select-platform false]
+        [select-tags true]
+        [:div.activity-info-wrap.box-shadow
+         (for [n (range @panel-number)]
+           ^{:key (inc n)}
+           [create-klipse-code-validation-component true])]
         [:div.create-activity-buttons
          [:button.add-panel
           {:on-click #(swap! panel-number inc)}
-          "+ Add another panel"]
+          "+ Add another code validation"]
          [:button.save-activity
           "Save Activity"]]]]
       [create-activity-response-component :ok]])))
 
-(defn create-klipse-panel-activity-view []
+(defn create-klipse-slides-activity-view []
   (if @(rf/subscribe [:my-id])
-    [create-klipse-panel-activity]
+    [create-klipse-slides-activity]
     [login-only-view]))

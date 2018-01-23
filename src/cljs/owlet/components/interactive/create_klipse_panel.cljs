@@ -1,6 +1,7 @@
 (ns owlet.components.interactive.create-klipse-panel
   (:require [owlet.components.interactive.klipse :refer [klipse-component]]
             [reagent.core :as reagent]
+            [owlet.components.interactive.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             cljsjs.simplemde))
 
 (defn remount-klipse [remount?]
@@ -56,6 +57,11 @@
               "javascript" [klipse-component @language "// type here"]
               "clojure" [klipse-component @language ";; type here"]
               "" [:div {:style {:margin-bottom "2em"}} ""]))]
+         [:div.panel-validation
+          [:span {:style {:font-weight "500"
+                          :margin "0 0.3em 0 0.05em"}}
+           "Below, place the output of the code once this panel is completed"]
+          [create-klipse-code-validation-component false]]
          [:div.panel-text
           [:textarea {:id (str text-id-base "2")
                       :placeholder "Optional text (markdown)"}]]])})))

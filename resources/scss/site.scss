@@ -1082,12 +1082,14 @@ span.inline-code {
     line-height: 1.3em;
     padding-left: 0.3em;
     width: 84%;
+    border: none;
   }
   h5 input {
     background: none;
     color: inherit;
     padding-left: 0.3em;
     width: 10em;
+    border: none;
   }
 }
 
@@ -1099,6 +1101,7 @@ span.inline-code {
     width: 100%;
     font-weight: 500;
     padding-left: 0.15em;
+    resize: none;
   }
 }
 
@@ -1112,6 +1115,34 @@ span.inline-code {
 
 .panel-klipse {
   margin-top: 0.5em;
+}
+
+#select-platform .display-flex, #select-tags .display-flex, #select-branch {
+  display: block;
+  background-color: white;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.panel-validation {
+  margin-bottom: 14px;
+}
+
+.pane-number {
+  background-color: white;
+  color: black;
+  display: inline-block;
+  width: 7%;
+  resize: none;
+  vertical-align: top;
+  margin-right: 2%;
+}
+
+.code-validation {
+  background-color: white;
+  color: black;
+  display: inline-block;
+  resize: none;
 }
 
 .create-activity-buttons {
