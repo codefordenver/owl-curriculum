@@ -88,14 +88,10 @@
   (-> activity
       ; Adds :branches data using :branchRefs
       (assoc-in [:fields :branches]
-              (map
-                (fn [branchRef]
-                  (first
-                    (map
-                      (fn [branch]
-                        (:fields branch))
-                      (filterv #(= (get-in branchRef [:sys :id]) (get-in % [:sys :id])) branches))))
-                (get-in activity [:fields :branchRefs])))
+                (map
+                  (fn [branchRef]
+                    (apply #(:fields %) (filter #(= (-> branchRef :sys :id) (-> % :sys :id)) branches)))
+                  (-> activity :fields :branchRefs)))
 
       ; Adds :platform data using :platformRef
       (assoc-in [:fields :platform]
