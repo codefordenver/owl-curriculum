@@ -72,11 +72,10 @@
       {:db (assoc db
             :activity-platforms (map #(:fields %) platforms)
             :activities activities
-            :activity-branches branches
+            :activity-branches (map #(:fields %) branches)
             :tags (map #(:fields %) tags)
             :activities-by-branch activities-by-branch
-            :activity-titles activity-titles
-            :activity-branches branches)
+            :activity-titles activity-titles)
        :dispatch-n (list [route-dispatch route-param]
                          [:set-loading-state! false])})))
 
