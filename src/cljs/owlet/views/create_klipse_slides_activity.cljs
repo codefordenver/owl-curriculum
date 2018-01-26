@@ -2,7 +2,7 @@
   (:require [owlet.components.interactive.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             [owlet.components.interactive.create-activity-response :refer [create-activity-response-component]]
             [owlet.components.creation.select-platform :refer [select-platform]]
-            [owlet.components.creation.select-platforms :refer [select-tags]]
+            [owlet.components.creation.select-tags :refer [select-tags]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]
             [owlet.views.login-only :refer [login-only-view]]

@@ -1,4 +1,4 @@
-(ns owlet.components.creation.select-platforms
+(ns owlet.components.creation.select-tags
   (:require [re-frame.core :as rf]
             [re-com.core :refer [checkbox]]
             [reagent.core :as reagent]))
