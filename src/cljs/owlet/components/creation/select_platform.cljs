@@ -6,7 +6,7 @@
 (defn select-platform []
   (let [platforms @(rf/subscribe [:activity-platforms])
         platform (reagent/atom nil)]
-    [:div#select-platform
+    [:div#select-platform.box-shadow
      [:form
       (doall (for [p platforms
                    :let [platform-name (:name p)]]

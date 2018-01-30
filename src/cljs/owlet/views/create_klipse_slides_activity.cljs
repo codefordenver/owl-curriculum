@@ -9,6 +9,10 @@
             [reagent.core :as reagent]
             [re-frame.core :as rf]))
 
+(def url (reagent/atom ""))
+
+(def embed-url (reagent/atom ""))
+
 (defn create-klipse-slides-activity []
  (let [panel-number (reagent/atom 1)]
    (fn []
@@ -27,6 +31,17 @@
        [:div.activity-content.col-sm-12.col-lg-7
         [select-platform false]
         [select-tags true]
+        [:textarea#iframe-url {:value @url
+                               :on-change (fn [v]
+                                            (reset! url (.. v -target -value))
+                                            (when (clojure.string/starts-with? @url "https://slides.com")
+                                              (reset! embed-url @url)))}]
+        [:iframe#preview {:src @embed-url
+                          :scrolling "no"
+                          :frameborder "0"
+                          :webkitallowfullscreen true
+                          :mozallowfullscreen true
+                          :allowfullscreen true}]
         [:div.activity-info-wrap.box-shadow
          (for [n (range @panel-number)]
            ^{:key (inc n)}

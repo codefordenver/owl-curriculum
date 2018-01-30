@@ -5,7 +5,7 @@
 
 (defn select-tags [klipse?]
   (let [tags @(rf/subscribe [:tags])]
-    [:div#select-tags
+    [:div#select-tags.box-shadow
      [:form
       (doall (for [t tags
                    :let [checked? (reagent/atom false)
