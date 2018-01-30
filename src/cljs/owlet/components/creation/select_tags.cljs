@@ -8,8 +8,8 @@
     [:div#select-tags.box-shadow
      [:form
       (doall (for [t tags
-                   :let [checked? (reagent/atom false)
-                         name (:name t)]]
+                   :let [tag-name (:name t)
+                         checked? (reagent/atom false)]]
                (if klipse?
                  (when (:klipseRelated t)
                    ^{:key (gensym "tag-")}
@@ -17,10 +17,10 @@
                      [checkbox
                       :model checked?
                       :on-change #(reset! checked? %)
-                      :label name]])
+                      :label tag-name]])
                  ^{:key (gensym "tag-")}
                   [:div
                    [checkbox
                     :model checked?
                     :on-change #(reset! checked? %)
-                    :label name]])))]]))
+                    :label tag-name]])))]]))

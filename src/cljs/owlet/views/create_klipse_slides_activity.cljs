@@ -1,8 +1,9 @@
 (ns owlet.views.create-klipse-slides-activity
   (:require [owlet.components.interactive.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             [owlet.components.interactive.create-activity-response :refer [create-activity-response-component]]
-            [owlet.components.creation.select-platform :refer [select-platform]]
+            [owlet.components.creation.select-branches :refer [select-branches]]
             [owlet.components.creation.select-tags :refer [select-tags]]
+            [owlet.components.creation.select-platform :refer [select-platform]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]
             [owlet.views.login-only :refer [login-only-view]]
@@ -28,7 +29,8 @@
                                :name "author"
                                :placeholder "Author"}]]]]]
        [:div.activity-content.col-sm-12.col-lg-7
-        [select-platform false]
+        [select-branches true]
+        [select-platform true]
         [select-tags true]
         [:textarea#iframe-url {:value @input-url
                                :on-change (fn [v]
@@ -38,9 +40,7 @@
         [:iframe#preview {:src @embed-url
                           :scrolling "no"
                           :frameborder "0"
-                          :webkitallowfullscreen true
-                          :mozallowfullscreen true
-                          :allowfullscreen true}]
+                          :allowfullscreen? true}]
         [:div.activity-info-wrap.box-shadow
          (for [n (range @panel-number)]
            ^{:key (inc n)}
