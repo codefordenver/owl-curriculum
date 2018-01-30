@@ -9,7 +9,7 @@
      [:form
       (doall (for [t tags
                    :let [checked? (reagent/atom false)
-                         id (reagent/atom (:name t))]]
+                         name (:name t)]]
                (if klipse?
                  (when (:klipseRelated t)
                    ^{:key (gensym "tag-")}
@@ -17,10 +17,10 @@
                      [checkbox
                       :model checked?
                       :on-change #(reset! checked? %)
-                      :label (:name t)]])
+                      :label name]])
                  ^{:key (gensym "tag-")}
                   [:div
                    [checkbox
                     :model checked?
                     :on-change #(reset! checked? %)
-                    :label (:name t)]])))]]))
+                    :label name]])))]]))
