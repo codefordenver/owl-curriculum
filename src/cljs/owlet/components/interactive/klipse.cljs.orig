@@ -19,6 +19,7 @@
 (defn- reset-background-color! [element color]
   (! element.style.background color))
 
+<<<<<<< HEAD
 (defn klipse-component [language code]
   (let [evaled? (reagent/atom false)
         klipse-handler (fn [e]
@@ -36,20 +37,56 @@
          (let [klipse-container (js/document.querySelector klipse-container-class)]
            (when klipse-container
             (!> klipse-container.removeEventListener "klipse-snippet-evaled" klipse-handler))))
+=======
+(defn handle-klipse-evaled [e]
+  (let [output-wrapper-div (? e.detail.result-element.display.wrapper)
+        detail (? e.detail.result)
+        [result _] (js->clj detail)
+        result->key (keyword result)]
+    (if (= result->key :ok)
+      (reset-background-color! output-wrapper-div ok-color)
+      (reset-background-color! output-wrapper-div err-color))))
+
+(defn klipse-component [language code & [inline?]]
+  (let [evaled? (reagent/atom false)]
+    (reagent/create-class
+      {:component-will-unmount
+       (fn []
+         (when-let [klipse-container (js/document.querySelector klipse-container-class)]
+           (. klipse-container
+             (removeEventListener "klipse-snippet-evaled" handle-klipse-evaled)))
+         (.remove (js/document.querySelector "#klipse-script")))
+>>>>>>> klipse-slides-activity-creation
        :component-did-mount
        (fn []
          (let [tag (js/document.createElement "script")]
            (-> tag (.setAttribute "src" klipse-plugin-path))
            (-> tag (.setAttribute "id" "klipse-script"))
            (js/document.body.appendChild tag)
+<<<<<<< HEAD
            (js/setTimeout #(reset! evaled? true) 7000)))
+=======
+           (js/setTimeout
+             (fn []
+               (let [nodeList (js/Array.prototype.slice.call (js/document.querySelectorAll ".temp-err .klipse-component pre .klipse-result .CodeMirror"))]
+                 (reset! evaled? true)
+                 ;; temporary hack to force magenta bg for klipse ouput
+                 ;; that has intentional errors on load
+                 (doseq [n nodeList]
+                   (! n.style.background err-color))))
+             5000)))
+>>>>>>> klipse-slides-activity-creation
        :reagent-render
        (fn [language code]
          [:div.klipse-component
           (when @evaled?
             (let [klipse-container (js/document.querySelector klipse-container-class)]
               (. klipse-container
+<<<<<<< HEAD
                  (addEventListener "klipse-snippet-evaled" klipse-handler))))
+=======
+                (addEventListener "klipse-snippet-evaled" handle-klipse-evaled))))
+>>>>>>> klipse-slides-activity-creation
           [:pre
            [:code {:class (case (string/lower-case language)
                             "python" "language-klipse-python"
