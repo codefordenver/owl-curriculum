@@ -3,6 +3,7 @@
             [owlet.components.interactive.create-activity-response :refer [create-activity-response-component]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]
+            [owlet.components.creation.select-branch :refer [select-branch]]
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
             [re-frame.core :as rf]))
@@ -23,6 +24,7 @@
                                :name "author"
                                :placeholder "Author"}]]]]]
        [:div.activity-content.col-sm-12.col-lg-7
+        [select-branch]
         (for [n (range @panel-number)]
           ^{:key (inc n)}
           [create-klipse-panel-component (inc n)])

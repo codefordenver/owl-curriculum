@@ -1117,9 +1117,11 @@ span.inline-code {
   margin-top: 0.5em;
 }
 
-#select-platform .display-flex, #select-tags .display-flex {
+#select-platform .display-flex, #select-tags .display-flex, #select-branch {
   display: block;
   background-color: white;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .panel-validation {
