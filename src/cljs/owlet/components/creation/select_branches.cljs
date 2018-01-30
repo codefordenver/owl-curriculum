@@ -1,15 +1,14 @@
-(ns owlet.components.creation.select-branch
+(ns owlet.components.creation.select-branches
   (:require [re-frame.core :as rf]
             [re-com.core :refer [checkbox]]
             [reagent.core :as reagent]))
 
-(defn select-branch []
+(defn select-branches []
   (let [branches @(rf/subscribe [:activity-branches])]
-    [:div {:id "select-branch"
-           :style {}}
+    [:div#select-branch.box-shadow
      [:form
       (doall (for [b branches
-                   :let [branch-name (get-in b [:fields :name])
+                   :let [branch-name (:name b)
                          checked? (reagent/atom false)]]
                ^{:key (gensym "branch-")}
                 [:div
