@@ -45,7 +45,7 @@
                  [cljsjs/auth0 "7.0.4-0"]
                  [cljsjs/auth0-lock "10.4.0-0"]
                  [cljsjs/bootstrap "3.3.6-1"]
-                 [cljsjs/firebase "4.4.0-0"]
+                 [cljsjs/firebase "4.8.1-0"]
                  [cljsjs/showdown "1.4.2-0"]
                  [cljsjs/toastr "2.1.2-0"]
                  [org.clojure/core.async "0.3.442"]
@@ -64,7 +64,8 @@
                  [metosin/compojure-api "1.1.9"]
                  [nilenso/mailgun "0.2.3"]
                  [funcool/cuerdas "2.0.3"]
-                 [cljsjs/chartjs "2.6.0-0"]]
+                 [cljsjs/chartjs "2.6.0-0"]
+                 [cljsjs/simplemde "1.11.2-0"]]
 
   :min-lein-version "2.0.0"
 

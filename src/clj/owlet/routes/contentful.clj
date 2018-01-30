@@ -84,8 +84,15 @@
 
 (def remove-nil (partial remove nil?))
 
-(defn- process-activity [activity platforms assets]
+(defn- process-activity [activity branches tags platforms assets]
   (-> activity
+      ; Adds :branches data using :branchRefs
+      (assoc-in [:fields :branches]
+                (map
+                  (fn [branchRef]
+                    (apply #(:fields %) (filter #(= (-> branchRef :sys :id) (-> % :sys :id)) branches)))
+                  (-> activity :fields :branchRefs)))
+
       ; Adds :platform data using :platformRef
       (assoc-in [:fields :platform]
                 (some #(when (= (get-in activity [:fields :platformRef :sys :id])
@@ -118,9 +125,9 @@
                                activity))))
 
 (defn- process-activities
-  [activities platforms assets]
+  [activities branches tags platforms assets]
   (for [activity activities]
-    (process-activity activity platforms assets)))
+    (process-activity activity branches tags platforms assets)))
 
 
 (defn handle-get-all-entries-for-given-space
@@ -139,14 +146,17 @@
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
+              branches (filter-entries "branch" (:items entries))
               platforms (filter-entries "platform" (:items entries))
+              tags (filter-entries "tag" (:items entries))
               activities (concat (filter-entries "klipseActivity" (:items entries))
                                  (filter-entries "activity" (:items entries)))]
 
-
           (ok {:metadata   (process-metadata (:body @metadata))
-               :activities (process-activities activities platforms assets)
-               :platforms  platforms}))
+               :activities (process-activities activities branches tags platforms assets)
+               :branches   branches
+               :platforms  platforms
+               :tags       tags}))
         (not-found status)))))
 
 (defn- compose-new-activity-email
