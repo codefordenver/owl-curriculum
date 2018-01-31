@@ -1,12 +1,11 @@
 (ns owlet.components.creation.select-platform
   (:require [re-frame.core :as rf]
-            [re-com.core :refer [radio-button]]
             [reagent.core :as reagent]))
 
 (defn select-platform [klipse?]
   (let [platforms @(rf/subscribe [:activity-platforms])
         platform (reagent/atom nil)]
-    [:div#select-platform.box-shadow
+    [:div#select-platform
      [:form
       (doall (for [p platforms
                    :let [platform-name (:name p)]]
@@ -14,16 +13,11 @@
                 (when (= platform-name "OWLET")
                   ^{:key (gensym "platform-")}
                    [:div
-                    [radio-button
-                     :model p
-                     :value p
-                     :disabled? true
-                     :on-change #(reset! platform p)
-                     :label platform-name]])
+                    [:input {:type "radio"
+                             :disabled true
+                             :checked true}]
+                    [:label platform-name]])
                 ^{:key (gensym "platform-")}
                  [:div
-                  [radio-button
-                   :model platform
-                   :value p
-                   :on-change #(reset! platform p)
-                   :label platform-name]])))]]))
+                  [:input {:type "radio"}]
+                  [:label platform-name]])))]]))

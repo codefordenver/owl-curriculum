@@ -1117,10 +1117,29 @@ span.inline-code {
   margin-top: 0.5em;
 }
 
-#select-platform, #select-tags, #select-branch {
-  background-color: white;
+#select-platform, #select-tags, #select-branches {
   padding: 5px;
   margin-bottom: 10px;
+}
+
+#select-platform form input {
+  display: inline-block;
+}
+
+#select-categories {
+  background-color: white;
+  padding-left: 5px;
+  padding-top: 3px;
+  h5 {
+    text-transform: uppercase;
+    margin: 0;
+  }
+}
+
+#select-categories input[type="radio"], #select-categories input[type="checkbox"] {
+  margin-top: -.32em;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 .panel-validation {

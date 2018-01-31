@@ -11,7 +11,7 @@
             [re-frame.core :as rf]))
 
 (def input-url (reagent/atom ""))
-(def embed-url (reagent/atom ""))
+(def embed-url (reagent/atom "http://localhost:3000/#/"))
 
 (defn create-klipse-slides-activity []
  (let [panel-number (reagent/atom 1)]
@@ -29,9 +29,13 @@
                                :name "author"
                                :placeholder "Author"}]]]]]
        [:div.activity-content.col-sm-12.col-lg-7
-        [select-branches true]
-        [select-platform true]
-        [select-tags true]
+        [:div#select-categories.box-shadow
+         [:div [:h5 [:mark "Branch"]]
+          [select-branches true]]
+         [:div [:h5 [:mark "Platform"]]
+          [select-platform true]]
+         [:div [:h5 [:mark "Tags"]]
+          [select-tags true]]]
         [:textarea#iframe-url {:value @input-url
                                :on-change (fn [v]
                                             (reset! input-url (.. v -target -value))
@@ -39,8 +43,8 @@
                                               (reset! embed-url (str @input-url "/embed?style=light"))))}]
         [:iframe#preview {:src @embed-url
                           :scrolling "no"
-                          :frameborder "0"
-                          :allowfullscreen? true}]
+                          :frameBorder "0"
+                          :allowFullScreen true}]
         [:div.activity-info-wrap.box-shadow
          (for [n (range @panel-number)]
            ^{:key (inc n)}
