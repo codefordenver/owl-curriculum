@@ -47,11 +47,10 @@
                 [:span " | " [:b "download required"]])]]
       [:div.summary summary]
       (when tags
-        (for [tag tags]
-          (if (= (lower-case tag) (lower-case display-name))
+        (for [tag tags :let [name (:name tag)]]
             ^{:key (gensym "tag-")}
-            [:div.tag {:on-click #(rf/dispatch [:show-tag tag])}
-              [:span tag]]
-            ^{:key (gensym "tag-")}
-            [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag tag])}
-              [:span tag]])))]]))
+            [:div {:class (if (= (lower-case name) (lower-case display-name))
+                           "tag"
+                           "inactive tag")
+                   :on-click #(rf/dispatch [:show-tag name])}
+              [:span name]]))]]))
