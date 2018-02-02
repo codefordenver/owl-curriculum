@@ -1,4 +1,4 @@
-(ns owlet.components.interactive.create-klipse-code-validation
+(ns owlet.components.creation.create-klipse-code-validation
   (:require [reagent.core :as reagent]))
 
 (defn create-klipse-code-validation-component [specify-number?]

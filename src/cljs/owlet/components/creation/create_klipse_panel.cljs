@@ -1,16 +1,12 @@
-(ns owlet.components.interactive.create-klipse-panel
+(ns owlet.components.creation.create-klipse-panel
   (:require [owlet.components.interactive.klipse :refer [klipse-component]]
             [reagent.core :as reagent]
-            [owlet.components.interactive.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
+            [owlet.components.creation.custom-klipse-component :refer [custom-klipse-component]]
+            [owlet.components.creation.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             cljsjs.simplemde))
 
-(defn remount-klipse [remount?]
-  (js/setTimeout #(swap! remount? not) 100))
-
 (defn create-klipse-panel-component [panel-number]
-  (let [text-id-base (str "panel-" panel-number "-text-")
-        language (reagent/atom "python")
-        remount? (reagent/atom true)]
+  (let [text-id-base (str "panel-" panel-number "-text-")]
     (reagent/create-class
       {:component-did-mount
        (fn []
@@ -40,23 +36,7 @@
           [:span {:style {:font-weight "500"
                           :margin "0 0.3em 0 0.05em"}}
                  [:mark "Code Evaluator"]]
-          [:select {:id (str "panel-" panel-number "-language")
-                    :value @language
-                    :on-change (fn [e]
-                                 (when (not= @language (-> e .-target .-value))
-                                   (swap! remount? not)
-                                   (remount-klipse remount?))
-                                 (reset! language (-> e .-target .-value)))}
-           [:option {:value ""} "None"]
-           [:option {:value "python"} "Python"]
-           [:option {:value "javascript"} "JavaScript"]
-           [:option {:value "clojure"} "Clojure"]]
-          (when @remount?
-            (case @language
-              "python" [klipse-component @language "# type here"]
-              "javascript" [klipse-component @language "// type here"]
-              "clojure" [klipse-component @language ";; type here"]
-              "" [:div {:style {:margin-bottom "2em"}} ""]))]
+          [custom-klipse-component panel-number]]
          [:div.panel-validation
           [:span {:style {:font-weight "500"
                           :margin "0 0.3em 0 0.05em"}}

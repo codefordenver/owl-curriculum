@@ -1,6 +1,6 @@
 (ns owlet.views.create-klipse-panel-activity
-  (:require [owlet.components.interactive.create-klipse-panel :refer [create-klipse-panel-component]]
-            [owlet.components.interactive.create-activity-response :refer [create-activity-response-component]]
+  (:require [owlet.components.creation.create-klipse-panel :refer [create-klipse-panel-component]]
+            [owlet.components.creation.create-activity-response :refer [create-activity-response-component]]
             [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.back :refer [back]]
             [owlet.components.creation.select-branches :refer [select-branches]]

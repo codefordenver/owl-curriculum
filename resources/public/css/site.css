@@ -713,11 +713,11 @@ span.platform-details {
     color: #ADADAD;
     margin-top: 0; }
 
-.activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
+.activity-info-wrap, .activity-creation-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
   padding: 10px 12px 10px 15px;
   margin-bottom: 30px; }
-  .activity-info-wrap span.platform-details, .activity-inspiration-wrap span.platform-details, .activity-challenge-wrap span.platform-details {
+  .activity-info-wrap span.platform-details, .activity-creation-wrap span.platform-details, .activity-inspiration-wrap span.platform-details, .activity-challenge-wrap span.platform-details {
     font-size: 0.75em; }
 
 .activity-challenge-wrap {
@@ -911,6 +911,9 @@ span.inline-code {
   margin-right: 5px;
   vertical-align: middle; }
 
+#summary, #code {
+  width: 100%; }
+
 .panel-validation {
   margin-bottom: 14px; }
 
@@ -930,13 +933,26 @@ span.inline-code {
   resize: none; }
 
 #iframe-url {
-  width: 576px;
+  width: 100%;
   height: 26px;
   resize: none; }
 
-#preview {
-  width: 576px;
-  height: 420px; }
+.language, .code-eval h4 {
+  display: inline-block; }
+
+.code-eval h4 {
+  margin-top: 30px; }
+
+.code-eval h4 ~ * {
+  margin-left: 10px; }
+
+.activity-creation-wrap h5, .activity-creation-wrap h4 {
+  margin-bottom: 10px;
+  text-transform: uppercase; }
+
+.code-preview {
+  margin-top: 10px;
+  border: 2px solid #65D2C0; }
 
 .create-activity-buttons button {
   font-size: 1.4em;

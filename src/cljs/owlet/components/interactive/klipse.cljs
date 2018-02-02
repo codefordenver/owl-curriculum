@@ -19,7 +19,7 @@
 (defn- reset-background-color! [element color]
   (! element.style.background color))
 
-(defn klipse-component [language code]
+(defn klipse-component [language code & [inline?]]
   (let [evaled? (reagent/atom false)
         klipse-handler (fn [e]
                          (let [output-wrapper-div (? e.detail.result-element.display.wrapper)
@@ -42,7 +42,7 @@
            (-> tag (.setAttribute "src" klipse-plugin-path))
            (-> tag (.setAttribute "id" "klipse-script"))
            (js/document.body.appendChild tag)
-           (js/setTimeout #(reset! evaled? true) 7000)))
+           (js/setTimeout #(reset! evaled? true) 30000)))
        :reagent-render
        (fn [language code]
          [:div.klipse-component

@@ -1,4 +1,4 @@
-(ns owlet.components.interactive.create-activity-response
+(ns owlet.components.creation.create-activity-response
   (:use-macros [purnam.core :only [! def*]])
   (:require cljsjs.toastr))
 

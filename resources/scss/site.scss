@@ -886,7 +886,7 @@ span.platform-details {
   margin-bottom: 15px;
 }
 
-.activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
+.activity-info-wrap, .activity-creation-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
   padding: 10px 12px 10px 15px;
   margin-bottom: 30px;
@@ -1142,6 +1142,10 @@ span.inline-code {
   vertical-align: middle;
 }
 
+#summary, #code {
+  width: 100%;
+}
+
 .panel-validation {
   margin-bottom: 14px;
 }
@@ -1164,14 +1168,31 @@ span.inline-code {
 }
 
 #iframe-url {
-  width: 576px;
+  width: 100%;
   height: 26px;
   resize: none;
 }
 
-#preview {
-  width: 576px;
-  height: 420px;
+.language, .code-eval h4 {
+  display: inline-block;
+}
+
+.code-eval h4 {
+  margin-top: 30px;
+}
+
+.code-eval h4 ~ * {
+  margin-left: 10px;
+}
+
+.activity-creation-wrap h5, .activity-creation-wrap h4 {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.code-preview {
+  margin-top: 10px;
+  border: 2px solid $aqua;
 }
 
 .create-activity-buttons {
