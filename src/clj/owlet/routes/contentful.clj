@@ -93,6 +93,14 @@
                     (apply #(:fields %) (filter #(= (-> branchRef :sys :id) (-> % :sys :id)) branches)))
                   (-> activity :fields :branchRefs)))
 
+      ;; Adds :tags data using :tagRefs
+
+      (assoc-in [:fields :tags]
+                (map
+                  (fn [tag-ref]
+                    (apply #(:fields %) (filter #(= (-> tag-ref :sys :id) (-> % :sys :id)) tags)))
+                  (-> activity :fields :tagRefs)))
+
       ; Adds :platform data using :platformRef
       (assoc-in [:fields :platform]
                 (some #(when (= (get-in activity [:fields :platformRef :sys :id])
@@ -116,13 +124,15 @@
                      (mapv (image-by-id assets))))
       ; Add :tag-
       (assoc-in [:tag-set] (or (some->> activity
-                                          :fields
-                                          :tags
-                                          remove-nil
-                                          seq                                    ; some->> gives nil if empty
-                                          (map keywordize-name)
-                                          set)
-                               activity))))
+                                        :fields
+                                        :tags
+                                        remove-nil
+                                        seq                 ; some->> gives nil if empty
+                                        (map keywordize-name)
+                                        set)
+                               activity))
+      ;; Removes refs since no longer needed in the front-end
+      (update :fields #(apply dissoc % [:branchRefs :tagRefs :platformRef]))))
 
 (defn- process-activities
   [activities branches tags platforms assets]
