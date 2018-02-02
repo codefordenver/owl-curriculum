@@ -950,9 +950,12 @@ span.inline-code {
   margin-bottom: 10px;
   text-transform: uppercase; }
 
-.code-preview {
+.code-preview, .add-validation {
   margin-top: 10px;
   border: 2px solid #65D2C0; }
+
+.add-validation {
+  margin-bottom: 6px; }
 
 .create-activity-buttons button {
   font-size: 1.4em;
@@ -966,7 +969,7 @@ span.inline-code {
   padding: 0.2em 0.4em 0.2em 0.35em; }
 
 .create-activity-buttons .save-activity {
-  margin: 0.1em 0 3em 1em;
+  margin: 0.1em 0 3em;
   background-color: #0c171b;
   color: white;
   padding: 0.2em 0.4em 0.2em 0.45em; }

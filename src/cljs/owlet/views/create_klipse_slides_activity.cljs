@@ -59,15 +59,15 @@
          (for [n (range @panel-number)]
            ^{:key (inc n)}
            [create-klipse-code-validation-component true])
+         [:button.btn.add-validation
+          {:on-click #(swap! panel-number inc)}
+          "+ Add another code validation"]
          [:h5 [:mark "Summary"]]
          [:input#summary {:type "text"
                           :maxLength "255"
                           :placeholder "In a nutshell, what will we be doing? (255 character limit)"}]
          [custom-klipse-component 0]]
         [:div.create-activity-buttons
-         [:button.add-panel
-          {:on-click #(swap! panel-number inc)}
-          "+ Add another code validation"]
          [:button.save-activity
           "Save Activity"]]]]
       [create-activity-response-component :ok]])))
