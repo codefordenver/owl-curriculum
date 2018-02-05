@@ -892,8 +892,7 @@ span.inline-code {
   margin-top: 0.5em; }
 
 #select-platform, #select-tags, #select-branches {
-  padding: 5px;
-  margin-bottom: 10px; }
+  padding: 5px; }
 
 #select-platform form input {
   display: inline-block; }
@@ -950,12 +949,10 @@ span.inline-code {
   margin-bottom: 10px;
   text-transform: uppercase; }
 
-.code-preview, .add-validation {
+.code-preview, .add-validation, .rem-validation {
   margin-top: 10px;
+  margin-right: 5px;
   border: 2px solid #65D2C0; }
-
-.add-validation {
-  margin-bottom: 6px; }
 
 .create-activity-buttons button {
   font-size: 1.4em;
