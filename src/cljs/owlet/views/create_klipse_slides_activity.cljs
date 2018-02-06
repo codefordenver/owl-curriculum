@@ -16,9 +16,9 @@
 (def input-url (reagent/atom ""))
 (def embed-url (reagent/atom ""))
 (def show-slides? (reagent/atom false))
+(def panel-number (reagent/atom 1))
 
 (defn create-klipse-slides-activity []
-  (let [panel-number (reagent/atom 1)]
    [:div.activity
     [:div.activity-wrap
      [:div.activity-header.col-sm-12.col-lg-7
@@ -60,18 +60,16 @@
        (for [n (range @panel-number)]
          ^{:key (inc n)}
          [create-klipse-code-validation-component true])
-       [:button.btn.add-validation
-        {:on-click #(swap! panel-number inc)}
+       [:button.btn.add-validation {:on-click #(swap! panel-number inc)}
         "+ Add another code validation"]
-       [:button.btn.rem-validation
-        {:on-click #(swap! panel-number dec)}
-        "- Remove a code validation"]
+       [:button.btn.rem-validation {:on-click #(swap! panel-number dec)}
+        "- Remove last a code validation"]
        [general-activity-text-fields]
        [custom-klipse-component 0]]
       [:div.create-activity-buttons
        [:button.save-activity
         "Save Activity"]]]]
-    [create-activity-response-component :ok]]))
+    [create-activity-response-component :ok]])
 
 (defn create-klipse-slides-activity-view []
   (if @(rf/subscribe [:my-id])
