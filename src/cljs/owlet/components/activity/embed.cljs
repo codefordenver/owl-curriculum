@@ -1,5 +1,10 @@
 (ns owlet.components.activity.embed
-  (:require [re-frame.core :as rf]))
+  (:require [re-com.core :as re-com :refer-macros [handler-fn]]
+            [re-com.popover]
+            [cljsjs.bootstrap]
+            [re-frame.core :as rf]
+            [clojure.string :refer [lower-case]]
+            [reagent.core :as reagent]))
 
 (defn check-slides [iframe-code]
   (let [cleaned-iframe (clojure.string/replace iframe-code #"\"" "'")
@@ -24,14 +29,12 @@
         {"dangerouslySetInnerHTML"
          #js{:__html (case activity-type
                        "klipseActivity" (check-slides embed)
-                       "activity" embed)}}
-        (when (= activity-type "klipseActivity")
-          (.addEventListener js/window "message" post-message-handler))])
+                       "activity" embed)}}])
      (when tags
        [:div.activity-tags-wrap
         [:div.tags
           "TAGS: "]
-        (for [tag tags]
-         ^{:key (gensym "tag-")}
-          [:div.tag {:on-click #(rf/dispatch [:show-tag tag])}
-            [:span tag]])])]))
+        (for [tag tags :let [name (:name tag)]]
+            ^{:key (gensym "tag-")}
+            [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag name])}
+              [:span name]])])]))
