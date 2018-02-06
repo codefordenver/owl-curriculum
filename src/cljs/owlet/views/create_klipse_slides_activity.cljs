@@ -62,7 +62,8 @@
          [create-klipse-code-validation-component true])
        [:button.btn.add-validation {:on-click #(swap! panel-number inc)}
         "+ Add another code validation"]
-       [:button.btn.rem-validation {:on-click #(swap! panel-number dec)}
+       [:button.btn.rem-validation {:on-click #(when (> @panel-number 1)
+                                                 (swap! panel-number dec))}
         "- Remove last a code validation"]
        [general-activity-text-fields]
        [custom-klipse-component 0]]
