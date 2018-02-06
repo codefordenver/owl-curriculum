@@ -1,9 +1,11 @@
 (ns owlet.views.create-klipse-panel-activity
   (:require [owlet.components.creation.create-klipse-panel :refer [create-klipse-panel-component]]
             [owlet.components.creation.create-activity-response :refer [create-activity-response-component]]
-            [owlet.components.activity.title :refer [activity-title]]
-            [owlet.components.back :refer [back]]
+            [owlet.components.creation.create-activity-title :refer [create-activity-title]]
+            [owlet.components.creation.select-tags :refer [select-tags]]
             [owlet.components.creation.select-branches :refer [select-branches]]
+            [owlet.components.creation.select-tags :refer [select-tags]]
+            [owlet.components.creation.select-platform :refer [select-platform]]
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
             [re-frame.core :as rf]))
@@ -14,17 +16,16 @@
      [:div.activity
       [:div.activity-wrap
        [:div.activity-header.col-sm-12.col-lg-7
-        [:div.activity-title-wrap
-         [:h1 [:mark [back]
-               [:input {:type "text"
-                        :name "title"
-                        :placeholder "Activity Title"}]]]
-         [:h5.author [:mark.white "Created by: "
-                      [:input {:type "text"
-                               :name "author"
-                               :placeholder "Author"}]]]]]
+        [create-activity-title]]
        [:div.activity-content.col-sm-12.col-lg-7
-        [select-branches]
+        [:div.activity-creation-wrap
+         [:div#select-categories
+          [:div [:h5 [:mark "Branch"]]
+           [select-branches true]]
+          [:div [:h5 [:mark "Platform"]]
+           [select-platform true]]
+          [:div [:h5 [:mark "Tags"]]
+           [select-tags true]]]]
         (for [n (range @panel-number)]
           ^{:key (inc n)}
           [create-klipse-panel-component (inc n)])

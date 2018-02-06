@@ -72,11 +72,12 @@
           [search-bar]
           [error]
           [:div.inner-height-wrap
-             [:div.content (when @src
-                             {:style {:background-image (when-not (or (= @active-view :about-view)
-                                                                      (= @active-view :confirm-view))
-                                                          (str "url('" @src "')"))
-                                      :background-size "cover"}})
+             [:div.content
+                           ; (when @src
+                           ;   {:style {:background-image (when-not (or (= @active-view :about-view)
+                           ;                                            (= @active-view :confirm-view))
+                           ;                                (str "url('" @src "')"))
+                           ;            :background-size "cover"}})
                 (when-not (or (= @active-view :about-view)
                               (= @active-view :confirm-view))
                   [:button#change-bg-btn

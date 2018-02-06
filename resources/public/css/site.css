@@ -88,7 +88,6 @@ b {
   color: black; }
 
 .search-bar-wrap {
-  margin-left: 5px;
   position: fixed;
   color: white;
   width: 100%;
@@ -219,7 +218,8 @@ b {
       opacity: 0.75; }
 
 #sidebar-wrap {
-  background-color: #32254B; }
+  background-color: #32254B;
+  min-width: 80px; }
 
 .lpsidebar {
   position: fixed;
@@ -466,7 +466,6 @@ mark.white {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
-  background: url("../img/cfd-bg.jpg");
   background-size: cover !important; }
 
 .outer-height-wrap {
@@ -712,14 +711,22 @@ span.platform-details {
     font-size: 2.4rem;
     margin-bottom: 0;
     text-transform: uppercase; }
+  .activity-title-wrap input {
+    background-color: black;
+    color: white;
+    width: 100%; }
   .activity-title-wrap .author {
     color: #ADADAD;
     margin-top: 0; }
+    .activity-title-wrap .author input {
+      border: 1px solid #C8C8C8;
+      margin-top: 5px; }
 
 .activity-info-wrap, .activity-creation-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
   padding: 10px 12px 10px 15px;
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  border: 2px solid black; }
   .activity-info-wrap span.platform-details, .activity-creation-wrap span.platform-details, .activity-inspiration-wrap span.platform-details, .activity-challenge-wrap span.platform-details {
     font-size: 0.75em; }
 
@@ -864,7 +871,7 @@ span.inline-code {
   color: white;
   line-height: 1.3em;
   padding-left: 0.3em;
-  width: 84%;
+  width: 90%;
   border: none; }
 
 .activity-title-wrap h5 input {
@@ -963,7 +970,7 @@ span.inline-code {
   border: 4px #65D2C0 solid; }
 
 .create-activity-buttons .add-panel {
-  margin: 0.1em 0 1.5em 0;
+  margin: 0.1em 1em 1.5em 0;
   background-color: white;
   color: #0c171b;
   padding: 0.2em 0.4em 0.2em 0.35em; }

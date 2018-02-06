@@ -118,7 +118,6 @@ b {
 }
 
 .search-bar-wrap {
-  margin-left: 5px;
   position: fixed;
   color: white;
   width: 100%;
@@ -177,8 +176,9 @@ b {
   border-radius: 50%;
 }
 
-#sidebar {min-height: inherit;
-min-width: inherit;
+#sidebar {
+  min-height: inherit;
+  min-width: inherit;
   z-index: 3;
   text-align: center;
   background-color: $purple;
@@ -276,6 +276,7 @@ min-width: inherit;
 
 #sidebar-wrap {
   background-color: $purple;
+  min-width: 80px;
 }
 
 .lpsidebar {
@@ -577,7 +578,7 @@ mark.white {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
-  background: url('../img/cfd-bg.jpg');
+  // background: url('../img/cfd-bg.jpg');
   background-size: cover !important;
 }
 
@@ -880,9 +881,18 @@ span.platform-details {
     margin-bottom: 0;
     text-transform: uppercase;
   }
+  input {
+    background-color: black;
+    color: white;
+    width: 100%;
+  }
   .author {
     color: #ADADAD;
     margin-top: 0;
+    input {
+      border: 1px solid $light-gray;
+      margin-top: 5px;
+    }
   }
   margin-top: 18px;
   margin-bottom: 15px;
@@ -892,6 +902,7 @@ span.platform-details {
   background-color: white;
   padding: 10px 12px 10px 15px;
   margin-bottom: 30px;
+  border: 2px solid black;
   span.platform-details {
     font-size: 0.75em;
   }
@@ -1084,7 +1095,7 @@ span.inline-code {
     color: white;
     line-height: 1.3em;
     padding-left: 0.3em;
-    width: 84%;
+    width: 90%;
     border: none;
   }
   h5 input {
@@ -1205,7 +1216,7 @@ span.inline-code {
     border: 4px $aqua solid;
   }
   .add-panel {
-    margin: 0.1em 0 1.5em 0;
+    margin: 0.1em 1em 1.5em 0;
     background-color: white;
     color: $dark-gray;
     padding: 0.2em 0.4em 0.2em 0.35em;

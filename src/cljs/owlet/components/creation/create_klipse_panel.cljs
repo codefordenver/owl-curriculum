@@ -22,7 +22,7 @@
                                                          :uniqueId smde-2-id}})]))
        :reagent-render
        (fn [panel-number]
-        [:div.activity-info-wrap.box-shadow
+        [:div.activity-creation-wrap
          [:div.panel-heading.flexcontainer-wrap
           [:div.panel-number (str panel-number)]
           [:div {:style {:width "82%"}}
@@ -34,8 +34,7 @@
                       :placeholder "Optional text (markdown)"}]]
          [:div.panel-klipse
           [:span {:style {:font-weight "500"
-                          :margin "0 0.3em 0 0.05em"}}
-                 [:mark "Code Evaluator"]]
+                          :margin "0 0.3em 0 0.05em"}}]
           [custom-klipse-component panel-number]]
          [:div.panel-validation
           [:span {:style {:font-weight "500"

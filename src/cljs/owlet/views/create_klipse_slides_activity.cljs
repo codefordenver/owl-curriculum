@@ -1,12 +1,11 @@
 (ns owlet.views.create-klipse-slides-activity
   (:require [owlet.components.creation.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             [owlet.components.creation.create-activity-response :refer [create-activity-response-component]]
+            [owlet.components.creation.create-activity-title :refer [create-activity-title]]
             [owlet.components.creation.select-branches :refer [select-branches]]
             [owlet.components.creation.select-tags :refer [select-tags]]
             [owlet.components.creation.select-platform :refer [select-platform]]
-            [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.creation.general-activity-text-fields :refer [general-activity-text-fields]]
-            [owlet.components.back :refer [back]]
             [owlet.components.creation.custom-klipse-component :refer [custom-klipse-component]]
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
@@ -22,17 +21,9 @@
    [:div.activity
     [:div.activity-wrap
      [:div.activity-header.col-sm-12.col-lg-7
-      [:div.activity-title-wrap
-       [:h1 [:mark [back]
-             [:input {:type "text"
-                      :name "title"
-                      :placeholder "Activity Title"}]]]
-       [:h5.author [:mark.white "Created by: "
-                    [:input {:type "text"
-                             :name "author"
-                             :placeholder "Author"}]]]]]
+      [create-activity-title]]
      [:div.activity-content.col-sm-12.col-lg-7
-      [:div.activity-creation-wrap.box-shadow
+      [:div.activity-creation-wrap
        [:div#select-categories
         [:div [:h5 [:mark "Branch"]]
          [select-branches true]]
