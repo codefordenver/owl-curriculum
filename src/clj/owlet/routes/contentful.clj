@@ -44,23 +44,6 @@
   (http/get (format "https://cdn.contentful.com/spaces/%1s/assets/%2s" space-id asset-id)
             {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}))
 
-; TODO: refactor to get tags and branches from Klipse Activity model too
-(defn- process-metadata
-  [metadata]
-  (let [body (json/parse-string metadata true)
-        items (body :items)
-        activity-model (some #(when (= (:name %) "Activity") %) items)
-        activity-model-fields (:fields activity-model)
-        pluck-prop (fn [prop]
-                     (-> (get-in (some #(when (= (:id %) prop) %) activity-model-fields)
-                                 [:items :validations])
-                         first
-                         :in))
-        tags (pluck-prop "tags")
-        branches (pluck-prop "branch")]
-    {:tags   tags
-     :branches branches}))
-
 (defn- filter-entries [content-type items]
   (filter #(= content-type
               (-> % (get-in [:sys :contentType :sys :id])))
@@ -162,8 +145,7 @@
               activities (concat (filter-entries "klipseActivity" (:items entries))
                                  (filter-entries "activity" (:items entries)))]
 
-          (ok {:metadata   (process-metadata (:body @metadata))
-               :activities (process-activities activities branches tags platforms assets)
+          (ok {:activities (process-activities activities branches tags platforms assets)
                :branches   branches
                :platforms  platforms
                :tags       tags}))

@@ -33,7 +33,6 @@
 (rf/reg-event-fx
   :get-content-from-contentful-success
   (fn [{db :db} [_ route-args {activities :activities
-                               metadata :metadata
                                platforms :platforms
                                tags :tags
                                branches :branches}]]
