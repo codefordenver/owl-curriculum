@@ -204,7 +204,7 @@
 
         (let [filtered-set (filter #(when (contains? (:tag-set %) search-term) %) activities)]
           (if (seq filtered-set)
-            (let [tags (:tags db)
+            (let [tags (concat (map #(:name %) (:tags db)))
                   lowercase-tags (map str/locale-lower tags)
                   tag-index (.indexOf lowercase-tags (string/lower-case term))
                   display-name (nth tags tag-index)]

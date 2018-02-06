@@ -64,7 +64,7 @@
               activity-titles (rf/subscribe [:activity-titles])
               activity-platforms (rf/subscribe [:activity-platforms])
               platform-names (map #(:name %) @activity-platforms)
-              search-collections (concat @tags @branches @activity-titles platform-names)
+              search-collections (concat (map #(:name %) @tags) (map #(:name %) @branches) @activity-titles platform-names)
               result-formatter #(-> {:term %})
               suggestion-renderer #(:term %)
               special-char-pattern (re-pattern "[^A-Za-z0-9]")
