@@ -88,6 +88,7 @@ b {
   color: black; }
 
 .search-bar-wrap {
+  margin-left: 5px;
   position: fixed;
   color: white;
   width: 100%;
@@ -141,6 +142,8 @@ b {
   border-radius: 50%; }
 
 #sidebar {
+  min-height: inherit;
+  min-width: inherit;
   z-index: 3;
   text-align: center;
   background-color: #32254B;
@@ -840,6 +843,10 @@ span.inline-code {
       background-color: black;
       color: white;
       padding: 5px !important; }
+  .klipse-component .klipse-result .CodeMirror-cursors, .klipse-component .klipse-result .CodeMirror-cursor {
+    display: none; }
+  .klipse-component .klipse-result .CodeMirror-lines, .klipse-component .klipse-result .CodeMirror-line {
+    cursor: default; }
   .klipse-component .klipse-result .CodeMirror {
     background-color: #65D2C0;
     color: yellow; }
@@ -851,10 +858,6 @@ span.inline-code {
     .klipse-component .klipse-result .CodeMirror .cm-keyword,
     .klipse-component .klipse-result .CodeMirror .cm-error {
       color: yellow; }
-  .klipse-component .CodeMirror-selected {
-    min-width: 0; }
-  .klipse-component .CodeMirror-cursor {
-    min-height: 0; }
 
 .activity-title-wrap h1 input {
   background: none;
@@ -1180,10 +1183,6 @@ button {
   -webkit-animation: rotate 1s linear infinite;
   animation: rotate 1s linear infinite;
   fill: rgba(0, 0, 0, 0.2); }
-
-* {
-  min-height: inherit;
-  min-width: inherit; }
 
 progress {
   display: inline-block;

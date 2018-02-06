@@ -118,6 +118,7 @@ b {
 }
 
 .search-bar-wrap {
+  margin-left: 5px;
   position: fixed;
   color: white;
   width: 100%;
@@ -176,7 +177,8 @@ b {
   border-radius: 50%;
 }
 
-#sidebar {
+#sidebar {min-height: inherit;
+min-width: inherit;
   z-index: 3;
   text-align: center;
   background-color: $purple;
@@ -1040,13 +1042,21 @@ span.inline-code {
     padding: 10px;
   }
 
-  .klipse-result .CodeMirror-line:first-child {
-    font-weight: 500;
-    text-transform: uppercase;
-    span {
-      background-color: black;
-      color: white;
-      padding: 5px !important;
+  .klipse-result {
+    .CodeMirror-line:first-child {
+      font-weight: 500;
+      text-transform: uppercase;
+      span {
+        background-color: black;
+        color: white;
+        padding: 5px !important;
+      }
+    }
+    .CodeMirror-cursors, .CodeMirror-cursor {
+      display: none;
+    }
+    .CodeMirror-lines, .CodeMirror-line {
+      cursor: default;
     }
   }
 
@@ -1065,13 +1075,6 @@ span.inline-code {
     .cm-error {
       color: yellow;
     }
-  }
-
-  .CodeMirror-selected {
-    min-width: 0;
-  }
-  .CodeMirror-cursor {
-    min-height: 0;
   }
 }
 
@@ -1466,12 +1469,6 @@ button {
   -webkit-animation: rotate 1s linear infinite;
   animation: rotate 1s linear infinite;
   fill: rgba(0, 0, 0, 0.2);
-}
-
-// re-com overwrites
-* {
-  min-height: inherit;
-  min-width: inherit;
 }
 
 // bootstrap 3 supplement for progress-bar (recom)
