@@ -143,7 +143,7 @@
           @(http/get (format "https://cdn.contentful.com/spaces/%1s/entries?" space-id) opts2)
           metadata (get-space-metadata space-id opts1)]
       (prn
-        (apply str test-template))
+        (apply str (test-template)))
 
       (if (= status 200)
         (let [entries (json/parse-string body true)
