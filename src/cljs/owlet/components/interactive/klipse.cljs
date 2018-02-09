@@ -8,25 +8,19 @@
 
 (def klipse-container-class ".klipse-container")
 
-(def ok-color
-  ;; $aqua
-  "#65D2C0")
+(def ok-color "#65D2C0") ;; $aqua
 
-(def err-color
-  ;; $magenta
-  "#FF0076")
+(def err-color "#FF0076") ;; $magenta
 
 (defn- reset-background-color! [element color]
   (! element.style.background color))
 
-(defn handle-klipse-evaled [e]
-  (let [output-wrapper-div (? e.detail.result-element.display.wrapper)
-        detail (? e.detail.result)
-        [result _] (js->clj detail)
-        result->key (keyword result)]
-    (if (= result->key :ok)
-      (reset-background-color! output-wrapper-div ok-color)
-      (reset-background-color! output-wrapper-div err-color))))
+(defn- klipse-event-handler [e]
+  (let [output-wrapper-div (? e.detail.resultElement.display.wrapper)
+        hasError (? e.detail.hasError)]
+    (if hasError
+      (reset-background-color! output-wrapper-div err-color)
+      (reset-background-color! output-wrapper-div ok-color))))
 
 (defn klipse-component [language code & [inline?]]
   (let [evaled? (reagent/atom false)]
@@ -34,31 +28,24 @@
       {:component-will-unmount
        (fn []
          (when-let [klipse-container (js/document.querySelector klipse-container-class)]
-           (. klipse-container
-             (removeEventListener "klipse-snippet-evaled" handle-klipse-evaled)))
-         (.remove (js/document.querySelector "#klipse-script")))
+           (!> klipse-container.removeEventListener
+               "klipse-snippet-evaled" klipse-event-handler))
+         (-> (js/document.querySelector "#klipse-script")
+             (.remove)))
        :component-did-mount
        (fn []
          (let [tag (js/document.createElement "script")]
            (-> tag (.setAttribute "src" klipse-plugin-path))
            (-> tag (.setAttribute "id" "klipse-script"))
            (js/document.body.appendChild tag)
-           (js/setTimeout
-             (fn []
-               (let [nodeList (js/Array.prototype.slice.call (js/document.querySelectorAll ".temp-err .klipse-component pre .klipse-result .CodeMirror"))]
-                 (reset! evaled? true)
-                 ;; temporary hack to force magenta bg for klipse ouput
-                 ;; that has intentional errors on load
-                 (doseq [n nodeList]
-                   (! n.style.background err-color))))
-             5000)))
+           ;; TODO: ADD SUPPORT FOR ERROR ONLOAD
+           (js/setTimeout #(reset! evaled? true) 5000)))
        :reagent-render
        (fn [language code]
          [:div.klipse-component
           (when @evaled?
             (let [klipse-container (js/document.querySelector klipse-container-class)]
-              (. klipse-container
-                (addEventListener "klipse-snippet-evaled" handle-klipse-evaled))))
+              (!> klipse-container.addEventListener "klipse-snippet-evaled" klipse-event-handler)))
           [:pre
            [:code {:class (case (string/lower-case language)
                             "python" "language-klipse-python"
@@ -69,4 +56,4 @@
               (if (and (nil? inline?) (re-find pattern code))
                 (string/replace code pattern "\n")
                 code))]
-           [loading-component]]])})))
+           (when-not @evaled? [loading-component])]])})))
