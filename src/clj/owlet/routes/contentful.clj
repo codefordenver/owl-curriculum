@@ -13,7 +13,7 @@
             [net.cgrand.enlive-html :as html]))
 
 (html/deftemplate test-template
-   (:body @(http/get "http://slides.com/michellelim-2/python-strings/embed?style=light")) []
+   (java.io.StringReader. (slurp "http://slides.com/michellelim-2/python-strings/embed?style=light")) []
    [:html] (html/add-class "test-class"))
 
 (def creds {:key    (System/getenv "MMM_MAILGUN_API_KEY")
