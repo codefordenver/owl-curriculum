@@ -4,4 +4,4 @@
 
 (defn not-found-view []
   [:div.not-found
-   [:h2 [:mark.box-shadow [back] "404 - Not Found"]]])
+   [:h2 [:mark [back] "404 - Not Found"]]])

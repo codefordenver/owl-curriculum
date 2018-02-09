@@ -35,7 +35,7 @@
                                                           @hover-image
                                                           "')")}
                            :on-mouse-enter #(set-hover! preview-images)}
-          [:div.branch-bg.box-shadow
+          [:div.branch-bg
            {:style {:background-color color
                     :background-image (str "linear-gradient(to right, "
                                            color

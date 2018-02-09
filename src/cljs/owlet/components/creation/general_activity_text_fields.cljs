@@ -21,12 +21,12 @@
      (fn []
        [:div#general-activity-info
         [:h5 [:mark "Summary"]]
-        [:input#summary {:type "text"
-                         :maxLength "255"
-                         :placeholder "In a nutshell, what will we be doing? (255 character limit)"}]
+        [:textarea#summary {:maxLength "255"
+                            :rows "2"
+                            :placeholder "In a nutshell, what will we be doing? (255 character limit)"}]
         [:h5 [:mark "Why?"]]
-        [:textarea#why {:placeholder "Why is this important?"}]
+        [:textarea#why {:placeholder "(optional) Why is this important?"}]
         [:h5 [:mark "Pre-requisites"]]
-        [:textarea#prereqs {:placeholder "What concepts or tools should we already know? Link to other Owlet activities or lessons if applicable."}]
+        [:textarea#prereqs {:placeholder "(optional) What concepts or tools should we already know? Link to other Owlet activities or lessons if applicable."}]
         [:h5 [:mark "Materials"]]
-        [:textarea#materials {:placeholder "Materials, resources, and/or handouts needed."}]])}))
+        [:textarea#materials {:placeholder "(optional) Materials, resources, and/or handouts needed."}]])}))

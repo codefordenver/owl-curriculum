@@ -21,7 +21,7 @@
   (let [preview-url (-> preview :sys :url)
         activity @(rf/subscribe [:activity-in-view])
         activity-type (get-in activity [:sys :contentType :sys :id])]
-    [:div.activity-embed-wrap.box-shadow
+    [:div.activity-embed-wrap
      (if-not embed
        [:div.activity-preview
         [:img {:src preview-url :width "100%"}]]

@@ -9,6 +9,10 @@ body {
 input, textarea, button, select {
   border-radius: 4px; }
 
+textarea, input {
+  border: 1px solid gray;
+  padding: 0.25em; }
+
 h1, h2, h5 {
   font-weight: 400; }
 
@@ -19,7 +23,7 @@ h2, h3, h5 {
   margin: 10px 0 15px 0; }
 
 h1 {
-  margin-top: 10px;
+  margin-top: 5px;
   line-height: 1.55em; }
 
 h4 b {
@@ -59,7 +63,8 @@ b {
     background-color: white;
     padding: 23px;
     font-size: 1.3em;
-    margin-bottom: 2em; }
+    margin-bottom: 2em;
+    border: 2px solid black; }
   .information-wrap .contributors {
     font-size: 1.1em; }
     .information-wrap .contributors h3 {
@@ -624,6 +629,7 @@ span.platform-details {
 
 .activity-thumbnail-wrap {
   border-radius: 7px;
+  border: 2px solid black;
   font-size: 0.9em;
   background-color: white;
   padding: 10px 10px 9px 10px;
@@ -678,9 +684,9 @@ span.platform-details {
 
 /* activity view */
 .activity-wrap {
-  width: 96%;
+  width: 100%;
   margin: 0 auto;
-  padding-top: 10px;
+  padding: 10px;
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em; }
@@ -695,14 +701,16 @@ span.platform-details {
     margin-bottom: 0; }
 
 .activity-header {
-  margin: 10px 0 20px 0; }
+  margin-bottom: 20px; }
 
 .activity-content, .activity-header {
   word-wrap: break-word;
-  padding: 0 0 0 23px; }
+  padding: 0 12px 0 20px; }
 
 .activity-content {
   font-size: 1.2em; }
+  .activity-content h1 {
+    font-style: italic; }
 
 .activity-title-wrap {
   margin-top: 18px;
@@ -730,17 +738,16 @@ span.platform-details {
   .activity-info-wrap span.platform-details, .activity-creation-wrap span.platform-details, .activity-inspiration-wrap span.platform-details, .activity-challenge-wrap span.platform-details {
     font-size: 0.75em; }
 
-.activity-challenge-wrap {
+.activity-challenge-wrap, .activity-inspiration-wrap {
   margin: 2em 0;
+  border: 2px solid black;
   width: 100%; }
-  .activity-challenge-wrap img {
+  .activity-challenge-wrap img, .activity-inspiration-wrap img {
     max-width: 100%; }
 
-.activity-inspiration-wrap {
-  margin: 2em 0; }
-
 .activity-embed-wrap {
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  border: 2px solid black; }
 
 .activity-tags-wrap {
   padding: 5px;
@@ -758,7 +765,8 @@ span.platform-details {
     font-weight: 400; }
 
 .activity-gallery-wrap {
-  margin-bottom: 2em; }
+  margin-bottom: 2em;
+  border: 2px solid black; }
 
 .activity-comments-wrap {
   background: #0C171B;
@@ -913,7 +921,8 @@ span.inline-code {
   padding-top: 3px; }
   #select-categories h5 {
     text-transform: uppercase;
-    margin: 0; }
+    margin: 0;
+    margin-top: 10px; }
 
 #select-categories input[type="radio"], #select-categories input[type="checkbox"] {
   margin-top: -.32em;
@@ -946,23 +955,21 @@ span.inline-code {
   height: 26px;
   resize: none; }
 
-.language, .code-eval h4 {
+.language, .code-eval h5 {
   display: inline-block; }
 
-.code-eval h4 {
-  margin-top: 30px; }
-
-.code-eval h4 ~ * {
+.language {
   margin-left: 10px; }
 
-.activity-creation-wrap h5, .activity-creation-wrap h4 {
+.activity-creation-wrap h5 {
   margin-bottom: 10px;
   text-transform: uppercase; }
 
 .code-preview, .add-validation, .rem-validation {
-  margin-top: 10px;
-  margin-right: 5px;
+  margin: 15px 5px;
   border: 2px solid #65D2C0; }
+  .code-preview:hover, .add-validation:hover, .rem-validation:hover {
+    background-color: #65D2C0; }
 
 .create-activity-buttons button {
   font-size: 1.4em;
