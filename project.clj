@@ -55,6 +55,7 @@
                  [re-com "1.0.0"]
                  [re-frisk "0.5.3"]
                  [day8.re-frame/http-fx "0.1.3"]
+                 [enlive "1.1.6"]
                  [ring-middleware-format "0.7.0"]
                  [ring-webjars "0.1.1"]
                  [ring-cors "0.1.8"]

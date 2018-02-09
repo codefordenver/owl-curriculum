@@ -9,7 +9,12 @@
             [mailgun.mail :as mail]
             [cheshire.core :as json]
             [camel-snake-kebab.core :refer [->kebab-case]]
-            [owlet.constants :as constants]))
+            [owlet.constants :as constants]
+            [net.cgrand.enlive-html :as html]))
+
+(html/deftemplate test-template
+   (:body @(http/get "http://slides.com/michellelim-2/python-strings/embed?style=light")) []
+   [:html] (html/add-class "test-class"))
 
 (def creds {:key    (System/getenv "MMM_MAILGUN_API_KEY")
             :domain "mg.codefordenver.org"})
@@ -130,12 +135,16 @@
 
   [req]
 
+
   (let [{:keys [space-id]} (:params req)
         opts1 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-MANAGEMENT-AUTH-TOKEN)}}
         opts2 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}]
     (let [{:keys [status body]}
           @(http/get (format "https://cdn.contentful.com/spaces/%1s/entries?" space-id) opts2)
           metadata (get-space-metadata space-id opts1)]
+      (prn
+        (apply str test-template))
+
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
