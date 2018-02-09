@@ -5,7 +5,7 @@
 (defn create-activity-title []
   [:div.activity-title-wrap
    [h-box
-    :width "100%"
+    :size "1"
     :align :center
     :style {:background-color "black"
             :font-size "2.4rem"

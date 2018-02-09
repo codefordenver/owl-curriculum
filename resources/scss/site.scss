@@ -23,6 +23,10 @@ textarea, input {
   padding: 0.25em;
 }
 
+textarea {
+  margin-bottom: 10px;
+}
+
 h1, h2, h5 { font-weight: 400 }
 h3, h4 { font-weight: 300 }
 h2, h3, h5 { margin: 10px 0 15px 0 }
@@ -898,10 +902,11 @@ span.platform-details {
   }
   .author {
     color: #ADADAD;
-    margin-top: 0;
+    margin-top: 0.25em;
     input {
       border: 1px solid $light-gray;
       margin-top: 5px;
+      color: $medium-gray;
     }
   }
   margin-top: 18px;
@@ -1014,7 +1019,7 @@ span.inline-code {
   min-height: inherit;
 }
 
-.panel-text {
+.panel-text, #general-activity-info {
   .CodeMirror-scroll {
     min-height: 100px;
   }
@@ -1099,20 +1104,10 @@ span.inline-code {
 }
 
 .activity-title-wrap {
-  h1 input {
-    background: none;
-    color: white;
-    line-height: 1.3em;
-    padding-left: 0.3em;
-    width: 90%;
-    border: none;
-  }
   h5 input {
     background: none;
-    color: inherit;
     padding-left: 0.3em;
     width: 10em;
-    border: none;
   }
 }
 
@@ -1120,6 +1115,9 @@ span.inline-code {
   margin-left: -15px;
   margin-top: -10px;
   align-items: flex-start;
+  h2 {
+    margin-bottom: 0;
+  }
   textarea {
     width: 100%;
     font-weight: 500;
@@ -1136,10 +1134,6 @@ span.inline-code {
   font-size: 1.25em;
 }
 
-.panel-klipse {
-  margin-top: 0.5em;
-}
-
 #select-platform, #select-tags, #select-branches {
   padding: 5px;
 }
@@ -1154,7 +1148,7 @@ span.inline-code {
   padding-top: 3px;
   h5 {
     text-transform: uppercase;
-    margin: 0;
+    margin-bottom: 3px;
     margin-top: 10px;
   }
 }
@@ -1174,47 +1168,32 @@ span.inline-code {
 }
 
 .pane-number {
-  background-color: white;
-  color: black;
-  display: inline-block;
-  width: 7%;
-  resize: none;
-  vertical-align: top;
-  margin-right: 2%;
-}
-
-.code-validation {
-  background-color: white;
-  color: black;
-  display: inline-block;
-  resize: none;
-}
-
-#iframe-url {
-  width: 100%;
-  height: 26px;
-  resize: none;
+  width: 2.2em;
 }
 
 .language, .code-eval h5 {
   display: inline-block;
 }
 
-// .code-eval h5 {
-//   margin-top: 30px;
-// }
-
 .language {
   margin-left: 10px;
 }
 
+.activity-creation-wrap {
+  input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
 .activity-creation-wrap h5 {
+  margin-top: 20px;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
 
 .code-preview, .add-validation, .rem-validation {
-  margin: 15px 5px;
+  margin: 5px 5px 15px 5px;
   border: 2px solid $aqua;
   &:hover {
     background-color: $aqua;

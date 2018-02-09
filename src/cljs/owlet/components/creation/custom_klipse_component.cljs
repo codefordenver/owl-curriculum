@@ -18,10 +18,10 @@
     [:option {:value "javascript"} "JavaScript"]
     [:option {:value "clojure"} "Clojure"]]
    [:h6 "Initial Code:"]
-   [:input#code {:type "text"
-                 :placeholder "Enter code to provide at the start. Use \\n for line breaks."
-                 :value @code
-                 :on-change #(reset! code (-> % .-target .-value))}]
+   [:textarea#code {:rows "3"
+                    :placeholder "Enter code to provide at the start. Use \\n for line breaks."
+                    :value @code
+                    :on-change #(reset! code (-> % .-target .-value))}]
    [:div {:style {:text-align "center"}}
     [:button.btn.code-preview {:on-click (fn []
                                            (reset! remount? true)
@@ -29,6 +29,4 @@
                                            (remount-klipse remount?))}
      "Generate Preview"]]
    (when @remount?
-     [:div
-      [:h6 "Preview"]
-      [klipse-component @language @code]])])
+     [klipse-component @language @code])])

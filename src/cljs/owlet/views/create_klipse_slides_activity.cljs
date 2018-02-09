@@ -10,7 +10,7 @@
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
             [re-frame.core :as rf]
-            [cljsjs.simplemde]))
+            cljsjs.simplemde))
 
 (def input-url (reagent/atom ""))
 (def embed-url (reagent/atom ""))
@@ -20,9 +20,12 @@
 (defn create-klipse-slides-activity []
    [:div.activity
     [:div.activity-wrap
-     [:div.activity-header.col-sm-12.col-lg-7
-      [create-activity-title]]
-     [:div.activity-content.col-sm-12.col-lg-7
+     [:div.col-sm-12
+      [:h1 "creating: a slides-based coding activity"]
+      [:div.activity-header.col-sm-12.col-lg-7
+       [create-activity-title]]]
+     [:div.activity-content.col-sm-12.col-lg-5
+      [:h1 "metadata"]
       [:div.activity-creation-wrap
        [:div#select-categories
         [:div [:h5 [:mark "Branch"]]
@@ -31,8 +34,18 @@
          [select-platform true]]
         [:div [:h5 [:mark "Tags"]]
          [select-tags true]]]
+       [general-activity-text-fields]]]
+     [:div.activity-content.col-sm-12.col-lg-7
+      [:h1 "activity content"]
+      [:div.activity-creation-wrap
+       [custom-klipse-component 0]
        [:h5 [:mark "Slideshow"]]
-       [:input#iframe-url {:placeholder "Input the link to your slides.com presentation here."
+       [:h6 "Create your slideshow at "
+        [:a {:href "https://slides.com"
+             :target "_blank"}
+          "slides.com"]]
+       [:input#iframe-url {:type "text"
+                           :placeholder "Paste the direct link to your slides.com presentation here."
                            :value @input-url
                            :on-change (fn [v]
                                         (reset! input-url (.. v -target -value))
@@ -55,13 +68,11 @@
         "+ Add another code validation"]
        [:button.btn.rem-validation {:on-click #(when (> @panel-number 1)
                                                  (swap! panel-number dec))}
-        "- Remove last a code validation"]
-       [general-activity-text-fields]
-       [custom-klipse-component 0]]
+        "- Remove last code validation"]]
       [:div.create-activity-buttons
        [:button.save-activity
-        "Save Activity"]]]]
-    [create-activity-response-component :ok]])
+        "Save Activity"]]]
+     [create-activity-response-component :ok]]])
 
 (defn create-klipse-slides-activity-view []
   (if @(rf/subscribe [:my-id])
