@@ -16,6 +16,8 @@ Generated using [Luminus](http://www.luminusweb.net/) version 2.9.11.68
 
     lein auto sassc once
 
+Navigate to http://localhost:3000/
+
 ## Prerequisites
 
 ### Installation
@@ -205,7 +207,7 @@ version of Chrome is required.
 
       script/start-chrome-canary.sh
 
-  You'll see an empty Chrome window with location http://localhost:4000/. It
+  You'll see an empty Chrome window with location http://localhost:3000/. It
   is empty because we haven't started up Owlet server yet.
   > By the way, this command is how you'll need to start up the browser whenever
   > you work on Owlet with Dirac. See [below](#using-dirac).

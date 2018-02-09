@@ -18,12 +18,17 @@ body {
 
 input, textarea, button, select { border-radius: 4px }
 
+textarea, input {
+  border: 1px solid gray;
+  padding: 0.25em;
+}
+
 h1, h2, h5 { font-weight: 400 }
 h3, h4 { font-weight: 300 }
 h2, h3, h5 { margin: 10px 0 15px 0 }
 
 h1 {
-  margin-top: 10px;
+  margin-top: 5px;
   line-height: 1.55em;
 }
 
@@ -75,6 +80,7 @@ b {
     padding: 23px;
     font-size: 1.3em;
     margin-bottom: 2em;
+    border: 2px solid black;
   }
   .contributors {
     font-size: 1.1em;
@@ -118,7 +124,6 @@ b {
 }
 
 .search-bar-wrap {
-  margin-left: 5px;
   position: fixed;
   color: white;
   width: 100%;
@@ -177,8 +182,9 @@ b {
   border-radius: 50%;
 }
 
-#sidebar {min-height: inherit;
-min-width: inherit;
+#sidebar {
+  min-height: inherit;
+  min-width: inherit;
   z-index: 3;
   text-align: center;
   background-color: $purple;
@@ -276,6 +282,7 @@ min-width: inherit;
 
 #sidebar-wrap {
   background-color: $purple;
+  min-width: 80px;
 }
 
 .lpsidebar {
@@ -577,7 +584,7 @@ mark.white {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
-  background: url('../img/cfd-bg.jpg');
+  // background: url('../img/cfd-bg.jpg');
   background-size: cover !important;
 }
 
@@ -777,6 +784,7 @@ span.platform-details {
 
 .activity-thumbnail-wrap {
   border-radius: 7px;
+  border: 2px solid black;
   font-size: 0.9em;
   @media (max-width: 1187px) {
     font-size: 0.8em;
@@ -842,9 +850,9 @@ span.platform-details {
 /* activity view */
 
 .activity-wrap {
-  width: 96%;
+  width: 100%;
   margin: 0 auto;
-  padding-top: 10px;
+  padding: 10px;
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em;
@@ -862,16 +870,19 @@ span.platform-details {
 }
 
 .activity-header {
-  margin: 10px 0 20px 0;
+  margin-bottom: 20px;
 }
 
 .activity-content, .activity-header {
   word-wrap: break-word;
-  padding: 0 0 0 23px;
+  padding: 0 12px 0 20px;
 }
 
 .activity-content {
   font-size: 1.2em;
+  h1 {
+    font-style: italic;
+  }
 }
 
 .activity-title-wrap {
@@ -880,9 +891,18 @@ span.platform-details {
     margin-bottom: 0;
     text-transform: uppercase;
   }
+  input {
+    background-color: black;
+    color: white;
+    width: 100%;
+  }
   .author {
     color: #ADADAD;
     margin-top: 0;
+    input {
+      border: 1px solid $light-gray;
+      margin-top: 5px;
+    }
   }
   margin-top: 18px;
   margin-bottom: 15px;
@@ -892,25 +912,24 @@ span.platform-details {
   background-color: white;
   padding: 10px 12px 10px 15px;
   margin-bottom: 30px;
+  border: 2px solid black;
   span.platform-details {
     font-size: 0.75em;
   }
 }
 
-.activity-challenge-wrap {
+.activity-challenge-wrap, .activity-inspiration-wrap {
   margin: 2em 0;
+  border: 2px solid black;
   width: 100%;
   img {
     max-width: 100%;
   }
 }
 
-.activity-inspiration-wrap {
-  margin: 2em 0;
-}
-
 .activity-embed-wrap {
   margin-bottom: 30px;
+  border: 2px solid black;
 }
 
 .activity-tags-wrap {
@@ -932,6 +951,7 @@ span.platform-details {
 
 .activity-gallery-wrap {
   margin-bottom: 2em;
+  border: 2px solid black;
 }
 
 .activity-comments-wrap {
@@ -1084,7 +1104,7 @@ span.inline-code {
     color: white;
     line-height: 1.3em;
     padding-left: 0.3em;
-    width: 84%;
+    width: 90%;
     border: none;
   }
   h5 input {
@@ -1135,6 +1155,7 @@ span.inline-code {
   h5 {
     text-transform: uppercase;
     margin: 0;
+    margin-top: 10px;
   }
 }
 
@@ -1175,27 +1196,29 @@ span.inline-code {
   resize: none;
 }
 
-.language, .code-eval h4 {
+.language, .code-eval h5 {
   display: inline-block;
 }
 
-.code-eval h4 {
-  margin-top: 30px;
-}
+// .code-eval h5 {
+//   margin-top: 30px;
+// }
 
-.code-eval h4 ~ * {
+.language {
   margin-left: 10px;
 }
 
-.activity-creation-wrap h5, .activity-creation-wrap h4 {
+.activity-creation-wrap h5 {
   margin-bottom: 10px;
   text-transform: uppercase;
 }
 
 .code-preview, .add-validation, .rem-validation {
-  margin-top: 10px;
-  margin-right: 5px;
+  margin: 15px 5px;
   border: 2px solid $aqua;
+  &:hover {
+    background-color: $aqua;
+  }
 }
 
 .create-activity-buttons {
@@ -1205,7 +1228,7 @@ span.inline-code {
     border: 4px $aqua solid;
   }
   .add-panel {
-    margin: 0.1em 0 1.5em 0;
+    margin: 0.1em 1em 1.5em 0;
     background-color: white;
     color: $dark-gray;
     padding: 0.2em 0.4em 0.2em 0.35em;

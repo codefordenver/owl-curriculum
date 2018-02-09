@@ -3,6 +3,7 @@
             [reagent.core :as reagent]
             [owlet.components.creation.custom-klipse-component :refer [custom-klipse-component]]
             [owlet.components.creation.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
+            [re-com.core :refer [h-box]]
             cljsjs.simplemde))
 
 (defn create-klipse-panel-component [panel-number]
@@ -22,26 +23,28 @@
                                                          :uniqueId smde-2-id}})]))
        :reagent-render
        (fn [panel-number]
-        [:div.activity-info-wrap.box-shadow
+        [:div.activity-creation-wrap
          [:div.panel-heading.flexcontainer-wrap
-          [:div.panel-number (str panel-number)]
-          [:div {:style {:width "82%"}}
-           [:h2 [:textarea {:id (str "panel-" panel-number "-heading")
-                            :rows "2"
-                            :placeholder "Heading"}]]]]
+          [h-box
+           :width "100%"
+           :align :start
+           :children [[:div.panel-number (str panel-number)]
+                      [:div {:style {:width "100%"}}
+                       [:h2 [:textarea {:id (str "panel-" panel-number "-heading")
+                                        :rows "2"
+                                        :placeholder "Heading"}]]]]]]
          [:div.panel-text
+          [:h5 [:mark "Optional Text"]]
           [:textarea {:id (str text-id-base "1")
-                      :placeholder "Optional text (markdown)"}]]
+                      :placeholder "Accepts markdown"}]]
          [:div.panel-klipse
           [:span {:style {:font-weight "500"
-                          :margin "0 0.3em 0 0.05em"}}
-                 [:mark "Code Evaluator"]]
+                          :margin "0 0.3em 0 0.05em"}}]
           [custom-klipse-component panel-number]]
          [:div.panel-validation
-          [:span {:style {:font-weight "500"
-                          :margin "0 0.3em 0 0.05em"}}
-           "Below, place the output of the code once this panel is completed"]
+          [:h6 "Below, enter the output expected once this panel is completed:"]
           [create-klipse-code-validation-component false]]
          [:div.panel-text
+          [:h5 [:mark "Optional Text"]]
           [:textarea {:id (str text-id-base "2")
-                      :placeholder "Optional text (markdown)"}]]])})))
+                      :placeholder "Accepts markdown"}]]])})))

@@ -58,6 +58,6 @@
                 [:a {:href src
                      :item-prop "contentUrl"
                      :data-size (str w "x" h)}
-                  [:img.box-shadow {:src src
+                  [:img {:src src
                                     :item-prop "thumbnail"}]]])]
            (full-screen-gallery)]))}))

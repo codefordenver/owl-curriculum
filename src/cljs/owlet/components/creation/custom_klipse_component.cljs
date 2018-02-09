@@ -10,23 +10,25 @@
 (def code (reagent/atom ""))
 (defn custom-klipse-component [panel-number]
   [:div.code-eval
-   [:h4 [:mark "Code Evaluator"]]
+   [:h5 [:mark "Code Evaluator"]]
    [:select.language {:id (str "panel-" panel-number "-language")
                       :value @language
                       :on-change #(reset! language (-> % .-target .-value))}
     [:option {:value "python"} "Python"]
     [:option {:value "javascript"} "JavaScript"]
     [:option {:value "clojure"} "Clojure"]]
-   [:h5 [:mark "Starting Code"]]
+   [:h6 "Initial Code:"]
    [:input#code {:type "text"
-                 :placeholder "The initial code that will be provided at the start. Use \\n for line breaks."
+                 :placeholder "Enter code to provide at the start. Use \\n for line breaks."
                  :value @code
                  :on-change #(reset! code (-> % .-target .-value))}]
-   [:button.btn.code-preview {:on-click (fn []
-                                          (reset! remount? true)
-                                          (swap! remount? not)
-                                          (remount-klipse remount?))}
-    "Preview"]
+   [:div {:style {:text-align "center"}}
+    [:button.btn.code-preview {:on-click (fn []
+                                           (reset! remount? true)
+                                           (swap! remount? not)
+                                           (remount-klipse remount?))}
+     "Generate Preview"]]
    (when @remount?
-     [:h5 [:mark "Preview"]]
-     [klipse-component @language @code])])
+     [:div
+      [:h6 "Preview"]
+      [klipse-component @language @code]])])

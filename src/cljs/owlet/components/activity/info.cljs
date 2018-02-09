@@ -18,7 +18,7 @@
                           [:div {:class class
                                  "dangerouslySetInnerHTML"
                                         #js{:__html (.makeHtml showdown (str title field))}}])]
-    [:div.activity-info-wrap.box-shadow
+    [:div.activity-info-wrap
      [:div
        [:h2 [:mark "About this Activity"]]
        [:span.h3 "Platform"] [:br]
