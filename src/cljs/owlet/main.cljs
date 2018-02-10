@@ -62,15 +62,20 @@
         is-user-logged-in? (rf/subscribe [:my-id])]
     (fn []
       (set! (-> js/document .-title) @(rf/subscribe [:app-title]))
+
       (if (= @active-view :welcome-view)
-        [show-view @active-view]
+
+        [:div
+         [error]
+         [show-view @active-view]]
+
         [:div#main
+         [error]
          [lpsidebar-component]
          [:div#sidebar-wrap.hidden-sm-down
           [sidebar-component]]
          [:div.outer-height-wrap
           [search-bar]
-          [error]
           [:div.inner-height-wrap
              [:div.content
               ;TODO: repurpose custom bg functionality for custom header
