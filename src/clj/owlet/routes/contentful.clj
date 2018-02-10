@@ -9,12 +9,8 @@
             [mailgun.mail :as mail]
             [cheshire.core :as json]
             [camel-snake-kebab.core :refer [->kebab-case]]
-            [owlet.constants :as constants]
-            [net.cgrand.enlive-html :as html]))
-
-(html/deftemplate test-template
-   (java.io.StringReader. (slurp "http://slides.com/michellelim-2/python-strings/embed?style=light")) []
-   [:html] (html/add-class "test-class"))
+            [owlet.constants :as constants])
+  (:use [net.cgrand.enlive-html :as html]))
 
 (def creds {:key    (System/getenv "MMM_MAILGUN_API_KEY")
             :domain "mg.codefordenver.org"})
@@ -73,22 +69,27 @@
 (def remove-nil (partial remove nil?))
 
 (defn- process-activity [activity branches tags platforms assets]
+  (when (= (get-in activity [:sys :contentType :sys :id]) "klipseActivity")
+    (html/deftemplate slideshow-template
+      (java.io.StringReader. (slurp (str (get-in activity [:fields :embedUrl]) "/embed?style=light&postMessageEvents=true"))) []
+      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/deck")]] (do-> (html/set-attr :src "../js/vendor/reveal.js") (html/remove-attr :defer))
+      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/application")]] (html/remove-attr :defer)
+      [:html :body] (append (html [:script {:src "https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.js"}]))
+      [:html :body] (append (html [:script (str "SL.util.setupReveal();")]))))
   (-> activity
+      (assoc-in [:fields :iframeContent] (apply str (slideshow-template)))
       ; Adds :branches data using :branchRefs
       (assoc-in [:fields :branches]
                 (map
                   (fn [branchRef]
                     (apply #(:fields %) (filter #(= (-> branchRef :sys :id) (-> % :sys :id)) branches)))
                   (-> activity :fields :branchRefs)))
-
       ;; Adds :tags data using :tagRefs
-
       (assoc-in [:fields :tags]
                 (map
                   (fn [tag-ref]
                     (apply #(:fields %) (filter #(= (-> tag-ref :sys :id) (-> % :sys :id)) tags)))
                   (-> activity :fields :tagRefs)))
-
       ; Adds :platform data using :platformRef
       (assoc-in [:fields :platform]
                 (some #(when (= (get-in activity [:fields :platformRef :sys :id])
@@ -142,9 +143,6 @@
     (let [{:keys [status body]}
           @(http/get (format "https://cdn.contentful.com/spaces/%1s/entries?" space-id) opts2)
           metadata (get-space-metadata space-id opts1)]
-      (prn
-        (apply str test-template))
-
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
