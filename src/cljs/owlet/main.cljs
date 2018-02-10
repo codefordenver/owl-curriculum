@@ -73,22 +73,23 @@
           [error]
           [:div.inner-height-wrap
              [:div.content
+              ;TODO: repurpose custom bg functionality for custom header
                            ; (when @src
                            ;   {:style {:background-image (when-not (or (= @active-view :about-view)
                            ;                                            (= @active-view :confirm-view))
                            ;                                (str "url('" @src "')"))
                            ;            :background-size "cover"}})
-                (when-not (or (= @active-view :about-view)
-                              (= @active-view :confirm-view))
-                  [:button#change-bg-btn
-                   {:type     "button"
-                    :class    "btn btn-secondary"
-                    :style    {:display (if @is-user-logged-in?
-                                            "block"
-                                            "none")}
-                    :on-click #(rf/dispatch [:show-bg-img-upload true])}
-                   [:i.fa.fa-pencil]])
-                [upload-image-component]
+                ; (when-not (or (= @active-view :about-view)
+                ;               (= @active-view :confirm-view))
+                ;   [:button#change-bg-btn
+                ;    {:type     "button"
+                ;     :class    "btn btn-secondary"
+                ;     :style    {:display (if @is-user-logged-in?
+                ;                             "block"
+                ;                             "none")}
+                ;     :on-click #(rf/dispatch [:show-bg-img-upload true])}
+                ;    [:i.fa.fa-pencil]])
+                ; [upload-image-component]
                 (when @loading?
                   [loading-component])
                 [show-view @active-view]]]]]))))

@@ -26,7 +26,7 @@
         [:div.activity-creation-wrap
          [:div.panel-heading.flexcontainer-wrap
           [h-box
-           :width "100%"
+           :size "1"
            :align :start
            :children [[:div.panel-number (str panel-number)]
                       [:div {:style {:width "100%"}}
@@ -38,11 +38,9 @@
           [:textarea {:id (str text-id-base "1")
                       :placeholder "Accepts markdown"}]]
          [:div.panel-klipse
-          [:span {:style {:font-weight "500"
-                          :margin "0 0.3em 0 0.05em"}}]
           [custom-klipse-component panel-number]]
          [:div.panel-validation
-          [:h6 "Below, enter the output expected once this panel is completed:"]
+          [:h6 "Below, enter the expected output for this panel:"]
           [create-klipse-code-validation-component false]]
          [:div.panel-text
           [:h5 [:mark "Optional Text"]]

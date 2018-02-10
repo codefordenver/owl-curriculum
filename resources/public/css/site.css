@@ -13,6 +13,9 @@ textarea, input {
   border: 1px solid gray;
   padding: 0.25em; }
 
+textarea {
+  margin-bottom: 10px; }
+
 h1, h2, h5 {
   font-weight: 400; }
 
@@ -725,10 +728,11 @@ span.platform-details {
     width: 100%; }
   .activity-title-wrap .author {
     color: #ADADAD;
-    margin-top: 0; }
+    margin-top: 0.25em; }
     .activity-title-wrap .author input {
       border: 1px solid #C8C8C8;
-      margin-top: 5px; }
+      margin-top: 5px;
+      color: #222F33; }
 
 .activity-info-wrap, .activity-creation-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
@@ -819,13 +823,13 @@ span.inline-code {
 .CodeMirror {
   min-height: inherit; }
 
-.panel-text .CodeMirror-scroll {
+.panel-text .CodeMirror-scroll, #general-activity-info .CodeMirror-scroll {
   min-height: 100px; }
 
-.panel-text .CodeMirror-line {
+.panel-text .CodeMirror-line, #general-activity-info .CodeMirror-line {
   word-break: normal; }
 
-.panel-text .CodeMirror-wrap pre code {
+.panel-text .CodeMirror-wrap pre code, #general-activity-info .CodeMirror-wrap pre code {
   word-break: break-all; }
 
 .klipse-component {
@@ -874,25 +878,17 @@ span.inline-code {
     .klipse-component .klipse-result .CodeMirror .cm-error {
       color: yellow; }
 
-.activity-title-wrap h1 input {
-  background: none;
-  color: white;
-  line-height: 1.3em;
-  padding-left: 0.3em;
-  width: 90%;
-  border: none; }
-
 .activity-title-wrap h5 input {
   background: none;
-  color: inherit;
   padding-left: 0.3em;
-  width: 10em;
-  border: none; }
+  width: 10em; }
 
 .panel-heading {
   margin-left: -15px;
   margin-top: -10px;
   align-items: flex-start; }
+  .panel-heading h2 {
+    margin-bottom: 0; }
   .panel-heading textarea {
     width: 100%;
     font-weight: 500;
@@ -906,9 +902,6 @@ span.inline-code {
   margin-right: 0.25em;
   font-size: 1.25em; }
 
-.panel-klipse {
-  margin-top: 0.5em; }
-
 #select-platform, #select-tags, #select-branches {
   padding: 5px; }
 
@@ -921,7 +914,7 @@ span.inline-code {
   padding-top: 3px; }
   #select-categories h5 {
     text-transform: uppercase;
-    margin: 0;
+    margin-bottom: 3px;
     margin-top: 10px; }
 
 #select-categories input[type="radio"], #select-categories input[type="checkbox"] {
@@ -936,24 +929,7 @@ span.inline-code {
   margin-bottom: 14px; }
 
 .pane-number {
-  background-color: white;
-  color: black;
-  display: inline-block;
-  width: 7%;
-  resize: none;
-  vertical-align: top;
-  margin-right: 2%; }
-
-.code-validation {
-  background-color: white;
-  color: black;
-  display: inline-block;
-  resize: none; }
-
-#iframe-url {
-  width: 100%;
-  height: 26px;
-  resize: none; }
+  width: 2.2em; }
 
 .language, .code-eval h5 {
   display: inline-block; }
@@ -961,12 +937,17 @@ span.inline-code {
 .language {
   margin-left: 10px; }
 
+.activity-creation-wrap input[type="text"] {
+  width: 100%;
+  margin-bottom: 10px; }
+
 .activity-creation-wrap h5 {
+  margin-top: 20px;
   margin-bottom: 10px;
   text-transform: uppercase; }
 
 .code-preview, .add-validation, .rem-validation {
-  margin: 15px 5px;
+  margin: 5px 5px 15px 5px;
   border: 2px solid #65D2C0; }
   .code-preview:hover, .add-validation:hover, .rem-validation:hover {
     background-color: #65D2C0; }
