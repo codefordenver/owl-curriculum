@@ -2,6 +2,7 @@
   (:require [reagent.core :refer [atom]]
             [re-com.core :refer [checkbox]]
             [re-frame.core :as rf]
+            [owlet.firebase :as fb]
             [owlet.views.login-only :refer [login-only-view]]))
 
 (defn settings [roles]
@@ -44,7 +45,10 @@
   (let [roles (atom {:content-creator false
                      :teacher false
                      :student false})
-        _ (add-watch roles :foo (fn [k & rest] (prn rest)))]
+        _ (add-watch roles :watcher
+                     (fn [key atm _ new-state]
+                       (when (apply fb/legal-db-value? (map val new))
+                          (prn "valid"))))]
     (fn []
       (if @(rf/subscribe [:my-id])
         [settings roles]
