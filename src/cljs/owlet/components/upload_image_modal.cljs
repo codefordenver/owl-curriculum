@@ -6,8 +6,7 @@
     [re-com.core :refer [v-box h-box modal-panel button alert-box progress-bar]]))
 
 
-(defn upload-form
-  []
+(defn upload-form []
   (let [upload-error (r/atom nil)
         progress-pct (r/atom 0)
         me           (rf/subscribe [:my-id])]
@@ -54,19 +53,15 @@
          :padding    "12px"]))))
 
 
-(defn upload-image-component
-  []
+(defn upload-image-component []
   (when @(rf/subscribe [:showing-bg-img-upload])
     [v-box
-
      :children
      [[modal-panel
        :backdrop-color "grey"
        :backdrop-opacity 0.4
-
        :child
        [h-box
-
         :children
         [[upload-form]
          [button
