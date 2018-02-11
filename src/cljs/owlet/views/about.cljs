@@ -60,19 +60,19 @@
      (fn []
        [:div.information-wrap
          [email-notification]
-         [:div.information-inner-wrap.col-xs-12.col-lg-8
+         [:div.information-inner-wrap.col-xs-12.col-lg-8.col-xl-9
           [:div.information-inner
            [:h1 [:mark "What is Owlet?"]]
            [:h3 "Free, self-guided projects for creative learning"]
            [:p "Owlet is a collection of self-guided activities designed for middle school students to learn technology skills through creative exploration. It's free and available to everyone, especially teachers looking for new ideas and students (of any age) looking to learn."]
-           [:p "We originally developed this platform to meet the specific needs of a small group of new technology teachers working in Denver Public Schools (DPS) via OpenWorld Learning (OWL), a local non-profit. We set out to create a platform that addressed their particular challenges in terms of curriculum content creation, delivery, accessibility, and keeping middle school   students engaged (no small feat)."]
+           [:p "We originally started developing this platform to meet the specific needs of a small group of new technology teachers working in Denver Public Schools (DPS) via OpenWorld Learning (OWL), a local non-profit. We set out to create a platform that addressed their particular challenges in terms of curriculum content creation, delivery, accessibility, and keeping middle school students engaged (no small feat). Our users have since grown to include both middle and high school students and teachers in other Denver-area programs such as KidsTek and Girls in STEM."]
            [:p "From the beginning, Owlet has been heavily shaped by feedback from teachers, and most importantly, the students. We are also "
             [:a {:href "https://blog.mmmanyfold.com/tagged/owlet"} "inspired by powerful ideas"]
-            " from computer scientists/educators such as Alan Kay, Simon Papert (constructivism), Kathy Sierra, Linda Liukas, Ted Nelson, Elon Musk, Tim Bell, etc… the list goes on. "]
+            " from computer scientists/educators such as Alan Kay, Simon Papert, Kathy Sierra, Linda Liukas, Ted Nelson, Elon Musk, Tim Bell, etc… the list goes on. "]
            [:br]
            [:img {:src "../img/logo-cfd.png"
                   :width "40%"}]
-           [:p "This project is independently produced and maintained by a team of Code for Denver volunteers, who have been developing it since March 2016. It’s open source and "
+           [:p "This project has always been independently produced and maintained by a team of Code for Denver volunteers, beginning in March 2016. It's entirely open source and "
             [:a {:href "https://github.com/codefordenver/owlet"} "available on GitHub"] "."][:br]
            [:canvas#chart]
            [:p {:style {:font-size "0.5em"
@@ -84,7 +84,7 @@
            [:p "Special thanks to "
             [:a {:href "https://www.contentful.com/"} "Contentful"]
             " for generously providing us with a pro bono subscription plan! We love Contentful's developer-friendly content management APIs and optimized microservices architecture for creating and delivering digital content."]]]
-         [:div.information-inner-wrap.col-xs-12.col-lg-4
+         [:div.information-inner-wrap.col-xs-12.col-lg-4.col-xl-3
           [:div.information-inner.contributors
            [:h3 [:mark "Contributors"]]
            [:h4 "Project Leads:"]
