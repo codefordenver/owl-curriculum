@@ -19,6 +19,7 @@
           "activity" {"dangerouslySetInnerHTML"
                       #js{:__html embed}}
           "klipseActivity" [:iframe {:srcDoc (get-in activity [:fields :iframeContent])
+                                     :src "javascript: window.frameElement.getAttribute('srcdoc');"
                                      :frameBorder "0"
                                      :scrolling "no"
                                      :allowFullScreen true}])])
