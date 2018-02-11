@@ -35,8 +35,7 @@
           [:br]
           [progress-bar
            :striped? true
-           :model    progress-pct
-           :width    "350px"]])])))
+           :model    progress-pct]])])))
 
 (defn upload-thumbnail-image-component []
   [v-box
