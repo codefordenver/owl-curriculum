@@ -19,8 +19,9 @@
           "activity" {"dangerouslySetInnerHTML"
                       #js{:__html embed}}
           "klipseActivity" [:iframe {:srcDoc (get-in activity [:fields :iframeContent])
-                                     :sandbox "allow-scripts"
-                                     :seamless true}])])
+                                     :frameBorder "0"
+                                     :scrolling "no"
+                                     :allowFullScreen true}])])
      (when tags
        [:div.activity-tags-wrap
         [:div.tags

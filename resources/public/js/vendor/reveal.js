@@ -1178,10 +1178,6 @@
 			document.addEventListener( 'keypress', onDocumentKeyPress, false );
 		}
 
-		if( config.progress && dom.progress ) {
-			dom.progress.addEventListener( 'click', onProgressClicked, false );
-		}
-
 		if( config.focusBodyOnPageVisibilityChange ) {
 			var visibilityChange;
 
@@ -1248,10 +1244,6 @@
 			dom.wrapper.removeEventListener( 'MSPointerDown', onPointerDown, false );
 			dom.wrapper.removeEventListener( 'MSPointerMove', onPointerMove, false );
 			dom.wrapper.removeEventListener( 'MSPointerUp', onPointerUp, false );
-		}
-
-		if ( config.progress && dom.progress ) {
-			dom.progress.removeEventListener( 'click', onProgressClicked, false );
 		}
 
 		[ 'touchstart', 'click' ].forEach( function( eventName ) {
@@ -4765,31 +4757,6 @@
 			}
 
 		}
-
-	}
-
-	/**
-	 * Clicking on the progress bar results in a navigation to the
-	 * closest approximate horizontal slide using this equation:
-	 *
-	 * ( clickX / presentationWidth ) * numberOfSlides
-	 *
-	 * @param {object} event
-	 */
-	function onProgressClicked( event ) {
-
-		onUserInput( event );
-
-		event.preventDefault();
-
-		var slidesTotal = toArray( dom.wrapper.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR ) ).length;
-		var slideIndex = Math.floor( ( event.clientX / dom.wrapper.offsetWidth ) * slidesTotal );
-
-		if( config.rtl ) {
-			slideIndex = slidesTotal - slideIndex;
-		}
-
-		slide( slideIndex );
 
 	}
 
