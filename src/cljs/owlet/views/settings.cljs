@@ -30,21 +30,30 @@
        :on-change #(swap! roles update :content-creator not)]
       (when (:content-creator @roles)
        [:div.settings-section
-        [:h3 "Create Activity"]
+        [:h3 "CREATE"]
         [:ul
-         [:li "Interactive:"]
-         [:ul
-          [:li [:a {:href "#/create/klipse-panel-activity"}
-                 "Coding, Multi-Panel"]
-               " — Python, JavaScript, and/or Clojure ["
-               [:a {:href "#/activity/hello-world"} "Example"]
-               "]"]
-          [:li [:a {:href "#/create/klipse-slides-activity"}
-                 "Coding, Slides"]
-               " — Python, JavaScript, and/or Clojure ["
-               [:a {:href "#/activity/#!34hdwSOWpiEEWSWaqQGcGC"} "Example"]
-               "]"]]]])]]]])
-
+         [:li [:b "A general purpose, read-only activity"]
+          [:ul
+           [:li [:a.semi-bold {:href "#/create/slides-activity"}
+                    "Embed-based instructions"]
+                [:ul
+                 [:li "Embed a slideshow iframe, video iframe, or your own HTML ["
+                      [:a {:href "#/activity/#!5g8tVqDGTeo2aMUey0M8G"} "see example"]
+                      "]"]]]]]
+         [:li [:b "An activity w/ built-in code evaluation"]
+          [:ul
+           [:li [:a.semi-bold {:href "#/create/klipse-panel-activity"}
+                    "MULTIPLE code evaluators; text-based instructions"]
+                [:ul
+                 [:li "Supports Python, JavaScript, and/or Clojure ["
+                      [:a {:href "#/activity/hello-world"} "see example"]
+                      "]"]]]
+           [:li [:a.semi-bold {:href "#/create/klipse-slides-activity"}
+                    "A SINGLE code evaluator; slides-based instructions"]
+                [:ul
+                 [:li "Supports Python, JavaScript, or Clojure ["
+                      [:a {:href "#/activity/#!34hdwSOWpiEEWSWaqQGcGC"} "see example"]
+                      "]"]]]]]]])]]]])
 
 (defn settings-view []
   (let [roles (atom {:content-creator false

@@ -13,6 +13,7 @@
             [owlet.views.temp-activities.print-errors :refer [temp-print-errors-view]]
             [owlet.views.create-klipse-panel-activity :refer [create-klipse-panel-activity-view]]
             [owlet.views.create-klipse-slides-activity :refer [create-klipse-slides-activity-view]]
+            [owlet.views.create-embed-activity :refer [create-embed-activity-view]]
             [owlet.components.search-bar :refer [search-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
@@ -36,6 +37,7 @@
 (defmethod views :filtered-activities-view [] [filtered-activities-view])
 (defmethod views :create-klipse-panel-activity-view [] [create-klipse-panel-activity-view])
 (defmethod views :create-klipse-slides-activity-view [] [create-klipse-slides-activity-view])
+(defmethod views :create-embed-activity-view [] [create-embed-activity-view])
 (defmethod views :not-found-view [] [not-found-view])
 (defmethod views :activity-view [] [activity-view])
 (defmethod views :branches-view [] [branches-view])

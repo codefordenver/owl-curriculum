@@ -28,7 +28,7 @@
            [select-branches true]]
           [:div [:h5 [:mark "Platform"]]
            [select-platform true]]
-          [:div [:h5 [:mark "Tags"]]
+          [:div [:h5 [:mark "Tag(s)"]]
            [select-tags true]]]
          [general-activity-text-fields]]]
        [:div.activity-content.col-sm-12.col-lg-7

@@ -177,13 +177,19 @@
   :show-create-klipse-panel-activity
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :create-klipse-panel-activity-view]
-                       [:set-active-document-title! "Create Klipse Panel Activity"])}))
+                       [:set-active-document-title! "Create Multi-Panel Coding Activity"])}))
 
 (rf/reg-event-fx
   :show-create-klipse-slides-activity
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :create-klipse-slides-activity-view]
-                       [:set-active-document-title! "Create Klipse Slides Activity"])}))
+                       [:set-active-document-title! "Create Slides-Based Coding Activity"])}))
+
+(rf/reg-event-fx
+  :show-create-embed-activity
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :create-embed-activity-view]
+                       [:set-active-document-title! "Create Embedded Activity"])}))
 
 ; search & filter
 

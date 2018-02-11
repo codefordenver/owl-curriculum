@@ -9,8 +9,7 @@
             [owlet.components.creation.custom-klipse-component :refer [custom-klipse-component]]
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
-            [re-frame.core :as rf]
-            cljsjs.simplemde))
+            [re-frame.core :as rf]))
 
 (def input-url (reagent/atom ""))
 (def embed-url (reagent/atom ""))
@@ -32,7 +31,7 @@
          [select-branches true]]
         [:div [:h5 [:mark "Platform"]]
          [select-platform true]]
-        [:div [:h5 [:mark "Tags"]]
+        [:div [:h5 [:mark "Tag(s)"]]
          [select-tags true]]]
        [general-activity-text-fields]]]
      [:div.activity-content.col-sm-12.col-lg-7
@@ -40,7 +39,7 @@
       [:div.activity-creation-wrap
        [custom-klipse-component 0]
        [:h5 [:mark "Slideshow"]]
-       [:h6 "Create your slideshow at "
+       [:h6 "Create your slideshow in "
         [:a {:href "https://slides.com"
              :target "_blank"}
           "slides.com"]]

@@ -17,5 +17,4 @@
                                                         :placeholder "Hello World"}]]]]]
     [:div
      [:textarea.code-validation {:rows "3"
-                                 :placeholder "Hello World"
-                                 :style {:width "100%"}}]]))
+                                 :placeholder "Hello World"}]]))

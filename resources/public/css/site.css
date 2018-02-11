@@ -6,6 +6,9 @@ body {
   font-size: 1.2rem;
   overflow-x: hidden; }
 
+.semi-bold {
+  font-weight: 500; }
+
 input, textarea, button, select {
   border-radius: 4px; }
 
@@ -14,7 +17,8 @@ textarea, input {
   padding: 0.25em; }
 
 textarea {
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  width: 100%; }
 
 h1, h2, h5 {
   font-weight: 400; }
@@ -810,7 +814,6 @@ div.code-block {
   padding: 0.5em;
   margin-bottom: 1em; }
   div.code-block textarea {
-    width: 100%;
     padding: 0.3em 0.2em;
     background: none; }
 
@@ -890,7 +893,6 @@ span.inline-code {
   .panel-heading h2 {
     margin-bottom: 0; }
   .panel-heading textarea {
-    width: 100%;
     font-weight: 500;
     padding-left: 0.15em;
     resize: none; }
@@ -921,9 +923,6 @@ span.inline-code {
   margin-top: -.32em;
   margin-right: 5px;
   vertical-align: middle; }
-
-#summary, #code {
-  width: 100%; }
 
 .panel-validation {
   margin-bottom: 14px; }
