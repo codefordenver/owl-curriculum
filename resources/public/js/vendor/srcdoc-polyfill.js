@@ -1,4 +1,4 @@
-var srcdocPolyfill = (function(root, factory) {
+(function(root, factory) {
 	// `root` does not resolve to the global window object in a Browserified
 	// bundle, so a direct reference to that object is used instead.
 	var _srcDoc = window.srcDoc;
