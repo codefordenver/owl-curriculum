@@ -7,27 +7,32 @@
             [reagent.core :as reagent]))
 
 (defn activity-embed [embed tags preview]
-  (let [preview-url (-> preview :sys :url)
-        activity @(rf/subscribe [:activity-in-view])
-        activity-type (get-in activity [:sys :contentType :sys :id])]
-    [:div.activity-embed-wrap
-     (if-not embed
-       [:div.activity-preview
-        [:img {:src preview-url :width "100%"}]]
-       [:div.embed-container
-        (case activity-type
-          "activity" {"dangerouslySetInnerHTML"
-                      #js{:__html embed}}
-          "klipseActivity" [:iframe {:srcDoc (get-in activity [:fields :iframeContent])
-                                     :src "javascript: window.frameElement.getAttribute('srcdoc');"
-                                     :frameBorder "0"
-                                     :scrolling "no"
-                                     :allowFullScreen true}])])
-     (when tags
-       [:div.activity-tags-wrap
-        [:div.tags
-          "TAGS: "]
-        (for [tag tags :let [name (:name tag)]]
-            ^{:key (gensym "tag-")}
-            [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag name])}
-              [:span name]])])]))
+  (reagent/create-class
+    {:component-did-mount
+     (fn []
+       #(js/srcdocPolyfill))
+     :reagent-render
+     (fn []
+       (let [preview-url (-> preview :sys :url)
+             activity @(rf/subscribe [:activity-in-view])
+             activity-type (get-in activity [:sys :contentType :sys :id])]
+         [:div.activity-embed-wrap
+          (if-not embed
+            [:div.activity-preview
+             [:img {:src preview-url :width "100%"}]]
+            [:div.embed-container
+             (case activity-type
+               "activity" {"dangerouslySetInnerHTML"
+                           #js{:__html embed}}
+               "klipseActivity" [:iframe {:srcDoc (get-in activity [:fields :iframeContent])
+                                          :frameBorder "0"
+                                          :scrolling "no"
+                                          :allowFullScreen true}])])
+          (when tags
+            [:div.activity-tags-wrap
+             [:div.tags
+               "TAGS: "]
+             (for [tag tags :let [name (:name tag)]]
+                 ^{:key (gensym "tag-")}
+                 [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag name])}
+                   [:span name]])])]))}))
