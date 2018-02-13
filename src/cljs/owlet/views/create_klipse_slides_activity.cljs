@@ -14,7 +14,7 @@
 (def input-url (reagent/atom ""))
 (def embed-url (reagent/atom ""))
 (def show-slides? (reagent/atom false))
-(def panel-number (reagent/atom 1))
+(def validation-id (reagent/atom 1))
 
 (defn create-klipse-slides-activity []
    [:div.activity
@@ -60,13 +60,15 @@
                                    :frameBorder "0"
                                    :allowFullScreen true}]])
        [:h5 [:mark "Code Validations"]]
-       (for [n (range @panel-number)]
-         ^{:key (inc n)}
-         [create-klipse-code-validation-component true])
-       [:button.btn.add-validation {:on-click #(swap! panel-number inc)}
+       [:div
+        (doall
+          (for [n (range @validation-id)]
+            ^{:key (inc n)}
+            [create-klipse-code-validation-component true n]))]
+       [:button.btn.add-validation {:on-click #(swap! validation-id inc)}
         "+ Add another code validation"]
-       [:button.btn.rem-validation {:on-click #(when (> @panel-number 1)
-                                                 (swap! panel-number dec))}
+       [:button.btn.rem-validation {:on-click #(when (> @validation-id 1)
+                                                 (swap! validation-id dec))}
         "- Remove last code validation"]]
       [:div.create-activity-buttons
        [:button.save-activity
