@@ -38,11 +38,11 @@
        [:h5 [:mark "Embed Code"]]
        [:h6 "Suggestions:"
         [:ul
-         [:li "Create a slideshow in "
+         [:li "Embed a slideshow from "
           [:a {:href "https://slides.com"
                :target "_blank"}
             "slides.com"]]
-         [:li "Upload a screencast to "
+         [:li "Embed a video from "
           [:a {:href "https://vimeo.com"
                :target "_blank"}
             "vimeo.com"]]
