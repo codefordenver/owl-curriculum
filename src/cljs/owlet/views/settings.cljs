@@ -40,7 +40,7 @@
            :model     (role-assignment :content-creator)
            :on-change #(role-change-handler :content-creator)]
 
-          (when (contains? (set @my-roles) :content-creator)
+          (when (contains? (set @my-roles) (name :content-creator))
             [:div.settings-section
              [:h3 "Create Activity"]
              [:ul
