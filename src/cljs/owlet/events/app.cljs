@@ -66,8 +66,7 @@
 (rf/reg-event-fx
   :update-user-roles!
   (fn [{{{:keys [private private-ref]} :my-identity} :db} [_ new-roles]]
-    (let [;; new-roles (keys (filter (comp #{true} last) new-roles)) ;; flatten role assignments '(:a :b :c)
-          old-roles (:my-roles private)
+    (let [old-roles (:my-roles private)
           new-roles-assignment (assoc private :my-roles new-roles)
           old-roles-assignment (assoc private :my-roles old-roles)]
       (if (seq new-roles)
