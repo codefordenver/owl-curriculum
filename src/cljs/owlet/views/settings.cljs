@@ -10,10 +10,10 @@
         role-change-handler
         (fn [new-role]
           (let [new-role (name new-role)
-                role-list (set @my-roles)]
-            (if (contains? role-list new-role)
-              (rf/dispatch [:update-user-roles! (disj role-list new-role)])
-              (rf/dispatch [:update-user-roles! (conj role-list new-role)]))))]
+                role-set (set @my-roles)]
+            (if (contains? role-set new-role)
+              (rf/dispatch [:update-user-roles! (disj role-set new-role)])
+              (rf/dispatch [:update-user-roles! (conj role-set new-role)]))))]
     (fn []
       [:div.information-wrap
        [:div.information-inner-wrap.col-xs-12.col-sm-11
