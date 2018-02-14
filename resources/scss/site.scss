@@ -52,6 +52,8 @@ a:hover {
   text-decoration: none;
 }
 
+.btn { padding: .5rem .6rem }
+
 .btn:focus {
   outline: none;
   &:active {
@@ -1212,6 +1214,10 @@ span.inline-code {
     background-color: $dark-gray;
     color: white;
     padding: 0.2em 0.4em 0.2em 0.45em;
+    &:hover {
+      background: $aqua;
+      color: black;
+    }
   }
 }
 

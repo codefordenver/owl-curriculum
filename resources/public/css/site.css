@@ -43,6 +43,9 @@ li {
 a:hover {
   text-decoration: none; }
 
+.btn {
+  padding: .5rem .6rem; }
+
 .btn:focus {
   outline: none; }
   .btn:focus:active {
@@ -965,6 +968,9 @@ span.inline-code {
   background-color: #0c171b;
   color: white;
   padding: 0.2em 0.4em 0.2em 0.45em; }
+  .create-activity-buttons .save-activity:hover {
+    background: #65D2C0;
+    color: black; }
 
 /* buttons and inputs */
 #change-bg-btn {
