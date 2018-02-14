@@ -83,7 +83,7 @@
     (when err ;; restore previous role assignments when err occurs
       (let [{{private-ref :private-ref} :my-identity} db]
         {:db (assoc-in db [:my-identity private-ref] old-roles-assignment)
-         :dispatch [:role-association-failed "Unable to save role assigment."]}))))
+         :dispatch [:role-association-failed "Unable to save role assignment."]}))))
 
 
 (rf/reg-event-db
