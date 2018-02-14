@@ -192,10 +192,6 @@
 			// The display mode that will be used to show slides
 			display: 'block',
 
-			//Allow horizontal or vertical navigations
-			horizontalNavigation: true,
-			verticalNavigation: true,
-
 			// Script dependencies to load
 			dependencies: []
 
@@ -1178,6 +1174,10 @@
 			document.addEventListener( 'keypress', onDocumentKeyPress, false );
 		}
 
+		if( config.progress && dom.progress ) {
+			dom.progress.addEventListener( 'click', onProgressClicked, false );
+		}
+
 		if( config.focusBodyOnPageVisibilityChange ) {
 			var visibilityChange;
 
@@ -1244,6 +1244,10 @@
 			dom.wrapper.removeEventListener( 'MSPointerDown', onPointerDown, false );
 			dom.wrapper.removeEventListener( 'MSPointerMove', onPointerMove, false );
 			dom.wrapper.removeEventListener( 'MSPointerUp', onPointerUp, false );
+		}
+
+		if ( config.progress && dom.progress ) {
+			dom.progress.removeEventListener( 'click', onProgressClicked, false );
 		}
 
 		[ 'touchstart', 'click' ].forEach( function( eventName ) {
@@ -1565,15 +1569,22 @@
 	 */
 	function dispatchEvent( type, args ) {
 
-		var event = document.createEvent( 'HTMLEvents', 1, 2 );
-		event.initEvent( type, true, true );
-		extend( event, args );
-		dom.wrapper.dispatchEvent( event );
+		if ( window.parent === window.self ) {
+			var event = document.createEvent( 'HTMLEvents', 1, 2 );
+			event.initEvent( type, true, true );
+			extend( event, args );
+			return dom.wrapper.dispatchEvent( event );
+		}
 
 		// If we're in an iframe, post each reveal.js event to the
 		// parent window. Used by the notes plugin
 		if( config.postMessageEvents && window.parent !== window.self ) {
+			var iframeEvent = document.createEvent( 'HTMLEvents', 1, 2 );
+			iframeEvent.initEvent( 'iframe' + type, true, true );
+			extend( iframeEvent, args );
+			dom.wrapper.dispatchEvent( iframeEvent );
 			window.parent.postMessage( JSON.stringify({ namespace: 'reveal', eventName: type, state: getState() }), '*' );
+			return window.parent.dispatchEvent( iframeEvent );
 		}
 
 	}
@@ -1787,8 +1798,6 @@
 	function layout() {
 
 		if( dom.wrapper && !isPrintingPDF() ) {
-
-			dom.wrapper.style.height = window.innerHeight - 34 + 'px';
 
 			var size = getComputedSlideSize();
 
@@ -2327,146 +2336,152 @@
 	 * @param {number} [o] Origin for use in multimaster environments
 	 */
 	function slide( h, v, f, o ) {
+		if ( dispatchEvent( 'slidewillchange', {
+					'currentSlide': currentSlide,
+					'indexh': indexh,
+					'indexv': indexv,
+					'newIndexh': h || indexh,
+					'newIndexv': v || indexv
+				 }) ) {
+			// Remember where we were at before
+			previousSlide = currentSlide;
 
-		// Remember where we were at before
-		previousSlide = currentSlide;
+			// Query all horizontal slides in the deck
+			var horizontalSlides = dom.wrapper.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR );
 
-		// Query all horizontal slides in the deck
-		var horizontalSlides = dom.wrapper.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR );
+			// Abort if there are no slides
+			if( horizontalSlides.length === 0 ) return;
 
-		// Abort if there are no slides
-		if( horizontalSlides.length === 0 ) return;
+			// If no vertical index is specified and the upcoming slide is a
+			// stack, resume at its previous vertical index
+			if( v === undefined && !isOverview() ) {
+				v = getPreviousVerticalIndex( horizontalSlides[ h ] );
+			}
 
-		// If no vertical index is specified and the upcoming slide is a
-		// stack, resume at its previous vertical index
-		if( v === undefined && !isOverview() ) {
-			v = getPreviousVerticalIndex( horizontalSlides[ h ] );
-		}
+			// If we were on a vertical stack, remember what vertical index
+			// it was on so we can resume at the same position when returning
+			if( previousSlide && previousSlide.parentNode && previousSlide.parentNode.classList.contains( 'stack' ) ) {
+				setPreviousVerticalIndex( previousSlide.parentNode, indexv );
+			}
 
-		// If we were on a vertical stack, remember what vertical index
-		// it was on so we can resume at the same position when returning
-		if( previousSlide && previousSlide.parentNode && previousSlide.parentNode.classList.contains( 'stack' ) ) {
-			setPreviousVerticalIndex( previousSlide.parentNode, indexv );
-		}
+			// Remember the state before this slide
+			var stateBefore = state.concat();
 
-		// Remember the state before this slide
-		var stateBefore = state.concat();
+			// Reset the state array
+			state.length = 0;
 
-		// Reset the state array
-		state.length = 0;
+			var indexhBefore = indexh || 0,
+				indexvBefore = indexv || 0;
 
-		var indexhBefore = indexh || 0,
-			indexvBefore = indexv || 0;
+			// Activate and transition to the new slide
+			indexh = updateSlides( HORIZONTAL_SLIDES_SELECTOR, h === undefined ? indexh : h );
+			indexv = updateSlides( VERTICAL_SLIDES_SELECTOR, v === undefined ? indexv : v );
 
-		// Activate and transition to the new slide
-		indexh = updateSlides( HORIZONTAL_SLIDES_SELECTOR, h === undefined ? indexh : h );
-		indexv = updateSlides( VERTICAL_SLIDES_SELECTOR, v === undefined ? indexv : v );
+			// Update the visibility of slides now that the indices have changed
+			updateSlidesVisibility();
 
-		// Update the visibility of slides now that the indices have changed
-		updateSlidesVisibility();
+			layout();
 
-		layout();
+			// Apply the new state
+			stateLoop: for( var i = 0, len = state.length; i < len; i++ ) {
+				// Check if this state existed on the previous slide. If it
+				// did, we will avoid adding it repeatedly
+				for( var j = 0; j < stateBefore.length; j++ ) {
+					if( stateBefore[j] === state[i] ) {
+						stateBefore.splice( j, 1 );
+						continue stateLoop;
+					}
+				}
 
-		// Apply the new state
-		stateLoop: for( var i = 0, len = state.length; i < len; i++ ) {
-			// Check if this state existed on the previous slide. If it
-			// did, we will avoid adding it repeatedly
-			for( var j = 0; j < stateBefore.length; j++ ) {
-				if( stateBefore[j] === state[i] ) {
-					stateBefore.splice( j, 1 );
-					continue stateLoop;
+				document.documentElement.classList.add( state[i] );
+
+				// Dispatch custom event matching the state's name
+				dispatchEvent( state[i] );
+			}
+
+			// Clean up the remains of the previous state
+			while( stateBefore.length ) {
+				document.documentElement.classList.remove( stateBefore.pop() );
+			}
+
+			// Update the overview if it's currently active
+			if( isOverview() ) {
+				updateOverview();
+			}
+
+			// Find the current horizontal slide and any possible vertical slides
+			// within it
+			var currentHorizontalSlide = horizontalSlides[ indexh ],
+				currentVerticalSlides = currentHorizontalSlide.querySelectorAll( 'section' );
+
+			// Store references to the previous and current slides
+			currentSlide = currentVerticalSlides[ indexv ] || currentHorizontalSlide;
+
+			// Show fragment, if specified
+			if( typeof f !== 'undefined' ) {
+				navigateFragment( f );
+			}
+
+			// Dispatch an event if the slide changed
+			var slideChanged = ( indexh !== indexhBefore || indexv !== indexvBefore );
+			if( slideChanged ) {
+				dispatchEvent( 'slidechanged', {
+					'indexh': indexh,
+					'indexv': indexv,
+					'previousSlide': previousSlide,
+					'currentSlide': currentSlide,
+					'origin': o
+				} );
+			}
+			else {
+				// Ensure that the previous slide is never the same as the current
+				previousSlide = null;
+			}
+
+			// Solves an edge case where the previous slide maintains the
+			// 'present' class when navigating between adjacent vertical
+			// stacks
+			if( previousSlide ) {
+				previousSlide.classList.remove( 'present' );
+				previousSlide.setAttribute( 'aria-hidden', 'true' );
+
+				// Reset all slides upon navigate to home
+				// Issue: #285
+				if ( dom.wrapper.querySelector( HOME_SLIDE_SELECTOR ).classList.contains( 'present' ) ) {
+					// Launch async task
+					setTimeout( function () {
+						var slides = toArray( dom.wrapper.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR + '.stack') ), i;
+						for( i in slides ) {
+							if( slides[i] ) {
+								// Reset stack
+								setPreviousVerticalIndex( slides[i], 0 );
+							}
+						}
+					}, 0 );
 				}
 			}
 
-			document.documentElement.classList.add( state[i] );
-
-			// Dispatch custom event matching the state's name
-			dispatchEvent( state[i] );
-		}
-
-		// Clean up the remains of the previous state
-		while( stateBefore.length ) {
-			document.documentElement.classList.remove( stateBefore.pop() );
-		}
-
-		// Update the overview if it's currently active
-		if( isOverview() ) {
-			updateOverview();
-		}
-
-		// Find the current horizontal slide and any possible vertical slides
-		// within it
-		var currentHorizontalSlide = horizontalSlides[ indexh ],
-			currentVerticalSlides = currentHorizontalSlide.querySelectorAll( 'section' );
-
-		// Store references to the previous and current slides
-		currentSlide = currentVerticalSlides[ indexv ] || currentHorizontalSlide;
-
-		// Show fragment, if specified
-		if( typeof f !== 'undefined' ) {
-			navigateFragment( f );
-		}
-
-		// Dispatch an event if the slide changed
-		var slideChanged = ( indexh !== indexhBefore || indexv !== indexvBefore );
-		if( slideChanged ) {
-			dispatchEvent( 'slidechanged', {
-				'indexh': indexh,
-				'indexv': indexv,
-				'previousSlide': previousSlide,
-				'currentSlide': currentSlide,
-				'origin': o
-			} );
-		}
-		else {
-			// Ensure that the previous slide is never the same as the current
-			previousSlide = null;
-		}
-
-		// Solves an edge case where the previous slide maintains the
-		// 'present' class when navigating between adjacent vertical
-		// stacks
-		if( previousSlide ) {
-			previousSlide.classList.remove( 'present' );
-			previousSlide.setAttribute( 'aria-hidden', 'true' );
-
-			// Reset all slides upon navigate to home
-			// Issue: #285
-			if ( dom.wrapper.querySelector( HOME_SLIDE_SELECTOR ).classList.contains( 'present' ) ) {
-				// Launch async task
-				setTimeout( function () {
-					var slides = toArray( dom.wrapper.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR + '.stack') ), i;
-					for( i in slides ) {
-						if( slides[i] ) {
-							// Reset stack
-							setPreviousVerticalIndex( slides[i], 0 );
-						}
-					}
-				}, 0 );
+			// Handle embedded content
+			if( slideChanged || !previousSlide ) {
+				stopEmbeddedContent( previousSlide );
+				startEmbeddedContent( currentSlide );
 			}
+
+			// Announce the current slide contents, for screen readers
+			dom.statusDiv.textContent = getStatusText( currentSlide );
+
+			updateControls();
+			updateProgress();
+			updateBackground();
+			updateParallax();
+			updateSlideNumber();
+			updateNotes();
+
+			// Update the URL hash
+			writeURL();
+
+			cueAutoSlide();
 		}
-
-		// Handle embedded content
-		if( slideChanged || !previousSlide ) {
-			stopEmbeddedContent( previousSlide );
-			startEmbeddedContent( currentSlide );
-		}
-
-		// Announce the current slide contents, for screen readers
-		dom.statusDiv.textContent = getStatusText( currentSlide );
-
-		updateControls();
-		updateProgress();
-		updateBackground();
-		updateParallax();
-		updateSlideNumber();
-		updateNotes();
-
-		// Update the URL hash
-		writeURL();
-
-		cueAutoSlide();
-
 	}
 
 	/**
@@ -4230,99 +4245,58 @@
 
 	}
 
-	function navigationEvent(eventName) {
-		var event = new CustomEvent(eventName, {
-    	view: window,
-    	bubbles: true,
-    	cancelable: true
-  	});
-		var cancelled = !dom.wrapper.dispatchEvent( event );
-		return cancelled;
-	}
-
-	function toggleHorizontalNavigation() {
-		config.horizontalNavigation = !config.horizontalNavigation;
-		if (config.horizontalNavigation) {
-			dom.controlsLeft.forEach( function( el ) { el.removeAttribute("disabled"); el.style.display = "block"; } );
-			dom.controlsRight.forEach( function( el ) { el.removeAttribute("disabled"); el.style.display = "block"; } );
-		} else {
-			dom.controlsLeft.forEach( function( el ) { el.setAttribute("disabled", "disabled"); el.style.display = "none"; } );
-			dom.controlsRight.forEach( function( el ) { el.setAttribute("disabled", "disabled"); el.style.display = "none"; } );
-		}
-	}
-
-	function toggleVerticalNavigation() {
-		config.verticalNavigation = !config.verticalNavigation;
-		if (config.verticalNavigation) {
-			dom.controlsUp.forEach( function ( el ) { el.removeAttribute("disabled"); el.style.display = "block"; } );
-			dom.controlsDown.forEach( function ( el ) { el.removeAttribute("disabled"); el.style.display = "block"; } );
-		} else {
-			dom.controlsUp.forEach( function ( el ) { el.setAttribute("disabled", "disabled"); el.style.display = "none"; } );
-			dom.controlsDown.forEach( function ( el ) { el.setAttribute("disabled", "disabled"); el.style.display = "none"; } );
-		}
-	}
-
 	function navigateLeft() {
-		if( !navigationEvent("horizontalNavigation") && config.horizontalNavigation ) {
-			if( config.postMessageEvents && window.parent !== window.self) {
-				window.parent.postMessage( JSON.stringify({ namespace: 'reveal', eventName: "horizontalNavigation", state: getState() }), '*' );
-			}
-			// Reverse for RTL
-			if( config.rtl ) {
-				if( ( isOverview() || nextFragment() === false ) && availableRoutes().left ) {
-					slide( indexh + 1 );
-				}
-			}
-			// Normal navigation
-			else if( ( isOverview() || previousFragment() === false ) && availableRoutes().left ) {
-				slide( indexh - 1 );
+
+		// Reverse for RTL
+		if( config.rtl ) {
+			if( ( isOverview() || nextFragment() === false ) && availableRoutes().left ) {
+				slide( indexh + 1 );
 			}
 		}
+		// Normal navigation
+		else if( ( isOverview() || previousFragment() === false ) && availableRoutes().left ) {
+			slide( indexh - 1 );
+		}
+
 	}
 
 	function navigateRight() {
-		if( !navigationEvent("horizontalNavigation") && config.horizontalNavigation ) {
-				if( config.postMessageEvents && window.parent !== window.self) {
-					window.parent.postMessage( JSON.stringify({ namespace: 'reveal', eventName: "horizontalNavigation", state: getState() }), '*' );
+
+			hasNavigatedRight = true;
+
+			// Reverse for RTL
+			if( config.rtl ) {
+				if( ( isOverview() || previousFragment() === false ) && availableRoutes().right ) {
+					slide( indexh - 1 );
 				}
-				hasNavigatedRight = true;
-				if( config.rtl ) {
-					// Reverse for RTL
-					if( ( isOverview() || previousFragment() === false ) && availableRoutes().right ) {
-						slide( indexh - 1 );
-					}
-				}
-				// Normal navigation
-				else if( ( isOverview() || nextFragment() === false ) && availableRoutes().right ) {
-					slide( indexh + 1 );
-				}
-		  }
+			}
+			// Normal navigation
+			else if( ( isOverview() || nextFragment() === false ) && availableRoutes().right ) {
+				slide( indexh + 1 );
+			}
+
 		}
 
-	function navigateUp() {
-		if( !navigationEvent("verticalNavigation") && config.verticalNavigation ) {
-			if( config.postMessageEvents && window.parent !== window.self) {
-				window.parent.postMessage( JSON.stringify({ namespace: 'reveal', eventName: "verticalNavigation", state: getState() }), '*' );
-			}
+		function navigateUp() {
+
 			// Prioritize hiding fragments
-			if( ( isOverview() || previousFragment() === false ) && availableRoutes().up) {
+			if( ( isOverview() || previousFragment() === false ) && availableRoutes().up ) {
 				slide( indexh, indexv - 1 );
 			}
-		}
-	}
 
-	function navigateDown() {
-		if( !navigationEvent("verticalNavigation") && config.verticalNavigation ) {
-			if( config.postMessageEvents && window.parent !== window.self) {
-					window.parent.postMessage( JSON.stringify({ namespace: 'reveal', eventName: "verticalNavigation", state: getState() }), '*' );
-			}
+		}
+
+		function navigateDown() {
+
 			hasNavigatedDown = true;
+
 			// Prioritize revealing fragments
-			if( ( isOverview() || nextFragment() === false ) && availableRoutes().down) {
+			if( ( isOverview() || nextFragment() === false ) && availableRoutes().down ) {
 				slide( indexh, indexv + 1 );
 			}
+
 		}
-	}
+
 	/**
 	 * Navigates backwards, prioritized in the following order:
 	 * 1) Previous fragment
@@ -4761,6 +4735,31 @@
 	}
 
 	/**
+	 * Clicking on the progress bar results in a navigation to the
+	 * closest approximate horizontal slide using this equation:
+	 *
+	 * ( clickX / presentationWidth ) * numberOfSlides
+	 *
+	 * @param {object} event
+	 */
+	function onProgressClicked( event ) {
+
+		onUserInput( event );
+
+		event.preventDefault();
+
+		var slidesTotal = toArray( dom.wrapper.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR ) ).length;
+		var slideIndex = Math.floor( ( event.clientX / dom.wrapper.offsetWidth ) * slidesTotal );
+
+		if( config.rtl ) {
+			slideIndex = slidesTotal - slideIndex;
+		}
+
+		slide( slideIndex );
+
+	}
+
+	/**
 	 * Event handler for navigation control buttons.
 	 */
 	function onNavigateLeftClicked( event ) { event.preventDefault(); onUserInput(); navigateLeft(); }
@@ -5119,12 +5118,6 @@
 
 		// Toggles the auto slide mode on/off
 		toggleAutoSlide: toggleAutoSlide,
-
-		// Toggles horizontal navigations
-		toggleHorizontalNavigation: toggleHorizontalNavigation,
-
-		// Toggles vertical navigations
-		toggleVerticalNavigation: toggleVerticalNavigation,
 
 		// State checks
 		isOverview: isOverview,
