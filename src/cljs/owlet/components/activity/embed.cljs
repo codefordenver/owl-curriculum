@@ -14,14 +14,20 @@
 
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])
-        expected-output "Hello World!" ;change this to the validation for a given slide
         output (clojure.string/trim (clojure.string/replace e.detail.resultElement.display.wrapper.innerText "OUTPUT:" ""))]
-    (reset! valid? (= output expected-output))))
+    (if-let [expected-output ""] ;Get expected output
+      (reset! valid? (= output expected-output))
+      (reset! valid? true))))
 
 (defn handle-slide-change [e]
   (when (> (.-newIndexh e) @indexh)
     (if @valid?
-      (reset! indexh (.-newIndexh e))
+      (do
+        (reset! indexh (.-newIndexh e))
+        (let [prev-expected-output ""] ;Get previous expected output
+          (if-let [new-expected-output ""] ;Get expected output of the new slide
+            (reset! valid? (= prev-expected-output new-expected-output))
+            (reset! valid? true))))
       (.preventDefault e))))
 
 
