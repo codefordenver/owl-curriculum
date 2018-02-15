@@ -1569,22 +1569,20 @@
 	 */
 	function dispatchEvent( type, args ) {
 
-		if ( window.parent === window.self ) {
-			var event = document.createEvent( 'HTMLEvents', 1, 2 );
-			event.initEvent( type, true, true );
-			extend( event, args );
-			return dom.wrapper.dispatchEvent( event );
-		}
-
 		// If we're in an iframe, post each reveal.js event to the
 		// parent window. Used by the notes plugin
-		if( config.postMessageEvents && window.parent !== window.self ) {
+		if ( config.postMessageEvents && window.parent !== window.self ) {
 			var iframeEvent = document.createEvent( 'HTMLEvents', 1, 2 );
 			iframeEvent.initEvent( 'iframe' + type, true, true );
 			extend( iframeEvent, args );
 			dom.wrapper.dispatchEvent( iframeEvent );
 			window.parent.postMessage( JSON.stringify({ namespace: 'reveal', eventName: type, state: getState() }), '*' );
 			return window.parent.dispatchEvent( iframeEvent );
+		} else {
+			var event = document.createEvent( 'HTMLEvents', 1, 2 );
+			event.initEvent( type, true, true );
+			extend( event, args );
+			return dom.wrapper.dispatchEvent( event );
 		}
 
 	}
@@ -2342,7 +2340,7 @@
 					'indexv': indexv,
 					'newIndexh': h || indexh,
 					'newIndexv': v || indexv
-				 }) ) {
+		}) ) {
 			// Remember where we were at before
 			previousSlide = currentSlide;
 

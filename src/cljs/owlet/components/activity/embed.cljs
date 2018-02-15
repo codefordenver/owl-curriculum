@@ -27,6 +27,8 @@
                "klipseActivity" [:iframe#klipseSlides {:srcDoc (get-in activity [:fields :iframeContent])
                                                        :frameBorder "0"
                                                        :scrolling "no"
+                                                       :width "576"
+                                                       :height "420"
                                                        :allowFullScreen true}])])
           (when tags
             [:div.activity-tags-wrap
