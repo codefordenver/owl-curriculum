@@ -9,15 +9,15 @@
             [re-frame.core :as rf]
             [owlet.components.activity.comments :refer [activity-comments]]))
 
-(defn ro-activity-view 
+(defn ro-activity-view
   "Read-only activity" []
   (let [activity @(rf/subscribe [:activity-in-view])]
     (if-not activity
       [:div.branch-activities-wrap
-        [:h2 [:mark.box.box-shadow [:b "Loading..."]]]]
+        [:h2 [:mark [:b "Loading..."]]]]
       (if (= activity "error")
         [:div.branch-activities-wrap
-          [:h2 [:mark.box.box-shadow [back] [:b "This activity does not exist"]]]]
+          [:h2 [:mark [back] [:b "This activity does not exist"]]]]
         (let [{:keys [fields]} activity]
           (let [{:keys [why
                         title

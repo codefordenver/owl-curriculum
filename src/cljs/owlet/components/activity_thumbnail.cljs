@@ -18,7 +18,7 @@
         route-param (first (keys @(rf/subscribe [:route-params])))
         showing? (reagent/atom false)]
     [:div.col-xs-12.col-md-6.col-lg-4
-     [:div.activity-thumbnail-wrap.box-shadow
+     [:div.activity-thumbnail-wrap
       [:a {:href (str "#/activity/#!" entry-id)}
        [:div.activity-thumbnail {:style {:background-image (str "url('" image "')")}}
         [:mark.title title]]]
@@ -47,11 +47,10 @@
                 [:span " | " [:b "download required"]])]]
       [:div.summary summary]
       (when tags
-        (for [tag tags]
-          (if (= (lower-case tag) (lower-case display-name))
+        (for [tag tags :let [name (:name tag)]]
             ^{:key (gensym "tag-")}
-            [:div.tag {:on-click #(rf/dispatch [:show-tag tag])}
-              [:span tag]]
-            ^{:key (gensym "tag-")}
-            [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag tag])}
-              [:span tag]])))]]))
+            [:div {:class (if (= (lower-case name) (lower-case display-name))
+                           "tag"
+                           "inactive tag")
+                   :on-click #(rf/dispatch [:show-tag name])}
+              [:span name]]))]]))

@@ -9,7 +9,8 @@
             [mailgun.mail :as mail]
             [cheshire.core :as json]
             [camel-snake-kebab.core :refer [->kebab-case]]
-            [owlet.constants :as constants]))
+            [owlet.constants :as constants])
+  (:use [net.cgrand.enlive-html :as html]))
 
 (def creds {:key    (System/getenv "MMM_MAILGUN_API_KEY")
             :domain "mg.codefordenver.org"})
@@ -44,23 +45,6 @@
   (http/get (format "https://cdn.contentful.com/spaces/%1s/assets/%2s" space-id asset-id)
             {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}))
 
-; TODO: refactor to get tags and branches from Klipse Activity model too
-(defn- process-metadata
-  [metadata]
-  (let [body (json/parse-string metadata true)
-        items (body :items)
-        activity-model (some #(when (= (:name %) "Activity") %) items)
-        activity-model-fields (:fields activity-model)
-        pluck-prop (fn [prop]
-                     (-> (get-in (some #(when (= (:id %) prop) %) activity-model-fields)
-                                 [:items :validations])
-                         first
-                         :in))
-        tags (pluck-prop "tags")
-        branches (pluck-prop "branch")]
-    {:tags   tags
-     :branches branches}))
-
 (defn- filter-entries [content-type items]
   (filter #(= content-type
               (-> % (get-in [:sys :contentType :sys :id])))
@@ -84,8 +68,28 @@
 
 (def remove-nil (partial remove nil?))
 
-(defn- process-activity [activity platforms assets]
+(defn- process-activity [activity branches tags platforms assets]
+  (when (= (get-in activity [:sys :contentType :sys :id]) "klipseActivity")
+    (html/deftemplate slideshow-template
+      (java.io.StringReader. (slurp (str (get-in activity [:fields :embedUrl]) "/embed?style=light&postMessageEvents=true"))) []
+      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/deck")]] (do-> (html/set-attr :src "../js/vendor/reveal.js") (html/remove-attr :defer))
+      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/application")]] (html/remove-attr :defer)
+      [:html :body] (append (html [:script {:src "https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.js"}]))
+      [:html :body] (append (html [:script (str "SL.util.setupReveal(); Reveal.configure({postMessageEvents: true, postMessage: true})")]))))
   (-> activity
+      (assoc-in [:fields :iframeContent] (apply str (slideshow-template)))
+      ; Adds :branches data using :branchRefs
+      (assoc-in [:fields :branches]
+                (map
+                  (fn [branchRef]
+                    (apply #(:fields %) (filter #(= (-> branchRef :sys :id) (-> % :sys :id)) branches)))
+                  (-> activity :fields :branchRefs)))
+      ;; Adds :tags data using :tagRefs
+      (assoc-in [:fields :tags]
+                (map
+                  (fn [tag-ref]
+                    (apply #(:fields %) (filter #(= (-> tag-ref :sys :id) (-> % :sys :id)) tags)))
+                  (-> activity :fields :tagRefs)))
       ; Adds :platform data using :platformRef
       (assoc-in [:fields :platform]
                 (some #(when (= (get-in activity [:fields :platformRef :sys :id])
@@ -109,18 +113,20 @@
                      (mapv (image-by-id assets))))
       ; Add :tag-
       (assoc-in [:tag-set] (or (some->> activity
-                                          :fields
-                                          :tags
-                                          remove-nil
-                                          seq                                    ; some->> gives nil if empty
-                                          (map keywordize-name)
-                                          set)
-                               activity))))
+                                        :fields
+                                        :tags
+                                        remove-nil
+                                        seq                 ; some->> gives nil if empty
+                                        (map keywordize-name)
+                                        set)
+                               activity))
+      ;; Removes refs since no longer needed in the front-end
+      (update :fields #(apply dissoc % [:branchRefs :tagRefs :platformRef]))))
 
 (defn- process-activities
-  [activities platforms assets]
+  [activities branches tags platforms assets]
   (for [activity activities]
-    (process-activity activity platforms assets)))
+    (process-activity activity branches tags platforms assets)))
 
 
 (defn handle-get-all-entries-for-given-space
@@ -129,6 +135,7 @@
 	optionally pass library-view=true param to get all entries for given space"
 
   [req]
+
 
   (let [{:keys [space-id]} (:params req)
         opts1 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-MANAGEMENT-AUTH-TOKEN)}}
@@ -139,14 +146,16 @@
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
+              branches (filter-entries "branch" (:items entries))
               platforms (filter-entries "platform" (:items entries))
+              tags (filter-entries "tag" (:items entries))
               activities (concat (filter-entries "klipseActivity" (:items entries))
                                  (filter-entries "activity" (:items entries)))]
 
-
-          (ok {:metadata   (process-metadata (:body @metadata))
-               :activities (process-activities activities platforms assets)
-               :platforms  platforms}))
+          (ok {:activities (process-activities activities branches tags platforms assets)
+               :branches   branches
+               :platforms  platforms
+               :tags       tags}))
         (not-found status)))))
 
 (defn- compose-new-activity-email

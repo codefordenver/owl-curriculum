@@ -1,4 +1,5 @@
 (ns owlet.helpers
+  (:require-macros [purnam.core :refer [!>]])
   (:require [clojure.string :as clj->str]
             [cljs.spec :as s]
             [camel-snake-kebab.core :refer [->kebab-case]]
@@ -33,3 +34,7 @@
   [cset]
   (check-and-throw ::set? cset)
   (clj->str/join " " (map str cset)))
+
+(defn remove-dom-element [id]
+  (let [el (.getElementById js/document id)]
+    (!> el.parentNode.removeChild el)))

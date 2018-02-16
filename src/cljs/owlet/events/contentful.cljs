@@ -39,45 +39,46 @@
 (rf/reg-event-fx
   :get-content-from-contentful-success
   (fn [{db :db} [_ route-args {activities :activities
-                               metadata :metadata
-                               platforms :platforms}]]
+                               platforms :platforms
+                               tags :tags
+                               branches :branches}]]
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
-          branches (:branches metadata)
-          tags (:tags metadata)
           activities (map #(update-in % [:tag-set] (partial (comp set map) keyword))
                         activities)
           activity-titles (remove-nil (map #(get-in % [:fields :title]) activities))
           branches-template (->> (mapv (fn [branch]
-                                         (hash-map (keywordize-name branch)
-                                           {:activities   []
-                                            :display-name branch
-                                            :count        0
-                                            :preview-urls []})) branches)
-                              (into {}))
+                                         (let [branch-name (get-in branch [:fields :name])]
+                                           (hash-map (keywordize-name branch-name)
+                                             {:activities   []
+                                              :display-name branch-name
+                                              :count        0
+                                              :preview-urls []}))) branches)
+                                 (into {}))
 
           activities-by-branch (->> (mapv (fn [branch]
                                             (let [[branch-key branch-vals] branch]
-                                              (let [display-name (:display-name branch-vals)
-                                                    matches (filterv (fn [activity]
-                                                                       (some #(= display-name %)
-                                                                         (get-in activity [:fields :branch])))
+                                             (let [display-name (:display-name branch-vals)
+                                                   matches (filterv (fn [activity]
+                                                                      (let [activity-branch-names (map #(:name %) (get-in activity [:fields :branches]))]
+                                                                        (some #(= display-name %) activity-branch-names)))
+
                                                               activities)
-                                                    preview-urls (mapv #(get-in % [:fields :preview :sys :url]) matches)]
-                                                (if (seq matches)
-                                                  (hash-map branch-key
-                                                    {:activities   matches
-                                                     :display-name display-name
-                                                     :count        (count matches)
-                                                     :preview-urls preview-urls})
-                                                  branch))))
+                                                   preview-urls (mapv #(get-in % [:fields :preview :sys :url]) matches)]
+                                               (if (seq matches)
+                                                 (hash-map branch-key
+                                                   {:activities   matches
+                                                    :display-name display-name
+                                                    :count        (count matches)
+                                                    :preview-urls preview-urls})
+                                                 branch))))
                                       branches-template)
                                  (into {}))]
       {:db (assoc db
             :activity-platforms (map #(:fields %) platforms)
             :activities activities
-            :activity-branches branches
-            :tags tags
+            :activity-branches (map #(:fields %) branches)
+            :tags (map #(:fields %) tags)
             :activities-by-branch activities-by-branch
             :activity-titles activity-titles)
        :dispatch-n (list [route-dispatch route-param]
@@ -176,7 +177,19 @@
   :show-create-klipse-panel-activity
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :create-klipse-panel-activity-view]
-                       [:set-active-document-title! "Klipse Activity Scroll"])}))
+                       [:set-active-document-title! "Create Multi-Panel Coding Activity"])}))
+
+(rf/reg-event-fx
+  :show-create-klipse-slides-activity
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :create-klipse-slides-activity-view]
+                       [:set-active-document-title! "Create Slides-Based Coding Activity"])}))
+
+(rf/reg-event-fx
+  :show-create-embed-activity
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :create-embed-activity-view]
+                       [:set-active-document-title! "Create Embedded Activity"])}))
 
 ; search & filter
 
@@ -201,7 +214,7 @@
 
         (let [filtered-set (filter #(when (contains? (:tag-set %) search-term) %) activities)]
           (if (seq filtered-set)
-            (let [tags (:tags db)
+            (let [tags (concat (map #(:name %) (:tags db)))
                   lowercase-tags (map str/locale-lower tags)
                   tag-index (.indexOf lowercase-tags (string/lower-case term))
                   display-name (nth tags tag-index)]

@@ -16,14 +16,26 @@ body {
   overflow-x: hidden;
 }
 
+.semi-bold { font-weight: 500; }
+
 input, textarea, button, select { border-radius: 4px }
+
+textarea, input {
+  border: 1px solid gray;
+  padding: 0.25em;
+}
+
+textarea {
+  margin-bottom: 10px;
+  width: 100%;
+}
 
 h1, h2, h5 { font-weight: 400 }
 h3, h4 { font-weight: 300 }
 h2, h3, h5 { margin: 10px 0 15px 0 }
 
 h1 {
-  margin-top: 10px;
+  margin-top: 5px;
   line-height: 1.55em;
 }
 
@@ -40,6 +52,8 @@ a:hover {
   text-decoration: none;
 }
 
+.btn { padding: .5rem .6rem }
+
 .btn:focus {
   outline: none;
   &:active {
@@ -53,9 +67,7 @@ b {
 
 // information views: about
 .information-wrap {
-  width: 98%;
-  margin: 0 auto;
-  margin-top: 45px;
+  margin: 30px 15px 15px 15px;
   height: 100vh;
   h1 {
     font-size: 2.4rem;
@@ -68,13 +80,14 @@ b {
     margin-bottom: 0.9em;
   }
   .information-inner-wrap {
-    padding: 0 0 0 23px;
+    padding: 0 10px 0 15px;
   }
   .information-inner {
     background-color: white;
     padding: 23px;
     font-size: 1.3em;
     margin-bottom: 2em;
+    border: 2px solid black;
   }
   .contributors {
     font-size: 1.1em;
@@ -177,6 +190,8 @@ b {
 }
 
 #sidebar {
+  min-height: inherit;
+  min-width: inherit;
   z-index: 3;
   text-align: center;
   background-color: $purple;
@@ -274,6 +289,7 @@ b {
 
 #sidebar-wrap {
   background-color: $purple;
+  min-width: 80px;
 }
 
 .lpsidebar {
@@ -575,7 +591,7 @@ mark.white {
   overflow-x: hidden;
   height: 100%;
   padding-top: 50px;
-  background: url('../img/cfd-bg.jpg');
+  // background: url('../img/cfd-bg.jpg');
   background-size: cover !important;
 }
 
@@ -775,6 +791,7 @@ span.platform-details {
 
 .activity-thumbnail-wrap {
   border-radius: 7px;
+  border: 2px solid black;
   font-size: 0.9em;
   @media (max-width: 1187px) {
     font-size: 0.8em;
@@ -840,9 +857,9 @@ span.platform-details {
 /* activity view */
 
 .activity-wrap {
-  width: 96%;
+  width: 100%;
   margin: 0 auto;
-  padding-top: 10px;
+  padding: 10px;
   background-color: transparent;
   height: 100vh;
   font-size: 0.85em;
@@ -860,16 +877,19 @@ span.platform-details {
 }
 
 .activity-header {
-  margin: 10px 0 20px 0;
+  margin-bottom: 20px;
 }
 
 .activity-content, .activity-header {
   word-wrap: break-word;
-  padding: 0 0 0 23px;
+  padding: 0 12px 0 20px;
 }
 
 .activity-content {
   font-size: 1.2em;
+  h1 {
+    font-style: italic;
+  }
 }
 
 .activity-title-wrap {
@@ -878,37 +898,46 @@ span.platform-details {
     margin-bottom: 0;
     text-transform: uppercase;
   }
+  input {
+    background-color: black;
+    color: white;
+    width: 100%;
+  }
   .author {
     color: #ADADAD;
-    margin-top: 0;
+    margin-top: 0.25em;
+    input {
+      border: 1px solid $light-gray;
+      margin-top: 5px;
+      color: $medium-gray;
+    }
   }
   margin-top: 18px;
   margin-bottom: 15px;
 }
 
-.activity-info-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
+.activity-info-wrap, .activity-creation-wrap, .activity-inspiration-wrap, .activity-challenge-wrap {
   background-color: white;
   padding: 10px 12px 10px 15px;
   margin-bottom: 30px;
+  border: 2px solid black;
   span.platform-details {
     font-size: 0.75em;
   }
 }
 
-.activity-challenge-wrap {
+.activity-challenge-wrap, .activity-inspiration-wrap {
   margin: 2em 0;
+  border: 2px solid black;
   width: 100%;
   img {
     max-width: 100%;
   }
 }
 
-.activity-inspiration-wrap {
-  margin: 2em 0;
-}
-
 .activity-embed-wrap {
   margin-bottom: 30px;
+  border: 2px solid black;
 }
 
 .activity-tags-wrap {
@@ -930,6 +959,7 @@ span.platform-details {
 
 .activity-gallery-wrap {
   margin-bottom: 2em;
+  border: 2px solid black;
 }
 
 .activity-comments-wrap {
@@ -975,7 +1005,6 @@ div.code-block {
   padding: 0.5em;
   margin-bottom: 1em;
   textarea {
-    width: 100%;
     padding: 0.3em 0.2em;
     background: none;
   }
@@ -992,7 +1021,7 @@ span.inline-code {
   min-height: inherit;
 }
 
-.panel-text {
+.panel-text, #general-activity-info {
   .CodeMirror-scroll {
     min-height: 100px;
   }
@@ -1040,13 +1069,21 @@ span.inline-code {
     padding: 10px;
   }
 
-  .klipse-result .CodeMirror-line:first-child {
-    font-weight: 500;
-    text-transform: uppercase;
-    span {
-      background-color: black;
-      color: white;
-      padding: 5px !important;
+  .klipse-result {
+    .CodeMirror-line:first-child {
+      font-weight: 500;
+      text-transform: uppercase;
+      span {
+        background-color: black;
+        color: white;
+        padding: 5px !important;
+      }
+    }
+    .CodeMirror-cursors, .CodeMirror-cursor {
+      display: none;
+    }
+    .CodeMirror-lines, .CodeMirror-line {
+      cursor: default;
     }
   }
 
@@ -1066,26 +1103,11 @@ span.inline-code {
       color: yellow;
     }
   }
-
-  .CodeMirror-selected {
-    min-width: 0;
-  }
-  .CodeMirror-cursor {
-    min-height: 0;
-  }
 }
 
 .activity-title-wrap {
-  h1 input {
-    background: none;
-    color: white;
-    line-height: 1.3em;
-    padding-left: 0.3em;
-    width: 84%;
-  }
   h5 input {
     background: none;
-    color: inherit;
     padding-left: 0.3em;
     width: 10em;
   }
@@ -1095,10 +1117,13 @@ span.inline-code {
   margin-left: -15px;
   margin-top: -10px;
   align-items: flex-start;
+  h2 {
+    margin-bottom: 0;
+  }
   textarea {
-    width: 100%;
     font-weight: 500;
     padding-left: 0.15em;
+    resize: none;
   }
 }
 
@@ -1110,27 +1135,93 @@ span.inline-code {
   font-size: 1.25em;
 }
 
-.panel-klipse {
-  margin-top: 0.5em;
+#select-platform, #select-tags, #select-branches {
+  padding: 5px;
 }
 
-.create-activity-buttons {
-  button {
-    font-size: 1.4em;
-    font-weight: 400;
-    border: 4px $aqua solid;
+#select-platform form input {
+  display: inline-block;
+}
+
+#select-categories {
+  background-color: white;
+  padding-left: 5px;
+  padding-top: 3px;
+  h5 {
+    text-transform: uppercase;
+    margin-bottom: 3px;
+    margin-top: 10px;
   }
-  .add-panel {
-    margin: 0.1em 0 1.5em 0;
-    background-color: white;
-    color: $dark-gray;
-    padding: 0.2em 0.4em 0.2em 0.35em;
+}
+
+#select-categories input[type="radio"], #select-categories input[type="checkbox"] {
+  margin-top: -.32em;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.panel-validation {
+  margin-bottom: 14px;
+}
+
+.pane-number {
+  width: 2.2em;
+}
+
+.language, .code-eval h5 {
+  display: inline-block;
+}
+
+.language {
+  margin-left: 10px;
+}
+
+.activity-creation-wrap {
+  input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
   }
-  .save-activity {
-    margin: 0.1em 0 3em 1em;
-    background-color: $dark-gray;
-    color: white;
-    padding: 0.2em 0.4em 0.2em 0.45em;
+}
+
+.activity-creation-wrap h5 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.code-preview, .add-validation, .rem-validation {
+  margin: 5px 5px 15px 5px;
+  border: 2px solid $aqua;
+  &:hover {
+    background-color: $aqua;
+  }
+}
+
+.add-panel {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin: 0.1em 1em 1.5em 0;
+  background-color: white;
+  color: $dark-gray;
+  border: 4px $aqua solid;
+  padding: 0.2em 0.4em 0.2em 0.35em;
+  &:hover {
+    background: $aqua;
+    color: black;
+  }
+}
+
+.save-activity {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin: 0.1em 0 3em;
+  background-color: $dark-gray;
+  color: white;
+  padding: 0.2em 0.4em 0.2em 0.45em;
+  border: 4px $aqua solid;
+  &:hover {
+    background: $aqua;
+    color: black;
   }
 }
 
@@ -1385,12 +1476,6 @@ button {
   -webkit-animation: rotate 1s linear infinite;
   animation: rotate 1s linear infinite;
   fill: rgba(0, 0, 0, 0.2);
-}
-
-// re-com overwrites
-* {
-  min-height: inherit;
-  min-width: inherit;
 }
 
 // bootstrap 3 supplement for progress-bar (recom)

@@ -31,7 +31,7 @@
           [checkbox
            :style {:align-self "center"}
            :label "Teacher"
-           :model    (role-assignment :teacher)
+           :model     (role-assignment :teacher)
            :on-change #(role-change-handler :teacher)]
 
           [checkbox
@@ -41,17 +41,35 @@
            :on-change #(role-change-handler :content-creator)]
 
           (when (contains? (set @my-roles) (name :content-creator))
-            [:div.settings-section
-             [:h3 "Create Activity"]
-             [:ul
-              [:li "Interactive:"]
+           [:div.settings-section
+            [:h4 [:i [:b "NOTE: "]
+                  "CONTENT CREATION FUNCTIONALITY IS CURRENTLY IN DEVELOPMENT. IT DOES NOT WORK - YET!"
+                  [:br] "THE LINKS BELOW ARE JUST A PREVIEW OF WHAT'S TO COME :)"]
+             [:br][:br]]
+            [:h3 "CREATE"]
+            [:ul
+             [:li [:b "A general purpose, read-only activity"]
               [:ul
-               [:li [:a {:href "#/create/klipse-panel-activity"}
-                     "Coding, Multi-Panel"]
-                " — Python, JavaScript, and/or Clojure ["
-                [:a {:href "#/activity/hello-world"} "Example"]
-                "]"]]]])]]]])))
-
+               [:li [:a.semi-bold {:href "#/create/embed-activity"}
+                        "Instructional medium of your choice"]
+                    [:ul
+                     [:li "Embed a slideshow iframe, video iframe, or your own HTML ["
+                          [:a {:href "#/activity/#!5g8tVqDGTeo2aMUey0M8G"} "see example"]
+                          "]"]]]]]
+             [:li [:b "An activity w/ built-in code evaluation"]
+              [:ul
+               [:li [:a.semi-bold {:href "#/create/klipse-panel-activity"}
+                        "MULTIPLE code evaluators & text-based instruction"]
+                    [:ul
+                     [:li "Supports Python, JavaScript, and/or Clojure ["
+                          [:a {:href "#/activity/hello-world"} "see example"]
+                          "]"]]]
+               [:li [:a.semi-bold {:href "#/create/klipse-slides-activity"}
+                        "A SINGLE code evaluator & slides-based instruction"]
+                    [:ul
+                     [:li "Supports Python, JavaScript, or Clojure ["
+                          [:a {:href "#/activity/#!34hdwSOWpiEEWSWaqQGcGC"} "see example"]
+                          "]"]]]]]]])]]]])))
 
 (defn settings-view []
   (if @(rf/subscribe [:my-id])
