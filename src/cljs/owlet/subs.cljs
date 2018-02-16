@@ -16,6 +16,8 @@
 
 (reg-getter :my-background-image-url [:my-identity :private :background-image-url])
 
+(reg-getter :my-roles [:my-identity :private :my-roles])
+
 (rf/reg-sub
   :activity-branches
   (fn [db]
