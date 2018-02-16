@@ -66,10 +66,7 @@
             ^{:key (inc n)}
             [create-klipse-code-validation-component true n]))]
        [:button.btn.add-validation {:on-click #(swap! validation-id inc)}
-        "+ Add another code validation"]
-       [:button.btn.rem-validation {:on-click #(when (> @validation-id 1)
-                                                 (swap! validation-id dec))}
-        "- Remove last code validation"]]
+        "+ Add another code validation"]]
       [:div.create-activity-buttons
        [:button.save-activity
         "Save Activity"]]]

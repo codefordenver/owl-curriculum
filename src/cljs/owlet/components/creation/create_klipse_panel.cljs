@@ -3,7 +3,7 @@
             [reagent.core :as reagent]
             [owlet.components.creation.custom-klipse-component :refer [custom-klipse-component]]
             [owlet.components.creation.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
-            [re-com.core :refer [h-box]]
+            [re-com.core :refer [h-box button]]
             cljsjs.simplemde))
 
 (defn create-klipse-panel-component [panel-number]

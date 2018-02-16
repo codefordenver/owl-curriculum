@@ -40,6 +40,9 @@
          [:button.add-panel
           {:on-click #(swap! panel-number inc)}
           "+ Add another panel"]
+         [:button.add-panel
+          {:on-click #(swap! panel-number dec)}
+          "- Remove last panel"][:br]
          [:button.save-activity
           "Save Activity"]]]]
       [create-activity-response-component :ok]])))
