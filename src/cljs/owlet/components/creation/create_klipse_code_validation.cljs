@@ -19,7 +19,7 @@
                  [button
                   :style {:margin "1.55em 0 1em 0.5em"
                           :padding "0 0.45em 0.1em 0.45em"}
-                  :class "btn-secondary"
+                  :class "btn-danger"
                   :label "x"
                   :on-click #(remove-dom-element id)]]]
     [:div

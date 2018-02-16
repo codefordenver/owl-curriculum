@@ -57,8 +57,10 @@
          [:div.embed-container {"dangerouslySetInnerHTML"
                                 #js{:__html @embed-code}}])]
       [:div.activity-creation-wrap
-       [:button {:on-click #(swap! show-upload? not)}
-                "Upload a thumbnail image for this activity"]
+       [:button.add-validation {:on-click #(swap! show-upload? not)
+                                :style {:margin "10px 0"
+                                        :font-size "1.25em"}}
+        "Upload a thumbnail image for this activity"]
        (when @show-upload?
          [upload-thumbnail-image-component])]
       [:div.create-activity-buttons

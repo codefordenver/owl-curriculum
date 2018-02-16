@@ -1197,27 +1197,31 @@ span.inline-code {
   }
 }
 
-.create-activity-buttons {
-  button {
-    font-size: 1.4em;
-    font-weight: 400;
-    border: 4px $aqua solid;
+.add-panel {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin: 0.1em 1em 1.5em 0;
+  background-color: white;
+  color: $dark-gray;
+  border: 4px $aqua solid;
+  padding: 0.2em 0.4em 0.2em 0.35em;
+  &:hover {
+    background: $aqua;
+    color: black;
   }
-  .add-panel {
-    margin: 0.1em 1em 1.5em 0;
-    background-color: white;
-    color: $dark-gray;
-    padding: 0.2em 0.4em 0.2em 0.35em;
-  }
-  .save-activity {
-    margin: 0.1em 0 3em;
-    background-color: $dark-gray;
-    color: white;
-    padding: 0.2em 0.4em 0.2em 0.45em;
-    &:hover {
-      background: $aqua;
-      color: black;
-    }
+}
+
+.save-activity {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin: 0.1em 0 3em;
+  background-color: $dark-gray;
+  color: white;
+  padding: 0.2em 0.4em 0.2em 0.45em;
+  border: 4px $aqua solid;
+  &:hover {
+    background: $aqua;
+    color: black;
   }
 }
 

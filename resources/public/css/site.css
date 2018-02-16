@@ -952,23 +952,27 @@ span.inline-code {
   .code-preview:hover, .add-validation:hover, .rem-validation:hover {
     background-color: #65D2C0; }
 
-.create-activity-buttons button {
+.add-panel {
   font-size: 1.4em;
   font-weight: 400;
-  border: 4px #65D2C0 solid; }
-
-.create-activity-buttons .add-panel {
   margin: 0.1em 1em 1.5em 0;
   background-color: white;
   color: #0c171b;
+  border: 4px #65D2C0 solid;
   padding: 0.2em 0.4em 0.2em 0.35em; }
+  .add-panel:hover {
+    background: #65D2C0;
+    color: black; }
 
-.create-activity-buttons .save-activity {
+.save-activity {
+  font-size: 1.4em;
+  font-weight: 400;
   margin: 0.1em 0 3em;
   background-color: #0c171b;
   color: white;
-  padding: 0.2em 0.4em 0.2em 0.45em; }
-  .create-activity-buttons .save-activity:hover {
+  padding: 0.2em 0.4em 0.2em 0.45em;
+  border: 4px #65D2C0 solid; }
+  .save-activity:hover {
     background: #65D2C0;
     color: black; }
 
