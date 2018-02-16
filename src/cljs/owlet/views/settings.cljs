@@ -30,6 +30,10 @@
        :on-change #(swap! roles update :content-creator not)]
       (when (:content-creator @roles)
        [:div.settings-section
+        [:h4 [:i [:b "NOTE: "]
+              "CONTENT CREATION FUNCTIONALITY IS CURRENTLY IN DEVELOPMENT. IT DOES NOT WORK - YET!"
+              [:br] "THE LINKS BELOW ARE JUST A PREVIEW OF WHAT'S TO COME :)"]
+         [:br][:br]]
         [:h3 "CREATE"]
         [:ul
          [:li [:b "A general purpose, read-only activity"]
