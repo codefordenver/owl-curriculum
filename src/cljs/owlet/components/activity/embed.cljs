@@ -15,7 +15,7 @@
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])
         output (clojure.string/trim (clojure.string/replace e.detail.resultElement.display.wrapper.innerText "OUTPUT:" ""))]
-    (if-let [expected-output ""] ;Get expected output
+    (if-let [expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh))])]
       (reset! valid? (= output expected-output))
       (reset! valid? true))))
 
@@ -23,11 +23,12 @@
   (when (> (.-newIndexh e) @indexh)
     (if @valid?
       (do
-        (reset! indexh (.-newIndexh e))
-        (let [prev-expected-output ""] ;Get previous expected output
-          (if-let [new-expected-output ""] ;Get expected output of the new slide
-            (reset! valid? (= prev-expected-output new-expected-output))
-            (reset! valid? true))))
+        (let [activity @(rf/subscribe [:activity-in-view])]
+          (reset! indexh (.-newIndexh e))
+          (let [prev-expected-output (get-in activity [:fields :codeValidation (keyword (str (- @indexh 1)))])]
+            (if-let [new-expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh))])]
+              (reset! valid? (= prev-expected-output new-expected-output))
+              (reset! valid? true)))))
       (.preventDefault e))))
 
 
