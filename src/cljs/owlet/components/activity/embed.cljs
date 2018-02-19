@@ -14,9 +14,12 @@
 
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])
-        output (clojure.string/trim (clojure.string/replace e.detail.resultElement.display.wrapper.innerText "OUTPUT:" ""))]
-    (if-let [expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh))])]
-      (reset! valid? (= output expected-output))
+        output (clojure.string/trim (clojure.string/replace e.detail.resultElement.display.wrapper.innerText "OUTPUT:" ""))
+        input (? e.detail.srcCode)
+        unacceptable-inputs (get-in activity [:fields :codeValidation (keyword (str @indexh)) :unacceptableInputs])]
+    (if-let [expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh)) :expectedOutput])]
+      (reset! valid? (and (= output expected-output)
+                          (not (some #(= % input) unacceptable-inputs))))
       (reset! valid? true))))
 
 (defn handle-slide-change [e]
@@ -24,8 +27,8 @@
     (if @valid?
       (let [activity @(rf/subscribe [:activity-in-view])]
         (reset! indexh (.-newIndexh e))
-        (let [prev-expected-output (get-in activity [:fields :codeValidation (keyword (str (- @indexh 1)))])]
-          (if-let [new-expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh))])]
+        (let [prev-expected-output (get-in activity [:fields :codeValidation (keyword (str (- @indexh 1)) :expectedOutput)])]
+          (if-let [new-expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh)) :expectedOutput])]
             (reset! valid? (= prev-expected-output new-expected-output))
             (reset! valid? true))))
       (.preventDefault e))))
