@@ -372,10 +372,15 @@ mark.white {
   justify-content: center;
   -webkit-flex-flow: column nowrap;
   flex-flow: column nowrap;
-  background: -webkit-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: -o-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: -moz-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: linear-gradient(to bottom, #1a0f2e, #493b68); }
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("../img/landing.png") center no-repeat, -webkit-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url("../img/landing.png") center no-repeat, -o-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url("../img/landing.png") center no-repeat, -moz-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url("../img/landing.png") center no-repeat, linear-gradient(to bottom, #1a0f2e, #493b68);
+  background-size: auto 100%;
+  text-align: 100%; }
 
 .flex-item {
   width: 100%; }
@@ -428,21 +433,11 @@ mark.white {
   .flex-item {
     display: none; }
   .user-type {
-    left: 0;
-    top: 35vh;
-    margin: 0; }
+    position: static; }
   #largetext {
     font-size: 10vw; }
   #smalltext {
-    font-size: 4vw; }
-  .landing {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    background: url("../img/landing.png");
-    background-size: auto 100%;
-    background-position: center; } }
+    font-size: 4vw; } }
 
 #top {
   background-color: #1a0f2e; }
