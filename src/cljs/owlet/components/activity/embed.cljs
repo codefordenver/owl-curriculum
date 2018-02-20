@@ -12,6 +12,12 @@
 
 (def klipse-container-class ".klipse-container")
 
+(add-watch valid? :is-valid
+  (fn [key atom old-state new-state]
+    (let [iframe (js/document.querySelector "#klipseSlides")]
+      (.postMessage (.-contentWindow iframe) (.stringify js/JSON (clj->js {:method "configure"
+                                                                           :args [{:controls new-state}]})) "*"))))
+
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])
         output (clojure.string/trim (clojure.string/replace e.detail.resultElement.display.wrapper.innerText "OUTPUT:" ""))
