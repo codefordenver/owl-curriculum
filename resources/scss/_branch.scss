@@ -1,0 +1,171 @@
+$font-stack: "Rubik", sans-serif;
+$purple: #32254B;
+$dark-gray: rgb(12, 23, 27);
+$medium-gray: #222F33;
+$light-gray: #C8C8C8;
+$aqua: #65D2C0;
+$magenta: #FF0076;
+
+.branch-activities-wrap .flexcontainer-wrap {
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+
+.platform-description {
+  width: 75%;
+  background-color: white;
+  color: black;
+  padding: .2em .3em;
+  margin: 0 15px 30px 15px;
+  a:hover {
+    color: cornflowerblue;
+  }
+  p {
+    padding: 5px;
+    margin-bottom: 0;
+  }
+}
+
+.branch-activities-wrap {
+  margin: 15px 20px 0 25px;
+  h2 {
+    font-size: 2.4rem;
+    margin: 1.2em 0 .1em 0;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-size: 1.9rem;
+    margin-bottom: 1em;
+  }
+  @media (max-width: 500px) {
+    .col-xs-12.col-md-6.col-lg-4 {
+      padding: 0;
+    }
+  }
+}
+
+.no-activities {
+  margin-left: 21px;
+}
+
+i.back {
+  color: white;
+  padding-bottom: .1em;
+  margin-right: 12px;
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.pushed-left {
+  padding-left: 15px;
+}
+
+.tag {
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 25px;
+  border: 1px solid #564B82;
+  margin: 5px;
+  padding: 7px 7px 6px 7px;
+  font-weight: normal;
+  font-size: 12px;
+  background-color: #564B82;
+  &:hover {
+    background-color: #483C6C;
+  }
+}
+
+.tag.inactive {
+  color: #564B82;
+  background-color: white;
+  border: 1px solid #564B82;
+  &:hover {
+    background-color: #564B82;
+    color: white;
+  }
+}
+
+.platform {
+  font-size: 1em;
+  padding: 5px 6px;
+  color: white;
+  background-color: #AAAAAA;
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.rc-popover-wrapper, .rc-popover-point {
+  min-height: 0;
+  height: 0;
+}
+
+span.platform-details {
+  margin-left: 2px;
+}
+
+.activity-thumbnail-wrap {
+  border-radius: 7px;
+  border: 2px solid black;
+  font-size: 0.9em;
+  @media (max-width: 1187px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 500px) {
+    margin-left: 15px;
+  }
+  background-color: white;
+  padding: 10px 10px 9px 10px;
+  margin: .75em 0;
+  overflow-y: auto;
+  .activity-thumbnail {
+    position: relative;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transition: background-size 0.5s ease;
+    -moz-transition: background-size 0.5s ease;
+    -ms-transition: background-size 0.5s ease;
+    -webkit-transition: background-size 0.5s ease;
+    -o-transition: background-size 0.5s ease;
+    &:hover {
+      background-size: 130% !important;
+    }
+    height: 250px;
+    @media only screen and (max-width: 767px) and (min-width: 650px) {
+      height: 400px;
+    }
+    .title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      text-transform: uppercase;
+      font-size: 1.1em;
+    }
+  }
+  .summary {
+    margin-top: 20px;
+    font-size: 0.9em;
+  }
+  .platform-wrap {
+    margin-top: 15px;
+    font-size: 0.65em;
+  }
+  .platform {
+    margin: 3px 0 0 0;
+    padding: 5px 6px 4px 6px;
+    font-size: 1em;
+    p {
+      margin: 0;
+    }
+  }
+  span.platform-details {
+    font-size: 0.8em;
+  }
+  .tag {
+    margin: 10px 10px 0px 0px;
+    font-size: 0.55em;
+  }
+}

@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700');
+@import 'global';
+@import 'branches';
+@import 'branch';
+@import 'activity';
+@import 'interactive';
+@import 'about-settings';
+@import 'creation';
+@import 'welcome';
 
 $font-stack: "Rubik", sans-serif;
 $purple: #32254B;
@@ -16,6 +24,11 @@ body {
   overflow-x: hidden;
 }
 
+<<<<<<< Updated upstream
+=======
+.semi-bold { font-weight: 500; }
+
+>>>>>>> Stashed changes
 input, textarea, button, select { border-radius: 4px }
 
 h1, h2, h5 { font-weight: 400 }
@@ -51,6 +64,7 @@ b {
   font-weight: 700;
 }
 
+<<<<<<< Updated upstream
 // information views: about
 .information-wrap {
   width: 98%;
@@ -402,6 +416,8 @@ b {
   transition: background-color 0.3s;
 }
 
+=======
+>>>>>>> Stashed changes
 mark {
   color: white;
   background-color: black;
@@ -470,6 +486,7 @@ mark.white {
   }
 }
 
+<<<<<<< Updated upstream
 .welcome-text {
   margin: 0 auto;
   margin-top: 1em;
@@ -535,6 +552,8 @@ mark.white {
   }
 }
 
+=======
+>>>>>>> Stashed changes
 #top {
   background-color: #1a0f2e;
 }
@@ -595,6 +614,7 @@ mark.white {
   }
 }
 
+<<<<<<< Updated upstream
 /* branches view */
 
 .branchwrapper.col-xs-12.col-sm-6.col-lg-4 {
@@ -1075,6 +1095,8 @@ span.inline-code {
   }
 }
 
+=======
+>>>>>>> Stashed changes
 .activity-title-wrap {
   h1 input {
     background: none;
@@ -1091,6 +1113,7 @@ span.inline-code {
   }
 }
 
+<<<<<<< Updated upstream
 .panel-heading {
   margin-left: -15px;
   margin-top: -10px;
@@ -1512,3 +1535,8 @@ progress {
 .popover-arrow {
   border-style: none;
 }
+=======
+button {
+  font-size: 1rem;
+}
+>>>>>>> Stashed changes

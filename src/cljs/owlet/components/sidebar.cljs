@@ -3,10 +3,10 @@
             [re-frame.core :as rf]))
 
 (defn sidebar-component []
-  [:div#sidebar
-   [:div#owlet-logo-div
-    [:a#owlet-image {:href "#"}
-      [:img#owlet-owl {:src "../img/owlet-owl.png"}]]]
+  [:div#sidebar.navbar
+   [:div.owlet-logo-div
+    [:a.owlet-image {:href "#"}
+      [:img.owlet-owl {:src "../img/owlet-owl.png"}]]]
    [:div.menu
     [:div.login
      [login-component]]
