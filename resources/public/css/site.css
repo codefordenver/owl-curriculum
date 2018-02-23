@@ -1049,10 +1049,6 @@ span.inline-code {
   font-size: 5vw;
   margin: 0; }
 
-#smalltext {
-  font-size: 20px;
-  color: white; }
-
 .btn-branches {
   background-color: #00A79D;
   color: white;
@@ -1160,10 +1156,15 @@ mark.white {
   justify-content: center;
   -webkit-flex-flow: column nowrap;
   flex-flow: column nowrap;
-  background: -webkit-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: -o-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: -moz-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: linear-gradient(to bottom, #1a0f2e, #493b68); }
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("../img/landing.png") center no-repeat, -webkit-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url("../img/landing.png") center no-repeat, -o-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url("../img/landing.png") center no-repeat, -moz-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url("../img/landing.png") center no-repeat, linear-gradient(to bottom, #1a0f2e, #493b68);
+  background-size: auto 100%;
+  text-align: 100%; }
 
 .flex-item {
   width: 100%; }
