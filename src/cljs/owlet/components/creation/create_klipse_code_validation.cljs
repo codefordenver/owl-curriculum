@@ -13,9 +13,9 @@
                              [:input.pane-number {:placeholder "#"}]]]
                  [v-box
                   :size "1"
-                  :children [[:h6 "Expected output for this slide:"]
-                             [:textarea.code-validation {:rows "3"
-                                                         :placeholder "Hello World"}]]]
+                  :children [[:h6 "Expected OUTPUT for this slide:"]
+                             [:textarea.code.code-validation {:rows "3"
+                                                              :placeholder "Hello World"}]]]
                  [button
                   :style {:margin "1.55em 0 1em 0.5em"
                           :padding "0 0.45em 0.1em 0.45em"}

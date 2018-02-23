@@ -9,6 +9,9 @@ body {
 .semi-bold {
   font-weight: 500; }
 
+.code {
+  font-family: monospace; }
+
 input, textarea, button, select {
   border-radius: 4px; }
 
