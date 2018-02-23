@@ -1164,7 +1164,7 @@ mark.white {
   background: url("../img/landing.png") center no-repeat, -moz-linear-gradient(to bottom, #1a0f2e, #493b68);
   background: url("../img/landing.png") center no-repeat, linear-gradient(to bottom, #1a0f2e, #493b68);
   background-size: auto 100%;
-  text-align: 100%; }
+  text-align: center; }
 
 .flex-item {
   width: 100%; }
