@@ -75,7 +75,7 @@
       [:html :body [:script (attr-contains :src "//assets.slid.es/assets/deck")]] (do-> (html/set-attr :src "../js/vendor/reveal.min.js") (html/remove-attr :defer))
       [:html :body [:script (attr-contains :src "//assets.slid.es/assets/application")]] (html/remove-attr :defer)
       [:html :body] (append (html [:script {:src "https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.js"}]))
-      [:html :body] (append (html [:script (str "SL.util.setupReveal(); Reveal.configure({postMessageEvents: true, postMessage: true})")]))))
+      [:html :body] (append (html [:script (str "SL.util.setupReveal(); Reveal.configure({postMessageEvents: true, postMessage: true, controls: false})")]))))
   (-> activity
       (assoc-in [:fields :iframeContent] (apply str (slideshow-template)))
       ; Adds :branches data using :branchRefs
