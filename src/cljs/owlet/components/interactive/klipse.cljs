@@ -27,9 +27,7 @@
     (reagent/create-class
       {:component-will-unmount
        (fn []
-         (when-let [klipse-container (js/document.querySelector klipse-container-class)]
-           (!> klipse-container.removeEventListener
-               "klipse-snippet-evaled" klipse-event-handler))
+         (js/document.removeEventListener "klipse-snippet-evaled" klipse-event-handler)
          (-> (js/document.querySelector "#klipse-script")
              (.remove)))
        :component-did-mount
@@ -38,14 +36,10 @@
            (-> tag (.setAttribute "src" klipse-plugin-path))
            (-> tag (.setAttribute "id" "klipse-script"))
            (js/document.body.appendChild tag)
-           ;; TODO: ADD SUPPORT FOR ERROR ONLOAD
-           (js/setTimeout #(reset! evaled? true) 5000)))
+           (js/document.addEventListener "klipse-snippet-evaled" klipse-event-handler)))
        :reagent-render
        (fn [language code]
          [:div.klipse-component
-          (when @evaled?
-            (let [klipse-container (js/document.querySelector klipse-container-class)]
-              (!> klipse-container.addEventListener "klipse-snippet-evaled" klipse-event-handler)))
           [:pre
            [:code {:class (case (string/lower-case language)
                             "python" "language-klipse-python"
