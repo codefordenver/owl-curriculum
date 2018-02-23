@@ -16,14 +16,14 @@
                       "0")]
       [:div.navbar
        (if @lpsidebar-state
-        [:div.lpsidebar-overlay.hidden-md-up.opened-sidebar {:on-click #(toggle-lpsidebar)}]
-        [:div.lpsidebar-overlay.hidden-md-up])
-       [:div.lpsidebar-wrap.hidden-md-up
-        [:div.lpsidebar {:style {:width position?}}
-         [:div#owlet-logo-div
-          [:a#owlet-image {:href "#/"
+        [:div#opened-sidebar.hidden-md-up {:on-click #(toggle-lpsidebar)}]
+        [:div.hidden-md-up])
+       [:div#lpsidebar-wrap.hidden-md-up
+        [:div#lpsidebar {:style {:width position?}}
+         [:div.owlet-logo-div
+          [:a.owlet-image {:href "#/"
                            :on-click #(toggle-lpsidebar)}
-           [:img#owlet-owl {:src "../img/owlet-owl.png"}]]]
+           [:img.owlet-owl {:src "../img/owlet-owl.png"}]]]
          [:div.menu
           [:div.login {:on-click #(toggle-lpsidebar)}
            [login-component]]
