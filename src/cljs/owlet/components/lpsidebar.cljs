@@ -14,7 +14,7 @@
     (let [position? (if @lpsidebar-state
                       "80px"
                       "0")]
-      [:div
+      [:div.navbar
        (if @lpsidebar-state
         [:div.lpsidebar-overlay.hidden-md-up.opened-sidebar {:on-click #(toggle-lpsidebar)}]
         [:div.lpsidebar-overlay.hidden-md-up])
