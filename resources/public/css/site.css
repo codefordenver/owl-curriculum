@@ -1231,10 +1231,5 @@ mark.white {
   #main {
     height: 100vh; } }
 
-.activity-title-wrap h5 input {
-  background: none;
-  padding-left: 0.3em;
-  width: 10em; }
-
 button {
   font-size: 1rem; }
