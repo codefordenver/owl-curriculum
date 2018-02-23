@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='utf-8'>
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OWLET ^OvO^</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/re-com.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    {% style "/css/site.css" %}
+    <script>
+        window.klipse_settings = {
+          // css selectors for the html elements you want to klipsify
+            selector_eval_python_client: '.language-klipse-python',
+            selector_eval_js: '.language-klipse-eval-js'
+        };
+    </script>
+  </head>
+
+  <body>
+
+    <div id="app">
+      <noscript id="jsdisabled"><span id="jsdisabled-text">Please <a href="http://www.enable-javascript.com/">enable javascript</a> to use Owlet</span></noscript>
+      <div id="disqus_thread" class="invisible"></div>
+    </div>
+
+    <script type="text/javascript">
+        var context = "{{servlet-context}}";
+        var csrfToken = "{{csrf-token}}";
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88936110-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <script src="js/vendor/disqus.js"></script>
+    <script src="js/vendor/initPhotoSwipeFromDOM.js"></script>
+<<<<<<< HEAD
+    <script src="js/vendor/srcdoc-polyfill.js"></script>
+=======
+<<<<<<< Updated upstream
+=======
+    <script src="js/vendor/srcdoc-polyfill.js"></script>
+    <script src="js/vendor/custom-event-polyfill.js"></script>
+>>>>>>> Stashed changes
+>>>>>>> Refactors CSS, removing validation changes
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+    {% script "/js/app.js" %}
+
+  </body>
+</html>

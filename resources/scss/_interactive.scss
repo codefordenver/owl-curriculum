@@ -1,0 +1,123 @@
+$font-stack: "Rubik", sans-serif;
+$purple: #32254B;
+$dark-gray: rgb(12, 23, 27);
+$medium-gray: #222F33;
+$light-gray: #C8C8C8;
+$aqua: #65D2C0;
+$magenta: #FF0076;
+
+.code { font-family: monospace; }
+
+.language, .code-eval h5 {
+  display: inline-block;
+}
+
+.language {
+  margin-left: 10px;
+}
+
+div.code-block {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  textarea {
+    padding: 0.3em 0.2em;
+    background: none;
+  }
+}
+
+span.inline-code {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 0.2em 0.25em 0.05em 0.2em;
+  margin-bottom: 1em;
+}
+
+.CodeMirror {
+  min-height: inherit;
+}
+
+.panel-text, #general-activity-info {
+  .CodeMirror-scroll {
+    min-height: 100px;
+  }
+  .CodeMirror-line {
+    word-break: normal;
+  }
+  .CodeMirror-wrap pre code {
+    word-break: break-all;
+  }
+}
+
+.klipse-component {
+  margin-top: 0.5em;
+  pre {
+    width: 100%;
+    margin-right: 0 !important;
+    @media screen and (max-width: 991px) {
+      width: 100%;
+    }
+  }
+
+  .CodeMirror-scroll {
+    min-height: inherit;
+  }
+
+  .CodeMirror {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    .CodeMirror-code .cm-comment {
+      background: none;
+    }
+  }
+
+  /* hides loading component when
+  klipse-separator is present */
+  .klipse-separator + .loading {
+    display: none;
+  }
+
+  .klipse-container {
+    display: none;
+  }
+
+  .CodeMirror {
+    padding: 10px;
+  }
+
+  .klipse-result {
+    .CodeMirror-line:first-child {
+      font-weight: 500;
+      text-transform: uppercase;
+      span {
+        background-color: black;
+        color: white;
+        padding: 5px !important;
+      }
+    }
+    .CodeMirror-cursors, .CodeMirror-cursor {
+      display: none;
+    }
+    .CodeMirror-lines, .CodeMirror-line {
+      cursor: default;
+    }
+  }
+
+  .klipse-result .CodeMirror {
+    background-color: $aqua;
+    color: yellow;
+
+    .CodeMirror-line:nth-child(2) {
+      margin-top: 25px;
+    }
+
+    .cm-number,
+    .cm-string,
+    .cm-variable,
+    .cm-keyword,
+    .cm-error {
+      color: yellow;
+    }
+  }
+}
