@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700');
+@import 'vars';
 @import 'global';
 @import 'branches';
 @import 'branch';
@@ -7,14 +7,6 @@
 @import 'about-settings';
 @import 'creation';
 @import 'welcome';
-
-$font-stack: "Rubik", sans-serif;
-$purple: #32254B;
-$dark-gray: rgb(12, 23, 27);
-$medium-gray: #222F33;
-$light-gray: #C8C8C8;
-$aqua: #65D2C0;
-$magenta: #FF0076;
 
 body {
   font: 100% $font-stack;
