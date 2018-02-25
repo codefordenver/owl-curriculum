@@ -6,7 +6,7 @@
 
 (defn branches-view []
   (let [activity-branches (rf/subscribe [:activity-branches])]
-    [:div.branches
+    [:div#branches
      [email-notification]
      [:section
       [:h1#title [:mark "Get started by choosing a branch below"]]
