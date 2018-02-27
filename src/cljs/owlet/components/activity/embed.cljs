@@ -12,8 +12,30 @@
 
 (def klipse-container-class ".klipse-container")
 
+(defn click-handler [forward?]
+  (let [iframe (js/document.getElementById "klipseSlides")]
+    (if forward?
+      (.postMessage (.-contentWindow iframe) (js/JSON.stringify #js{:method "next"}) "*")
+      (.postMessage (.-contentWindow iframe) (js/JSON.stringify #js{:method "prev"}) "*")))
+  (when-not @valid?
+    (let [next-button (js/document.getElementById "next-slide")]
+      (when (and (.contains (.-classList next-button) "inactive")
+                 forward?)
+        (.add (.-classList next-button) "animate")
+        (js/setTimeout #(.remove (.-classList next-button) "animate") "820")))))
+
 (add-watch valid? :is-valid
-  (fn [key atom old-state new-state]))
+  (fn [key atom old-state new-state]
+    (let [next-button (js/document.getElementById "next-slide")]
+      (if new-state
+        (do
+          (.remove (.-classList next-button) "inactive")
+          (.add (.-classList next-button) "active")
+          (.add (.-classList next-button) "animate"))
+        (do
+          (.remove (.-classList next-button) "active")
+          (.remove (.-classList next-button) "animate")
+          (.add (.-classList next-button) "inactive"))))))
 
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])
@@ -40,6 +62,10 @@
   (reagent/create-class
     {:component-did-mount
      (fn []
+       (let [next-button (js/document.getElementById "next-slide")
+             prev-button (js/document.getElementById "prev-slide")]
+         (.addEventListener next-button "click" #(click-handler true))
+         (.addEventListener prev-button "click" #(click-handler false)))
        (js/srcDoc.set (js/document.getElementById "klipseSlides"))
        (.addEventListener js/document "klipse-snippet-evaled" handle-eval)
        (.addEventListener js/window "iframeslidewillchange" handle-slide-change))

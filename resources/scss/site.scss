@@ -1028,6 +1028,101 @@ span.inline-code {
   }
 }
 
+@keyframes shake {
+  10%, 90% {
+    -webkit-transform: translate3d(-1px, 0, 0);
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    -webkit-transform: translate3d(2px, 0, 0);
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    -webkit-transform: translate3d(-4px, 0, 0);
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    -webkit-transform: translate3d(4px, 0, 0);
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@-webkit-keyframes hvr-pulse {
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+@keyframes hvr-pulse {
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+#nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+#prev-slide {
+  color: white;
+  background-color: $purple;
+  padding: 5px;
+}
+
+#prev-slide:focus {
+  outline: 0;
+}
+
+#next-slide {
+  padding: 5px;
+  color: white;
+}
+
+#next-slide.inactive {
+  background-color: $light-gray;
+}
+
+#next-slide:focus {
+  outline: 0;
+}
+
+#next-slide.inactive.animate {
+  -webkit-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  animation-iteration-count: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+#next-slide.active {
+  background-color: #6D2666;
+}
+
+#next-slide.active.animate {
+  -webkit-animation-name: hvr-pulse;
+  animation-name: hvr-pulse;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 3;
+  animation-iteration-count: 3;
+}
+
 .klipse-component {
   margin-top: 0.5em;
   pre {
