@@ -1,0 +1,625 @@
+.refresh {
+  animation: refresh 1s 1;
+  margin-bottom: 10px;
+}
+
+@keyframes refresh {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// loading css
+// https://codepen.io/jonmilner/pen/hDHuo
+
+/* Animation */
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* Variables */
+/* Loading Icon */
+.loading {
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+}
+
+.loading__ring {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+
+.loading__ring:first-child {
+  -webkit-transform: skew(30deg, 20deg);
+  transform: skew(30deg, 20deg);
+}
+
+.loading__ring:last-child {
+  -webkit-transform: skew(-30deg, -20deg) scale(-1, 1);
+  transform: skew(-30deg, -20deg) scale(-1, 1);
+}
+
+.loading__ring:last-child svg {
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+
+.loading__ring svg {
+  -webkit-animation: rotate 1s linear infinite;
+  animation: rotate 1s linear infinite;
+  fill: rgba(0, 0, 0, 0.2);
+}
+
+// bootstrap 3 supplement for progress-bar (recom)
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@-o-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+.progress {
+  height: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.progress-bar {
+  float: left;
+  width: 0;
+  height: 100%;
+  font-size: 12px;
+  line-height: 20px;
+  color: #fff;
+  text-align: center;
+  background-color: #337ab7;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+  -webkit-transition: width .6s ease;
+  -o-transition: width .6s ease;
+  transition: width .6s ease;
+}
+
+.progress-striped .progress-bar,
+.progress-bar-striped {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  -webkit-background-size: 40px 40px;
+  background-size: 40px 40px;
+}
+
+.progress.active .progress-bar,
+.progress-bar.active {
+  -webkit-animation: progress-bar-stripes 2s linear infinite;
+  -o-animation: progress-bar-stripes 2s linear infinite;
+  animation: progress-bar-stripes 2s linear infinite;
+}
+
+.progress-bar-success {
+  background-color: #5cb85c;
+}
+
+.progress-striped .progress-bar-success {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-info {
+  background-color: #5bc0de;
+}
+
+.progress-striped .progress-bar-info {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-warning {
+  background-color: #f0ad4e;
+}
+
+.progress-striped .progress-bar-warning {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-danger {
+  background-color: #d9534f;
+}
+
+.progress-striped .progress-bar-danger {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+// bootstrap 3 supplement for popover (recom)
+.popover-arrow {
+  border-style: none;
+}
+
+// Login
+
+.login {
+  margin-top: 10px;
+  z-index: 1;
+  text-align: center;
+}
+
+.login-landing {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+}
+
+.btn-login {
+  color: #fff;
+  background-color: $aqua;
+  border-color: $aqua;
+  &:hover {
+    color: #5EFFE4;
+    background-color: $purple;
+  }
+}
+
+.btn-logout {
+  color: #5EFFE4;
+  background-color: transparent;
+  border-color: $aqua;
+  &:hover {
+    color: #fff;
+    background-color: $aqua;
+  }
+}
+
+// Email subscription
+
+#email-wrap {
+  transition: height 0.3s;
+  width: 313px;
+  padding: 10px;
+  color: $light-gray;
+  border-radius: 7px 0;
+  background: $dark-gray;
+  font-size: 0.9em;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+}
+
+#email-wrap > * {
+  vertical-align: middle;
+}
+
+#email-text-closed, #email-text-opened {
+  cursor: pointer;
+}
+
+#email-text-opened {
+  margin-bottom: 10px;
+}
+
+#email-text-closed {
+  margin-bottom: 0;
+}
+
+#email-input {
+  height: 28px;
+  width: 205px;
+  display: inline-block;
+  border: none;
+  border-radius: 3px;
+  padding-left: 5px;
+  background-color: $medium-gray;
+  color: $light-gray;
+  outline: 0;
+  &:active {
+    outline: 0;
+  }
+}
+
+#unsubscribe-button {
+  height: 28px;
+  width: 100px;
+  margin-left: 10px;
+  display: inline-block;
+  position: inherit;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  color: $light-gray;
+  background-color: $purple;
+  outline: 0;
+  &:active {
+    outline: 0;
+  }
+}
+
+#email-button {
+  width: 77px;
+  height: 28px;
+  margin-left: 10px;
+  display: inline-block;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  color: $light-gray;
+  background-color: $purple;
+  outline: 0;
+  &:active {
+    outline: 0;
+  }
+}
+
+.email-unsubscribe {
+  font-size: 0.75em;
+  padding: 10px;
+  margin: 30px 0;
+  width: 335px;
+  #email-input {
+    background-color: white;
+    border: 1px $medium-gray solid;
+    color: $medium-gray;
+  }
+}
+
+// Search
+
+.rc-typeahead-suggestion {
+  background-color: #3B3B3B;
+  &:hover {
+    background-color: whitesmoke;
+    color: black;
+  }
+}
+
+.rc-typeahead-suggestion.active {
+  background-color: whitesmoke;
+  color: black;
+}
+
+.search-bar-wrap {
+  position: fixed;
+  color: white;
+  width: 100%;
+  z-index: 10;
+  .search {
+    border-color: $light-gray;
+    border-radius: 0 3.5px;
+    background-color: black;
+    color: $light-gray;
+    height: 50px;
+    font-size: 1.2em;
+    transition: all 0.3s;
+    background-image:url('../img/search-icon.png');
+    background-size: auto 45%;
+    background-repeat:no-repeat;
+    background-position:left center;outline:0;
+    padding-left: 38px;
+    &:focus {
+      border-color: $aqua;
+      color: white;
+      background-color: black;
+    }
+  }
+  .hidden-search {
+    height: 1.2em;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  @media(max-width: 767px) {
+    margin-left: 31px;
+  }
+}
+
+#confirm {
+  color: white;
+}
+#confirm-message {
+  position: absolute;
+  top: 70px;
+  left: calc(50vw - 135px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 215px);
+  }
+  display: block;
+  width: 430px;
+}
+#g-recaptcha {
+  position: absolute;
+  top: 110px;
+  left: calc(50vw - 71px);
+  @media (max-width: 767px) {
+    left: calc(50vw - 151px);
+  }
+}
+
+// Sidebar
+
+.navigation {
+  cursor: pointer;
+}
+
+.owlet-image {
+  display: block;
+  height: 108px;
+  width: 80px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.owlet-owl {
+  transform: rotate(0deg);
+  transition: transform 1s;
+  transition-timing-function: ease;
+  -webkit-transform: rotate(0deg);
+  -webkit-transition: -webkit-transform 0.5s;
+  -webkit-transition-timing-function: ease;
+  -ms-transform: rotate(0deg);
+  -ms-transition: -ms-transform 0.5s;
+  -ms-transition-timing-function: ease;
+  border-radius: 50%;
+}
+
+#sidebar {
+  min-height: inherit;
+  min-width: inherit;
+  z-index: 3;
+  text-align: center;
+  background-color: $purple;
+  color: #cffffd;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 80px;
+  .menu {
+    padding-top: 10px;
+    overflow: hidden;
+    background-color: $purple;
+    a {
+      margin-top: 20px;
+      color: white;
+      text-decoration: none;
+      display: block;
+    }
+    div.branch-icon,
+    div.settings-icon,
+    div.about-icon {
+      margin: 10px;
+    }
+    div.branch-icon::before, div.branch-icon::after,
+    div.settings-icon::before,
+    div.about-icon::before, div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-size: 100%;
+    }
+    div.branch-icon, div.branch-icon::before, a.branch-icon:hover div.branch-icon::after,
+    div.settings-icon, div.settings-icon::before,
+    div.about-icon, div.about-icon::before, a.about-icon:hover div.about-icon::after {
+      width: 60px;
+      height: 60px;
+    }
+    div.branch-icon::after, a.branch-icon:hover div.branch-icon::before,
+    div.about-icon::after, a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+    }
+    div.settings-icon::before {
+      background-image: url('../img/icon3.png');
+    }
+    div.branch-icon::before {
+      background-image: url('../img/icon1.png');
+    }
+    div.branch-icon::after {
+      background-image: url("../img/icon1-nudge.gif");
+    }
+    a.branch-icon:hover div.branch-icon::before,
+    a.about-icon:hover div.about-icon::before {
+      width: 0;
+      height: 0;
+    }
+    a.branch-icon:hover div.branch-icon::after,
+    a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+    }
+    div.about-icon::before {
+      background-image: url('../img/icon4.png');
+    }
+    div.about-icon::after {
+      background-image: url("../img/icon4-hover.png");
+    }
+    .rc-popover-anchor-wrapper {
+      position: absolute;
+      left: 0;
+    }
+    .rc-popover-point {
+      opacity: 0.75;
+    }
+  }
+}
+
+#sidebar-wrap {
+  background-color: $purple;
+  min-width: 80px;
+}
+
+#lpsidebar {
+  position: fixed;
+  z-index: 100;
+  transition: all 0.3s;
+  text-align: center;
+  background-color: $purple;
+  color: #cffffd;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#lpsidebar-wrap {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  z-index: 100;
+}
+
+.lpsidebar-toggle {
+  z-index: 100;
+  cursor: pointer;
+  border-left: 1px solid #6A2569;
+  transition: all 0.3s;
+  position: fixed;
+  top: 2px;
+  height: 86px;
+}
+
+#lpsidebar-opened {
+  left: 80px;
+}
+
+#opened-sidebar {
+  cursor: pointer;
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 3;
+  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s;
+}
+
+.navbar {
+  padding: 0;
+  margin: 0;
+  a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .owlet-logo-div {
+    margin-top: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background: url("../img/owlet-text.png");
+    &:hover {
+      .owlet-owl {
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        transition: transform 1s;
+        transition-timing-function: ease;
+        -webkit-transition: -webkit-transform 0.5s;
+        -webkit-transition-timing-function: ease;
+      }
+    }
+  }
+  .menu {
+    padding-top: 10px;
+    overflow: hidden;
+    background-color: $purple;
+    a {
+      margin-top: 20px;
+      color: white;
+      text-decoration: none;
+      display: block;
+    }
+    div.branch-icon,
+    div.settings-icon,
+    div.about-icon {
+      margin: 10px;
+    }
+    div.branch-icon::before, div.branch-icon::after,
+    div.settings-icon::before,
+    div.about-icon::before, div.about-icon::after {
+      content: "";
+      display: inline-block;
+      background-size: 100%;
+    }
+    div.branch-icon, div.branch-icon::before, a.branch-icon:hover div.branch-icon::after,
+    div.settings-icon, div.settings-icon::before,
+    div.about-icon, div.about-icon::before, a.about-icon:hover div.about-icon::after {
+      width: 60px;
+      height: 60px;
+    }
+    div.branch-icon::after, a.branch-icon:hover div.branch-icon::before,
+    div.about-icon::after, a.about-icon:hover div.about-icon::before {
+      opacity: 0;
+    }
+    div.settings-icon::before {
+      background-image: url('../img/icon3.png');
+    }
+    div.branch-icon::before {
+      background-image: url('../img/icon1.png');
+    }
+    div.branch-icon::after {
+      background-image: url("../img/icon1-nudge.gif");
+    }
+    a.branch-icon:hover div.branch-icon::before,
+    a.about-icon:hover div.about-icon::before {
+      width: 0;
+      height: 0;
+    }
+    a.branch-icon:hover div.branch-icon::after,
+    a.about-icon:hover div.about-icon::after {
+      opacity: 1;
+    }
+    div.about-icon::before {
+      background-image: url('../img/icon4.png');
+    }
+    div.about-icon::after {
+      background-image: url("../img/icon4-hover.png");
+    }
+  }
+}
