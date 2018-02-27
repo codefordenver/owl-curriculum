@@ -2,6 +2,7 @@
   (:require [owlet.components.creation.create-klipse-panel :refer [create-klipse-panel-component]]
             [owlet.components.creation.create-activity-response :refer [create-activity-response-component]]
             [owlet.components.creation.create-activity-title :refer [create-activity-title]]
+            [owlet.components.creation.create-preview-image :refer [create-preview-image]]
             [owlet.components.creation.general-activity-text-fields :refer [general-activity-text-fields]]
             [owlet.components.creation.select-tags :refer [select-tags]]
             [owlet.components.creation.select-branches :refer [select-branches]]
@@ -10,6 +11,8 @@
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
             [re-frame.core :as rf]))
+
+(def show-upload? (reagent/atom false))
 
 (defn create-klipse-panel-activity []
  (let [panel-number (reagent/atom 1)]
@@ -23,6 +26,7 @@
        [:div.activity-content.col-sm-12.col-lg-5
         [:h1 "metadata"]
         [:div.activity-creation-wrap
+         [create-preview-image]
          [:div#select-categories
           [:div [:h5 [:mark "Branch"]]
            [select-branches true]]
