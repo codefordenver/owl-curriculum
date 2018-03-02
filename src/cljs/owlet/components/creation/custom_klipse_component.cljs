@@ -18,7 +18,7 @@
     [:option {:value "javascript"} "JavaScript"]
     [:option {:value "clojure"} "Clojure"]]
    [:h6 "Initial Code:"]
-   [:textarea#code {:rows "3"
+   [:textarea.code {:rows "3"
                     :placeholder "Enter code to provide at the start. Use \\n for line breaks."
                     :value @code
                     :on-change #(reset! code (-> % .-target .-value))}]

@@ -113,3 +113,182 @@ span.inline-code {
     }
   }
 }
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@-webkit-keyframes shake {
+  10%, 90% {
+    -webkit-transform: translate3d(-1px, 0, 0);
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    -webkit-transform: translate3d(2px, 0, 0);
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    -webkit-transform: translate3d(-4px, 0, 0);
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    -webkit-transform: translate3d(4px, 0, 0);
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@-moz-keyframes shake {
+  10%, 90% {
+    -moz-transform: translate3d(-1px, 0, 0);
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    -moz-transform: translate3d(2px, 0, 0);
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    -moz-transform: translate3d(-4px, 0, 0);
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    -moz-transform: translate3d(4px, 0, 0);
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes hvr-pulse {
+  25% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(0.9);
+  }
+}
+
+@-webkit-keyframes hvr-pulse {
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+@-moz-keyframes hvr-pulse {
+  25% {
+    -moz-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -moz-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+#nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+#prev-slide {
+  color: white;
+  background-color: $purple;
+  padding: 5px;
+}
+
+#prev-slide:focus {
+  outline: 0;
+}
+
+#next-slide {
+  padding: 5px;
+  color: white;
+  animation-play-state: running;
+  -webkit-animation-play-state: running;
+  -moz-animation-play-state: running;
+  -o-animation-play-state: running;
+}
+
+#next-slide.inactive {
+  background-color: $light-gray;
+}
+
+#next-slide:focus {
+  outline: 0;
+
+  animation-play-state: paused;
+  -webkit-animation-play-state: paused;
+  -moz-animation-play-state: paused;
+  -o-animation-play-state: paused;
+}
+
+#next-slide.inactive.animate {
+
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  -webkit-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  -moz-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  -o-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
+  -moz-animation-iteration-count: 1;
+  -o-animation-iteration-count: 1;
+
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+#next-slide.active {
+  background-color: #6D2666;
+}
+
+#next-slide.active.animate {
+
+  animation-name: hvr-pulse;
+  -webkit-animation-name: hvr-pulse;
+  -moz-animation-name: hvr-pulse;
+  -o-animation-name: hvr-pulse;
+
+  animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  -o-animation-duration: 1s;
+
+  animation-timing-function: linear;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+
+  animation-iteration-count: 3;
+  -webkit-animation-iteration-count: 3;
+  -moz-animation-iteration-count: 3;
+  -o-animation-iteration-count: 3;
+}

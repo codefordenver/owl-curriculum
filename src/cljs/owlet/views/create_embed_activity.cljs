@@ -5,7 +5,7 @@
             [owlet.components.creation.select-tags :refer [select-tags]]
             [owlet.components.creation.select-platform :refer [select-platform]]
             [owlet.components.creation.general-activity-text-fields :refer [general-activity-text-fields]]
-            [owlet.components.creation.upload-thumbnail-image :refer [upload-thumbnail-image-component]]
+            [owlet.components.creation.create-preview-image :refer [create-preview-image]]
             [owlet.views.login-only :refer [login-only-view]]
             [reagent.core :as reagent]
             [re-frame.core :as rf]))
@@ -57,12 +57,7 @@
          [:div.embed-container {"dangerouslySetInnerHTML"
                                 #js{:__html @embed-code}}])]
       [:div.activity-creation-wrap
-       [:button.add-validation {:on-click #(swap! show-upload? not)
-                                :style {:margin "10px 0"
-                                        :font-size "1.25em"}}
-        "Upload a thumbnail image for this activity"]
-       (when @show-upload?
-         [upload-thumbnail-image-component])]
+       [create-preview-image]]
       [:div.create-activity-buttons
        [:button.save-activity
         "Save Activity"]]]
