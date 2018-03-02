@@ -28,14 +28,14 @@
   (fn [key atom old-state new-state]
     (let [next-button (js/document.getElementById "next-slide")]
       (if new-state
-        (do
-          (.remove (.-classList next-button) "inactive")
-          (.add (.-classList next-button) "active")
-          (.add (.-classList next-button) "animate"))
-        (do
-          (.remove (.-classList next-button) "active")
-          (.remove (.-classList next-button) "animate")
-          (.add (.-classList next-button) "inactive"))))))
+        (doto (.-classList next-button)
+          (.remove "inactive")
+          (.add "active")
+          (.add "animate"))
+        (doto (.-classList next-button)
+          (.remove "active")
+          (.remove "animate")
+          (.add "inactive"))))))
 
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])
