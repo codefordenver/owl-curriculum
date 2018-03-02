@@ -17,6 +17,9 @@
               "/content/space?library-view=true&space-id="
               config/owlet-activities-3-space-id))
 
+(defn keyword-kebab [x]
+  (keywordize-name (->kebab-case x)))
+
 
 (rf/reg-event-fx
   :get-content-from-contentful
@@ -44,8 +47,6 @@
                                branches :branches}]]
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
-          activities (map #(update-in % [:tag-set] (partial (comp set map) keyword))
-                        activities)
           activity-titles (remove-nil (map #(get-in % [:fields :title]) activities))
           branches-template (->> (mapv (fn [branch]
                                          (let [branch-name (get-in branch [:fields :name])]
@@ -211,13 +212,11 @@
 
         ;; by tag
         ;; --------
-
-        (let [filtered-set (filter #(when (contains? (:tag-set %) search-term) %) activities)]
+        (let [filtered-set (filter (fn [a]
+                                     (some #(= search-term (keyword-kebab (:name %))) (get-in a [:fields :tags]))) activities)]
           (if (seq filtered-set)
-            (let [tags (concat (map #(:name %) (:tags db)))
-                  lowercase-tags (map str/locale-lower tags)
-                  tag-index (.indexOf lowercase-tags (string/lower-case term))
-                  display-name (nth tags tag-index)]
+            (let [tags (:tags db)
+                  display-name (:name (first (filter #(= search-term (keyword-kebab (:name %))) tags)))]
               (set-path (str "tag/" (->kebab-case term)))
               (assoc db :activities-by-filter (hash-map :activities filtered-set
                                                         :display-name (str/capital display-name))))
