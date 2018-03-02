@@ -47,7 +47,6 @@
                                branches :branches}]]
     (let [route-dispatch (second route-args)
           route-param (get route-args 2)
-          activities activities
           activity-titles (remove-nil (map #(get-in % [:fields :title]) activities))
           branches-template (->> (mapv (fn [branch]
                                          (let [branch-name (get-in branch [:fields :name])]
