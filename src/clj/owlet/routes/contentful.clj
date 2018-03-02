@@ -111,15 +111,6 @@
                 (->> (get-in activity [:fields :imageGallery])
                      (map (comp :id :sys))                            ; Gallery image ids.
                      (mapv (image-by-id assets))))
-      ; Add :tag-
-      (assoc-in [:tag-set] (or (some->> activity
-                                        :fields
-                                        :tags
-                                        remove-nil
-                                        seq                 ; some->> gives nil if empty
-                                        (map keywordize-name)
-                                        set)
-                               activity))
       ;; Removes refs since no longer needed in the front-end
       (update :fields #(apply dissoc % [:branchRefs :tagRefs :platformRef]))))
 
