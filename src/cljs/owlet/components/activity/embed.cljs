@@ -17,25 +17,28 @@
     (if forward?
       (.postMessage (.-contentWindow iframe) (js/JSON.stringify #js{:method "next"}) "*")
       (.postMessage (.-contentWindow iframe) (js/JSON.stringify #js{:method "prev"}) "*")))
-  (when-not @valid?
-    (let [next-button (js/document.getElementById "next-slide")]
+  (let [next-button (js/document.getElementById "next-slide")]
+    (if-not @valid?
       (when (and (.contains (.-classList next-button) "inactive")
                  forward?)
         (.add (.-classList next-button) "animate")
-        (js/setTimeout #(.remove (.-classList next-button) "animate") "820")))))
+        (js/setTimeout #(.remove (.-classList next-button) "animate") "820"))
+      (when (.contains (.-classList next-button) "animate")
+        (.remove (.-classList next-button) "animate")))))
 
 (add-watch valid? :is-valid
   (fn [key atom old-state new-state]
-    (let [next-button (js/document.getElementById "next-slide")]
-      (if new-state
-        (doto (.-classList next-button)
-          (.remove "inactive")
-          (.add "active")
-          (.add "animate"))
-        (doto (.-classList next-button)
-          (.remove "active")
-          (.remove "animate")
-          (.add "inactive"))))))
+    (when (not= old-state new-state)
+      (let [next-button (js/document.getElementById "next-slide")]
+        (if new-state
+          (doto (.-classList next-button)
+            (.remove "inactive")
+            (.add "active")
+            (.add "animate"))
+          (doto (.-classList next-button)
+            (.remove "active")
+            (.remove "animate")
+            (.add "inactive")))))))
 
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])

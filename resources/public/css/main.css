@@ -986,7 +986,11 @@ span.inline-code {
 
 #next-slide {
   padding: 5px;
-  color: white; }
+  color: white;
+  animation-play-state: running;
+  -webkit-animation-play-state: running;
+  -moz-animation-play-state: running;
+  -o-animation-play-state: running; }
 
 #next-slide.inactive {
   background-color: #C8C8C8; }
@@ -999,10 +1003,6 @@ span.inline-code {
   -o-animation-play-state: paused; }
 
 #next-slide.inactive.animate {
-  animation-play-state: running;
-  -webkit-animation-play-state: running;
-  -moz-animation-play-state: running;
-  -o-animation-play-state: running;
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   -webkit-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   -moz-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
@@ -1022,10 +1022,6 @@ span.inline-code {
   background-color: #6D2666; }
 
 #next-slide.active.animate {
-  animation-play-state: running;
-  -webkit-animation-play-state: running;
-  -moz-animation-play-state: running;
-  -o-animation-play-state: running;
   animation-name: hvr-pulse;
   -webkit-animation-name: hvr-pulse;
   -moz-animation-name: hvr-pulse;
