@@ -1,0 +1,103 @@
+.panel-heading {
+  margin-left: -15px;
+  margin-top: -10px;
+  align-items: flex-start;
+  h2 {
+    margin-bottom: 0;
+  }
+  textarea {
+    font-weight: 500;
+    padding-left: 0.15em;
+    resize: none;
+  }
+}
+
+.panel-number {
+  background-color: black;
+  color: white;
+  padding: 0.1em 0.3em;
+  margin-right: 0.25em;
+  font-size: 1.25em;
+}
+
+#select-platform, #select-tags, #select-branches {
+  padding: 5px;
+}
+
+#select-platform form input {
+  display: inline-block;
+}
+
+#select-categories {
+  background-color: white;
+  padding-left: 5px;
+  padding-top: 3px;
+  h5 {
+    text-transform: uppercase;
+    margin-bottom: 3px;
+    margin-top: 10px;
+  }
+}
+
+#select-categories input[type="radio"], #select-categories input[type="checkbox"] {
+  margin-top: -.32em;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.panel-validation {
+  margin-bottom: 14px;
+}
+
+.pane-number {
+  width: 2.2em;
+}
+
+.activity-creation-wrap {
+  input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+.activity-creation-wrap h5 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.code-preview, .add-validation, .rem-validation {
+  margin: 5px 5px 15px 5px;
+  border: 2px solid $aqua;
+  &:hover {
+    background-color: $aqua;
+  }
+}
+
+.add-panel {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin: 0.1em 1em 1.5em 0;
+  background-color: white;
+  color: $dark-gray;
+  border: 4px $aqua solid;
+  padding: 0.2em 0.4em 0.2em 0.35em;
+  &:hover {
+    background: $aqua;
+    color: black;
+  }
+}
+
+.save-activity {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin: 0.1em 0 3em;
+  background-color: $dark-gray;
+  color: white;
+  padding: 0.2em 0.4em 0.2em 0.45em;
+  border: 4px $aqua solid;
+  &:hover {
+    background: $aqua;
+    color: black;
+  }
+}

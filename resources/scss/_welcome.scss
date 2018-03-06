@@ -1,0 +1,47 @@
+.welcome-text {
+  margin: 0 auto;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  color: white;
+  width: 80%;
+}
+
+.user-type {
+  position: absolute;
+  left: 50vw;
+  top: 28vh;
+  z-index: 1;
+  text-align: center;
+}
+
+#largetext {
+  color: white;
+  font-size: 5vw;
+  margin: 0;
+}
+
+.btn-branches {
+  background-color: #00A79D;
+  color: white;
+  margin-bottom: 1em;
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+// landing page media queries
+
+@media (max-width: 1000px) {
+  .flex-item {
+    display: none;
+  }
+  .user-type {
+    position: static;
+  }
+  #largetext {
+    font-size: 10vw;
+  }
+  #smalltext {
+    font-size: 4vw;
+  }
+}

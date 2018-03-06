@@ -72,10 +72,10 @@
   (when (= (get-in activity [:sys :contentType :sys :id]) "klipseActivity")
     (html/deftemplate slideshow-template
       (java.io.StringReader. (slurp (str (get-in activity [:fields :embedUrl]) "/embed?style=light&postMessageEvents=true"))) []
-      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/deck")]] (do-> (html/set-attr :src "../js/vendor/reveal.js") (html/remove-attr :defer))
+      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/deck")]] (do-> (html/set-attr :src "../js/vendor/reveal.min.js") (html/remove-attr :defer))
       [:html :body [:script (attr-contains :src "//assets.slid.es/assets/application")]] (html/remove-attr :defer)
       [:html :body] (append (html [:script {:src "https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.js"}]))
-      [:html :body] (append (html [:script (str "SL.util.setupReveal(); Reveal.configure({postMessageEvents: true, postMessage: true})")]))))
+      [:html :body] (append (html [:script (str "SL.util.setupReveal(); Reveal.configure({postMessageEvents: true, postMessage: true, controls: false})")]))))
   (-> activity
       (assoc-in [:fields :iframeContent] (apply str (slideshow-template)))
       ; Adds :branches data using :branchRefs
@@ -111,15 +111,6 @@
                 (->> (get-in activity [:fields :imageGallery])
                      (map (comp :id :sys))                            ; Gallery image ids.
                      (mapv (image-by-id assets))))
-      ; Add :tag-
-      (assoc-in [:tag-set] (or (some->> activity
-                                        :fields
-                                        :tags
-                                        remove-nil
-                                        seq                 ; some->> gives nil if empty
-                                        (map keywordize-name)
-                                        set)
-                               activity))
       ;; Removes refs since no longer needed in the front-end
       (update :fields #(apply dissoc % [:branchRefs :tagRefs :platformRef]))))
 

@@ -4,8 +4,7 @@
     [re-frame.core :as rf]))
 
 (defn welcome-view []
-  [:div.flexcontainer {:style {:height "100vh"}}
-    [:div.landing]
+  [:div.flexcontainer
     [:div.user-type
       [:p#largetext.text-shadow "Welcome to Owlet"]
       [:div.welcome-text.text-shadow
@@ -14,9 +13,4 @@
       [:a {:href "#/branches"}
         [:button.btn.btn-branches "Go to Activities"]]]
     [:div.login-landing
-      [login-component]]
-    [:div.flex-item-top]
-    [:div.flex-item
-        [:img {:src "img/landing.png"
-               :width "100%"}]]
-    [:div.flex-item-bottom]])
+      [login-component]]])
