@@ -69,50 +69,52 @@
 (def remove-nil (partial remove nil?))
 
 (defn- process-activity [activity branches tags platforms assets]
-  (when (= (get-in activity [:sys :contentType :sys :id]) "klipseActivity")
-    (html/deftemplate slideshow-template
-      (java.io.StringReader. (slurp (str (get-in activity [:fields :embedUrl]) "/embed?style=light&postMessageEvents=true"))) []
-      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/deck")]] (do-> (html/set-attr :src "../js/vendor/reveal.min.js") (html/remove-attr :defer))
-      [:html :body [:script (attr-contains :src "//assets.slid.es/assets/application")]] (html/remove-attr :defer)
-      [:html :body] (append (html [:script {:src "https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.js"}]))
-      [:html :body] (append (html [:script (str "SL.util.setupReveal(); Reveal.configure({postMessageEvents: true, postMessage: true, controls: false})")]))))
-  (-> activity
-      (assoc-in [:fields :iframeContent] (apply str (slideshow-template)))
-      ; Adds :branches data using :branchRefs
-      (assoc-in [:fields :branches]
-                (map
-                  (fn [branchRef]
-                    (apply #(:fields %) (filter #(= (-> branchRef :sys :id) (-> % :sys :id)) branches)))
-                  (-> activity :fields :branchRefs)))
-      ;; Adds :tags data using :tagRefs
-      (assoc-in [:fields :tags]
-                (map
-                  (fn [tag-ref]
-                    (apply #(:fields %) (filter #(= (-> tag-ref :sys :id) (-> % :sys :id)) tags)))
-                  (-> activity :fields :tagRefs)))
-      ; Adds :platform data using :platformRef
-      (assoc-in [:fields :platform]
-                (some #(when (= (get-in activity [:fields :platformRef :sys :id])
-                                (get-in % [:sys :id]))
-                         (hash-map :name (get-in % [:fields :name])
-                                   :search-name (str (->kebab-case (get-in % [:fields :name])))
-                                   :color (get-in % [:fields :color])
-                                   :requiresDownload (get-in % [:fields :requiresDownload])
-                                   :free (get-in % [:fields :free])))
-                      platforms))
-      ; Adds preview img. URL at [.. :sys :url]
-      (update-in [:fields :preview :sys]
-                 (fn [{id :id :as sys}]
-                   (assoc sys
-                     :url
-                     (get-in (image-by-id assets) [id :url]))))
-      ; Adds :image-gallery-items
-      (assoc-in [:fields :image-gallery-items]
-                (->> (get-in activity [:fields :imageGallery])
-                     (map (comp :id :sys))                            ; Gallery image ids.
-                     (mapv (image-by-id assets))))
-      ;; Removes refs since no longer needed in the front-end
-      (update :fields #(apply dissoc % [:branchRefs :tagRefs :platformRef]))))
+  (let [activity (if (= (get-in activity [:sys :contentType :sys :id]) "klipseActivity")
+                   (do
+                     (html/deftemplate slideshow-template
+                       (java.io.StringReader. (slurp (str (get-in activity [:fields :embedUrl]) "/embed?style=light&postMessageEvents=true"))) []
+                       [:html :body [:script (attr-contains :src "//assets.slid.es/assets/deck")]] (do-> (html/set-attr :src "../js/vendor/reveal.min.js") (html/remove-attr :defer))
+                       [:html :body [:script (attr-contains :src "//assets.slid.es/assets/application")]] (html/remove-attr :defer)
+                       [:html :body] (append (html [:script {:src "https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.js"}]))
+                       [:html :body] (append (html [:script (str "SL.util.setupReveal(); Reveal.configure({postMessageEvents: true, postMessage: true, controls: false})")])))
+                     (assoc-in activity [:fields :iframeContent] (apply str (slideshow-template))))
+                   activity)]
+    (-> activity
+        ; Adds :branches data using :branchRefs
+        (assoc-in [:fields :branches]
+                  (map
+                    (fn [branchRef]
+                      (apply #(:fields %) (filter #(= (-> branchRef :sys :id) (-> % :sys :id)) branches)))
+                    (-> activity :fields :branchRefs)))
+        ;; Adds :tags data using :tagRefs
+        (assoc-in [:fields :tags]
+                  (map
+                    (fn [tag-ref]
+                      (apply #(:fields %) (filter #(= (-> tag-ref :sys :id) (-> % :sys :id)) tags)))
+                    (-> activity :fields :tagRefs)))
+        ; Adds :platform data using :platformRef
+        (assoc-in [:fields :platform]
+                  (some #(when (= (get-in activity [:fields :platformRef :sys :id])
+                                  (get-in % [:sys :id]))
+                           (hash-map :name (get-in % [:fields :name])
+                                     :search-name (str (->kebab-case (get-in % [:fields :name])))
+                                     :color (get-in % [:fields :color])
+                                     :requiresDownload (get-in % [:fields :requiresDownload])
+                                     :free (get-in % [:fields :free])))
+                        platforms))
+        ; Adds preview img. URL at [.. :sys :url]
+        (update-in [:fields :preview :sys]
+                   (fn [{id :id :as sys}]
+                     (assoc sys
+                       :url
+                       (get-in (image-by-id assets) [id :url]))))
+        ; Adds :image-gallery-items
+        (assoc-in [:fields :image-gallery-items]
+                  (->> (get-in activity [:fields :imageGallery])
+                       (map (comp :id :sys))                            ; Gallery image ids.
+                       (mapv (image-by-id assets))))
+        ;; Removes refs since no longer needed in the front-end
+        (update :fields #(apply dissoc % [:branchRefs :tagRefs :platformRef])))))
 
 (defn- process-activities
   [activities branches tags platforms assets]
@@ -126,7 +128,6 @@
 	optionally pass library-view=true param to get all entries for given space"
 
   [req]
-
 
   (let [{:keys [space-id]} (:params req)
         opts1 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-MANAGEMENT-AUTH-TOKEN)}}
