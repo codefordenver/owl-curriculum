@@ -142,6 +142,7 @@
               platforms (filter-entries "platform" (:items entries))
               tags (filter-entries "tag" (:items entries))
               activities (concat (filter-entries "klipseActivity" (:items entries))
+                                 (filter-entries "klipsePanelActivity" (:items entries))
                                  (filter-entries "activity" (:items entries)))]
 
           (ok {:activities (process-activities activities branches tags platforms assets)
