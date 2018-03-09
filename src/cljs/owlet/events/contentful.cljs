@@ -187,9 +187,9 @@
                        [:set-active-document-title! "Create Slides-Based Coding Activity"])}))
 
 (rf/reg-event-fx
-  :show-create-embed-activity
+  :show-create-general-activity
   (fn [_ _]
-    {:dispatch-n (list [:set-active-view :create-embed-activity-view]
+    {:dispatch-n (list [:set-active-view :create-general-activity-view]
                        [:set-active-document-title! "Create Embedded Activity"])}))
 
 ; search & filter

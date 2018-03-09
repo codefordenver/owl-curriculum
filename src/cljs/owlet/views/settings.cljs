@@ -50,7 +50,7 @@
             [:ul
              [:li [:b "A general purpose, read-only activity"]
               [:ul
-               [:li [:a.semi-bold {:href "#/create/embed-activity"}
+               [:li [:a.semi-bold {:href "#/create/general-activity"}
                         "Instructional medium of your choice"]
                     [:ul
                      [:li "Embed a slideshow iframe, video iframe, or your own HTML ["
