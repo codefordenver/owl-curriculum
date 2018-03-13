@@ -59,5 +59,6 @@
                      :item-prop "contentUrl"
                      :data-size (str w "x" h)}
                   [:img {:src src
+                         :alt "Gallery image"
                                     :item-prop "thumbnail"}]]])]
            (full-screen-gallery)]))}))

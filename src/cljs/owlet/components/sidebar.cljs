@@ -6,7 +6,8 @@
   [:div#sidebar.navbar
    [:div.owlet-logo-div
     [:a.owlet-image {:href "#"}
-      [:img.owlet-owl {:src "../img/owlet-owl.png"}]]]
+      [:img.owlet-owl {:src "../img/owlet-owl.png"
+                       :alt "Owlet home"}]]]
    [:div.menu
     [:div.login
      [login-component]]
