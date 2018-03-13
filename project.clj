@@ -41,7 +41,7 @@
                  [compojure "1.5.2"]
                  [yogthos/config "0.8"]       ; For env in owlet-ui.server
                  [ring "1.4.0"]               ; For owlet-ui.server & .handler
-                 [cljsjs/jquery "2.2.2-0"]
+                 [cljsjs/jquery "3.2.1-0"]
                  [cljsjs/auth0 "7.0.4-0"]
                  [cljsjs/auth0-lock "10.4.0-0"]
                  [cljsjs/bootstrap "3.3.6-1"]
@@ -57,6 +57,8 @@
                  [day8.re-frame/http-fx "0.1.3"]
                  [enlive "1.1.6"]
                  [ring-middleware-format "0.7.0"]
+                 [bk/ring-gzip "0.3.0"]
+                 [ring/ring-ssl "0.3.0"]
                  [ring-webjars "0.1.1"]
                  [ring-cors "0.1.8"]
                  [ring/ring-json "0.4.0"]

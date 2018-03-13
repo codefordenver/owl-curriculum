@@ -1,0 +1,10 @@
+{
+  "name": "Owlet",
+  "short_name": "Owlet",
+  "start_url": "index.html",
+  "display": "minimal-ui",
+  "background_color": "#32254B",
+  "description": "A learning platform for teaching elementary and middle school students about technology",
+  "lang": "en-US",
+  "theme_color": "#32254B"
+}
