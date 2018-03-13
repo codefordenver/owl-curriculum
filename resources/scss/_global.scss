@@ -206,14 +206,14 @@ progress {
   background-color: $aqua;
   border-color: $aqua;
   &:hover {
-    color: #5EFFE4;
+    color: $aqua;
     background-color: $purple;
   }
 }
 
 .btn-logout {
-  color: #5EFFE4;
-  background-color: transparent;
+  color: $aqua;
+  background-color: $purple;
   border-color: $aqua;
   &:hover {
     color: #fff;
