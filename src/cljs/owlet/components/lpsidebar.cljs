@@ -23,7 +23,8 @@
          [:div.owlet-logo-div
           [:a.owlet-image {:href "#/"
                            :on-click #(toggle-lpsidebar)}
-           [:img.owlet-owl {:src "../img/owlet-owl.png"}]]]
+           [:img.owlet-owl {:src "../img/owlet-owl.png"
+                            :alt "Owlet home"}]]]
          [:div.menu
           [:div.login {:on-click #(toggle-lpsidebar)}
            [login-component]]
@@ -40,7 +41,9 @@
          (if @lpsidebar-state
            [:img#lpsidebar-opened.lpsidebar-toggle.hidden-md-up {:style {:left position?}
                                                                  :src      "img/owlet-tab-opened.png"
+                                                                 :alt "Open sidebar"
                                                                  :on-click #(toggle-lpsidebar)}]
            [:img#lpsidebar-closed.lpsidebar-toggle.hidden-md-up {:style {:left position?}
                                                                  :src      "img/owlet-tab-closed.png"
+                                                                 :alt "Close sidebar"
                                                                  :on-click #(toggle-lpsidebar)}])]]])))
