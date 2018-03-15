@@ -61,6 +61,7 @@
                  [ring-webjars "0.1.1"]
                  [ring-cors "0.1.8"]
                  [ring/ring-json "0.4.0"]
+                 [ring/ring-ssl "0.3.0"]
                  [cheshire "5.6.3"]
                  [environ "1.0.2"]
                  [metosin/compojure-api "1.1.9"]
