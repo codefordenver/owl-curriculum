@@ -71,6 +71,7 @@
             " from computer scientists/educators such as Alan Kay, Simon Papert, Kathy Sierra, Linda Liukas, Ted Nelson, Elon Musk, Tim Bell, etc… the list goes on. "]
            [:br]
            [:img {:src "../img/logo-cfd.png"
+                  :alt "Code for Denver logo"
                   :width "40%"}]
            [:p "This project has always been independently produced and maintained by a team of Code for Denver volunteers, beginning in March 2016. It's entirely open source and "
             [:a {:href "https://github.com/codefordenver/owlet"} "available on GitHub"] "."][:br]
@@ -80,6 +81,7 @@
                         :color "gray"}}
               "*In the git workflow, a \"commit\" is an individual contribution to a project's codebase."][:br]
            [:img {:src "../img/logo-contentful.png"
+                  :alt "Contentful logo"
                   :width "37%"}]
            [:p "Special thanks to "
             [:a {:href "https://www.contentful.com/"} "Contentful"]
