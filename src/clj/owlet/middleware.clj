@@ -67,5 +67,4 @@
                  :access-control-allow-methods [:get :post :put :delete])
       wrap-context
       wrap-internal-error
-      wrap-gzip
-      wrap-ssl-redirect))
+      wrap-gzip))

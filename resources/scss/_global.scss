@@ -341,10 +341,11 @@ progress {
     height: 50px;
     font-size: 1.2em;
     transition: all 0.3s;
-    background-image:url('../img/search-icon.png');
+    background-image: url('../img/search-icon.png');
     background-size: auto 45%;
     background-repeat:no-repeat;
-    background-position:left center;outline:0;
+    background-position: left center;
+    outline:0;
     padding-left: 38px;
     &:focus {
       border-color: $aqua;
