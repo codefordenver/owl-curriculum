@@ -725,6 +725,8 @@ span.platform-details {
   font-size: 1.2em; }
   .activity-content h1 {
     font-style: italic; }
+  .activity-content strong {
+    font-weight: 500; }
 
 .activity-title-wrap {
   margin-top: 18px;
@@ -838,20 +840,23 @@ span.platform-details {
 .language {
   margin-left: 10px; }
 
-div.code-block {
-  font-family: monospace;
-  background-color: #eee;
-  padding: 0.5em;
-  margin-bottom: 1em; }
-  div.code-block textarea {
-    padding: 0.3em 0.2em;
-    background: none; }
-
-span.inline-code {
+.panel-text code {
   font-family: monospace;
   background-color: #eee;
   padding: 0.2em 0.25em 0.05em 0.2em;
   margin-bottom: 1em; }
+
+h5.panel-text2 {
+  margin-top: 1.6em; }
+
+.panel-text1 pre, .panel-text1 pre {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 0.5em;
+  margin-bottom: 1em; }
+  .panel-text1 pre code, .panel-text1 pre code {
+    background: none;
+    border: none; }
 
 .CodeMirror {
   min-height: inherit; }

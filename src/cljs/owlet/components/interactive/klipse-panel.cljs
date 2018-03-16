@@ -5,7 +5,8 @@
             [owlet.helpers :refer [showdown]]))
 
 (defn klipse-panel-component [panel]
-  (let [{:keys [code
+  (let [{:keys [id
+                code
                 text1
                 text2
                 heading
@@ -15,13 +16,15 @@
       [h-box
        :size "1"
        :align :start
-       :children [[:div.panel-number "1"]
+       :children [[:div.panel-number id]
                   [:div {:style {:width "100%"}}
-                   [:h2 {:style {:margin-bottom "1em"}}
+                   [:h2 {:style {:margin-bottom "0.7em"}}
                         heading]
-                   [:h5 {"dangerouslySetInnerHTML"
+                   [:h5 {:class "panel-text1"
+                         "dangerouslySetInnerHTML"
                          #js{:__html (.makeHtml showdown text1)}}]]]]]
 
      [klipse-component language code]
-     [:h5 {"dangerouslySetInnerHTML"
+     [:h5 {:class "panel-text2"
+           "dangerouslySetInnerHTML"
            #js{:__html (.makeHtml showdown text2)}}]]))
