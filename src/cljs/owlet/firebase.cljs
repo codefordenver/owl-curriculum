@@ -15,9 +15,14 @@
             [reagent.ratom :refer-macros [reaction]]
             [re-frame.core :as rf]
 
-            ; Adds <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
-            ; to index.html . This is required for def. of js/firebase, etc.
-            [cljsjs.firebase]))
+            ; These are all provided by the cljsjs/firebase dependency.
+            ; Don't :require cljsjs.firebase. It causes firebase.firestore
+            ; to be undefined.
+            [firebase.app]          ; Must be first.
+            [firebase.auth]
+            [firebase.database]
+            [firebase.storage]
+            [firebase.firestore]))
 
 
 (defonce firebase-app
@@ -109,6 +114,10 @@
   "
   [url]
   (-> firebase-app .storage (.refFromURL url)))
+
+
+(def firebase-firestore-ref
+  (js/firebase.firestore firebase-app))
 
 
 ;  ;  ;  ;  ;  ;  ;  ;  ;   Firebase authorization   ;  ;  ;  ;  ;  ;  ;  ;  ;
