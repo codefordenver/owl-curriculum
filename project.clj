@@ -84,8 +84,8 @@
             [lein-kibit "0.1.2"]]
 
   :sassc [{:src "resources/scss/main.scss"
-           :output-to "resources/public/css/main.css"
-           :style "nested"
+           :output-to "resources/public/css/main.min.css"
+           :style "compressed"
            :import-path "resources/scss"}]
 
   :auto {"sassc"  {:file-pattern  #"\.(scss)$"

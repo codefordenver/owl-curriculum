@@ -80,7 +80,8 @@
          [:div.activity-embed-wrap
           (if-not embed
             [:div.activity-preview
-             [:img {:src preview-url :width "100%"}]]
+             [:img {:src preview-url :width "100%"
+                    :alt "Activity preview image"}]]
             [:div.embed-container
              (case activity-type
                "activity" {"dangerouslySetInnerHTML"
