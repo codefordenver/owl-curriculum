@@ -33,11 +33,14 @@
                       :on-failure      [:get-content-from-contentful-failure route-args]}}
         {:dispatch [route-dispatch route-param]}))))
 
-(rf/reg-event-db :get-content-from-contentful-failure
-  (fn [db _]
-    (assoc db :on-app-failure
-      {:show? true
-       :msg "Not able to retrieve content from contentful: Possibly missing ENV variables"})))
+
+(reg-setter
+  :get-content-from-contentful-failure
+  [:on-app-failure]
+  (constantly {:show? true
+               :msg   (str "Not able to retrieve content from Contentful: "
+                           "Possibly missing ENV variables")}))
+
 
 (rf/reg-event-fx
   :get-content-from-contentful-success

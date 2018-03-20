@@ -17,18 +17,13 @@
   (assoc-in db [:my-identity :pending] msg))
 
 
-(reg-setter :show-bg-img-upload [:showing-bg-img-upload])
-
-
 (rf/reg-event-db
   :initialize-db
-  (fn [_ _]
-    db/default-db))
+  (constantly db/default-db))
 
-(rf/reg-event-db
-  :set-loading-state!
-  (fn [db [_ state]]
-    (assoc-in db [:app :loading?] state)))
+
+(reg-setter :set-loading-state! [:app :loading?])
+
 
 (rf/reg-event-db
   :set-active-view
@@ -63,33 +58,7 @@
       (assoc-in db [:app :title] title))))
 
 
-(rf/reg-event-fx
-  :update-user-roles!
-  (fn [{{{:keys [private private-ref]} :my-identity} :db} [_ new-roles]]
-    (let [old-roles (:my-roles private)
-          new-roles-assignment (assoc private :my-roles new-roles)
-          old-roles-assignment (assoc private :my-roles old-roles)]
-      (if (seq new-roles)
-        {:firebase-reset-into-ref
-         [private-ref new-roles-assignment :user-role-updated old-roles-assignment]}
-        (let [reset-roles-assignment (dissoc private :my-roles)]
-          {:firebase-reset-ref
-           [private-ref reset-roles-assignment :user-role-updated old-roles-assignment]})))))
-
-
-(rf/reg-event-fx
-  :user-role-updated
-  (fn [{db :db} [_ {err :error-reason} old-roles-assignment]]
-    (when err ;; restore previous role assignments when err occurs
-      (let [{{private-ref :private-ref} :my-identity} db]
-        {:db (assoc-in db [:my-identity private-ref] old-roles-assignment)
-         :dispatch [:role-association-failed "Unable to save role assignment."]}))))
-
-
-(rf/reg-event-db
-  :role-association-failed
-  (fn [db [_ msg]]
-    (assoc db :on-app-failure {:show? true :msg msg})))
+(reg-setter :show-bg-img-upload [:showing-bg-img-upload])
 
 
 (rf/reg-event-fx

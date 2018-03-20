@@ -4,11 +4,7 @@
             [owlet.rf-util :refer [reg-getter]]))
 
 
-(rf/reg-sub
-  :active-view
-  (fn [db _]
-    (:active-view db)))
-
+(reg-getter :active-view [:active-view])
 
 (reg-getter :my-id [:my-identity :firebase-id])
 
@@ -16,32 +12,17 @@
 
 (reg-getter :my-background-image-url [:my-identity :private :background-image-url])
 
-(reg-getter :my-roles [:my-identity :private :my-roles])
+(reg-getter :my-roles [:my-identity :private :roles])
 
-(rf/reg-sub
-  :activity-branches
-  (fn [db]
-    (get-in db [:activity-branches])))
+(reg-getter :activity-branches [:activity-branches])
 
-(rf/reg-sub
-  :activities-by-branch
-  (fn [db]
-    (get-in db [:activities-by-branch])))
+(reg-getter :activities-by-branch [:activities-by-branch])
 
-(rf/reg-sub
-  :activities-by-filter
-  (fn [db]
-    (get-in db [:activities-by-filter])))
+(reg-getter :activities-by-filter [:activities-by-filter])
 
-(rf/reg-sub
-  :activity-in-view
-  (fn [db]
-    (get-in db [:activity-in-view])))
+(reg-getter :activity-in-view [:activity-in-view])
 
-(rf/reg-sub
-  :loading-state
-  (fn [db]
-    (get-in db [:app :loading?])))
+(reg-getter :loading-state [:app :loading?])
 
 (reg-getter :app-title [:app :title])
 
@@ -55,7 +36,4 @@
 
 (reg-getter :subscriber-info [:app :route-opts])
 
-(rf/reg-sub
-  :on-app-failure
-  (fn [db _]
-    (:on-app-failure db)))
+(reg-getter :on-app-failure [:on-app-failure])
