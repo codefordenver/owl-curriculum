@@ -32,12 +32,6 @@
              [:div.activity-wrap
               [:div.activity-header.col-xs-12
                [activity-title title author]]
-              ; [:div.activity-content.col-xs-12.col-lg-6
-              ;  [activity-embed embed tags preview]]
-              ; [:div.activity-content.col-xs-12.col-lg-6
-              ;  [:h2 {:style {:margin-top "40px"}}
-              ;   [:mark "Edit this code:"]]
-              ;  [klipse-component language code]]
               [:div.activity-content.col-xs-12.col-lg-8
                 (for [panel panels :let [id (:id panel)]]
                   ^{:key id}

@@ -1096,7 +1096,8 @@ h5.panel-text2 {
   color: white;
   padding: 0.1em 0.3em;
   margin-right: 0.25em;
-  font-size: 1.25em; }
+  font-size: 1.25em;
+  min-width: auto; }
 
 #select-platform, #select-tags, #select-branches {
   padding: 5px; }

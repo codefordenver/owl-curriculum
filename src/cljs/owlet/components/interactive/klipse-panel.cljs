@@ -17,8 +17,10 @@
        :size "1"
        :align :start
        :children [[:div.panel-number id]
-                  [:div {:style {:width "100%"}}
-                   [:h2 {:style {:margin-bottom "0.7em"}}
+                  [:div {:style {:width "100%"
+                                 :margin-left "0.15em"}}
+                   [:h2 {:style {:margin-top "0.5em"
+                                 :margin-bottom "0.7em"}}
                         heading]
                    [:h5 {:class "panel-text1"
                          "dangerouslySetInnerHTML"
