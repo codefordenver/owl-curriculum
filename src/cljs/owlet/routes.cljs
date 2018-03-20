@@ -54,9 +54,6 @@
   (defroute "/create/:type" {:as params}
             (rf/dispatch [:get-content-from-contentful (keywordize-name (str "show-create-" (:type params)))]))
 
-  (defroute "/activity/hello-world" []
-            (rf/dispatch [:get-content-from-contentful :show-temp-hello-world]))
-
   (defroute "/activity/print-errors" []
             (rf/dispatch [:get-content-from-contentful :show-temp-print-errors]))
 

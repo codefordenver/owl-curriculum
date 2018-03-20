@@ -163,12 +163,6 @@
                        [:set-activity-in-view route-param])}))
 
 (rf/reg-event-fx
-  :show-temp-hello-world
-  (fn [_ _]
-    {:dispatch-n (list [:set-active-view :temp-hello-world-view]
-                       [:set-active-document-title! "Hello world!"])}))
-
-(rf/reg-event-fx
   :show-temp-print-errors
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :temp-print-errors-view]
