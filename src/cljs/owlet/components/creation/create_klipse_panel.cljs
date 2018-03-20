@@ -1,6 +1,5 @@
 (ns owlet.components.creation.create-klipse-panel
-  (:require [owlet.components.interactive.klipse :refer [klipse-component]]
-            [reagent.core :as reagent]
+  (:require [reagent.core :as reagent]
             [owlet.components.creation.custom-klipse-component :refer [custom-klipse-component]]
             [owlet.components.creation.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             [re-com.core :refer [h-box button]]

@@ -38,23 +38,23 @@
                 "CONTENT CREATION FUNCTIONALITY IS CURRENTLY IN DEVELOPMENT. IT DOES NOT WORK - YET!"
                 [:br] "THE LINKS BELOW ARE JUST A PREVIEW OF WHAT'S TO COME :)"]
            [:br][:br]]
-          [:h3 "CREATE"]
+          [:h3 "CREATE..."]
           [:ul
            [:li [:b "A general purpose, read-only activity"]
             [:ul
-             [:li [:a.semi-bold {:href "#/create/embed-activity"}
+             [:li [:a.semi-bold {:href "#/create/general-activity"}
                       "Instructional medium of your choice"]
                   [:ul
                    [:li "Embed a slideshow iframe, video iframe, or your own HTML ["
                         [:a {:href "#/activity/#!5g8tVqDGTeo2aMUey0M8G"} "see example"]
                         "]"]]]]]
-           [:li [:b "An activity w/ built-in code evaluation"]
+           [:li [:b "A coding activity with built-in code evaluation"]
             [:ul
              [:li [:a.semi-bold {:href "#/create/klipse-panel-activity"}
                       "MULTIPLE code evaluators & text-based instruction"]
                   [:ul
                    [:li "Supports Python, JavaScript, and/or Clojure ["
-                        [:a {:href "#/activity/hello-world"} "see example"]
+                        [:a {:href "#/activity/#!3PR1mUaAI0msuao28W2SCs"} "see example"]
                         "]"]]]
              [:li [:a.semi-bold {:href "#/create/klipse-slides-activity"}
                       "A SINGLE code evaluator & slides-based instruction"]

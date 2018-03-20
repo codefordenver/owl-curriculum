@@ -1,4 +1,4 @@
-(ns owlet.views.create-embed-activity
+(ns owlet.views.create-general-activity
   (:require [owlet.components.creation.create-activity-title :refer [create-activity-title]]
             [owlet.components.creation.create-activity-response :refer [create-activity-response-component]]
             [owlet.components.creation.select-branches :refer [select-branches]]
@@ -14,7 +14,7 @@
 (def show-embed? (reagent/atom false))
 (def show-upload? (reagent/atom false))
 
-(defn create-embed-activity []
+(defn create-general-activity []
    [:div.activity
     [:div.activity-wrap
      [:div.col-sm-12
@@ -63,7 +63,7 @@
         "Save Activity"]]]
      [create-activity-response-component :ok]]])
 
-(defn create-embed-activity-view []
+(defn create-general-activity-view []
   (if @(rf/subscribe [:my-id])
-    [create-embed-activity]
+    [create-general-activity]
     [login-only-view]))

@@ -12,7 +12,7 @@
      (if-not filtered-activities
        [:h2.pushed-left [:mark [:b "Loading..."]]]
        (if (= filtered-activities "error")
-         [:h2.pushed-left [:mark.box [back] [:b "Nothing here. Try a different search above."]]]
+         [:h2.pushed-left [:mark [back] "Nothing here. Try a different search above."]]
          (let [{:keys [display-name activities & description]} filtered-activities]
            [:div
             [:h2.pushed-left [:mark [back] display-name]]
