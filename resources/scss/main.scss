@@ -192,7 +192,7 @@ mark.white {
   width: 100%;
 }
 
-@media (min-width: 992px) {
+@media screen and (min-width: 992px) {
   #main {
     height: 100vh;
   }

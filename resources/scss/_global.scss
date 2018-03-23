@@ -357,7 +357,7 @@ progress {
     padding-top: 0;
     padding-bottom: 0;
   }
-  @media(max-width: 767px) {
+  @media screen and(max-width: 767px) {
     margin-left: 31px;
   }
 }
@@ -369,7 +369,7 @@ progress {
   position: absolute;
   top: 70px;
   left: calc(50vw - 135px);
-  @media (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     left: calc(50vw - 215px);
   }
   display: block;
@@ -379,7 +379,7 @@ progress {
   position: absolute;
   top: 110px;
   left: calc(50vw - 71px);
-  @media (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     left: calc(50vw - 151px);
   }
 }
