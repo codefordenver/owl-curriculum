@@ -10,7 +10,6 @@
     {:component-did-mount
      (fn []
        (let [smde-text1 (simplemde "text1")
-             _ (set! js/window.foo smde-text1)
              smde-text2 (simplemde "text2")]))
      :reagent-render
      (fn [id]
