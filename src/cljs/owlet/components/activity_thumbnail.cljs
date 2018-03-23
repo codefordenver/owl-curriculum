@@ -17,7 +17,7 @@
         platform-free (:free platform)
         route-param (first (keys @(rf/subscribe [:route-params])))
         showing? (reagent/atom false)]
-    [:div.col-xs-12.col-md-6.col-lg-4
+    [:div.grid-item
      [:div.activity-thumbnail-wrap
       [:a {:href (str "#/activity/#!" entry-id)}
        [:div.activity-thumbnail
@@ -49,9 +49,9 @@
       [:div.summary summary]
       (when tags
         (for [tag tags :let [name (:name tag)]]
-            ^{:key (gensym "tag-")}
-            [:div {:class (if (= (lower-case name) (lower-case display-name))
-                           "tag"
-                           "inactive tag")
-                   :on-click #(rf/dispatch [:show-tag name])}
-              [:span name]]))]]))
+          ^{:key (gensym "tag-")}
+          [:div {:class (if (= (lower-case name) (lower-case display-name))
+                            "tag"
+                            "inactive tag")
+                 :on-click #(rf/dispatch [:show-tag name])}
+            [:span name]]))]]))

@@ -148,13 +148,13 @@
   float: left;
   margin: 0.66%;
   height: 205px;
-  @media (max-width: 1200px) {
+  @media screen and (max-width: 1200px) {
     height: 140px;
   }
-  @media (max-width: 642px) {
+  @media screen and (max-width: 642px) {
     height: 89px;
   }
-  @media (max-width: 375px) {
+  @media screen and (max-width: 375px) {
     height: 76px;
   }
 }
