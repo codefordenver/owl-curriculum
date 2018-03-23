@@ -113,21 +113,23 @@ span.platform-details {
   overflow-y: auto;
   .activity-thumbnail {
     position: relative;
-    overflow: hidden;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    transition: background-size 0.5s ease;
-    -moz-transition: background-size 0.5s ease;
-    -ms-transition: background-size 0.5s ease;
-    -webkit-transition: background-size 0.5s ease;
-    -o-transition: background-size 0.5s ease;
-    &:hover {
-      background-size: 130% !important;
-    }
     height: 150px;
-    @media only screen and (max-width: 767px) and (min-width: 650px) {
-      height: 400px;
+    .image {
+      opacity: 0.6;
+      height: 100%;
+      overflow: hidden;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      transition: background-size 0.5s ease;
+      -moz-transition: background-size 0.5s ease;
+      -ms-transition: background-size 0.5s ease;
+      -webkit-transition: background-size 0.5s ease;
+      -o-transition: background-size 0.5s ease;
+      &:hover {
+        background-size: 130% !important;
+        opacity: 1;
+      }
     }
     .title {
       position: absolute;

@@ -20,7 +20,8 @@
     [:div.col-xs-12.col-md-6.col-lg-4
      [:div.activity-thumbnail-wrap
       [:a {:href (str "#/activity/#!" entry-id)}
-       [:div.activity-thumbnail {:style {:background-image (str "url('" image "')")}}
+       [:div.activity-thumbnail
+        [:div.image {:style {:background-image (str "url('" image "')")}}]
         [:mark.title title]]]
       [:div.platform-wrap
        [:b "PLATFORM"][:br]
