@@ -78,7 +78,7 @@ mark.white {
 }
 
 .box-shadow, .box {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .text-shadow {
@@ -149,31 +149,17 @@ mark.white {
 
 #main {
   display: flex;
-  overflow-y: visible;
 }
 
 .content {
-  overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
   // background: url('../img/cfd-bg.jpg');
   background-size: cover !important;
 }
 
-.outer-height-wrap {
-  height: 100vh;
+.outer-height-wrap, .inner-height-wrap {
   width: 100%;
-}
-
-.inner-height-wrap {
-  height: 100%;
-  width: 100%;
-}
-
-@media screen and (min-width: 992px) {
-  #main {
-    height: 100vh;
-  }
 }
 
 button {
