@@ -1,5 +1,7 @@
-## Difficulty: M
-Based on ***complexity***, ranges from **XS - XL** (👕 sizes)
+### Difficulty: M
+Based on ***complexity***, ranging from **XS - XL** (👕 sizes)
+
+### Suggested Deadline: 1 week
 
 ## User Story
 As a user, I want to ...
@@ -7,5 +9,5 @@ As a user, I want to ...
 ## Acceptance Criteria
 - [ ] ...
 
-## Before You Start
+## Before You Begin
 ...
