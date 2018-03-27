@@ -488,6 +488,11 @@ progress {
   }
 }
 
+#top-bar {
+  background-color: $purple-light;
+  padding: 0.4em 0.5em;
+}
+
 #sidebar-wrap {
   background-color: $purple;
   min-width: 80px;

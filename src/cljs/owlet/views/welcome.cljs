@@ -4,7 +4,7 @@
     [re-frame.core :as rf]))
 
 (defn welcome-view []
-  [:div.flexcontainer
+  [:div.welcome-wrap
     [:div.user-type
       [:p#largetext.text-shadow "Welcome to Owlet"]
       [:div.welcome-text.text-shadow

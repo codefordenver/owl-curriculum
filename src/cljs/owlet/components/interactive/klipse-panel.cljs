@@ -12,7 +12,7 @@
                 heading
                 language]} panel]
     [:div.activity-info-wrap
-     [:div.panel-heading.flexcontainer-wrap
+     [:div.panel-heading
       [h-box
        :size "1"
        :align :start

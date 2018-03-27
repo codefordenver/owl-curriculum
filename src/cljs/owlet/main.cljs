@@ -13,7 +13,7 @@
             [owlet.views.create-klipse-panel-activity :refer [create-klipse-panel-activity-view]]
             [owlet.views.create-klipse-slides-activity :refer [create-klipse-slides-activity-view]]
             [owlet.views.create-general-activity :refer [create-general-activity-view]]
-            [owlet.components.search-bar :refer [search-bar]]
+            [owlet.components.top-bar :refer [top-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
             [owlet.views.branches :refer [branches-view]]
@@ -71,11 +71,8 @@
 
         [:div#main
          [error]
-         [lpsidebar-component]
-         [:div#sidebar-wrap.hidden-sm-down
-          [sidebar-component]]
          [:div.outer-height-wrap
-          [search-bar]
+          [top-bar]
           [:div.inner-height-wrap
              [:div.content
               ;TODO: repurpose custom bg functionality for custom header
