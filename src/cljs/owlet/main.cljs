@@ -2,8 +2,6 @@
   (:require [re-frame.core :as rf]
             [reagent.core :as reagent]
             [owlet.components.upload-image-modal :refer [upload-image-component]]
-            [owlet.components.sidebar :refer [sidebar-component]]
-            [owlet.components.lpsidebar :refer [lpsidebar-component]]
             [owlet.components.loading :refer [loading-component]]
             [owlet.components.error :refer [error]]
             [owlet.views.welcome :refer [welcome-view]]
