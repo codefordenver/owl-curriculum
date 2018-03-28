@@ -8,6 +8,10 @@
 @import 'creation';
 @import 'welcome';
 
+html, body {
+  margin: 0;
+}
+
 body {
   font: 100% $font-stack;
   font-weight: 300;
@@ -49,7 +53,7 @@ li {
   margin-bottom: 0.3em;
 }
 
-a:hover {
+a {
   text-decoration: none;
 }
 
@@ -87,13 +91,14 @@ mark.white {
 }
 
 .flex-row {
-  display: -webkit-flex;
   display: flex;
-  -webkit-align-items: center;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
   justify-content: space-between;
-  -webkit-flex-flow: row nowrap;
+  -webkit-justify-content: space-between;
   flex-flow: row nowrap;
+  -webkit-flex-flow: row nowrap;
 }
 
 .flex-item {
@@ -150,6 +155,7 @@ mark.white {
 
 #main {
   display: flex;
+  display: -webkit-flex;
   overflow-y: visible;
   height: 100vh;
 }

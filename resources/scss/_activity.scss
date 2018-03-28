@@ -106,8 +106,8 @@
   padding: 5px;
   background-color: $dark-gray;
   color: white;
-  display: -webkit-flex;
   display: flex;
+  display: -webkit-flex;
   -webkit-align-items: center;
   align-items: center;
   -webkit-flex-flow: row nowrap;
@@ -132,8 +132,8 @@
 
 .img-gallery {
   width: 100%;
-  display: -webkit-flex;
   display: flex;
+  display: -webkit-flex;
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
 }
