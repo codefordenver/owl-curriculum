@@ -12,9 +12,9 @@
     [:div.login
      [login-component]]
     [:a.navigation.branch-icon {:href "#/branches"}
-     [:div.branch-icon]]
+     "Branches"]
     (when @(rf/subscribe [:my-id])
       [:a.navigation.settings-icon {:href "#/settings"}
-       [:div.settings-icon]])
+       "Settings"])
     [:a.navigation.about-icon {:href "#/about"}
-     [:div.about-icon]]]])
+     "About"]]])
