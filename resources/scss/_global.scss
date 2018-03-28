@@ -281,8 +281,11 @@ progress {
 
 // Top bar: Logo, Search, Navigation, Login
 
-#top-bar {
+.top-bar {
   background-color: $purple-light;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
 }
 
 // Logo
@@ -379,11 +382,6 @@ progress {
       color: black;
     }
   }
-  // .hidden-search {
-  //   height: 1.2em;
-  //   padding-top: 0;
-  //   padding-bottom: 0;
-  // }
 }
 
 // Navigation
@@ -412,6 +410,18 @@ progress {
     color: $magenta;
     background-color: white;
     height: 73px;
+  }
+}
+
+.hidden-top-bar {
+  height: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+  .owlet-text p {
+    display: none;
+  }
+  .btn-login, .btn-logout {
+    height: 50px;
   }
 }
 
