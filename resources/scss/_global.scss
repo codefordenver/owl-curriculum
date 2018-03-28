@@ -354,6 +354,7 @@ progress {
 .search-container {
   position: relative;
   flex: 1;
+  -webkit-flex: 1;
   height: 40px;
   margin: 0 1em;
 }
