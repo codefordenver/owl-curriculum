@@ -335,17 +335,17 @@ progress {
 
 // Search
 
+.rc-typeahead-suggestions-container {
+  border: 1px solid $light-gray;
+}
+
 .rc-typeahead-suggestion {
-  background-color: #3B3B3B;
-  &:hover {
-    background-color: whitesmoke;
-    color: black;
-  }
+  background-color: white;
+  color: $medium-gray;
 }
 
 .rc-typeahead-suggestion.active {
-  background-color: whitesmoke;
-  color: black;
+  background-color: $light-gray;
 }
 
 .search-container {
@@ -356,8 +356,10 @@ progress {
 }
 
 .search-bar-wrap {
+  z-index: 20;
   position: absolute;
   color: black;
+  font-weight: 400;
   width: 100%;
   .search {
     border-color: $light-gray;
@@ -374,9 +376,7 @@ progress {
     outline: 0;
     padding-left: 38px;
     &:focus {
-      border-color: $aqua;
       color: black;
-      background-color: white;
     }
   }
   // .hidden-search {
