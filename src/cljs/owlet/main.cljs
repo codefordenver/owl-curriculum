@@ -9,12 +9,11 @@
             [owlet.views.welcome :refer [welcome-view]]
             [owlet.views.about :refer [about-view]]
             [owlet.views.klipse-activity :refer [klipse-activity-view]]
-            [owlet.views.temp-activities.hello-world :refer [temp-hello-world-view]]
             [owlet.views.temp-activities.print-errors :refer [temp-print-errors-view]]
             [owlet.views.create-klipse-panel-activity :refer [create-klipse-panel-activity-view]]
             [owlet.views.create-klipse-slides-activity :refer [create-klipse-slides-activity-view]]
-            [owlet.views.create-embed-activity :refer [create-embed-activity-view]]
-            [owlet.components.search-bar :refer [search-bar]]
+            [owlet.views.create-general-activity :refer [create-general-activity-view]]
+            [owlet.components.top-bar :refer [top-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
             [owlet.views.branches :refer [branches-view]]
@@ -32,12 +31,11 @@
 (defmethod views :welcome-view [] [welcome-view])
 (defmethod views :about-view [] [about-view])
 (defmethod views :klipse-activity-view [] [klipse-activity-view])
-(defmethod views :temp-hello-world-view [] [temp-hello-world-view])
 (defmethod views :temp-print-errors-view [] [temp-print-errors-view])
 (defmethod views :filtered-activities-view [] [filtered-activities-view])
 (defmethod views :create-klipse-panel-activity-view [] [create-klipse-panel-activity-view])
 (defmethod views :create-klipse-slides-activity-view [] [create-klipse-slides-activity-view])
-(defmethod views :create-embed-activity-view [] [create-embed-activity-view])
+(defmethod views :create-general-activity-view [] [create-general-activity-view])
 (defmethod views :not-found-view [] [not-found-view])
 (defmethod views :activity-view [] [activity-view])
 (defmethod views :branches-view [] [branches-view])
@@ -73,11 +71,8 @@
 
         [:div#main
          [error]
-         [lpsidebar-component]
-         [:div#sidebar-wrap.hidden-sm-down
-          [sidebar-component]]
          [:div.outer-height-wrap
-          [search-bar]
+          [top-bar]
           [:div.inner-height-wrap
              [:div.content
               ;TODO: repurpose custom bg functionality for custom header

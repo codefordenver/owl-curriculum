@@ -98,5 +98,5 @@
                "TAGS: "]
              (for [tag tags :let [name (:name tag)]]
                  ^{:key (gensym "tag-")}
-                 [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag name])}
+                 [:div.tag.active {:on-click #(rf/dispatch [:show-tag name])}
                    [:span name]])])]))}))

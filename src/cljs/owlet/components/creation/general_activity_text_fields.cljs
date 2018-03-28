@@ -1,22 +1,14 @@
 (ns owlet.components.creation.general-activity-text-fields
-  (:require [reagent.core :as reagent]))
+  (:require [reagent.core :as reagent]
+            [owlet.components.creation.markdown-editor :refer [simplemde]]))
 
 (defn general-activity-text-fields []
   (reagent/create-class
     {:component-did-mount
      (fn []
-       (let [smde-why (js/SimpleMDE. #js {:element (js/document.querySelector "#why")
-                                          :lineWrapping true
-                                          :autosave #js {:enabled true
-                                                         :uniqueId "why"}})
-             smde-materials (js/SimpleMDE. #js {:element (js/document.querySelector "#materials")
-                                                :lineWrapping true
-                                                :autosave #js {:enabled true
-                                                               :uniqueId "materials"}})
-             smde-prereqs (js/SimpleMDE. #js {:element (js/document.querySelector "#prereqs")
-                                              :lineWrapping true
-                                              :autosave #js {:enabled true
-                                                             :uniqueId "prereqs"}})]))
+       (let [smde-why (simplemde "why")
+             smde-materials (simplemde "materials")
+             smde-prereqs (simplemde "prereqs")]))
      :reagent-render
      (fn []
        [:div#general-activity-info

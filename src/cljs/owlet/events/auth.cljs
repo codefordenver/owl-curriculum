@@ -14,7 +14,7 @@
 
 (rf/reg-event-fx
   :auth0-authenticated
-  (fn [{db :db} [_ {:keys [auth0-token delegation-token]}]]
+  (fn [{db :db} [_ {:keys [delegation-token]}]]
     {:db               (app/note-pending db :log-in)
      :firebase-sign-in [fb/firebase-auth-object
                         delegation-token

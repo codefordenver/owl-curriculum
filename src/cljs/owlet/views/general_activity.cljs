@@ -1,4 +1,4 @@
-(ns owlet.views.ro-activity
+(ns owlet.views.general-activity
   (:require [owlet.components.activity.title :refer [activity-title]]
             [owlet.components.activity.embed :refer [activity-embed]]
             [owlet.components.activity.info :refer [activity-info]]
@@ -9,8 +9,8 @@
             [re-frame.core :as rf]
             [owlet.components.activity.comments :refer [activity-comments]]))
 
-(defn ro-activity-view
-  "Read-only activity" []
+(defn general-activity-view
+  "General activity" []
   (let [activity @(rf/subscribe [:activity-in-view])]
     (if-not activity
       [:div.branch-activities-wrap
@@ -42,7 +42,7 @@
                (when (seq image-gallery-items)
                 [activity-image-gallery image-gallery-items])]
               [:div.activity-content.col-xs-12.col-lg-4
-               [activity-info platform  summary why preRequisites materials]
+               [activity-info platform summary why preRequisites materials]
                (when challenge
                 [activity-challenge challenge])
                (when inspiration

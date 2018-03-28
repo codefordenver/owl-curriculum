@@ -4,6 +4,7 @@
               [dirac.runtime :as dirac]
               [owlet.events.contentful]
               [owlet.events.auth]
+              [owlet.events.priv]
               [owlet.events.app]
               [owlet.subs]
               [owlet.routes :as routes]

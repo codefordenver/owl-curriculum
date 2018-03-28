@@ -187,40 +187,6 @@ progress {
   border-style: none;
 }
 
-// Login
-
-.login {
-  margin-top: 10px;
-  z-index: 1;
-  text-align: center;
-}
-
-.login-landing {
-  position: absolute;
-  top: 13px;
-  right: 10px;
-}
-
-.btn-login {
-  color: #fff;
-  background-color: $aqua;
-  border-color: $aqua;
-  &:hover {
-    color: $aqua;
-    background-color: $purple;
-  }
-}
-
-.btn-logout {
-  color: $aqua;
-  background-color: $purple;
-  border-color: $aqua;
-  &:hover {
-    color: #fff;
-    background-color: $aqua;
-  }
-}
-
 // Email subscription
 
 #email-wrap {
@@ -313,53 +279,149 @@ progress {
   }
 }
 
-// Search
+// Top bar: Logo, Search, Navigation, Login
 
-.rc-typeahead-suggestion {
-  background-color: #3B3B3B;
+.top-bar {
+  background-color: $purple-light;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+// Logo
+
+.owlet-logo-div {
+  padding: 0.4em 0.55em;
+  .owlet-owl {
+    width: 60px;
+    transform: rotate(0deg);
+    transition: transform 1s;
+    transition-timing-function: ease;
+    -webkit-transform: rotate(0deg);
+    -webkit-transition: -webkit-transform 0.5s;
+    -webkit-transition-timing-function: ease;
+    -ms-transform: rotate(0deg);
+    -ms-transition: -ms-transform 0.5s;
+    -ms-transition-timing-function: ease;
+    border-radius: 50%;
+  }
   &:hover {
-    background-color: whitesmoke;
-    color: black;
+    .owlet-owl {
+      -ms-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+      transition: transform 1s;
+      transition-timing-function: ease;
+      -webkit-transition: -webkit-transform 0.5s;
+      -webkit-transition-timing-function: ease;
+    }
+  }
+  .owlet-text {
+    color: white;
+    margin-left: 0.9em;
+    text-align: center;
+    h1 {
+      font-size: 2.2em;
+      font-weight: 500;
+      line-height: 0.8em;
+      margin: 0;
+      letter-spacing: 0.1em;
+    }
+    p {
+      font-size: 0.4em;
+      line-height: 1em;
+      margin: 0.7em 0 0 -0.8em;
+      font-weight: 100;
+    }
   }
 }
 
+// Search
+
+.rc-typeahead-suggestions-container {
+  border: 1px solid $light-gray;
+}
+
+.rc-typeahead-suggestion {
+  background-color: white;
+  color: $medium-gray;
+}
+
 .rc-typeahead-suggestion.active {
-  background-color: whitesmoke;
-  color: black;
+  background-color: $light-gray;
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+  height: 40px;
+  margin: 0 1em;
 }
 
 .search-bar-wrap {
-  position: fixed;
-  color: white;
+  z-index: 20;
+  position: absolute;
+  color: black;
+  font-weight: 400;
   width: 100%;
-  z-index: 10;
   .search {
     border-color: $light-gray;
-    border-radius: 0 3.5px;
-    background-color: black;
+    border-radius: 3.5px;
+    background-color: white;
     color: $light-gray;
-    height: 50px;
-    font-size: 1.2em;
+    height: 40px;
+    font-size: 1em;
     transition: all 0.3s;
     background-image: url('../img/search-icon.png');
     background-size: auto 45%;
     background-repeat:no-repeat;
     background-position: left center;
-    outline:0;
+    outline: 0;
     padding-left: 38px;
     &:focus {
-      border-color: $aqua;
-      color: white;
-      background-color: black;
+      color: black;
     }
   }
-  .hidden-search {
-    height: 1.2em;
-    padding-top: 0;
-    padding-bottom: 0;
+}
+
+// Navigation
+
+.navigation {
+  margin-left: 0.9em;
+  button {
+    font-weight: 500;
+    border: none;
+    border-radius: 0;
+    font-size: 0.7em;
+    padding: 1em;
+    text-transform: uppercase;
+    background: none;
+    color: white;
+    border-left: 1px solid white;
+    outline: none;
   }
-  @media(max-width: 767px) {
-    margin-left: 31px;
+  .btn-login {
+    color: $aqua;
+    background-color: white;
+    height: 73px;
+  }
+
+  .btn-logout {
+    color: $magenta;
+    background-color: white;
+    height: 73px;
+  }
+}
+
+.hidden-top-bar {
+  height: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+  .owlet-text p {
+    display: none;
+  }
+  .btn-login, .btn-logout {
+    height: 50px;
   }
 }
 
@@ -370,7 +432,7 @@ progress {
   position: absolute;
   top: 70px;
   left: calc(50vw - 135px);
-  @media (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     left: calc(50vw - 215px);
   }
   display: block;
@@ -380,195 +442,7 @@ progress {
   position: absolute;
   top: 110px;
   left: calc(50vw - 71px);
-  @media (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     left: calc(50vw - 151px);
-  }
-}
-
-// Sidebar
-
-.navigation {
-  cursor: pointer;
-}
-
-.owlet-image {
-  display: block;
-  height: 108px;
-  width: 80px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.owlet-owl {
-  transform: rotate(0deg);
-  transition: transform 1s;
-  transition-timing-function: ease;
-  -webkit-transform: rotate(0deg);
-  -webkit-transition: -webkit-transform 0.5s;
-  -webkit-transition-timing-function: ease;
-  -ms-transform: rotate(0deg);
-  -ms-transition: -ms-transform 0.5s;
-  -ms-transition-timing-function: ease;
-  border-radius: 50%;
-}
-
-#sidebar {
-  min-height: inherit;
-  min-width: inherit;
-  z-index: 3;
-  text-align: center;
-  background-color: $purple;
-  color: #cffffd;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 80px;
-}
-
-#sidebar-wrap {
-  background-color: $purple;
-  min-width: 80px;
-}
-
-#lpsidebar {
-  position: fixed;
-  z-index: 100;
-  transition: all 0.3s;
-  text-align: center;
-  background-color: $purple;
-  color: #cffffd;
-  top: 0;
-  bottom: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-
-#lpsidebar-wrap {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  z-index: 100;
-}
-
-.lpsidebar-toggle {
-  z-index: 100;
-  cursor: pointer;
-  border-left: 1px solid #6A2569;
-  transition: all 0.3s;
-  position: fixed;
-  top: 2px;
-  height: 86px;
-}
-
-#lpsidebar-opened {
-  left: 80px;
-}
-
-#opened-sidebar {
-  cursor: pointer;
-  position: fixed;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: 3;
-  background-color: transparent;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: background-color 0.3s;
-}
-
-.navbar {
-  padding: 0;
-  margin: 0;
-  a {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .owlet-logo-div {
-    margin-top: 0;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    background: url("../img/owlet-text.png");
-    &:hover {
-      .owlet-owl {
-        -ms-transform: rotate(360deg);
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-        transition: transform 1s;
-        transition-timing-function: ease;
-        -webkit-transition: -webkit-transform 0.5s;
-        -webkit-transition-timing-function: ease;
-      }
-    }
-  }
-  .menu {
-    padding-top: 10px;
-    overflow: hidden;
-    background-color: $purple;
-    a {
-      margin-top: 20px;
-      color: white;
-      text-decoration: none;
-      display: block;
-    }
-    a.branch-icon,
-    a.settings-icon,
-    a.about-icon {
-      margin: 10px;
-    }
-    a.branch-icon::before, a.branch-icon::after,
-    a.settings-icon::before,
-    a.about-icon::before, a.about-icon::after {
-      content: "";
-      display: block;
-      background-size: 100%;
-    }
-    a.branch-icon, a.branch-icon::before,
-    a.settings-icon, a.settings-icon::before,
-    a.about-icon, a.about-icon::before, {
-      width: 60px;
-      height: 60px;
-    }
-    a.branch-icon::after,
-    a.about-icon::after {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    a.settings-icon::before {
-      background-image: url('../img/icon3.png');
-    }
-    a.branch-icon::before {
-      background-image: url('../img/icon1.png');
-    }
-    a.branch-icon:hover::before {
-      background-image: url("../img/icon1-hover.gif");
-    }
-    a.branch-icon::after {
-      background-image: url("../img/icon1-hover.gif");
-    }
-    a.about-icon::before {
-      background-image: url('../img/icon4.png');
-    }
-    a.about-icon:hover::before {
-      background-image: url("../img/icon4-hover.png");
-    }
-    a.about-icon::after {
-      background-image: url("../img/icon4-hover.png");
-    }
-    a.about-icon,
-    a.branch-icon {
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .rc-popover-anchor-wrapper {
-      position: absolute;
-      left: 0;
-    }
-    .rc-popover-point {
-      opacity: 0.75;
-    }
   }
 }

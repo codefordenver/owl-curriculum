@@ -33,11 +33,14 @@
                       :on-failure      [:get-content-from-contentful-failure route-args]}}
         {:dispatch [route-dispatch route-param]}))))
 
-(rf/reg-event-db :get-content-from-contentful-failure
-  (fn [db _]
-    (assoc db :on-app-failure
-      {:show? true
-       :msg "Not able to retrieve content from contentful: Possibly missing ENV variables"})))
+
+(reg-setter
+  :get-content-from-contentful-failure
+  [:on-app-failure]
+  (constantly {:show? true
+               :msg   (str "Not able to retrieve content from Contentful: "
+                           "Possibly missing ENV variables")}))
+
 
 (rf/reg-event-fx
   :get-content-from-contentful-success
@@ -163,12 +166,6 @@
                        [:set-activity-in-view route-param])}))
 
 (rf/reg-event-fx
-  :show-temp-hello-world
-  (fn [_ _]
-    {:dispatch-n (list [:set-active-view :temp-hello-world-view]
-                       [:set-active-document-title! "Hello world!"])}))
-
-(rf/reg-event-fx
   :show-temp-print-errors
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :temp-print-errors-view]
@@ -187,9 +184,9 @@
                        [:set-active-document-title! "Create Slides-Based Coding Activity"])}))
 
 (rf/reg-event-fx
-  :show-create-embed-activity
+  :show-create-general-activity
   (fn [_ _]
-    {:dispatch-n (list [:set-active-view :create-embed-activity-view]
+    {:dispatch-n (list [:set-active-view :create-general-activity-view]
                        [:set-active-document-title! "Create Embedded Activity"])}))
 
 ; search & filter
