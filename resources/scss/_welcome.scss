@@ -1,3 +1,22 @@
+.welcome-wrap {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+  -webkit-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('../img/landing.png') center no-repeat, -webkit-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url('../img/landing.png') center no-repeat, -o-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url('../img/landing.png') center no-repeat, -moz-linear-gradient(to bottom, #1a0f2e, #493b68);
+  background: url('../img/landing.png') center no-repeat, linear-gradient(to bottom, #1a0f2e, #493b68);
+  background-size: auto 100%;
+  text-align: center;
+}
+
 .welcome-text {
   margin: 0 auto;
   margin-top: 1em;

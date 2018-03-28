@@ -30,14 +30,14 @@
            [login-component]]
           [:a.navigation.branch-icon {:href     "#/branches"
                                       :on-click #(toggle-lpsidebar)}
-           [:div.branch-icon]]
+           "Branches"]
           (when @(rf/subscribe [:my-id])
             [:a.navigation.settings-icon {:href "#/settings"
                                           :on-click #(toggle-lpsidebar)}
-             [:div.settings-icon]])
+             "Settings"])
           [:a.navigation.about-icon {:href     "#/about"
                                      :on-click #(toggle-lpsidebar)}
-           [:div.about-icon]]]
+           "About"]]
          (if @lpsidebar-state
            [:img#lpsidebar-opened.lpsidebar-toggle.hidden-md-up {:style {:left position?}
                                                                  :src      "img/owlet-tab-opened.png"

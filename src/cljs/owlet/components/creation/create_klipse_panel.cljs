@@ -14,7 +14,7 @@
      :reagent-render
      (fn [id]
       [:div.activity-creation-wrap
-       [:div.panel-heading.flexcontainer-wrap
+       [:div.panel-heading
         [h-box
          :size "1"
          :align :start

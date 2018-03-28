@@ -1,7 +1,17 @@
 .panel-heading {
   margin-left: -15px;
   margin-top: -10px !important;
+  -webkit-align-items: flex-start;
   align-items: flex-start;
+  margin-top: 0.6em;
+  font-size: 2rem;
+  font-weight: 400;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-align-items: center;
+  align-items: center;
   h2 {
     margin-bottom: 0;
   }
