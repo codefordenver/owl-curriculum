@@ -5,23 +5,42 @@
   align-items: center;
   justify-content: center;
   -webkit-justify-content: center;
-  flex-flow: row nowrap;
-  -webkit-flex-flow: row nowrap;
+  flex-flow: row wrap;
+  -webkit-flex-flow: row wrap;
   width: 100%;
   margin-top: 3em;
-  .welcome-image, .welcome-text {
+  .welcome-image {
     width: 35%;
   }
   .welcome-text {
-    font-style: italic;
+    width: 40%;
+  }
+  .welcome-image, .welcome-text {
+    @media screen and (max-width: 700px) {
+      width: 100%;
+    }
+  }
+  .welcome-image {
+    text-align: center;
+    img {
+      width: 50%;
+      margin-bottom: 2em;
+    }
+  }
+  .welcome-text {
     font-weight: 400;
+    margin-bottom: 1em;
     h1 {
-      font-size: 1.9em;
+      font-style: italic;
+      font-size: 1.5em;
       text-transform: uppercase;
       margin-bottom: 0.4em;
       mark {
         padding: .15em .55em .1em .25em;
         background-color: $purple-light;
+      }
+      @media screen and (min-width: 900px) {
+        font-size: 1.9em;
       }
     }
     p {
@@ -30,6 +49,18 @@
     }
     b {
       font-weight: 500;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    text-align: center;
+    padding: 1.5em;
+    padding-bottom: 0;
+    margin-top: 1em;
+    .welcome-text p {
+      margin-left: 0;
+    }
+    .welcome-image img {
+      margin-bottom: 0.75em;
     }
   }
 }
@@ -42,6 +73,10 @@
     padding: 0.6em 0 0.5em 2em;
     text-transform: uppercase;
     margin-bottom: 0;
+    @media screen and (max-width: 700px) {
+      text-align: center;
+      padding-left: 0;
+    }
   }
   .grid {
     margin-left: 25px;

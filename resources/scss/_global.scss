@@ -295,7 +295,7 @@ progress {
 
 .owlet-logo-div {
   padding: 0.4em 0.55em;
-  .owlet-owl {
+  .owlet-logo {
     width: 60px;
     transform: rotate(0deg);
     transition: transform 1s;
@@ -309,7 +309,7 @@ progress {
     border-radius: 50%;
   }
   &:hover {
-    .owlet-owl {
+    .owlet-logo {
       -ms-transform: rotate(360deg);
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg);
@@ -335,19 +335,6 @@ progress {
       line-height: 1em;
       margin: 0.7em 0 0 -0.8em;
       font-weight: 100;
-    }
-  }
-}
-
-// Top bar: small window size
-@media (max-width: 535px) {
-  .owlet-text, .search-container:focus-within ~ .navigation {
-    display: none;
-  }
-  .top-bar .search-container {
-    margin-right: .65em;
-    &:focus-within {
-      margin-right: 1.55em;
     }
   }
 }
@@ -397,6 +384,27 @@ progress {
     padding-left: 38px;
     &:focus {
       color: black;
+    }
+  }
+}
+
+// Top bar: small window size
+@media (max-width: 410px) {
+  .search-container {
+    display: none;
+  }
+}
+@media (max-width: 595px) {
+  .owlet-text, .search-container:focus-within ~ .navigation {
+    display: none;
+  }
+  .search-container {
+    margin-left: 0.2em;
+  }
+  .top-bar .search-container {
+    margin-right: .65em;
+    &:focus-within {
+      margin-right: 1.55em;
     }
   }
 }

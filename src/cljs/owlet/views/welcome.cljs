@@ -18,7 +18,8 @@
         (let [activities (take 3 @(rf/subscribe [:activities]))]
           [:div.welcome-container
            [:div.welcome-wrap
-            [:div.welcome-image ""]
+            [:div.welcome-image
+             [:img {:src "img/owlet-owl.png"}]]
             [:div.welcome-text
              [:h1 [:mark "Welcome to Owlet!"]]
              [:p "Explore free, self-guided projects for creative learning in "
