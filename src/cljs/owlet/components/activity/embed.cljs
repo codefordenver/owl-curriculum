@@ -6,8 +6,8 @@
             [clojure.string :refer [lower-case]]
             [reagent.core :as reagent]))
 
-(def indexh (atom 0))
-(def valid? (atom false))
+(def indexh (reagent/atom 0))
+(def valid? (reagent/atom false))
 
 (def klipse-container-class ".klipse-container")
 
@@ -50,20 +50,15 @@
       (reset! valid? true))))
 
 (defn handle-slide-change [e]
-  (js/console.log (> (.-newIndexh e) @indexh))
-  (js/console.log @indexh)
-  (when (> (.-newIndexh e) @indexh)
+  (when (> (? e.newIndexh) @indexh)
     (if @valid?
       (let [activity @(rf/subscribe [:activity-in-view])]
-        (js/console.log "Valid")
-        (reset! indexh (.-newIndexh e))
+        (reset! indexh (? e.newIndexh))
         (let [prev-expected-output (get-in activity [:fields :codeValidation (keyword (str (- @indexh 1)) :expectedOutput)])]
           (if-let [new-expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh)) :expectedOutput])]
             (reset! valid? (= prev-expected-output new-expected-output))
             (reset! valid? true))))
-      (do
-        (js/console.log "Not Valid")
-        (.preventDefault e)))))
+      (.preventDefault e))))
 
 (defn activity-embed [embed tags preview]
   (reagent/create-class
