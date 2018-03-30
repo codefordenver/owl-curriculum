@@ -83,7 +83,7 @@
        :dispatch
        [:show-bg-img-upload false]})))
 
-
+inde
 (rf/reg-event-fx
   :user-background-saved
   (fn [_ [_ {err :error-reason} new-image-info old-image-info]]

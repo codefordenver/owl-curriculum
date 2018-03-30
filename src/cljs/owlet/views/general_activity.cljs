@@ -6,8 +6,7 @@
             [owlet.components.activity.challenge :refer [activity-challenge]]
             [owlet.components.activity.image-gallery :refer [activity-image-gallery]]
             [owlet.components.back :refer [back]]
-            [re-frame.core :as rf]
-            [owlet.components.activity.comments :refer [activity-comments]]))
+            [re-frame.core :as rf]))
 
 (defn general-activity-view
   "General activity" []
@@ -46,6 +45,4 @@
                (when challenge
                 [activity-challenge challenge])
                (when inspiration
-                [activity-inspiration inspiration])]
-              [:div.activity-content.col-xs-12.col-lg-8
-                [activity-comments]]]]))))))
+                [activity-inspiration inspiration])]]]))))))

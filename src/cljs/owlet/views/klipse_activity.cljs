@@ -6,8 +6,7 @@
             [owlet.components.activity.inspiration :refer [activity-inspiration]]
             [owlet.components.activity.challenge :refer [activity-challenge]]
             [owlet.components.back :refer [back]]
-            [re-frame.core :as rf]
-            [owlet.components.activity.comments :refer [activity-comments]]))
+            [re-frame.core :as rf]))
 
 (defn klipse-activity-view []
   (let [activity @(rf/subscribe [:activity-in-view])]
@@ -42,6 +41,4 @@
                 [:mark "Edit this code:"]]
                [klipse-component language code true]]
               [:div.activity-content.col-xs-12
-               [activity-info platform  summary why preRequisites materials]]
-              [:div.activity-content.col-xs-12
-                [activity-comments]]]]))))))
+               [activity-info platform  summary why preRequisites materials]]]]))))))

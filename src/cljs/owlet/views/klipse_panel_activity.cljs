@@ -5,8 +5,7 @@
             [owlet.components.activity.inspiration :refer [activity-inspiration]]
             [owlet.components.activity.challenge :refer [activity-challenge]]
             [owlet.components.back :refer [back]]
-            [re-frame.core :as rf]
-            [owlet.components.activity.comments :refer [activity-comments]]))
+            [re-frame.core :as rf]))
 
 (defn klipse-panel-activity-view []
   (let [activity @(rf/subscribe [:activity-in-view])]
@@ -37,6 +36,4 @@
                   ^{:key id}
                   [klipse-panel-component panel])]
               [:div.activity-content.col-xs-12.col-lg-4
-                [activity-info platform summary nil preRequisites nil]]
-              [:div.activity-content.col-xs-12.col-lg-8
-                [activity-comments]]]]))))))
+                [activity-info platform summary nil preRequisites nil]]]]))))))
