@@ -1,7 +1,6 @@
 (ns owlet.components.activity.embed
   (:require-macros [purnam.core :refer [?]])
-  (:require [re-com.core :as re-com :refer-macros [handler-fn]]
-            [re-com.popover]
+  (:require [re-com.popover]
             [cljsjs.bootstrap]
             [re-frame.core :as rf]
             [clojure.string :refer [lower-case]]
@@ -27,7 +26,7 @@
         (.remove (.-classList next-button) "animate")))))
 
 (add-watch valid? :is-valid
-  (fn [key atom old-state new-state]
+  (fn [_ _ old-state new-state]
     (when (not= old-state new-state)
       (let [next-button (js/document.getElementById "next-slide")]
         (if new-state
@@ -65,9 +64,9 @@
   (reagent/create-class
     {:component-did-mount
      (fn []
-       (let [next-button (js/document.getElementById "next-slide")
-             prev-button (js/document.getElementById "prev-slide")]
-         (.addEventListener next-button "click" #(click-handler true))
+       (when-let [next-button (js/document.getElementById "next-slide")]
+         (.addEventListener next-button "click" #(click-handler true)))
+       (when-let [prev-button (js/document.getElementById "prev-slide")]
          (.addEventListener prev-button "click" #(click-handler false)))
        (js/srcDoc.set (js/document.getElementById "klipseSlides"))
        (.addEventListener js/document "klipse-snippet-evaled" handle-eval)
