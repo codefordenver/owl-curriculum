@@ -17,22 +17,6 @@
   }
 }
 
-.branch-activities-wrap {
-  margin: 15px 20px 0 25px;
-  @media screen and (min-width: 780px) {
-    margin-right: 10px;
-  }
-  h2 {
-    font-size: 2.4rem;
-    margin: 1.2em 0 .1em 0;
-    text-transform: uppercase;
-  }
-  h3 {
-    font-size: 1.9rem;
-    margin-bottom: 1em;
-  }
-}
-
 .grid {
   font-size: 1.2em;
   margin-bottom: 2em;
@@ -52,6 +36,22 @@
   @media screen and (max-width: 649px) {
     width: 94%;
     margin: 1.7em 0.6em 0 0.9em;
+  }
+}
+
+.branch-activities-wrap {
+  margin: 15px 20px 0 25px;
+  @media screen and (min-width: 780px) {
+    margin-right: 10px;
+  }
+  h2 {
+    font-size: 2.4rem;
+    margin: 1.2em 0 .1em 0;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-size: 1.9rem;
+    margin-bottom: 1em;
   }
 }
 

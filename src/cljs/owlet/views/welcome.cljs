@@ -1,14 +1,23 @@
 (ns owlet.views.welcome
-  (:require
-    [owlet.components.login :refer [login-component]]
-    [re-frame.core :as rf]))
+  (:require [owlet.components.activity-thumbnail :refer [activity-thumbnail]]
+            [re-frame.core :as rf]))
 
 (defn welcome-view []
-  [:div.welcome-wrap
-    [:div.user-type
-      [:p#largetext.text-shadow "Welcome to Owlet"]
-      [:div.welcome-text.text-shadow
-        [:p "Explore some of the awesome things you can do with multimedia & coding!"]
-        [:p "¡Bienvenidx a Owlet! Explora lo que puedes hacer con programación y con multimedios."]]
-      [:a {:href "#/branches"}
-        [:button.btn.btn-branches "Go to Activities"]]]])
+  (let [activities @(rf/subscribe [:activities])]
+    [:div.welcome-container
+     [:div.welcome-wrap
+      [:div.welcome-image ""]
+      [:div.welcome-text
+       [:h1 [:mark "Welcome to Owlet!"]]
+       [:p "Explore free, self-guided projects for creative learning in "
+        [:b "STEM:"]
+        " Science, Technology, Engineering, Art, and Math!"]
+       [:p "Explora proyectos creativos para aprender ciencia, tecnología, arte y mate. ¡Gratis!"]]]
+     [:div.featured-projects-wrap
+      [:h2 "Featured Projects"]
+      [:div.grid
+       (for [activity activities
+             :let [fields (:fields activity)
+                   entry-id (get-in activity [:sys :id])]]
+         ^{:key [entry-id (gensym "key-")]}
+         [activity-thumbnail fields entry-id "featured"])]]]))

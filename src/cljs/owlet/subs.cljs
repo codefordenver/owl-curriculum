@@ -16,6 +16,8 @@
 
 (reg-getter :activity-branches [:activity-branches])
 
+(reg-getter :activities [:activities])
+
 (reg-getter :activities-by-branch [:activities-by-branch])
 
 (reg-getter :activities-by-filter [:activities-by-filter])
