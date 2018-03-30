@@ -50,15 +50,19 @@
       (reset! valid? true))))
 
 (defn handle-slide-change [e]
+  (prn (> (.-newIndexh e) @indexh))
   (when (> (.-newIndexh e) @indexh)
     (if @valid?
       (let [activity @(rf/subscribe [:activity-in-view])]
+        (prn "Valid")
         (reset! indexh (.-newIndexh e))
         (let [prev-expected-output (get-in activity [:fields :codeValidation (keyword (str (- @indexh 1)) :expectedOutput)])]
           (if-let [new-expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh)) :expectedOutput])]
             (reset! valid? (= prev-expected-output new-expected-output))
             (reset! valid? true))))
-      (.preventDefault e))))
+      (do
+        (prn "Not Valid")
+        (.preventDefault e)))))
 
 (defn activity-embed [embed tags preview]
   (reagent/create-class
