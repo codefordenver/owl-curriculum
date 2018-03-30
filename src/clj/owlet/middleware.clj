@@ -6,6 +6,8 @@
             [ring.middleware.cors :refer [wrap-cors]]
             [ring-ttl-session.core :refer [ttl-memory-store]]
             [ring.middleware.json :refer [wrap-json-response]]
+            [ring.middleware.gzip :refer [wrap-gzip]]
+            [ring.middleware.ssl :refer [wrap-ssl-redirect]]
             [ring.middleware.format :refer [wrap-restful-format]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [clojure.tools.logging :as log])
@@ -64,4 +66,5 @@
       (wrap-cors :access-control-allow-origin [#".+"]
                  :access-control-allow-methods [:get :post :put :delete])
       wrap-context
-      wrap-internal-error))
+      wrap-internal-error
+      wrap-gzip))

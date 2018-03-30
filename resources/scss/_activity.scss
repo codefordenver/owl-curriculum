@@ -32,6 +32,9 @@
   h1 {
     font-style: italic;
   }
+  strong {
+    font-weight: 500;
+  }
 }
 
 .activity-title-wrap {
@@ -103,8 +106,8 @@
   padding: 5px;
   background-color: $dark-gray;
   color: white;
-  display: -webkit-flex;
   display: flex;
+  display: -webkit-flex;
   -webkit-align-items: center;
   align-items: center;
   -webkit-flex-flow: row nowrap;
@@ -121,16 +124,10 @@
   border: 2px solid black;
 }
 
-.activity-comments-wrap {
-  background: #0C171B;
-  padding: 10px;
-  margin-bottom: 2em;
-}
-
 .img-gallery {
   width: 100%;
-  display: -webkit-flex;
   display: flex;
+  display: -webkit-flex;
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
 }
@@ -145,13 +142,13 @@
   float: left;
   margin: 0.66%;
   height: 205px;
-  @media (max-width: 1200px) {
+  @media screen and (max-width: 1200px) {
     height: 140px;
   }
-  @media (max-width: 642px) {
+  @media screen and (max-width: 642px) {
     height: 89px;
   }
-  @media (max-width: 375px) {
+  @media screen and (max-width: 375px) {
     height: 76px;
   }
 }

@@ -41,10 +41,12 @@
                  [compojure "1.5.2"]
                  [yogthos/config "0.8"]       ; For env in owlet-ui.server
                  [ring "1.4.0"]               ; For owlet-ui.server & .handler
-                 [cljsjs/jquery "2.2.2-0"]
+                 [cljsjs/jquery "2.2.4-0"]
                  [cljsjs/auth0 "7.0.4-0"]
                  [cljsjs/auth0-lock "10.4.0-0"]
                  [cljsjs/bootstrap "3.3.6-1"]
+                 [cljsjs/chartjs "2.6.0-0"]
+                 [cljsjs/simplemde "1.11.2-0"]
                  [cljsjs/firebase "4.9.0-0"]
                  [cljsjs/showdown "1.4.2-0"]
                  [cljsjs/toastr "2.1.2-0"]
@@ -57,16 +59,16 @@
                  [day8.re-frame/http-fx "0.1.3"]
                  [enlive "1.1.6"]
                  [ring-middleware-format "0.7.0"]
+                 [bk/ring-gzip "0.3.0"]
                  [ring-webjars "0.1.1"]
                  [ring-cors "0.1.8"]
                  [ring/ring-json "0.4.0"]
+                 [ring/ring-ssl "0.3.0"]
                  [cheshire "5.6.3"]
                  [environ "1.0.2"]
                  [metosin/compojure-api "1.1.9"]
                  [nilenso/mailgun "0.2.3"]
-                 [funcool/cuerdas "2.0.3"]
-                 [cljsjs/chartjs "2.6.0-0"]
-                 [cljsjs/simplemde "1.11.2-0"]]
+                 [funcool/cuerdas "2.0.3"]]
 
   :min-lein-version "2.0.0"
 

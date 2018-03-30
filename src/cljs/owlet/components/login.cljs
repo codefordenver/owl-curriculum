@@ -6,7 +6,7 @@
 
 (defn login-button
   []
-  [:button.btn.btn-login.btn-sm
+  [:button.btn-login
    {:type     "button"
     :on-click #(.show auth0/lock)}
    "Log in"])
@@ -14,7 +14,7 @@
 
 (defn logout-button
   []
-  [:button.btn.btn-logout.btn-sm
+  [:button.btn-logout
    {:type     "button"
     :on-click #(rf/dispatch [:log-out])}
    "Log out"])
@@ -25,4 +25,3 @@
   (if @(rf/subscribe [:my-id])
     [logout-button]
     [login-button]))
-

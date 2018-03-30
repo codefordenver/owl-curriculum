@@ -1,7 +1,6 @@
 (ns owlet.components.activity.embed
   (:require-macros [purnam.core :refer [?]])
-  (:require [re-com.core :as re-com :refer-macros [handler-fn]]
-            [re-com.popover]
+  (:require [re-com.popover]
             [cljsjs.bootstrap]
             [re-frame.core :as rf]
             [clojure.string :refer [lower-case]]
@@ -27,7 +26,7 @@
         (.remove (.-classList next-button) "animate")))))
 
 (add-watch valid? :is-valid
-  (fn [key atom old-state new-state]
+  (fn [_ _ old-state new-state]
     (when (not= old-state new-state)
       (let [next-button (js/document.getElementById "next-slide")]
         (if new-state
@@ -42,7 +41,7 @@
 
 (defn handle-eval [e]
   (let [activity @(rf/subscribe [:activity-in-view])
-        output (clojure.string/trim (clojure.string/replace e.detail.resultElement.display.wrapper.innerText "OUTPUT:" ""))
+        output (clojure.string/trim (clojure.string/replace (? e.detail.resultElement.display.wrapper.innerText) "OUTPUT:" ""))
         input (? e.detail.srcCode)
         unacceptable-inputs (get-in activity [:fields :codeValidation (keyword (str @indexh)) :unacceptableInputs])]
     (if-let [expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh)) :expectedOutput])]
@@ -51,10 +50,10 @@
       (reset! valid? true))))
 
 (defn handle-slide-change [e]
-  (when (> (.-newIndexh e) @indexh)
+  (when (> (? e.newIndexh) @indexh)
     (if @valid?
       (let [activity @(rf/subscribe [:activity-in-view])]
-        (reset! indexh (.-newIndexh e))
+        (reset! indexh (? e.newIndexh))
         (let [prev-expected-output (get-in activity [:fields :codeValidation (keyword (str (- @indexh 1)) :expectedOutput)])]
           (if-let [new-expected-output (get-in activity [:fields :codeValidation (keyword (str @indexh)) :expectedOutput])]
             (reset! valid? (= prev-expected-output new-expected-output))
@@ -65,9 +64,9 @@
   (reagent/create-class
     {:component-did-mount
      (fn []
-       (let [next-button (js/document.getElementById "next-slide")
-             prev-button (js/document.getElementById "prev-slide")]
-         (.addEventListener next-button "click" #(click-handler true))
+       (when-let [next-button (js/document.getElementById "next-slide")]
+         (.addEventListener next-button "click" #(click-handler true)))
+       (when-let [prev-button (js/document.getElementById "prev-slide")]
          (.addEventListener prev-button "click" #(click-handler false)))
        (js/srcDoc.set (js/document.getElementById "klipseSlides"))
        (.addEventListener js/document "klipse-snippet-evaled" handle-eval)
@@ -98,5 +97,5 @@
                "TAGS: "]
              (for [tag tags :let [name (:name tag)]]
                  ^{:key (gensym "tag-")}
-                 [:div.tag.inactive {:on-click #(rf/dispatch [:show-tag name])}
+                 [:div.tag.active {:on-click #(rf/dispatch [:show-tag name])}
                    [:span name]])])]))}))
