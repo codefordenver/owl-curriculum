@@ -6,8 +6,8 @@
             [clojure.string :refer [lower-case]]
             [reagent.core :as reagent]))
 
-(def indexh (reagent/atom 0))
-(def valid? (reagent/atom false))
+(def indexh (atom 0))
+(def valid? (atom false))
 
 (def klipse-container-class ".klipse-container")
 
