@@ -286,6 +286,9 @@ progress {
   position: fixed;
   width: 100%;
   z-index: 10;
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 // Logo
@@ -332,6 +335,19 @@ progress {
       line-height: 1em;
       margin: 0.7em 0 0 -0.8em;
       font-weight: 100;
+    }
+  }
+}
+
+// Top bar: small window size
+@media (max-width: 535px) {
+  .owlet-text, .search-container:focus-within ~ .navigation {
+    display: none;
+  }
+  .top-bar .search-container {
+    margin-right: .65em;
+    &:focus-within {
+      margin-right: 1.55em;
     }
   }
 }
