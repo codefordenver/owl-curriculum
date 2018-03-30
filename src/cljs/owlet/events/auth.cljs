@@ -1,6 +1,6 @@
 (ns owlet.events.auth
   (:require [re-frame.core :as rf]
-            [owlet.rf-util :refer [reg-setter]]
+            [owlet.rf-util :refer [reg-setter fx-pipeline]]
             [owlet.firebase :as fb]
             [owlet.events.app :as app]))
 
@@ -9,7 +9,10 @@
 
 (reg-setter :firebase-users-change [:users])
 
-(reg-setter :private [:my-identity :private])
+(reg-setter
+  :private
+  [:my-identity :private]
+  :interceptors fx-pipeline)
 
 
 (rf/reg-event-fx
