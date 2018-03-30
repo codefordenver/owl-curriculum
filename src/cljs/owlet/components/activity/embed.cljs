@@ -51,6 +51,7 @@
 
 (defn handle-slide-change [e]
   (js/console.log (> (.-newIndexh e) @indexh))
+  (js/console.log @indexh)
   (when (> (.-newIndexh e) @indexh)
     (if @valid?
       (let [activity @(rf/subscribe [:activity-in-view])]
