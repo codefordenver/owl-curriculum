@@ -29,6 +29,8 @@
   (fn [_ _ old-state new-state]
     (when (not= old-state new-state)
       (let [next-button (js/document.getElementById "next-slide")]
+        (prn old-state)
+        (prn new-state)
         (if new-state
           (doto (.-classList next-button)
             (.remove "inactive")
