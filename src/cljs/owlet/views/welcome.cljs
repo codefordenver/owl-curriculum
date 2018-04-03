@@ -15,7 +15,7 @@
                      #js {:itemSelector ".grid-item"}))
       :reagent-render
       (fn []
-        (let [activities (take 3 @(rf/subscribe [:activities]))]
+        (let [activities (take 3 (shuffle @(rf/subscribe [:activities])))]
           [:div.welcome-container
            [:div.welcome-wrap
             [:div.welcome-image
@@ -24,7 +24,8 @@
              [:h1 [:mark "Welcome to Owlet!"]]
              [:p "Explore free, self-guided projects for creative learning in "
               [:b "STEM: Science, Technology, Engineering, Art, and Math!"]]
-             [:p "Explora proyectos creativos para aprender ciencia, tecnología, arte y mate. ¡Gratis!"]]]
+             [:p "Explora proyectos creativos para aprender ciencia, tecnología, arte y mate. ¡Gratis!"]
+             [:button.sign-up "Sign Up"]]]
            [:div.featured-projects-wrap
             [:h2 "Featured Projects"]
             [:div.grid
