@@ -125,4 +125,8 @@
   background-color: $aqua;
   color: white;
   border: 2px solid $aqua;
+  a {
+    color: white;
+    text-decoration: none;
+  }
 }
