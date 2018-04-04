@@ -5,63 +5,124 @@
   align-items: center;
   justify-content: center;
   -webkit-justify-content: center;
-  flex-flow: column nowrap;
-  -webkit-flex-flow: column nowrap;
-  position: absolute;
+  flex-flow: row wrap;
+  -webkit-flex-flow: row wrap;
   width: 100%;
-  height: 100%;
-  background: url('../img/landing.png') center no-repeat, -webkit-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: url('../img/landing.png') center no-repeat, -o-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: url('../img/landing.png') center no-repeat, -moz-linear-gradient(to bottom, #1a0f2e, #493b68);
-  background: url('../img/landing.png') center no-repeat, linear-gradient(to bottom, #1a0f2e, #493b68);
-  background-size: auto 100%;
-  text-align: center;
+  margin-top: 3em;
+  .welcome-image {
+    width: 35%;
+  }
+  .welcome-text {
+    width: 40%;
+  }
+  .welcome-image, .welcome-text {
+    @media screen and (max-width: 700px) {
+      width: 100%;
+    }
+  }
+  .welcome-image {
+    text-align: center;
+    img {
+      width: 50%;
+      margin-bottom: 2em;
+    }
+  }
+  .welcome-text {
+    font-weight: 400;
+    margin-bottom: 1em;
+    h1 {
+      font-style: italic;
+      font-size: 1.5em;
+      text-transform: uppercase;
+      margin-bottom: 0.4em;
+      mark {
+        padding: .15em .55em .1em .25em;
+        background-color: $purple-light;
+      }
+      @media screen and (min-width: 900px) {
+        font-size: 1.9em;
+      }
+    }
+    p {
+      color: $purple-light;
+      margin-left: 0.4em;
+    }
+    b {
+      font-weight: 500;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    text-align: center;
+    padding: 1.5em;
+    padding-bottom: 0;
+    margin-top: 1em;
+    .welcome-text p {
+      margin-left: 0;
+    }
+    .welcome-image img {
+      margin-bottom: 0.75em;
+    }
+  }
 }
 
-.welcome-text {
-  margin: 0 auto;
-  margin-top: 1em;
-  margin-bottom: 2em;
-  color: white;
-  width: 80%;
+.featured-projects-wrap {
+  h2 {
+    color: $purple-light;
+    font-style: italic;
+    background-color: #E8E8E8;
+    padding: 0.6em 0 0.5em 2em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    @media screen and (max-width: 700px) {
+      text-align: center;
+      padding-left: 0;
+    }
+  }
+  .grid {
+    margin-left: 25px;
+    @media screen and (min-width: 1300px) {
+      margin-left: 35px;
+    }
+    @media screen and (max-width: 879px) {
+      margin-left: 10px;
+    }
+    @media screen and (max-width: 779px) {
+      margin-left: 4px;
+    }
+  }
+  .grid-item {
+    width: 30%;
+    margin: 1.7em 0.6em 0 0.9em;
+    @media screen and (min-width: 1300px) {
+      margin: 1.7em 1em 0 0.8em;
+    }
+    @media screen and (max-width: 1080px) {
+      width: 29%;
+    }
+    @media screen and (max-width: 800px) {
+      width: 94%;
+    }
+  }
 }
 
-.user-type {
-  position: absolute;
-  left: 50vw;
-  top: 28vh;
-  z-index: 1;
-  text-align: center;
+.btn-signup {
+  font-size: 1.1em;
+  margin-left: 0.4em;
+  padding: 0.35em 0.5em;
+  background-color: none;
+  color: $purple-light;
+  border: 2px solid $purple-light;
+  &:hover {
+    background-color: $purple-light;
+    color: white;
+  }
 }
 
-#largetext {
-  color: white;
-  font-size: 5vw;
-  margin: 0;
-}
-
-.btn-branches {
+.btn-explore {
+  font-size: 1.1em;
+  margin-left: 1em;
+  padding: 0.35em 0.5em;
   background-color: $aqua;
   color: white;
-  margin-bottom: 1em;
-  &:hover {
-    opacity: 0.75;
-  }
-}
-
-// landing page media queries
-
-@media screen and (max-width: 1000px) {
-  .flex-item {
-    display: none;
-  }
-  .user-type {
-    position: static;
-  }
-  #largetext {
-    font-size: 10vw;
-  }
-  #smalltext {
-    font-size: 4vw;
-  }
+  border: 2px solid $aqua;
 }

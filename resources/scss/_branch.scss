@@ -17,8 +17,16 @@
   }
 }
 
+.grid {
+  font-size: 1.2em;
+  margin-bottom: 2em;
+}
+
 .branch-activities-wrap {
   margin: 15px 20px 0 25px;
+  @media screen and (max-width: 779px) {
+    margin-left: 10px;
+  }
   @media screen and (min-width: 780px) {
     margin-right: 10px;
   }
@@ -30,28 +38,6 @@
   h3 {
     font-size: 1.9rem;
     margin-bottom: 1em;
-  }
-}
-
-.grid {
-  font-size: 1.2em;
-  margin-bottom: 2em;
-}
-
-.grid-item {
-  width: 22%;
-  margin: 1.9em 0.8em 0 0.9em;
-  @media screen and (max-width: 1268px) {
-    width: 30%;
-    margin: 1.7em 0.6em 0 0.9em;
-  }
-  @media screen and (max-width: 1032px) {
-    width: 45%;
-    margin: 1.7em 0.6em 0 0.9em;
-  }
-  @media screen and (max-width: 649px) {
-    width: 94%;
-    margin: 1.7em 0.6em 0 0.9em;
   }
 }
 
@@ -70,6 +56,23 @@ i.back {
 
 .pushed-left {
   padding-left: 15px;
+}
+
+.grid-item {
+  width: 22%;
+  margin: 1.9em 0.8em 0 0.9em;
+  @media screen and (max-width: 1268px) {
+    width: 30%;
+    margin: 1.7em 0.6em 0 0.9em;
+  }
+  @media screen and (max-width: 1032px) {
+    width: 45%;
+    margin: 1.7em 0.6em 0 0.9em;
+  }
+  @media screen and (max-width: 649px) {
+    width: 94%;
+    margin: 1.7em 0.4em 0 0.9em;
+  }
 }
 
 .tag {
@@ -144,7 +147,7 @@ span.platform-details {
         opacity: 1;
       }
     }
-    .title {
+    .title-wrap {
       position: absolute;
       bottom: 0;
       left: 0;
