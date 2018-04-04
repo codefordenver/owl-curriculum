@@ -47,7 +47,7 @@
   [views view-name])
 
 (defn view []
-  (auth0/on-authenticated auth0/lock
+  (auth0/on-authenticated (auth0/lock "login")
                           config/auth0-del-opts-for-firebase
                           :auth0-authenticated
                           :auth0-error)

@@ -3,12 +3,18 @@
             [owlet.auth0 :as auth0]
             [owlet.firebase :as fb]))
 
+(defn signup-button
+  []
+  [:button.btn-signup
+   {:type     "button"
+    :on-click #(.show (auth0/lock "signup"))}
+   "Sign Up"])
 
 (defn login-button
   []
   [:button.btn-login
    {:type     "button"
-    :on-click #(.show auth0/lock)}
+    :on-click #(.show (auth0/lock "login"))}
    "Log in"])
 
 

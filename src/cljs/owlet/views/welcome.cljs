@@ -1,5 +1,6 @@
 (ns owlet.views.welcome
   (:require [owlet.components.activity-thumbnail :refer [activity-thumbnail]]
+            [owlet.components.login :refer [signup-button]]
             [re-frame.core :as rf]
             [reagent.core :as reagent]))
 
@@ -25,7 +26,9 @@
              [:p "Explore free, self-guided projects for creative learning in "
               [:b "STEM: Science, Technology, Engineering, Art, and Math!"]]
              [:p "Explora proyectos creativos para aprender ciencia, tecnología, arte y mate. ¡Gratis!"]
-             [:button.sign-up "Sign Up"]]]
+             [signup-button]
+             [:button.btn-explore {:href "/#/branches"}
+              "Explore"]]]
            [:div.featured-projects-wrap
             [:h2 "Featured Projects"]
             [:div.grid

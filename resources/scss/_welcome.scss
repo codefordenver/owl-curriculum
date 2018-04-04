@@ -105,17 +105,24 @@
   }
 }
 
-.btn-branches {
-  background-color: $aqua;
-  color: white;
-  margin-bottom: 1em;
+.btn-signup {
+  font-size: 1.1em;
+  margin-left: 0.4em;
+  padding: 0.35em 0.5em;
+  background-color: none;
+  color: $purple-light;
+  border: 2px solid $purple-light;
   &:hover {
-    opacity: 0.75;
+    background-color: $purple-light;
+    color: white;
   }
 }
 
-.sign-up {
-  background-color: $dark-aqua;
+.btn-explore {
+  font-size: 1.1em;
+  margin-left: 1em;
+  padding: 0.35em 0.5em;
+  background-color: $aqua;
   color: white;
-  border: 1px solid $dark-aqua;
+  border: 2px solid $aqua;
 }
