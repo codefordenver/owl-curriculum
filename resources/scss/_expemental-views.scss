@@ -1,19 +1,56 @@
 .secret-key-exchange-experimental-view {
-  .prime-base-wrapper {
-    width: 250px;
-  }
+  width: 100%;
   .flex-container {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
-    .form-control {
-      padding: 0.75rem;
-      font-size: 3rem;
-    }
+    justify-content: space-between;
   }
   p .public {
     color: $aqua;
     font-weight: 500;
+  }
+  .form-control {
+    padding: 0.75rem 0 0.75rem 0.75rem;
+    font-size: 3rem;
+    text-align: center;
+  }
+  .input-group {
+    text-align: center;
+  }
+  #diffie-hellman-grid {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template: 1fr 3em repeat(8, 1fr) / repeat(5, 1fr) 2em repeat(5, 1fr);
+    .prime-wrapper {
+      grid-area: 1 / 5 / 2 / 6;
+    }
+    .base-wrapper {
+      grid-area: 1 / 7 / 2 / 8;
+    }
+    .alice-name {
+      grid-area: 2 / 1 / 3 / 3;
+      margin-top: auto;
+    }
+    .alice-secret-wrapper-1 {
+      grid-area: 3 / 1 / 4 / 2;
+    }
+    .alice-base-wrapper {
+      grid-area: 4 / 1 / 5 / 2;
+    }
+    .alice-secret-wrapper-2 {
+      grid-area: 4 / 2 / 5 / 3;
+    }
+    .alice-prime-1 {
+      grid-area: 4 / 3 / 5 / 4;
+    }
+    .alice-equal-1 {
+      grid-area: 4 / 4 / 5 / 5;
+    }
+    .alice-number {
+      grid-area: 4 / 5 / 5 / 6;
+    }
   }
 }

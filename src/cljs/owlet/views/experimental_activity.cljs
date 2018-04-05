@@ -31,5 +31,5 @@
              [:div.activity-wrap
               [:div.activity-header.col-xs-12
                [activity-title title author]]
-              [:div.activity-content.col-xs-12.col-lg-8
+              [:div.activity-content.col-xs-12
                [secret-key-exchange/activity]]]]))))))
