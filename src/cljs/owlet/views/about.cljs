@@ -2,8 +2,7 @@
   (:require [owlet.components.email-notification :refer [email-notification]]
             [cljsjs.chartjs]
             [reagent.core :as reagent]
-            [ajax.core :refer [GET]]
-            [owlet.config :as config]))
+            [ajax.core :refer [GET]]))
 
 (def stats-endpoint "/api/github/stats")
 
