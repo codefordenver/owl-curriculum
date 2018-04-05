@@ -1,10 +1,9 @@
 .secret-key-exchange-experimental-view {
   width: 100%;
-  .flex-container {
+  .flex {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
   }
   p .public {
     color: $aqua;
@@ -12,8 +11,11 @@
   }
   .form-control {
     padding: 0.75rem 0 0.75rem 0.75rem;
-    font-size: 3rem;
+    font-size: 2rem;
     text-align: center;
+  }
+  .form-control.known {
+    padding-right: 0.75rem;
   }
   .input-group {
     text-align: center;
@@ -23,24 +25,49 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template: 1fr 3em repeat(8, 1fr) / repeat(5, 1fr) 2em repeat(5, 1fr);
-    .prime-wrapper {
+    grid-template: 1fr 4em 1fr 1fr 1fr repeat(5, 1fr) / repeat(5, 1fr) 1.5em 1.5em repeat(5, 1fr);
+    .pa {
+      padding: 0.5em;
+    }
+    .exp {
+      align-self: flex-start;
+      .form-control {
+        font-size: 1.5rem;
+      }
+    }
+    .mod {
+      margin: 0.5em 0.7em 1em 0.65em;
+      font-size: 2em;
+    }
+    .equal-sign {
+      margin-bottom: 0.75em;
+      font-size: 2em;
+    }
+    .divider-1 {
+      grid-area: 2 / 7 / span 3 / 8;
+      border-left: 2px dashed $magenta;
+    }
+    .divider-2 {
+      grid-area: 6 / 7 / 7 / 8;
+      border-left: 2px dashed $magenta;
+    }
+    .prime-input {
       grid-area: 1 / 5 / 2 / 6;
     }
-    .base-wrapper {
-      grid-area: 1 / 7 / 2 / 8;
+    .base-input {
+      grid-area: 1 / 8 / 2 / 9;
     }
     .alice-name {
       grid-area: 2 / 1 / 3 / 3;
       margin-top: auto;
     }
-    .alice-secret-wrapper-1 {
+    .alice-secret-1 {
       grid-area: 3 / 1 / 4 / 2;
     }
-    .alice-base-wrapper {
+    .alice-base {
       grid-area: 4 / 1 / 5 / 2;
     }
-    .alice-secret-wrapper-2 {
+    .alice-secret-2 {
       grid-area: 4 / 2 / 5 / 3;
     }
     .alice-prime-1 {
@@ -51,6 +78,58 @@
     }
     .alice-number {
       grid-area: 4 / 5 / 5 / 6;
+    }
+    .alice-bob-number {
+      grid-area: 6 / 1 / 7 / 2;
+    }
+    .alice-secret-3 {
+      grid-area: 6 / 2 / 7 / 3;
+    }
+    .alice-prime-2 {
+      grid-area: 6 / 3 / 7 / 4;
+    }
+    .alice-equal-2 {
+      grid-area: 6 / 4 / 7 / 5;
+    }
+    .alice-shared-secret {
+      grid-area: 6 / 5 / 7 / 6;
+    }
+    .bob-name {
+      grid-area: 2 / -2 / 3 / -4;
+      margin-top: auto;
+    }
+    .bob-secret-1 {
+      grid-area: 3 / -3 / 4 / -4;
+    }
+    .bob-base {
+      grid-area: 4 / -3 / 5 / -4;
+    }
+    .bob-secret-2 {
+      grid-area: 4 / -2 / 5 / -3;
+    }
+    .bob-prime-1 {
+      grid-area: 4 / -1 / 5 / -2;
+    }
+    .bob-equal-1 {
+      grid-area: 4 / -4 / 5 / -5;
+    }
+    .bob-number {
+      grid-area: 4 / -5 / 5 / -6;
+    }
+    .bob-alice-number {
+      grid-area: 6 / -3 / 7 / -4;
+    }
+    .bob-secret-3 {
+      grid-area: 6 / -2 / 7 / -3;
+    }
+    .bob-prime-2 {
+      grid-area: 6 / -1 / 7 / -2;
+    }
+    .bob-equal-2 {
+      grid-area: 6 / -4 / 7 / -5;
+    }
+    .bob-shared-secret {
+      grid-area: 6 / -5 / 7 / -6;
     }
   }
 }
