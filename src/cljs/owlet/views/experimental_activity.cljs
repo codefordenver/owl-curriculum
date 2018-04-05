@@ -4,6 +4,7 @@
             [owlet.components.activity.inspiration :refer [activity-inspiration]]
             [owlet.components.activity.challenge :refer [activity-challenge]]
             [owlet.components.back :refer [back]]
+            [owlet.views.experimental.secret-key-exchange :as secret-key-exchange]
             [re-frame.core :as rf]))
 
 (defn experimental-activity-view []
@@ -23,10 +24,12 @@
                         summary
                         preview
                         preRequisites
+                        json
                         platform]} fields]
             (rf/dispatch [:set-active-document-title! title])
             [:div.activity
              [:div.activity-wrap
               [:div.activity-header.col-xs-12
                [activity-title title author]]
-              [:div.activity-content.col-xs-12.col-lg-8]]]))))))
+              [:div.activity-content.col-xs-12.col-lg-8
+               [secret-key-exchange/activity]]]]))))))
