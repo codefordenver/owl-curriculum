@@ -36,8 +36,9 @@
       }
     }
     .mod {
-      margin: 0.5em 0.7em 1em 0.65em;
+      margin: 0.5em 0 1em 0;
       font-size: 2em;
+      flex: 1;
     }
     .equal-sign {
       margin-bottom: 0.75em;
@@ -69,6 +70,7 @@
     }
     .alice-secret-2 {
       grid-area: 4 / 2 / 5 / 3;
+      justify-content: flex-start;
     }
     .alice-prime-1 {
       grid-area: 4 / 3 / 5 / 4;
@@ -84,6 +86,7 @@
     }
     .alice-secret-3 {
       grid-area: 6 / 2 / 7 / 3;
+      justify-content: flex-start;
     }
     .alice-prime-2 {
       grid-area: 6 / 3 / 7 / 4;
@@ -106,6 +109,7 @@
     }
     .bob-secret-2 {
       grid-area: 4 / -2 / 5 / -3;
+      justify-content: flex-start;
     }
     .bob-prime-1 {
       grid-area: 4 / -1 / 5 / -2;
@@ -121,6 +125,7 @@
     }
     .bob-secret-3 {
       grid-area: 6 / -2 / 7 / -3;
+      justify-content: flex-start;
     }
     .bob-prime-2 {
       grid-area: 6 / -1 / 7 / -2;
