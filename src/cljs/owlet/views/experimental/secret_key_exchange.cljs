@@ -1,13 +1,18 @@
 (ns owlet.views.experimental.secret-key-exchange
   (:require [reagent.core :as reagent]))
 
-(def prime (reagent/atom 0))
+(def prime (reagent/atom 1))
 
-(def base (reagent/atom 0))
+(def base (reagent/atom 1))
 
-(def alice-secret (reagent/atom 0))
+(def alice-secret (reagent/atom 1))
 
-(def bob-secret (reagent/atom 0))
+(def bob-secret (reagent/atom 1))
+
+(defn exp-mod [base exponent modulus]
+  (-> (js/bigInt base)
+      (.pow exponent)
+      (.mod modulus)))
 
 (defn input-number [title value]
   [:div.input-group.mb-3
@@ -25,7 +30,7 @@
   [:div.input-group.mb-3
    [:div.input-group-prepend
     [:div.form-control.known
-     value]
+     (str value)]
     [:span.input-group-text title]]])
 
 (defn activity []
@@ -67,9 +72,9 @@
     [:div.flex.alice-equal-1.equal-sign
      [:div "="]]
     [:div.flex.pa.alice-number
-     [known-number "ALICE'S #" (mod (js/Math.pow @base @alice-secret) @prime)]]
+     [known-number "ALICE'S #" (exp-mod @base @alice-secret @prime)]]
     [:div.flex.pa.alice-bob-number
-     [known-number "BOB'S #" (mod (js/Math.pow @base @bob-secret) @prime)]]
+     [known-number "BOB'S #" (exp-mod @base @bob-secret @prime)]]
     [:div.flex.alice-secret-3
      [:div.exp
       [known-number "" @alice-secret]]
@@ -79,7 +84,9 @@
     [:div.flex.alice-equal-2.equal-sign
      [:div "="]]
     [:div.flex.pa.alice-shared-secret
-     [known-number "SHARED SECRET" (mod (js/Math.pow (mod (js/Math.pow @base @bob-secret) @prime) @alice-secret) @prime)]]
+     [known-number "SHARED SECRET" (exp-mod (exp-mod @base @bob-secret @prime)
+                                            @alice-secret
+                                            @prime)]]
     [:div.flex.pa.bob-name
      [:h1 "BOB"]]
     [:div.flex.pa.bob-secret-1
@@ -95,9 +102,9 @@
     [:div.flex.bob-equal-1.equal-sign
      [:div "="]]
     [:div.flex.pa.bob-number
-     [known-number "BOB'S #" (mod (js/Math.pow @base @bob-secret) @prime)]]
+     [known-number "BOB'S #" (exp-mod @base @bob-secret @prime)]]
     [:div.flex.pa.bob-alice-number
-     [known-number "ALICE'S #" (mod (js/Math.pow @base @alice-secret) @prime)]]
+     [known-number "ALICE'S #" (exp-mod @base @alice-secret @prime)]]
     [:div.flex.bob-secret-3
      [:div.exp
       [known-number "" @bob-secret]]
@@ -107,7 +114,9 @@
     [:div.flex.bob-equal-2.equal-sign
      [:div "="]]
     [:div.flex.pa.bob-shared-secret
-     [known-number "SHARED SECRET" (mod (js/Math.pow (mod (js/Math.pow @base @alice-secret) @prime) @bob-secret) @prime)]]]
+     [known-number "SHARED SECRET" (exp-mod (exp-mod @base @alice-secret @prime)
+                                            @bob-secret
+                                            @prime)]]]
    [:div
     [:p "Each computer takes the publicly shared "
      [:span.public "BASE number"]
