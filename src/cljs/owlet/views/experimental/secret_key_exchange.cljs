@@ -53,6 +53,8 @@
    [:div#diffie-hellman-grid
     [:div.divider-1]
     [:div.divider-2]
+    [:div.lines
+     [:img {:src "img/experimental/lines1.png"}]]
     [:div.flex.pa.prime-input
      [input-number "PRIME #" prime]]
     [:div.flex.pa.base-input
