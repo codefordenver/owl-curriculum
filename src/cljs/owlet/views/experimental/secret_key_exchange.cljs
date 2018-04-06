@@ -54,68 +54,72 @@
     [:div.divider-1]
     [:div.divider-2]
     [:div.lines
-     [:img {:src "img/experimental/lines1.png"}]]
-    [:div.flex.pa.prime-input
+     [:img {:src "img/experimental/lines.png"}]]
+    [:div.flex.pa.prime.public
      [input-number "PRIME #" prime]]
-    [:div.flex.pa.base-input
+    [:div.flex.pa.base.public
      [input-number "BASE #" base]]
     [:div.flex.pa.alice-name
      [:h1 "ALICE"]]
-    [:div.flex.pa.alice-secret-1
+    [:div.flex.pa.alice-secret-1.secret
      [input-number "SECRET #" alice-secret]]
-    [:div.flex.pa.alice-base
+    [:div.flex.pa.alice-secret-msg
+     [:div "< Enter a secret number for Alice. For subtle reasons, it should not have any common factors with the BASE #"]]
+    [:div.flex.pa.alice-base.public
      [known-number "BASE #" @base]]
     [:div.flex.alice-secret-2
-     [:div.exp
+     [:div.exp.secret
       [known-number "" @alice-secret]]
      [:div.mod "%"]]
-    [:div.flex.pa.alice-prime-1
+    [:div.flex.pa.alice-prime-1.public
      [known-number "PRIME #" @prime]]
     [:div.flex.alice-equal-1.equal-sign
      [:div "="]]
-    [:div.flex.pa.alice-number
+    [:div.flex.pa.alice-number.calc
      [known-number "ALICE'S #" (exp-mod @base @alice-secret @prime)]]
-    [:div.flex.pa.alice-bob-number
+    [:div.flex.pa.alice-bob-number.calc
      [known-number "BOB'S #" (exp-mod @base @bob-secret @prime)]]
     [:div.flex.alice-secret-3
-     [:div.exp
+     [:div.exp.secret
       [known-number "" @alice-secret]]
      [:div.mod "%"]]
-    [:div.flex.pa.alice-prime-2
+    [:div.flex.pa.alice-prime-2.public
      [known-number "PRIME #" @prime]]
     [:div.flex.alice-equal-2.equal-sign
      [:div "="]]
-    [:div.flex.pa.alice-shared-secret
+    [:div.flex.pa.alice-shared-secret.secret
      [known-number "SHARED SECRET" (exp-mod (exp-mod @base @bob-secret @prime)
                                             @alice-secret
                                             @prime)]]
     [:div.flex.pa.bob-name
      [:h1 "BOB"]]
-    [:div.flex.pa.bob-secret-1
+    [:div.flex.pa.bob-secret-1.secret
      [input-number "SECRET #" bob-secret]]
-    [:div.flex.pa.bob-base
+    [:div.flex.pa.bob-secret-msg
+     [:div "< Enter a secret number for Bob. For subtle reasons, it should not have any common factors with the BASE #"]]
+    [:div.flex.pa.bob-base.public
      [known-number "BASE #" @base]]
     [:div.flex.bob-secret-2
-     [:div.exp
+     [:div.exp.secret
       [known-number "" @bob-secret]]
      [:div.mod "%"]]
-    [:div.flex.pa.bob-prime-1
+    [:div.flex.pa.bob-prime-1.public
      [known-number "PRIME #" @prime]]
     [:div.flex.bob-equal-1.equal-sign
      [:div "="]]
-    [:div.flex.pa.bob-number
+    [:div.flex.pa.bob-number.calc
      [known-number "BOB'S #" (exp-mod @base @bob-secret @prime)]]
-    [:div.flex.pa.bob-alice-number
+    [:div.flex.pa.bob-alice-number.calc
      [known-number "ALICE'S #" (exp-mod @base @alice-secret @prime)]]
     [:div.flex.bob-secret-3
-     [:div.exp
+     [:div.exp.secret
       [known-number "" @bob-secret]]
      [:div.mod "%"]]
-    [:div.flex.pa.bob-prime-2
+    [:div.flex.pa.bob-prime-2.public
      [known-number "PRIME #" @prime]]
     [:div.flex.bob-equal-2.equal-sign
      [:div "="]]
-    [:div.flex.pa.bob-shared-secret
+    [:div.flex.pa.bob-shared-secret.secret
      [known-number "SHARED SECRET" (exp-mod (exp-mod @base @alice-secret @prime)
                                             @bob-secret
                                             @prime)]]]
