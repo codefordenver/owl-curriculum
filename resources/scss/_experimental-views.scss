@@ -9,37 +9,42 @@
     color: $aqua;
     font-weight: 500;
   }
+  input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
   .form-control {
-    padding: 0.75rem 0 0.75rem 0.75rem;
+    padding: 0.5rem;
     font-size: 2rem;
     text-align: center;
     margin-bottom: 0.2em;
-  }
-  .form-control.known {
-    padding-right: 0.75rem;
   }
   .input-group {
     text-align: center;
   }
   #diffie-hellman-grid {
+    font-size: 0.8em;
+    font-weight: 500;
+    text-align: center;
     h1 {
       font-weight: 500;
       font-style: normal;
     }
-    font-weight: 500;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template: 1fr 4em 7em 1fr 2fr repeat(2, 1fr) / 1fr 1fr repeat(4, 2fr) 1.5em 1.5em repeat(2, 2fr) 1fr 1fr repeat(2, 2fr);
     .pa {
       padding: 0.5em;
     }
     .exp {
       align-self: flex-start;
       .form-control {
-        font-size: 1.5rem;
+        background-color: $magenta;
+        color: white;
+        font-size: 1.3rem;
         padding: 0.2em 0.4em 0.1em 0.35em;
+        border: 0.1em solid $magenta;
+        border-radius: 50%;
       }
     }
     .mod {
@@ -51,21 +56,6 @@
       margin-bottom: 0.75em;
       font-size: 2em;
     }
-    .divider-1 {
-      grid-area: 2 / 8 / span 3 / 9;
-      border-left: 2px dashed $magenta;
-    }
-    .divider-2 {
-      grid-area: 6 / 8 / 7 / 9;
-      border-left: 2px dashed $magenta;
-    }
-    .lines {
-      grid-area: 5 / 2 / 6 / span 10;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
     .public .form-control {
       color: $aqua;
       border: 0.1em solid $aqua;
@@ -74,20 +64,77 @@
       color: $magenta;
       border: 0.1em solid $magenta;
     }
-    .calc {
-      color: $aqua;
+    .filled {
+      color: $aqua 0.5;
       .form-control {
       background-color: $aqua;
       color: white;
       border: 0;
       }
     }
+    .alice-secret-msg, .bob-secret-msg {
+      text-align: left;
+      font-weight: 400;
+      span {
+        font-weight: 500;
+        &:first-child {
+          font-weight: 700;
+        }
+      }
+    }
+    .mixed-1 {
+      color: #966292;
+      .form-control {
+        color: white;
+        background-color: #966292;
+        border-color: #966292;
+      }
+    }
+    .mixed-2 {
+      color: #6293A0;
+      .form-control {
+        color: white;
+        background-color: #6293A0;
+        border-color: #6293A0;
+      }
+    }
+
+    width: 100%;
+    height: 45em;
+    display: grid;
+    grid-template: 2fr 1fr 3fr 2fr 1fr 1fr 2fr 1fr / 1fr 1fr repeat(4, 2fr) 1.5em 1.5em repeat(2, 2fr) 1fr 1fr repeat(2, 2fr);
+
+    .divider-1 {
+      grid-area: 2 / 8 / span 3 / 9;
+      border-left: 3px dashed $magenta;
+    }
+    .divider-2 {
+      grid-area: 7 / 8 / 8 / 9;
+      border-left: 3px dashed $magenta;
+    }
+    .hotspot-2 {
+      z-index: 10;
+      grid-area: 5 / 6 / 6 / span 4;
+    }
+    .lines {
+      grid-area: 5 / 2 / 7 / span 10;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
     .prime {
       grid-area: 1 / 6 / 2 / 7;
     }
     .base {
       grid-area: 1 / 9 / 2 / 10;
+      .form-control {
+        color: #2C6960;
+        border-color: #2C6960;
+      }
     }
+
     .alice-name {
       grid-area: 2 / 4 / 3 / 6;
       justify-content: flex-start;
@@ -97,10 +144,12 @@
     }
     .alice-secret-msg {
       grid-area: 3 / 4 / 4 / span 3;
-      text-align: left;
     }
     .alice-base {
       grid-area: 4 / 1 / 5 / 3;
+      .form-control {
+        background-color: #2C6960;
+      }
     }
     .alice-secret-2 {
       grid-area: 4 / 3 / 5 / 4;
@@ -116,28 +165,23 @@
       grid-area: 4 / 6 / 5 / 7;
     }
     .alice-bob-number {
-      grid-area: 6 / 1 / 7 / 3;
+      grid-area: 7 / 1 / 8 / 3;
     }
     .alice-secret-3 {
-      grid-area: 6 / 3 / 7 / 4;
+      grid-area: 7 / 3 / 8 / 4;
       justify-content: flex-start;
     }
     .alice-prime-2 {
-      grid-area: 6 / 4 / 7 / 5;
+      grid-area: 7 / 4 / 8 / 5;
     }
     .alice-equal-2 {
-      grid-area: 6 / 5 / 7 / 6;
+      grid-area: 7 / 5 / 8 / 6;
     }
     .alice-shared-secret {
-      grid-area: 6 / 6 / 7 / 7;
-      color: $magenta;
-      .form-control {
-        background-color: $magenta;
-        color: white;
-      }
+      grid-area: 7 / 6 / 8 / 7;
     }
     .bob-name {
-      grid-area: 2 / -3 / 3 / -5;
+      grid-area: 2 / -2 / 3 / -5;
       justify-content: flex-start;
     }
     .bob-secret-1 {
@@ -145,10 +189,12 @@
     }
     .bob-secret-msg {
       grid-area: 3 / -5 / 4 / span 4;
-      text-align: left;
     }
     .bob-base {
       grid-area: 4 / -3 / 5 / -5;
+      .form-control {
+        background-color: #2C6960;
+      }
     }
     .bob-secret-2 {
       grid-area: 4 / -2 / 5 / -3;
@@ -164,25 +210,20 @@
       grid-area: 4 / -6 / 5 / -7;
     }
     .bob-alice-number {
-      grid-area: 6 / -3 / 7 / -5;
+      grid-area: 7 / -3 / 8 / -5;
     }
     .bob-secret-3 {
-      grid-area: 6 / -2 / 7 / -3;
+      grid-area: 7 / -2 / 8 / -3;
       justify-content: flex-start;
     }
     .bob-prime-2 {
-      grid-area: 6 / -1 / 7 / -2;
+      grid-area: 7 / -1 / 8 / -2;
     }
     .bob-equal-2 {
-      grid-area: 6 / -5 / 7 / -6;
+      grid-area: 7 / -5 / 8 / -6;
     }
     .bob-shared-secret {
-      grid-area: 6 / -6 / 7 / -7;
-      color: $magenta;
-      .form-control {
-        background-color: $magenta;
-        color: white;
-      }
+      grid-area: 7 / -6 / 8 / -7;
     }
   }
 }
