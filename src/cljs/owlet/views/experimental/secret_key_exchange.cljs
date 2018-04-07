@@ -46,9 +46,9 @@
    [:div.col-xs-12.col-lg-6
     [:p [:i "But how do you share the key without exposing it??"]]
     [:p "Instead of sending the key, Computer A sends over two numbers: a "
-     [:span.public "PRIME number"]
+     [:span.prime "PRIME number"]
      ", and a "
-     [:span.public "BASE number"]
+     [:span.base "BASE number"]
      ". It doesn't matter if these are intercepted, because they're useless on their own."]]
    [:div#diffie-hellman-grid
     [:div.divider-1]
@@ -132,11 +132,11 @@
                                             @prime)]]]
    [:div
     [:p "Each computer takes the publicly shared "
-     [:span.public "BASE number"]
+     [:span.base "BASE number"]
      ", applies its own secret exponent (which is never shared), and then mods the result by the "
-     [:span.public "PRIME number"]
+     [:span.prime "PRIME number"]
      " to produce a brand new number. Then, those numbers are publicly exchanged."]
     [:p "This is where the magic happens. Computer A takes Computer B's number, applies its own secret exponent from before, and then mods it by the "
-     [:span.public "PRIME number"]
+     [:span.prime "PRIME number"]
      ". Computer B does the same, using Computer A's number and its own secret exponent."]
     [:p "The final number will be the same for both; this is their encryption key!"]]])

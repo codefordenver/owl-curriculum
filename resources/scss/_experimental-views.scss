@@ -5,10 +5,17 @@
     justify-content: center;
     align-items: center;
   }
-  p .public {
-    color: $aqua;
-    font-weight: 500;
+  p {
+    .prime {
+      color: $aqua;
+      font-weight: 500;
+    }
+    .base {
+      color: #2C6960;
+      font-weight: 500;
+    }
   }
+
   input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
