@@ -21,6 +21,8 @@
     font-size: 2rem;
     text-align: center;
     margin-bottom: 0.2em;
+    border-width: 0.1em;
+    border-style: solid;
   }
   .input-group {
     text-align: center;
@@ -56,20 +58,27 @@
       margin-bottom: 0.75em;
       font-size: 2em;
     }
-    .public .form-control {
-      color: $aqua;
-      border: 0.1em solid $aqua;
-    }
-    .secret .form-control {
+    .alice-secret-1, .bob-secret-1 {
       color: $magenta;
-      border: 0.1em solid $magenta;
-    }
-    .filled {
-      color: $aqua 0.5;
       .form-control {
-      background-color: $aqua;
-      color: white;
-      border: 0;
+        color: $magenta;
+        border: 0.1em solid $magenta;
+      }
+    }
+    .alice-prime-1, .alice-prime-2, .bob-prime-1, .bob-prime-2 {
+      color: $aqua;
+      .form-control {
+        background-color: $aqua;
+        color: white;
+        border: 0;
+      }
+    }
+    .alice-base, .bob-base {
+      color: #2C6960;
+      .form-control {
+        background-color: #2C6960;
+        color: white;
+        border: 0;
       }
     }
     .alice-secret-msg, .bob-secret-msg {
@@ -126,9 +135,15 @@
 
     .prime {
       grid-area: 1 / 6 / 2 / 7;
+      color: $aqua;
+      .form-control {
+        color: $aqua;
+        border-color: $aqua;
+      }
     }
     .base {
       grid-area: 1 / 9 / 2 / 10;
+      color: #2C6960;
       .form-control {
         color: #2C6960;
         border-color: #2C6960;
