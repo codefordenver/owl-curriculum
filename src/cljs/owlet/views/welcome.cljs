@@ -27,8 +27,8 @@
               [:b "STEM: Science, Technology, Engineering, Art, and Math!"]]
              [:p "Explora proyectos creativos para aprender ciencia, tecnología, arte y mate. ¡Gratis!"]
              [signup-button]
-             [:button.btn-explore [:a {:href "/#/branches"}
-                                      "Explore"]]]]
+             [:a {:href "/#/branches"}
+              [:button.btn-explore "Explore"]]]]
            [:div.featured-projects-wrap
             [:h2 "Featured Projects"]
             [:div.grid
