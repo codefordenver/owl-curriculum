@@ -23,13 +23,15 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+  .input-group .form-control:not(:last-child) {
+    border-radius: .25rem;
+  }
   .form-control {
     padding: 0.5rem;
     font-size: 2rem;
     text-align: center;
     margin-bottom: 0.2em;
-    border-width: 0.1em;
-    border-style: solid;
+    border: 0;
   }
   .input-group {
     text-align: center;
@@ -51,15 +53,18 @@
         background-color: $magenta;
         color: white;
         font-size: 1.3rem;
-        padding: 0.2em 0.4em 0.1em 0.35em;
-        border: 0.1em solid $magenta;
+        padding: 0.25em 0.45em 0.15em 0.4em;
         border-radius: 50%;
+        min-height: 0.9em;
       }
     }
     .mod {
       margin: 0.5em 0 1em 0;
       font-size: 2em;
       flex: 1;
+      span {
+        cursor: pointer;
+      }
     }
     .equal-sign {
       margin-bottom: 0.75em;
@@ -77,7 +82,6 @@
       .form-control {
         background-color: $aqua;
         color: white;
-        border: 0;
       }
     }
     .alice-base, .bob-base {
@@ -85,7 +89,6 @@
       .form-control {
         background-color: #2C6960;
         color: white;
-        border: 0;
       }
     }
     .alice-secret-msg, .bob-secret-msg {
@@ -103,7 +106,6 @@
       .form-control {
         color: white;
         background-color: #966292;
-        border-color: #966292;
       }
     }
     .mixed-2 {
@@ -111,7 +113,6 @@
       .form-control {
         color: white;
         background-color: #6293A0;
-        border-color: #6293A0;
       }
     }
 
@@ -145,7 +146,7 @@
       color: $aqua;
       .form-control {
         color: $aqua;
-        border-color: $aqua;
+        border: 0.1em solid $aqua;
       }
     }
     .base {
@@ -153,7 +154,7 @@
       color: #2C6960;
       .form-control {
         color: #2C6960;
-        border-color: #2C6960;
+        border: 0.1em solid #2C6960;
       }
     }
 
@@ -248,4 +249,41 @@
       grid-area: 7 / -6 / 8 / -7;
     }
   }
+}
+
+/* Pulse */
+@-webkit-keyframes pulse {
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+@keyframes pulse {
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+.pulse {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 }
