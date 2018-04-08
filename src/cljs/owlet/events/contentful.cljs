@@ -208,7 +208,9 @@
                                                     :preview-urls (:preview-urls filtered-set)
                                                     :count (:count filtered-set)
                                                     :display-name (:display-name filtered-set)
-                                                    :activities (:activities filtered-set))))
+                                                    :activities (:activities filtered-set)
+                                                    :pre-filter {:name (:display-name filtered-set)
+                                                                 :type "Branch"})))
 
         ;; by tag
         ;; --------
@@ -220,7 +222,9 @@
               (set-path (str "tag/" (->kebab-case term)))
               (assoc db :activities-by-filter (hash-map :activities filtered-set
                                                         :display-name (str/capital display-name)
-                                                        :filter-type "Tag")))
+                                                        :filter-type "Tag"
+                                                        :pre-filter {:name display-name
+                                                                     :type "Tag"})))
 
             ;; by activity name (title)
             ;; ------------------------
@@ -251,14 +255,15 @@
                         (assoc db :activities-by-filter (hash-map :activities filtered-set
                                                                   :display-name platform-name
                                                                   :description description
-                                                                  :filter-type "Platform")))
+                                                                  :filter-type "Platform"
+                                                                  :pre-filter {:name platform-name
+                                                                               :type "Platform"})))
                       (assoc db :activities-by-filter "error"))))))))))))
 
 (rf/reg-event-db
   :filter-activities-by-selected-terms
-  (fn [db [_ terms]]
-    (let [selected-terms terms
-          activities (:activities db)
+  (fn [db [_ selected-filters]]
+    (let [activities (:activities db)
           set-path (fn [path]
                     (set! (.-location js/window) (str "/#/" path)))
           filtered-act (filter (fn [a]
@@ -269,10 +274,18 @@
                                                "Branch" (some #(= (:name %) (:name t)) (get-in a [:fields :branches]))
                                                "Platform" (= (:name t) (get-in a [:fields :platform :name]))
                                                "Tag" (some #(= (:name %) (:name t)) (get-in a [:fields :tags]))))
-                                           selected-terms)))
+                                           (if (empty? selected-filters)
+                                             (conj '() (get-in db [:activities-by-filter :pre-filter]))
+                                             selected-filters))))
                                activities)]
+      (prn (conj '() (get-in db [:activities-by-filter :pre-filter])))
+      (prn selected-filters)
       (rf/dispatch [:set-active-view :filtered-activities-view])
       (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
-                                                :display-name (clojure.string/join ", " (map #(:name %) selected-terms))
+                                                :display-name (clojure.string/join ", " (map #(:name %)
+                                                                                             (if (empty? selected-filters)
+                                                                                               (conj '() (get-in db [:activities-by-filter :pre-filter]))
+                                                                                               selected-filters)))
                                                 :activities filtered-act
-                                                :filters selected-terms)))))
+                                                :filters selected-filters
+                                                :pre-filter (get-in db [:activities-by-filter :pre-filter]))))))
