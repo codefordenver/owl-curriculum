@@ -44,15 +44,25 @@
     (let [branches (:activity-branches db)
           platforms (:activity-platforms db)
           tags (:tags db)
+          filters (get-in db [:activities-by-filter :display-name])
           filter-bar-terms ()]
       (as-> filter-bar-terms ts
         (conj ts (map #(hash-map :name (:name %)
-                                 :type "Branch")
+                                 :type "Branch"
+                                 :checked (if filters
+                                            (clojure.string/includes? filters (:name %))
+                                            false))
                       branches))
         (conj ts (map #(hash-map :name (:name %)
-                                 :type "Platform")
+                                 :type "Platform"
+                                 :checked (if filters
+                                            (clojure.string/includes? filters (:name %))
+                                            false))
                       platforms))
         (conj ts (map #(hash-map :name (:name %)
-                                 :type "Tag")
+                                 :type "Tag"
+                                 :checked (if filters
+                                            (clojure.string/includes? filters (:name %))
+                                            false))
                       tags))
-        (apply concat ts)))))
+        (distinct (apply concat ts))))))

@@ -72,30 +72,35 @@
            (doall
              (for [term (shuffle @(rf/subscribe [:filter-bar-terms]))
                    :let [name (:name term)
-                         type (:type term)]]
+                         type (:type term)
+                         filter-term (hash-map :name (:name term)
+                                               :type (:type term))]]
                 (case type
                   "Branch"   ^{:key (gensym "branch-")}
                               [:div
                                [:input {:type "checkbox"
                                         :on-click (fn [e]
                                                     (if (.-checked (.-target e))
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters term)))])
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % term) @filters)))])))}]
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters filter-term)))])
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % filter-term) @filters)))])))
+                                        :defaultChecked (:checked term)}]
                                [:label name]]
                   "Platform" ^{:key (gensym "platform-")}
                               [:div
                                [:input {:type "checkbox"
                                         :on-click (fn [e]
                                                     (if (.-checked (.-target e))
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters term)))])
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % term) @filters)))])))}]
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters filter-term)))])
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % filter-term) @filters)))])))
+                                        :defaultChecked (:checked term)}]
                                [:label name]]
                   "Tag"      ^{:key (gensym "tag-")}
                               [:div
                                [:input {:type "checkbox"
                                         :on-click (fn [e]
                                                     (if (.-checked (.-target e))
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters term)))])
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % term) @filters)))])))}]
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters filter-term)))])
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % filter-term) @filters)))])))
+                                        :defaultChecked (:checked term)}]
                                [:label name]])))
            [:span.arrow-right]])])}))
