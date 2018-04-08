@@ -79,23 +79,23 @@
                                [:input {:type "checkbox"
                                         :on-click (fn [e]
                                                     (if (.-checked (.-target e))
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (swap! filters conj term)])
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (remove #(= % term) @filters))])))}]
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters term)))])
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % term) @filters)))])))}]
                                [:label name]]
                   "Platform" ^{:key (gensym "platform-")}
                               [:div
                                [:input {:type "checkbox"
                                         :on-click (fn [e]
                                                     (if (.-checked (.-target e))
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (swap! filters conj term)])
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (remove #(= % term) @filters))])))}]
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters term)))])
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % term) @filters)))])))}]
                                [:label name]]
                   "Tag"      ^{:key (gensym "tag-")}
                               [:div
                                [:input {:type "checkbox"
                                         :on-click (fn [e]
                                                     (if (.-checked (.-target e))
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (swap! filters conj term)])
-                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (remove #(= % term) @filters))])))}]
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (conj @filters term)))])
+                                                     (rf/dispatch [:filter-activities-by-selected-terms (reset! filters (distinct (remove #(= % term) @filters)))])))}]
                                [:label name]])))
            [:span.arrow-right]])])}))

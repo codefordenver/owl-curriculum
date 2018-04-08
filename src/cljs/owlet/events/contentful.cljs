@@ -279,12 +279,16 @@
                                              pre-filter
                                              selected-filters))))
                                activities)]
-      (rf/dispatch [:set-active-view :filtered-activities-view])
-      (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
-                                                :display-name (clojure.string/join ", " (map #(:name %)
-                                                                                             (if (empty? selected-filters)
-                                                                                               pre-filter
-                                                                                               selected-filters)))
-                                                :activities filtered-act
-                                                :filters selected-filters
-                                                :pre-filter (get-in db [:activities-by-filter :pre-filter]))))))
+      (if (and (empty? selected-filters)
+               (every? nil? pre-filter))
+        (rf/dispatch [:get-content-from-contentful :show-branches])
+        (do
+          (rf/dispatch [:set-active-view :filtered-activities-view])
+          (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
+                                                    :display-name (clojure.string/join ", " (map #(:name %)
+                                                                                                 (if (empty? selected-filters)
+                                                                                                   pre-filter
+                                                                                                   selected-filters)))
+                                                    :activities filtered-act
+                                                    :filters selected-filters
+                                                    :pre-filter (get-in db [:activities-by-filter :pre-filter]))))))))
