@@ -281,7 +281,9 @@
                                activities)]
       (if (and (empty? selected-filters)
                (every? nil? pre-filter))
-        (rf/dispatch [:get-content-from-contentful :show-branches])
+        (do
+          (rf/dispatch [:get-content-from-contentful :show-branches])
+          (assoc db :activities-by-filter nil))
         (do
           (rf/dispatch [:set-active-view :filtered-activities-view])
           (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
