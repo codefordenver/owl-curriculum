@@ -101,7 +101,7 @@
      [:div.col-xs-12.directions
       [:h2.mixed-2 "Fill in the white boxes to calculate a shared secret key"]
       [:h4 "Use the suggested numbers or try your own."
-       [:br] "Put your mouse over the "
+       [:br] "Hover your mouse over "
        [:span.pulse-shrink "\"pulsing\""]
        " areas to learn more!"]]
      [:div#diffie-hellman-grid
