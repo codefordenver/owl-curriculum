@@ -6,13 +6,17 @@
     align-items: center;
   }
   p {
+    span {
+      font-weight: 500;
+    }
     .prime {
       color: $aqua;
-      font-weight: 500;
     }
     .base {
       color: #2C6960;
-      font-weight: 500;
+    }
+    .secret {
+      color: $magenta;
     }
   }
 
@@ -26,6 +30,9 @@
   .input-group .form-control:not(:last-child) {
     border-radius: .25rem;
   }
+  .input-group {
+    text-align: center;
+  }
   .form-control {
     padding: 0.5rem;
     font-size: 2rem;
@@ -33,8 +40,26 @@
     margin-bottom: 0.2em;
     border: 0;
   }
-  .input-group {
+  .mixed-1 {
+    color: #966292;
+    .form-control {
+      color: white;
+      background-color: #966292;
+    }
+  }
+  .mixed-2 {
+    color: #6293A0;
+    .form-control {
+      color: white;
+      background-color: #6293A0;
+    }
+  }
+  .directions {
     text-align: center;
+    margin-top: 2em;
+    padding: 2em 0;
+    border-top: 2px solid black;
+    h2 { font-weight: 500 }
   }
   #diffie-hellman-grid {
     font-size: 0.8em;
@@ -53,18 +78,19 @@
         background-color: $magenta;
         color: white;
         font-size: 1.3rem;
-        padding: 0.25em 0.45em 0.15em 0.4em;
+        padding: 0.25em 0.45em 0.1em 0.43em;
         border-radius: 50%;
         min-height: 0.9em;
       }
     }
+    .pulse, .pulse-shrink {
+      cursor: pointer;
+    }
     .mod {
       margin: 0.5em 0 1em 0;
       font-size: 2em;
+      font-weight: 600;
       flex: 1;
-      span {
-        cursor: pointer;
-      }
     }
     .equal-sign {
       margin-bottom: 0.75em;
@@ -99,20 +125,6 @@
         &:first-child {
           font-weight: 700;
         }
-      }
-    }
-    .mixed-1 {
-      color: #966292;
-      .form-control {
-        color: white;
-        background-color: #966292;
-      }
-    }
-    .mixed-2 {
-      color: #6293A0;
-      .form-control {
-        color: white;
-        background-color: #6293A0;
       }
     }
 
@@ -286,4 +298,35 @@
   animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
+}
+
+/* Pulse Shrink */
+@-webkit-keyframes pulse-shrink {
+  to {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+@keyframes pulse-shrink {
+  to {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+.pulse-shrink {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-animation-name: pulse-shrink;
+  animation-name: pulse-shrink;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
 }
