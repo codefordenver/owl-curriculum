@@ -66,7 +66,7 @@
            [:a {:href "#/settings"}
             [:button [:i.fa.fa-gear]]])
           [login-component]]]
-        (when-not (some #(= @(rf/subscribe [:active-view]) %) [:welcome-view :about-view :settings-view :activity-view])
+        (when (some #(= @(rf/subscribe [:active-view]) %) [:branches-view :filtered-activities-view])
           [:div.flex-row.filter-bar
            [:span.arrow-left]
            (doall

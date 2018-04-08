@@ -8,8 +8,7 @@
             [camel-snake-kebab.core :refer [->kebab-case]]
             [cuerdas.core :as str]
             [clojure.string :as string]
-            [owlet.helpers :refer
-             [keywordize-name remove-nil]]))
+            [owlet.helpers :refer [keywordize-name remove-nil]]))
 
 
 (defonce space-endpoint
@@ -130,7 +129,8 @@
   :show-branches
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :branches-view]
-                       [:set-active-document-title! "Branches"])}))
+                       [:set-active-document-title! "Branches"]
+                       [:remove-filtered-activities])}))
 
 (rf/reg-event-fx
   :show-branch
@@ -190,6 +190,11 @@
                        [:set-active-document-title! "Create Embedded Activity"])}))
 
 ; search & filter
+
+(rf/reg-event-db
+  :remove-filtered-activities
+  (fn [db [_]]
+    (assoc db :activities-by-filter nil)))
 
 (rf/reg-event-db
   :filter-activities-by-search-term
@@ -281,9 +286,7 @@
                                activities)]
       (if (and (empty? selected-filters)
                (every? nil? pre-filter))
-        (do
-          (rf/dispatch [:get-content-from-contentful :show-branches])
-          (assoc db :activities-by-filter nil))
+        (rf/dispatch [:get-content-from-contentful :show-branches])
         (do
           (rf/dispatch [:set-active-view :filtered-activities-view])
           (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
