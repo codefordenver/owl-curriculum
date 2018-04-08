@@ -266,6 +266,7 @@
     (let [activities (:activities db)
           set-path (fn [path]
                     (set! (.-location js/window) (str "/#/" path)))
+          pre-filter (conj '() (get-in db [:activities-by-filter :pre-filter]))
           filtered-act (filter (fn [a]
                                  (every? true?
                                          (map
@@ -275,16 +276,14 @@
                                                "Platform" (= (:name t) (get-in a [:fields :platform :name]))
                                                "Tag" (some #(= (:name %) (:name t)) (get-in a [:fields :tags]))))
                                            (if (empty? selected-filters)
-                                             (conj '() (get-in db [:activities-by-filter :pre-filter]))
+                                             pre-filter
                                              selected-filters))))
                                activities)]
-      (prn (conj '() (get-in db [:activities-by-filter :pre-filter])))
-      (prn selected-filters)
       (rf/dispatch [:set-active-view :filtered-activities-view])
       (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
                                                 :display-name (clojure.string/join ", " (map #(:name %)
                                                                                              (if (empty? selected-filters)
-                                                                                               (conj '() (get-in db [:activities-by-filter :pre-filter]))
+                                                                                               pre-filter
                                                                                                selected-filters)))
                                                 :activities filtered-act
                                                 :filters selected-filters
