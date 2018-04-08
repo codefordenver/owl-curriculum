@@ -290,6 +290,10 @@ progress {
     text-decoration: none;
   }
 }
+.filter-bar {
+  height: 300px;
+  border-bottom: 1px solid #E7E7E7;
+}
 
 // Logo
 
@@ -431,14 +435,14 @@ progress {
 }
 
 .hidden-top-bar {
-  height: 50px;
+  height: 60px;
   padding-top: 0;
   padding-bottom: 0;
   .owlet-text p {
     display: none;
   }
   .btn-login, .btn-logout {
-    height: 50px;
+    height: 60px;
   }
 }
 

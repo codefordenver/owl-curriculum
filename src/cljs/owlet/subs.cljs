@@ -37,3 +37,22 @@
 (reg-getter :subscriber-info [:app :route-opts])
 
 (reg-getter :on-app-failure [:on-app-failure])
+
+(rf/reg-sub
+  :filter-bar-terms
+  (fn [db _]
+    (let [branches (:activity-branches db)
+          platforms (:activity-platforms db)
+          tags (:tags db)
+          filter-bar-terms ()]
+      (as-> filter-bar-terms ts
+        (conj ts (map #(hash-map :name (:name %)
+                                 :type "Branch")
+                      branches))
+        (conj ts (map #(hash-map :name (:name %)
+                                 :type "Platform")
+                      platforms))
+        (conj ts (map #(hash-map :name (:name %)
+                                 :type "Tag")
+                      tags))
+        (apply concat ts)))))

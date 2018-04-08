@@ -134,21 +134,21 @@
 
 (rf/reg-event-fx
   :show-branch
-  (fn [_ [_ route-param]]
+  (fn [_ [_ route-param use-normal]]
     {:dispatch-n (list [:set-active-view :filtered-activities-view "branch"]
                        [:filter-activities-by-search-term route-param]
                        [:set-active-document-title! route-param])}))
 
 (rf/reg-event-fx
   :show-platform
-  (fn [_ [_ route-param]]
+  (fn [_ [_ route-param use-normal]]
     {:dispatch-n (list [:set-active-view :filtered-activities-view "platform"]
                        [:filter-activities-by-search-term route-param]
                        [:set-active-document-title! route-param])}))
 
 (rf/reg-event-fx
   :show-tag
-  (fn [_ [_ route-param]]
+  (fn [_ [_ route-param use-normal]]
     {:dispatch-n (list [:set-active-view :filtered-activities-view "tag"]
                        [:filter-activities-by-search-term route-param]
                        [:set-active-document-title! route-param])}))
@@ -198,14 +198,17 @@
           activities (:activities db)
           set-path (fn [path]
                     (set! (.-location js/window) (str "/#/" path)))]
-
       ;; by branch
       ;; ---------
 
       (if-let [filtered-set (search-term (:activities-by-branch db))]
         (do
           (set-path (str "branch/" (->kebab-case term)))
-          (assoc db :activities-by-filter filtered-set))
+          (assoc db :activities-by-filter (hash-map :filter-type "Branch"
+                                                    :preview-urls (:preview-urls filtered-set)
+                                                    :count (:count filtered-set)
+                                                    :display-name (:display-name filtered-set)
+                                                    :activities (:activities filtered-set))))
 
         ;; by tag
         ;; --------
@@ -216,7 +219,8 @@
                   display-name (:name (first (filter #(= search-term (keyword-kebab (:name %))) tags)))]
               (set-path (str "tag/" (->kebab-case term)))
               (assoc db :activities-by-filter (hash-map :activities filtered-set
-                                                        :display-name (str/capital display-name))))
+                                                        :display-name (str/capital display-name)
+                                                        :filter-type "Tag")))
 
             ;; by activity name (title)
             ;; ------------------------
@@ -246,5 +250,29 @@
                         (set-path (str "platform/" term))
                         (assoc db :activities-by-filter (hash-map :activities filtered-set
                                                                   :display-name platform-name
-                                                                  :description description)))
+                                                                  :description description
+                                                                  :filter-type "Platform")))
                       (assoc db :activities-by-filter "error"))))))))))))
+
+(rf/reg-event-db
+  :filter-activities-by-selected-terms
+  (fn [db [_ terms]]
+    (let [selected-terms terms
+          activities (:activities db)
+          set-path (fn [path]
+                    (set! (.-location js/window) (str "/#/" path)))
+          filtered-act (filter (fn [a]
+                                 (every? true?
+                                         (map
+                                           (fn [t]
+                                             (case (:type t)
+                                               "Branch" (some #(= (:name %) (:name t)) (get-in a [:fields :branches]))
+                                               "Platform" (= (:name t) (get-in a [:fields :platform :name]))
+                                               "Tag" (some #(= (:name %) (:name t)) (get-in a [:fields :tags]))))
+                                           selected-terms)))
+                               activities)]
+      (rf/dispatch [:set-active-view :filtered-activities-view])
+      (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
+                                                :display-name (clojure.string/join ", " (map #(:name %) selected-terms))
+                                                :activities filtered-act
+                                                :filters selected-terms)))))
