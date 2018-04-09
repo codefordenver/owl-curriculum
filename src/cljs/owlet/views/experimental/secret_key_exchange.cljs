@@ -11,40 +11,39 @@
 
 (def bob-secret (reagent/atom nil))
 
-(def prime-showing? (reagent/atom false))
-
 (defn exp-mod [base exponent modulus]
   (-> (js/bigInt base)
       (.pow exponent)
       (.mod modulus)))
 
 (defn input-number [title value placeholder]
-  [:div.input-group.mb-3
-   [:div.input-group-prepend
-    [:input.form-control
-     {:type "number"
-      :placeholder placeholder
-      :min 1
-      :max 10000
-      :value @value
-      :on-change (fn [e]
-                   (if (= "" (-> e .-target .-value))
-                     (reset! value nil)
-                     (reset! value (js/parseInt (-> e .-target .-value)))))}]
-    (if (= value prime)
-      [re-com/popover-anchor-wrapper
-           :showing? prime-showing?
-           :position :below-center
-           :anchor [:span.input-group-text.pulse
-                    {:on-mouse-over (handler-fn (reset! prime-showing? true))
-                     :on-mouse-out  (handler-fn (reset! prime-showing? false))}
-                    title]
-           :popover [re-com/popover-content-wrapper
-                     :close-button? false
-                     :body [:div {:style {:text-align "center"
-                                          :font-size "1.2em"}}
-                            "a \"prime\" number is only divisible by itself and 1"]]]
-      [:span.input-group-text title])]])
+  (let [prime-showing? (reagent/atom false)]
+    [:div.input-group.mb-3
+     [:div.input-group-prepend
+      [:input.form-control
+       {:type "number"
+        :placeholder placeholder
+        :min 1
+        :max 10000
+        :value @value
+        :on-change (fn [e]
+                     (if (= "" (-> e .-target .-value))
+                       (reset! value nil)
+                       (reset! value (js/parseInt (-> e .-target .-value)))))}]
+      (if (= value prime)
+        [re-com/popover-anchor-wrapper
+             :showing? prime-showing?
+             :position :below-center
+             :anchor [:span.input-group-text.pulse
+                      {:on-mouse-over (handler-fn (reset! prime-showing? true))
+                       :on-mouse-out  (handler-fn (reset! prime-showing? false))}
+                      title]
+             :popover [re-com/popover-content-wrapper
+                       :close-button? false
+                       :body [:div {:style {:text-align "center"
+                                            :font-size "1.2em"}}
+                              "a \"prime\" number is only divisible by itself and 1"]]]
+        [:span.input-group-text title])]]))
 
 (defn known-number [title & [value]]
   [:div.input-group.mb-3
@@ -59,8 +58,10 @@
         mod-showing-3? (reagent/atom false)
         mod-showing-4? (reagent/atom false)]
     [:div.secret-key-exchange-experimental-view
+     [:div.col-xs-12.too-small
+      [:h1.secret "To view the interactive demo, rotate your phone or come back on a desktop."]]
      [:div.col-xs-12.col-lg-6
-      [:p "When you submit a password or credit card number online, your computer has to send that data to another computer (server) over the internet. Any data sent over the internet can be easily intercepted, so when dealing with sensitive data, computers are instructed to scramble (encrypt) the data before sending it out, to prevent a "
+      [:p "When you submit a password or credit card number online, your computer has to send that data to another computer (server) over the internet. Any data sent over the internet can be intercepted, so when dealing with sensitive data, computers are instructed to scramble (encrypt) the data before sending it out. Otherwise, it's vulnerable to a "
        [:a {:href "https://us.norton.com/internetsecurity-wifi-what-is-a-man-in-the-middle-attack.html"
             :target "_blank"}
         "man-in-the-middle (MITM) attack"]
@@ -70,7 +71,7 @@
        " combines it with a random string of bits, called an \"encryption key.\" Once the data is received, "
        [:span "Computer B"]
        " unscrambles (decrypts) the data using the same encryption key."]
-      [:p [:span "Then how do they share that key??"]]
+      [:p [:span "How do they share that key??"]]
       [:p "Remember, "
        [:span "Computer A"]
        " can't just send the key over, or anyone would be able to use it to decrypt your credit card number."]]
@@ -96,10 +97,10 @@
       [:p "After a few more calculations, they will end up with the "
        [:span.mixed-2 "SAME number (the encryption key)"]
        " without ever actually sharing it!"]
-      [:p "Today, there are various key exchange methods that rely on various kinds of math. "
+      [:p "Today, there are various key exchange methods that rely on different kinds of math. "
        [:span "This interactive demo is based on the Diffie-Hellman key exchange (DH), one of the earliest practical examples first introduced in 1976.*"]]]
      [:div.col-xs-12.directions
-      [:h2.mixed-2 "Fill in the white boxes to calculate a shared secret key"]
+      [:h2.mixed-2 "Fill in the white boxes to create a shared secret key"]
       [:h4 "Use the suggested numbers or try your own."
        [:br] "Hover your mouse over "
        [:span.pulse-shrink "\"pulsing\""]
@@ -236,7 +237,7 @@
                                        (exp-mod (exp-mod @base @alice-secret @prime)
                                                 @bob-secret
                                                 @prime))]]]
-     [:div
+     [:div.col-xs-12
       [:p "*In 2015, computer scientists discovered the "
        [:a {:href "https://weakdh.org/"
             :target "_blank"}
