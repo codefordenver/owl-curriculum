@@ -29,7 +29,7 @@
 
 
 (defn filter-bar []
-  (when (some #(= @(rf/subscribe [:active-view]) %) [:branches-view :filtered-activities-view])
+  (if (some #(= @(rf/subscribe [:active-view]) %) [:branches-view :filtered-activities-view])
     [:div#filter-bar
      [:span.arrow-left {:on-click #(scroll-filters false)}
       (goog-string/unescapeEntities "&lt;")]
@@ -75,4 +75,5 @@
                           [:label {:for (str name "-filter")}
                            (clojure.string/upper-case name)]])))]
      [:span.arrow-right {:on-click #(scroll-filters true)}
-      (goog-string/unescapeEntities "&gt;")]]))
+      (goog-string/unescapeEntities "&gt;")]]
+    [:div#spacer]))
