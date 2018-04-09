@@ -54,7 +54,7 @@
          [search-bar]]
         [:div.navigation
          [:a {:href "#/about"}
-          [:button.nav-link "ABOUT US"]]
+          [:button.nav-link "ABOUT"]]
          [:a {:href "#/branches"}
           [:button.nav-link "EXPLORE"]]
          (when @(rf/subscribe [:my-id])
