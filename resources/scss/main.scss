@@ -157,9 +157,8 @@ mark.white {
 }
 
 .content {
-  padding-top: 74px;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: visible;
 }
 
 .outer-height-wrap, .inner-height-wrap {

@@ -12,6 +12,7 @@
             [owlet.views.create-klipse-slides-activity :refer [create-klipse-slides-activity-view]]
             [owlet.views.create-general-activity :refer [create-general-activity-view]]
             [owlet.components.top-bar :refer [top-bar]]
+            [owlet.components.filter-bar :refer [filter-bar]]
             [owlet.views.not-found :refer [not-found-view]]
             [owlet.views.activity :refer [activity-view]]
             [owlet.views.branches :refer [branches-view]]
@@ -71,6 +72,7 @@
          [error]
          [:div.outer-height-wrap
           [top-bar]
+          [filter-bar]
           [:div.inner-height-wrap
              [:div.content
               ;TODO: repurpose custom bg functionality for custom header
