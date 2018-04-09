@@ -17,9 +17,10 @@
                 preRequisites
                 platform
                 panels]} (:fields activity)]
-    [:div.activity-content.col-xs-12.col-lg-8
-      (for [panel panels :let [id (:id panel)]]
-        ^{:key id}
-        [klipse-panel-component panel])]
-    [:div.activity-content.col-xs-12.col-lg-4
-      [activity-info platform summary nil preRequisites nil]]))
+    [:div
+     [:div.activity-content.col-xs-12.col-lg-8
+       (for [panel panels :let [id (:id panel)]]
+         ^{:key id}
+         [klipse-panel-component panel])]
+     [:div.activity-content.col-xs-12.col-lg-4
+       [activity-info platform summary nil preRequisites nil]]]))

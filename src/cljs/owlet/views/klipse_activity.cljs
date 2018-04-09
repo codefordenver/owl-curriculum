@@ -19,11 +19,12 @@
                 platform
                 language
                 code]} (:fields activity)]
-    [:div.activity-content.col-xs-12.col-lg-6
-     [activity-embed embed tags preview]]
-    [:div.activity-content.col-xs-12.col-lg-6
-     [:h2 {:style {:margin-top "40px"}}
-      [:mark "Edit this code:"]]
-     [klipse-component language code true]]
-    [:div.activity-content.col-xs-12
-     [activity-info platform  summary why preRequisites materials]]))
+    [:div
+     [:div.activity-content.col-xs-12.col-lg-6
+      [activity-embed embed tags preview]]
+     [:div.activity-content.col-xs-12.col-lg-6
+      [:h2 {:style {:margin-top "40px"}}
+       [:mark "Edit this code:"]]
+      [klipse-component language code true]]
+     [:div.activity-content.col-xs-12
+      [activity-info platform  summary why preRequisites materials]]]))
