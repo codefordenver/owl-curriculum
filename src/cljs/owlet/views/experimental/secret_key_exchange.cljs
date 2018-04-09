@@ -27,9 +27,10 @@
         :max 10000
         :value @value
         :on-change (fn [e]
-                     (if (= "" (-> e .-target .-value))
-                       (reset! value nil)
-                       (reset! value (js/parseInt (-> e .-target .-value)))))}]
+                     (let [input (-> e .-target .-value)]
+                       (if (= "" input)
+                         (reset! value nil)
+                         (reset! value (js/parseInt input)))))}]
       (if (= value prime)
         [re-com/popover-anchor-wrapper
              :showing? prime-showing?
