@@ -50,7 +50,7 @@
       (when tags
         (for [tag tags :let [name (:name tag)]]
           ^{:key (gensym "tag-")}
-          [:div {:class (if (= (lower-case name) (lower-case display-name))
+          [:div {:class (if (clojure.string/includes? (lower-case display-name) (lower-case name))
                             "tag"
                             "inactive tag")
                  :on-click #(rf/dispatch [:show-tag name])}

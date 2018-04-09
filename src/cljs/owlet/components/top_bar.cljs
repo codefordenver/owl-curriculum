@@ -70,7 +70,7 @@
           [:div.flex-row.filter-bar
            [:span.arrow-left]
            (doall
-             (for [term (shuffle @(rf/subscribe [:filter-bar-terms]))
+             (for [term @(rf/subscribe [:filter-bar-terms])
                    :let [name (:name term)
                          type (:type term)
                          filter-term (hash-map :name (:name term)
