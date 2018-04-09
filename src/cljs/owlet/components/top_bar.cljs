@@ -45,8 +45,8 @@
        [:div.flex-row.box-shadow {:class (class-names @top-bar-classes)}
         [:a {:href "#"}
          [:div.owlet-logo-div.flex-row
-          [:img.owlet-owl {:src "../img/owlet-owl.png"
-                           :alt "Owlet home"}]
+          [:img.owlet-logo {:src "../img/owlet-logo.png"
+                            :alt "Owlet home"}]
           [:div.owlet-text
             [:h1 "OWLET"]
             [:p "TECHNOLOGY EDUCATION MADE SIMPLER"]]]]
@@ -54,10 +54,10 @@
          [search-bar]]
         [:div.navigation
          [:a {:href "#/about"}
-          [:button "ABOUT US"]]
+          [:button.nav-link "ABOUT"]]
          [:a {:href "#/branches"}
-          [:button "EXPLORE"]]
+          [:button.nav-link "EXPLORE"]]
          (when @(rf/subscribe [:my-id])
           [:a {:href "#/settings"}
-           [:button [:i.fa.fa-gear]]])
+           [:button.nav-link [:i.fa.fa-gear]]])
          [login-component]]])}))

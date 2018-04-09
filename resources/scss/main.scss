@@ -7,6 +7,7 @@
 @import 'about-settings';
 @import 'creation';
 @import 'welcome';
+@import 'experimental-views';
 
 body {
   font: 100% $font-stack;
@@ -49,8 +50,9 @@ li {
   margin-bottom: 0.3em;
 }
 
-a {
+a, a:active, a:hover, a:focus, button:focus {
   text-decoration: none;
+  outline: 0;
 }
 
 .btn { padding: .5rem .6rem }
@@ -158,6 +160,7 @@ mark.white {
 
 .content {
   padding-top: 74px;
+  width: 100%;
   height: 100%;
   overflow-y: auto;
 }

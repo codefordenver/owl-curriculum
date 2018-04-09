@@ -32,11 +32,6 @@
 
 (add-filter! :kebab #(->kebab-case %))
 
-(defn- get-space-metadata
-  "GET all content types in owlet-activities-3 space"
-  [space-id headers]
-  (http/get (format "https://api.contentful.com/spaces/%1s/content_types" space-id) headers))
-
 (defn- get-entry-by-id [space-id entry-id]
   (http/get (format "https://cdn.contentful.com/spaces/%1s/entries/%2s" space-id entry-id)
             {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}))
@@ -129,19 +124,18 @@
 
   [req]
 
-  (let [{:keys [space-id]} (:params req)
-        opts1 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-MANAGEMENT-AUTH-TOKEN)}}
-        opts2 {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}]
+  (let [space-id (-> req :params :space-id)
+        opts {:headers {"Authorization" (str "Bearer " OWLET-ACTIVITIES-3-DELIVERY-AUTH-TOKEN)}}]
     (let [{:keys [status body]}
-          @(http/get (format "https://cdn.contentful.com/spaces/%1s/entries?" space-id) opts2)
-          metadata (get-space-metadata space-id opts1)]
+          @(http/get (format "https://cdn.contentful.com/spaces/%1s/entries?" space-id) opts)]
       (if (= status 200)
         (let [entries (json/parse-string body true)
               assets (get-in entries [:includes :Asset])
               branches (filter-entries "branch" (:items entries))
               platforms (filter-entries "platform" (:items entries))
               tags (filter-entries "tag" (:items entries))
-              activities (concat (filter-entries "klipseActivity" (:items entries))
+              activities (concat (filter-entries "experimentalActivity" (:items entries))
+                                 (filter-entries "klipseActivity" (:items entries))
                                  (filter-entries "klipsePanelActivity" (:items entries))
                                  (filter-entries "activity" (:items entries)))]
 
