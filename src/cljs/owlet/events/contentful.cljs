@@ -280,9 +280,7 @@
                                                "Branch" (some #(= (:name %) (:name t)) (get-in a [:fields :branches]))
                                                "Platform" (= (:name t) (get-in a [:fields :platform :name]))
                                                "Tag" (some #(= (:name %) (:name t)) (get-in a [:fields :tags]))))
-                                           (if (empty? selected-filters)
-                                             pre-filter
-                                             selected-filters))))
+                                           (remove nil? (concat pre-filter selected-filters)))))
                                activities)]
       (if (and (empty? selected-filters)
                (every? nil? pre-filter))
@@ -292,7 +290,7 @@
                                                   :display-name (clojure.string/join ", " (map #(:name %)
                                                                                                (if (empty? selected-filters)
                                                                                                  pre-filter
-                                                                                                 selected-filters)))
+                                                                                                 (concat pre-filter selected-filters))))
                                                   :activities filtered-act
                                                   :filters selected-filters
                                                   :pre-filter (get-in db [:activities-by-filter :pre-filter]))
@@ -306,7 +304,7 @@
           tags (:tags db)
           filters (get-in db [:activities-by-filter :display-name])
           filter-bar-terms ()]
-      (if-not (:filter-bar-terms db)
+      (if (nil? (:filter-bar-terms db))
         (as-> filter-bar-terms ts
           (conj ts (map #(hash-map :name (:name %)
                                    :type "Branch"

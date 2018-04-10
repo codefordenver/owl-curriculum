@@ -47,31 +47,32 @@
                     type (:type term)
                     filter-term (hash-map :name (:name term)
                                           :type (:type term))]]
-           (case type
-             "Branch"   ^{:key (gensym "branch-")}
-                         [:div.filter
-                          [:input {:id (str name "-filter")
-                                   :type "checkbox"
-                                   :on-click #(toggle-filter % filter-term)
-                                   :defaultChecked (is-checked? filter-term)}]
-                          [:label {:for (str name "-filter")}
-                           (clojure.string/upper-case name)]]
-             "Platform" ^{:key (gensym "platform-")}
-                         [:div.filter
-                          [:input {:id (str name "-filter")
-                                   :type "checkbox"
-                                   :on-click #(toggle-filter % filter-term)
-                                   :defaultChecked (is-checked? filter-term)}]
-                          [:label {:for (str name "-filter")}
-                           (clojure.string/upper-case name)]]
-             "Tag"      ^{:key (gensym "tag-")}
-                         [:div.filter
-                          [:input {:id (str name "-filter")
-                                   :type "checkbox"
-                                   :on-click #(toggle-filter % filter-term)
-                                   :defaultChecked (is-checked? filter-term)}]
-                          [:label {:for (str name "-filter")}
-                           (clojure.string/upper-case name)]])))]
+           (when-not (= filter-term (:pre-filter @(rf/subscribe [:activities-by-filter])))
+             (case type
+               "Branch"   ^{:key (gensym "branch-")}
+                           [:div.filter
+                            [:input {:id (str name "-filter")
+                                     :type "checkbox"
+                                     :on-click #(toggle-filter % filter-term)
+                                     :defaultChecked (is-checked? filter-term)}]
+                            [:label {:for (str name "-filter")}
+                             (clojure.string/upper-case name)]]
+               "Platform" ^{:key (gensym "platform-")}
+                           [:div.filter
+                            [:input {:id (str name "-filter")
+                                     :type "checkbox"
+                                     :on-click #(toggle-filter % filter-term)
+                                     :defaultChecked (is-checked? filter-term)}]
+                            [:label {:for (str name "-filter")}
+                             (clojure.string/upper-case name)]]
+               "Tag"      ^{:key (gensym "tag-")}
+                           [:div.filter
+                            [:input {:id (str name "-filter")
+                                     :type "checkbox"
+                                     :on-click #(toggle-filter % filter-term)
+                                     :defaultChecked (is-checked? filter-term)}]
+                            [:label {:for (str name "-filter")}
+                             (clojure.string/upper-case name)]]))))]
      [:span.arrow-right {:on-click #(scroll-filters true)}
       (goog-string/unescapeEntities "&gt;")]]
     [:div#spacer]))
