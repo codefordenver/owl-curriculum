@@ -8,23 +8,44 @@
   (js/Auth0. (clj->js auth0-init)))
 
 
-(defn lock
+(def lock
   "A JS object through which we communicate with the Auth0 authentication
-  server. Also, its .show method puts up a nice GUI for the user to enter
-  login credentials. See
-
+  server. See owlet.auth0/show-lock to bring up a nice GUI for the user to
+  enter login credentials. See https://auth0.com/docs/libraries/lock/v10/api
   "
-  [screen]
   (js/Auth0Lock.
     (:clientID auth0-init)
     (:domain auth0-init)
     ; Here are configuration options for Auth0Lock. See
     ; https://auth0.com/docs/libraries/lock/v10/customization
     (clj->js {:auth {:connectionScopes {:google-oauth2 ["openid" "profile"]}
-                     :redirect         false}
-              :initialScreen (case screen
-                                   "login" "login"
-                                   "signup" "signUp")})))
+                     :redirect         false}})))
+
+
+(defn show-lock
+  "Puts up the Auth0 log-in, sign-up, or forgot-password modal dialog by
+  calling method .show on an instance of js/Auth0Lock. By default, the instance
+  is the owlet.auth0/lock global object. You can instead provide :lock followed
+  by an instance as two of the arguments.
+
+  Other possible arguments are keyword/value options. For a list of available
+  options, see https://auth0.com/docs/libraries/lock/v10/api#show-
+  The most common option is :initialScreen with a string, keyword, or symbol
+  whose name is \"login\", \"signUp\", or \"forgotPassword\". This value will
+  be validated. (N.B., if \"forgotPassword\" is given, it's probably best to
+  also give option :allowLogin false.)
+  "
+  [& {screen-opt :initialScreen, lk :lock :as options}]
+  (assert
+    (or (nil? screen-opt)
+        (#{"login" "signUp" "forgotPassword"} (name screen-opt)))
+    (str
+      "Option :initialScreen was given as " (pr-str screen-opt)
+      ", but should be a value whose name is \"login\", \"signUp\""
+      ", or \"forgotPassword\"."))
+
+  (.show (or lk lock)
+         (-> options (dissoc :lock) (or {}) clj->js)))
 
 
 (defn on-authenticated
