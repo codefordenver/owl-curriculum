@@ -38,31 +38,4 @@
 
 (reg-getter :on-app-failure [:on-app-failure])
 
-(rf/reg-sub
-  :filter-bar-terms
-  (fn [db _]
-    (let [branches (:activity-branches db)
-          platforms (:activity-platforms db)
-          tags (:tags db)
-          filters (get-in db [:activities-by-filter :display-name])
-          filter-bar-terms ()]
-      (as-> filter-bar-terms ts
-        (conj ts (map #(hash-map :name (:name %)
-                                 :type "Branch"
-                                 :checked (if filters
-                                            (clojure.string/includes? filters (:name %))
-                                            false))
-                      branches))
-        (conj ts (map #(hash-map :name (:name %)
-                                 :type "Platform"
-                                 :checked (if filters
-                                            (clojure.string/includes? filters (:name %))
-                                            false))
-                      platforms))
-        (conj ts (map #(hash-map :name (:name %)
-                                 :type "Tag"
-                                 :checked (if filters
-                                            (clojure.string/includes? filters (:name %))
-                                            false))
-                      tags))
-        (distinct (apply concat ts))))))
+(reg-getter :filter-bar-terms [:filter-bar-terms])
