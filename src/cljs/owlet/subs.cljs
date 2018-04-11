@@ -38,4 +38,33 @@
 
 (reg-getter :on-app-failure [:on-app-failure])
 
-(reg-getter :filter-bar-terms [:filter-bar-terms])
+(rf/reg-sub
+  :filter-bar-terms
+  (fn [db _]
+    (if (nil? (:activities-by-filter db))
+      (:filter-bar-terms db)
+      (let [activities-by-filter (:activities-by-filter db)
+            filters (:display-name activities-by-filter)
+            activity-branches (distinct (apply concat (map #(get-in % [:fields :branches])
+                                                           (:activities activities-by-filter))))
+            activity-platforms (distinct (map #(get-in % [:fields :platform])
+                                              (:activities activities-by-filter)))
+            activity-tags (distinct (apply concat (map #(get-in % [:fields :tags])
+                                                       (:activities activities-by-filter))))
+            branches (distinct (map #(hash-map :name (:name %) :type "Branch" :checked (if filters
+                                                                                         (clojure.string/includes? filters (:name %))
+                                                                                         false))
+                                    activity-branches))
+            platforms (distinct (map #(hash-map :name (:name %) :type "Platform" :checked (if filters
+                                                                                            (clojure.string/includes? filters (:name %))
+                                                                                            false))
+                                     activity-platforms))
+            tags (distinct (map #(hash-map :name (:name %) :type "Tag" :checked (if filters
+                                                                                  (clojure.string/includes? filters (:name %))
+                                                                                  false))
+                                activity-tags))]
+        (prn (concat branches platforms tags))
+        (concat (:filters activities-by-filter)
+                (filter (fn [t]
+                          (some #(= t %) (concat branches platforms tags)))
+                        (:filter-bar-terms db)))))))

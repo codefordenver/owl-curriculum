@@ -2,6 +2,5 @@
   (:require [re-frame.core :as rf]))
 
 (defn back []
-  [:a {:href "#/branches"
-       :on-click #(rf/dispatch [:get-content-from-contentful :show-branches])}
+  [:a {:href "#/branches"}
     [:i.fa.fa-caret-left.back {:aria-hidden "true"}]])

@@ -37,7 +37,6 @@
 (defn filter-bar []
   (if (some #(= @(rf/subscribe [:active-view]) %) [:branches-view :filtered-activities-view])
     [:div#filter-bar
-     (rf/dispatch [:filter-bar-terms])
      [:span.arrow-left {:on-click #(scroll-filters false)}
       (goog-string/unescapeEntities "&lt;")]
      [:div#filter-items
