@@ -8,8 +8,8 @@
   [:div.flex-row.box-shadow.top-bar
    [:a {:href "#"}
     [:div.owlet-logo-div.flex-row
-     [:img.owlet-owl {:src "../img/owlet-owl.png"
-                      :alt "Owlet home"}]
+     [:img.owlet-logo {:src "../img/owlet-logo.png"
+                       :alt "Owlet home"}]
      [:div.owlet-text
        [:h1 "OWLET"]
        [:p "TECHNOLOGY EDUCATION MADE SIMPLER"]]]]
