@@ -130,7 +130,7 @@
     width: 100%;
     height: 45em;
     display: grid;
-    grid-template: 1fr 2fr 3fr 2fr 1fr 1fr 2fr 1fr / 2fr 2fr 4fr 4fr 2fr 1fr 1fr 4fr 1fr 1fr 1fr 4fr 1fr 1fr repeat(3, 2fr) 4fr 4fr;
+    grid-template: 1em 2fr 3fr 2fr 1fr 1fr 2fr 1fr / 2fr 2fr 4fr 4fr 2fr 1fr 1fr 4fr 1fr 1fr 1fr 4fr 1fr 1fr repeat(3, 2fr) 4fr 4fr;
 
     .border-1 {
       grid-area: 7 / 7 / 8 / span 3;
@@ -148,22 +148,24 @@
       }
     }
     .cloud {
-      grid-area: 1 / 6 / 6 / span 8;
+      grid-area: 2 / 6 / 6 / span 9;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .public {
-      grid-area: 3 / 6 / 4 / span 8;
+      grid-area: 3 / 6 / 4 / span 9;
       font-weight: 400;
+      align-self: flex-end;
       h2 {
-        margin: 0;
+        margin-top: 0;
         font-weight: 300;
       }
     }
     .prime {
-      grid-area: 2 / 8 / 3 / 9;
+      grid-area: 3 / 8 / 4 / 9;
+      align-self: flex-start;
       color: $aqua;
       .form-control {
         color: $aqua;
@@ -171,7 +173,8 @@
       }
     }
     .base {
-      grid-area: 2 / 12 / 3 / 13;
+      grid-area: 3 / 12 / 4 / 13;
+      align-self: flex-start;
       color: #2C6960;
       .form-control {
         color: #2C6960;

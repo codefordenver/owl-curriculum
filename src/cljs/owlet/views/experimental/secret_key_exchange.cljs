@@ -105,7 +105,7 @@
       [:h4 "Use the suggested numbers or try your own."
        [:br] "Hover your mouse over "
        [:span.pulse-shrink "\"pulsing\""]
-       " areas to learn more!"]]
+       " areas to learn more."]]
      [:div#diffie-hellman-grid
       [:div.border-1]
       [:div.border-2]
