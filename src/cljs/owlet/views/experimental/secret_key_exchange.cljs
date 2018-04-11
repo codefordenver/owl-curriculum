@@ -107,15 +107,14 @@
        [:span.pulse-shrink "\"pulsing\""]
        " areas to learn more!"]]
      [:div#diffie-hellman-grid
-      [:div.divider-1]
-      [:div.divider-2]
+      [:div.border-1]
+      [:div.border-2]
       [:div.cloud
        [:img {:src "img/experimental/cloud.png"}]]
       [:div.flex.public
        [:div
-        [:h3 {:style {:margin-bottom "0"}}
-         "SHARED"]
-        "(PUBLIC)"]]
+        "SHARED IN"
+        [:h2 "PUBLIC"]]]
       [:div.lines
        [:img {:src "img/experimental/lines.png"}]]
       [:div.flex.pa.prime
@@ -180,11 +179,11 @@
        [known-number "PRIME #" @prime]]
       [:div.flex.alice-equal-2.equal-sign
        [:div "="]]
-      [:div.flex.pa.alice-shared-secret.mixed-2
-       [known-number "SECRET KEY" (when (and @prime @base @bob-secret @alice-secret)
-                                    (exp-mod (exp-mod @base @bob-secret @prime)
-                                             @alice-secret
-                                             @prime))]]
+      [:div.flex.pa.alice-key.mixed-2
+       [known-number "SHARED SECRET" (when (and @prime @base @bob-secret @alice-secret)
+                                       (exp-mod (exp-mod @base @bob-secret @prime)
+                                                @alice-secret
+                                                @prime))]]
       [:div.flex.pa.bob-name
        [:h1 "BOB"]]
       [:div.flex.pa.bob-secret-1
@@ -243,8 +242,8 @@
        [known-number "PRIME #" @prime]]
       [:div.flex.bob-equal-2.equal-sign
        [:div "="]]
-      [:div.flex.pa.bob-shared-secret.mixed-2
-       [known-number "SECRET KEY" (when (and @prime @base @alice-secret @bob-secret)
+      [:div.flex.pa.bob-key.mixed-2
+       [known-number "SHARED SECRET" (when (and @prime @base @alice-secret @bob-secret)
                                        (exp-mod (exp-mod @base @alice-secret @prime)
                                                 @bob-secret
                                                 @prime))]]]

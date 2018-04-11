@@ -130,33 +130,40 @@
     width: 100%;
     height: 45em;
     display: grid;
-    grid-template: 1fr 2fr 3fr 2fr 1fr 1fr 2fr 1fr / 1fr 1fr 2fr 2fr 1fr 1fr 2fr 1.5em 1.5em 2fr repeat(4, 1fr) 2fr 2fr;
+    grid-template: 1fr 2fr 3fr 2fr 1fr 1fr 2fr 1fr / 2fr 2fr 4fr 4fr 2fr 1fr 1fr 4fr 1fr 1fr 1fr 4fr 1fr 1fr repeat(3, 2fr) 4fr 4fr;
 
-    .divider-2 {
-      grid-area: 7 / 9 / 8 / 10;
-      border-left: 3px dashed $magenta;
+    .border-1 {
+      grid-area: 7 / 7 / 8 / span 3;
+      border: 3px dashed $magenta;
+    }
+    .border-2 {
+      grid-area: 7 / 11 / 8 / span 3;
+      border: 3px dashed $magenta;
     }
     .lines {
-      grid-area: 5 / 2 / 7 / span 12;
+      grid-area: 5 / 2 / 7 / span 15;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .cloud {
-      grid-area: 1 / 6 / 6 / span 6;
+      grid-area: 1 / 6 / 6 / span 8;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .public {
-      grid-area: 3 / 6 / 4 / span 6;
+      grid-area: 3 / 6 / 4 / span 8;
       font-weight: 400;
+      h2 {
+        margin: 0;
+        font-weight: 300;
+      }
     }
-
     .prime {
-      grid-area: 2 / 7 / 3 / 8;
+      grid-area: 2 / 8 / 3 / 9;
       color: $aqua;
       .form-control {
         color: $aqua;
@@ -164,14 +171,13 @@
       }
     }
     .base {
-      grid-area: 2 / 10 / 3 / 11;
+      grid-area: 2 / 12 / 3 / 13;
       color: #2C6960;
       .form-control {
         color: #2C6960;
         border: 0.1em solid #2C6960;
       }
     }
-
     .alice-name {
       grid-area: 2 / 4 / 3 / 6;
       justify-content: flex-start;
@@ -200,7 +206,7 @@
       grid-area: 4 / 5 / 5 / 6;
     }
     .alice-number {
-      grid-area: 4 / 7 / 5 / 8;
+      grid-area: 4 / 8 / 5 / 9;
     }
     .alice-bob-number {
       grid-area: 7 / 1 / 8 / 3;
@@ -215,8 +221,8 @@
     .alice-equal-2 {
       grid-area: 7 / 5 / 8 / 6;
     }
-    .alice-shared-secret {
-      grid-area: 7 / 7 / 8 / 8;
+    .alice-key {
+      grid-area: 7 / 8 / 8 / 9;
     }
     .bob-name {
       grid-area: 2 / -2 / 3 / -5;
@@ -246,7 +252,7 @@
       grid-area: 4 / -5 / 5 / -6;
     }
     .bob-number {
-      grid-area: 4 / -7 / 5 / -8;
+      grid-area: 4 / -8 / 5 / -9;
     }
     .bob-alice-number {
       grid-area: 7 / -3 / 8 / -5;
@@ -261,8 +267,8 @@
     .bob-equal-2 {
       grid-area: 7 / -5 / 8 / -6;
     }
-    .bob-shared-secret {
-      grid-area: 7 / -7 / 8 / -8;
+    .bob-key {
+      grid-area: 7 / -8 / 8 / -9;
     }
   }
   .too-small {
