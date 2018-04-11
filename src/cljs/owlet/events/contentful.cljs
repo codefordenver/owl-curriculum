@@ -131,7 +131,7 @@
     {:dispatch-n (list [:set-active-view :branches-view]
                        [:set-active-document-title! "Branches"]
                        [:remove-filtered-activities]
-                       [:filter-bar-terms])}))
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-branch
@@ -139,7 +139,7 @@
     {:dispatch-n (list [:set-active-view :filtered-activities-view "branch"]
                        [:filter-activities-by-search-term route-param]
                        [:set-active-document-title! route-param]
-                       [:filter-bar-terms])}))
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-platform
@@ -147,7 +147,7 @@
     {:dispatch-n (list [:set-active-view :filtered-activities-view "platform"]
                        [:filter-activities-by-search-term route-param]
                        [:set-active-document-title! route-param]
-                       [:filter-bar-terms])}))
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-tag
@@ -155,7 +155,7 @@
     {:dispatch-n (list [:set-active-view :filtered-activities-view "tag"]
                        [:filter-activities-by-search-term route-param]
                        [:set-active-document-title! route-param]
-                       [:filter-bar-terms])}))
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-activity
@@ -290,7 +290,7 @@
                (every? nil? pre-filter))
         {:db (assoc db :active-view :branches-view
                        :activities-by-filter nil)
-         :dispatch [:filter-bar-terms]}
+         :dispatch [:set-filter-bar-terms]}
         {:db (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
                                                        :display-name (clojure.string/join ", " (map #(:name %)
                                                                                                     (if (empty? selected-filters)
@@ -300,10 +300,10 @@
                                                        :filters selected-filters
                                                        :pre-filter (get-in db [:activities-by-filter :pre-filter]))
                        :active-view :filtered-activities-view)
-         :dispatch [:filter-bar-terms]}))))
+         :dispatch [:set-filter-bar-terms]}))))
 
 (rf/reg-event-db
-  :filter-bar-terms
+  :set-filter-bar-terms
   (fn [db _]
     (let [activities-by-filter (get-in db [:activities-by-filter :activities])
           branches (:activity-branches db)

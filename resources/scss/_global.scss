@@ -340,13 +340,13 @@ progress {
     cursor: pointer;
   }
 }
-.arrow-left {
+#arrow-left {
   text-align: left;
 }
-.arrow-right {
+#arrow-right {
   text-align: right;
 }
-.arrow-left, .arrow-right {
+#arrow-left, #arrow-right {
   display: inline-block;
   width: 5%;
   font-size: 40px;

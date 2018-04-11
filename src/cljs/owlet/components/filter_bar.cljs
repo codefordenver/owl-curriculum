@@ -6,23 +6,24 @@
 
 (defonce filters (reagent/atom '()))
 
-(defn element-is-in-view [el right?]
+(defn element-is-in-view [el]
   (let [rect (.getBoundingClientRect el)
         parent-rect (.getBoundingClientRect (.-parentElement el))]
-      (if right?
-        (>= (.-right rect) (.-right parent-rect))
-        (<= (.-left rect) (.-left parent-rect)))))
-
+      (and (<= (.-right rect) (.-right parent-rect))
+           (>= (.-left rect) (.-left parent-rect)))))
 (defn scroll-filters [right?]
-  (let [filter-elements (array-seq (js/document.getElementsByClassName "filter"))
-        scroll-to-rect (if right?
-                        (.getBoundingClientRect (first (filter #(element-is-in-view % right?) filter-elements)))
-                        (.getBoundingClientRect (last (filter #(element-is-in-view % right?) filter-elements))))
-        filter-items-rect (.getBoundingClientRect (js/document.getElementById "filter-items"))
-        current-scroll (.scrollLeft (js/jQuery "#filter-items"))]
-    (if right?
-      (.scrollLeft (js/jQuery "#filter-items") (+ current-scroll (- (.-left scroll-to-rect) (.-left filter-items-rect))))
-      (.scrollLeft (js/jQuery "#filter-items") (+ current-scroll (- (.-right scroll-to-rect) (.-right filter-items-rect)))))))
+  (let [filter-elements (array-seq (js/document.getElementsByClassName "filter"))]
+    (when-let [elements-in-view (not-empty (filter #(element-is-in-view %) filter-elements))]
+      (let [scroll-to-rect (.getBoundingClientRect (if right?
+                                                     (last elements-in-view)
+                                                     (first elements-in-view)))
+            filter-items-rect (.getBoundingClientRect (js/document.getElementById "filter-items"))
+            current-scroll (.scrollLeft (js/jQuery "#filter-items"))
+            scroll-distance (if right?
+                              (+ current-scroll (- (.-left scroll-to-rect) (.-left filter-items-rect)))
+                              (+ current-scroll (- (.-right scroll-to-rect) (.-right filter-items-rect))))]
+        (prn scroll-distance)
+        (.animate (js/jQuery "#filter-items") (clj->js {:scrollLeft scroll-distance}) (* 2 (- scroll-distance  current-scroll)))))))
 
 (defn toggle-filter [e filter-term]
   (if (.-checked (.-target e))
@@ -37,7 +38,7 @@
 (defn filter-bar []
   (if (some #(= @(rf/subscribe [:active-view]) %) [:branches-view :filtered-activities-view])
     [:div#filter-bar
-     [:span.arrow-left {:on-click #(scroll-filters false)}
+     [:span#arrow-left.arrow {:on-click #(scroll-filters false)}
       (goog-string/unescapeEntities "&lt;")]
      [:div#filter-items
       (doall
@@ -72,6 +73,6 @@
                                      :defaultChecked (is-checked? filter-term)}]
                             [:label {:for (str name "-filter")}
                              (clojure.string/upper-case name)]]))))]
-     [:span.arrow-right {:on-click #(scroll-filters true)}
+     [:span#arrow-right.arrow {:on-click #(scroll-filters true)}
       (goog-string/unescapeEntities "&gt;")]]
     [:div#spacer]))
