@@ -8,6 +8,6 @@
     [:div.information-inner
      [:div.inner-height-wrap
       [:h1 [:mark {:style {:cursor "pointer"}
-                   :on-click #(.show auth0/lock)}
+                   :on-click #(.show (auth0/lock "login"))}
             "Log in"]]
       [:h2 "You must be logged in to view this page."]]]]])

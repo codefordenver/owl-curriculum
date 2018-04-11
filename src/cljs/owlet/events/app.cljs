@@ -40,21 +40,9 @@
 
 (rf/reg-event-db
   :set-active-document-title!
-  (fn [db [_ val]]
-    (let [active-view (:active-view db)
-          titles {:welcome-view           "Welcome"
-                  :branches-view          "Branches"
-                  :activity-view          (-> db
-                                              :activity-in-view
-                                              :fields
-                                              :title)
-                  :filtered-activities-view (-> db
-                                                :activities-by-filter
-                                                :display-name)}
-          default-title (:welcome-view titles)
-          document-title (or (titles active-view) (clj-str/capitalize (or val "")))
-          title-template (str document-title " | " config/project-name)
-          title (or title-template default-title)]
+  (fn [db [_ val skip-caps]]
+    (let [document-title (if skip-caps val (clj-str/capitalize (or val "")))
+          title (str document-title " | " config/project-name)]
       (assoc-in db [:app :title] title))))
 
 

@@ -22,7 +22,8 @@
       [:a {:href (str "#/activity/#!" entry-id)}
        [:div.activity-thumbnail
         [:div.image {:style {:background-image (str "url('" image "')")}}]
-        [:mark.title title]]]
+        [:div.title-wrap
+         [:mark.title title]]]]
       [:div.platform-wrap
        [:b "PLATFORM"][:br]
        [re-com/popover-anchor-wrapper

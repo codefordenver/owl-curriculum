@@ -8,19 +8,23 @@
   (js/Auth0. (clj->js auth0-init)))
 
 
-(def lock
+(defn lock
   "A JS object through which we communicate with the Auth0 authentication
   server. Also, its .show method puts up a nice GUI for the user to enter
   login credentials. See
 
   "
+  [screen]
   (js/Auth0Lock.
     (:clientID auth0-init)
     (:domain auth0-init)
     ; Here are configuration options for Auth0Lock. See
     ; https://auth0.com/docs/libraries/lock/v10/customization
     (clj->js {:auth {:connectionScopes {:google-oauth2 ["openid" "profile"]}
-                     :redirect         false}})))
+                     :redirect         false}
+              :initialScreen (case screen
+                                   "login" "login"
+                                   "signup" "signUp")})))
 
 
 (defn on-authenticated
