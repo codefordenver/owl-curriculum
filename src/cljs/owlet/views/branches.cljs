@@ -12,7 +12,7 @@
       [:h1#title [:mark "Get started by choosing a branch below"]]
       [:br]
       (doall
-        (for [b (reverse @activity-branches)
+        (for [b (sort-by :name @activity-branches)
                 :let [pair (vector (:color b) (:name b))
                       branch-key (->kebab-case (-> pair
                                                    second

@@ -107,9 +107,14 @@
        [:span.pulse-shrink "\"pulsing\""]
        " areas to learn more!"]]
      [:div#diffie-hellman-grid
-      [:div.divider-1]
-      [:div.divider-2]
-      [:div.hotspot-2]
+      [:div.border-1]
+      [:div.border-2]
+      [:div.cloud
+       [:img {:src "img/experimental/cloud.png"}]]
+      [:div.flex.public
+       [:div
+        "SHARED IN"
+        [:h2 "PUBLIC"]]]
       [:div.lines
        [:img {:src "img/experimental/lines.png"}]]
       [:div.flex.pa.prime
@@ -121,9 +126,11 @@
       [:div.flex.pa.alice-secret-1
        [input-number "ALICE SECRET" alice-secret 47]]
       [:div.flex.pa.alice-secret-msg
-       [:div [:span "<"]
-        " Enter a secret number for Alice. For subtle reasons, it should not have any common factors with the "
-        [:span.base "BASE #"]]]
+       [:div "Enter a secret number for Alice. For subtle reasons, it should not have any common factors with the "
+        [:span.base "BASE #"]]
+       [:div {:style {:width "60px"
+                      :font-weight "700"}}
+          ">"]]
       [:div.flex.pa.alice-base
        [known-number "BASE #" @base]]
       [:div.flex.alice-secret-2
@@ -147,11 +154,11 @@
       [:div.flex.alice-equal-1.equal-sign
        [:div "="]]
       [:div.flex.pa.alice-number.mixed-1
-       [known-number "ALICE PUBLIC" (when (and @prime @base @alice-secret)
-                                      (exp-mod @base @alice-secret @prime))]]
+       [known-number "ALICE'S NUMBER" (when (and @prime @base @alice-secret)
+                                        (exp-mod @base @alice-secret @prime))]]
       [:div.flex.pa.alice-bob-number.mixed-1
-       [known-number "BOB PUBLIC" (when (and @prime @base @bob-secret)
-                                    (exp-mod @base @bob-secret @prime))]]
+       [known-number "BOB'S NUMBER" (when (and @prime @base @bob-secret)
+                                      (exp-mod @base @bob-secret @prime))]]
       [:div.flex.alice-secret-3
        [:div.exp
         [known-number "" @alice-secret]]
@@ -172,8 +179,8 @@
        [known-number "PRIME #" @prime]]
       [:div.flex.alice-equal-2.equal-sign
        [:div "="]]
-      [:div.flex.pa.alice-shared-secret.mixed-2
-       [known-number "SECRET KEY" (when (and @prime @base @bob-secret @alice-secret)
+      [:div.flex.pa.alice-key.mixed-2
+       [known-number "SHARED SECRET" (when (and @prime @base @bob-secret @alice-secret)
                                        (exp-mod (exp-mod @base @bob-secret @prime)
                                                 @alice-secret
                                                 @prime))]]
@@ -182,8 +189,10 @@
       [:div.flex.pa.bob-secret-1
        [input-number "BOB SECRET" bob-secret 91]]
       [:div.flex.pa.bob-secret-msg
-       [:div [:span "<"]
-        " Enter a secret number for Bob. For subtle reasons, it should not have any common factors with the "
+       [:div {:style {:width "60px"
+                      :font-weight "700"}}
+          "<"]
+       [:div "Enter a secret number for Bob. For subtle reasons, it should not have any common factors with the "
         [:span.base "BASE #"]]]
       [:div.flex.pa.bob-base
        [known-number "BASE #" @base]]
@@ -208,11 +217,11 @@
       [:div.flex.bob-equal-1.equal-sign
        [:div "="]]
       [:div.flex.pa.bob-number.mixed-1
-       [known-number "BOB PUBLIC" (when (and @prime @base @bob-secret)
-                                    (exp-mod @base @bob-secret @prime))]]
+       [known-number "BOB'S NUMBER" (when (and @prime @base @bob-secret)
+                                      (exp-mod @base @bob-secret @prime))]]
       [:div.flex.pa.bob-alice-number.mixed-1
-       [known-number "ALICE PUBLIC" (when (and @prime @base @alice-secret)
-                                      (exp-mod @base @alice-secret @prime))]]
+       [known-number "ALICE'S NUMBER" (when (and @prime @base @alice-secret)
+                                        (exp-mod @base @alice-secret @prime))]]
       [:div.flex.bob-secret-3
        [:div.exp
         [known-number "" @bob-secret]]
@@ -233,8 +242,8 @@
        [known-number "PRIME #" @prime]]
       [:div.flex.bob-equal-2.equal-sign
        [:div "="]]
-      [:div.flex.pa.bob-shared-secret.mixed-2
-       [known-number "SECRET KEY" (when (and @prime @base @alice-secret @bob-secret)
+      [:div.flex.pa.bob-key.mixed-2
+       [known-number "SHARED SECRET" (when (and @prime @base @alice-secret @bob-secret)
                                        (exp-mod (exp-mod @base @alice-secret @prime)
                                                 @bob-secret
                                                 @prime))]]]
