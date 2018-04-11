@@ -65,7 +65,6 @@
                                                                                   (clojure.string/includes? filters (:name %))
                                                                                   false))
                                 activity-tags))]
-        (prn (concat branches platforms tags))
         (concat (:filters activities-by-filter)
                 (filter (fn [t]
                           (some #(= t %) (concat branches platforms tags)))

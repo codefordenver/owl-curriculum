@@ -22,7 +22,6 @@
             scroll-distance (if right?
                               (+ current-scroll (- (.-left scroll-to-rect) (.-left filter-items-rect)))
                               (+ current-scroll (- (.-right scroll-to-rect) (.-right filter-items-rect))))]
-        (prn scroll-distance)
         (.animate (js/jQuery "#filter-items") (clj->js {:scrollLeft scroll-distance}) (* 2 (- scroll-distance  current-scroll)))))))
 
 (defn toggle-filter [e filter-term]

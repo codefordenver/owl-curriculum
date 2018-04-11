@@ -298,7 +298,8 @@ progress {
 }
 
 #filter-bar {
-  height: 80px;
+  height: 70px;
+  font-size: .85em;
   margin-top: 74px;
   border-bottom: 1px solid #ADADAD;
   display: flex;
@@ -340,18 +341,14 @@ progress {
     cursor: pointer;
   }
 }
-#arrow-left {
-  text-align: left;
-}
-#arrow-right {
-  text-align: right;
-}
 #arrow-left, #arrow-right {
   display: inline-block;
   width: 5%;
   font-size: 40px;
   margin: 0 5px 0 10px;
   cursor: pointer;
+  text-align: center;
+  color: #BFBFBF;
 }
 // Logo
 
