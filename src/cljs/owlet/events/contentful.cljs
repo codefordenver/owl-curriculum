@@ -190,6 +190,13 @@
     {:dispatch-n (list [:set-active-view :create-general-activity-view]
                        [:set-active-document-title! "Create Embedded Activity"])}))
 
+(rf/reg-event-fx
+  :show-welcome
+  (fn [_ _]
+    {:dispatch-n (list [:set-active-view :welcome-view]
+                       [:set-active-document-title! "^OvO^" :skip-caps])}))
+
+
 ; search & filter
 
 (rf/reg-event-db
