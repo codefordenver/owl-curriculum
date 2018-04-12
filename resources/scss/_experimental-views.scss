@@ -171,6 +171,9 @@
         color: $aqua;
         border: 0.1em solid $aqua;
       }
+      .popover-content {
+        width: 200px;
+      }
     }
     .base {
       grid-area: 3 / 12 / 4 / 13;

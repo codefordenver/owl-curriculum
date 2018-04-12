@@ -52,8 +52,8 @@
                        :body [:div {:style {:text-align "center"
                                             :font-size "1.2em"}}
                                    (case title
-                                     "PRIME #" "Only divisible by itself and 1"
-                                     "BASE #" "Any random number"
+                                     "PRIME #" "Enter a \"prime\" number - a number that has no factors except itself and 1"
+                                     "BASE #" "Enter any random number"
                                      "ALICE SECRET" "Never shared with Bob"
                                      "BOB SECRET" "Never shared with Alice")]]]]])))
 
