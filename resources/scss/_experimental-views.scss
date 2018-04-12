@@ -5,6 +5,10 @@
     justify-content: center;
     align-items: center;
   }
+  h2 {
+    font-weight: 500;
+    margin-bottom: 0.2em;
+  }
   p span {
     font-weight: 500;
   }
@@ -52,12 +56,11 @@
       background-color: #6293A0;
     }
   }
-  .directions {
+  .step-1 {
     text-align: center;
     margin-top: 2em;
-    padding: 2em 0;
+    padding-top: 2em;
     border-top: 2px solid black;
-    h2 { font-weight: 500 }
   }
   #diffie-hellman-grid {
     font-size: 0.8em;
@@ -128,9 +131,9 @@
     }
 
     width: 100%;
-    height: 45em;
+    height: 65em;
     display: grid;
-    grid-template: 1fr 2fr 3fr 2fr 1fr 1fr 2fr 1fr / 2fr 2fr 4fr 4fr 2fr 1fr 1fr 4fr 1fr 1fr 1fr 4fr 1fr 1fr repeat(3, 2fr) 4fr 4fr;
+    grid-template: 1em 1fr 4fr 2fr 2fr 2fr 2fr 3fr / 2fr 2fr 4fr 4fr 2fr 1fr 1fr 4fr 1fr 1fr 1fr 4fr 1fr 1fr repeat(3, 2fr) 4fr 4fr;
 
     .border-1 {
       grid-area: 7 / 7 / 8 / span 3;
@@ -141,37 +144,56 @@
       border: 3px dashed $magenta;
     }
     .lines {
-      grid-area: 5 / 2 / 7 / span 15;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .cloud {
-      grid-area: 1 / 6 / 6 / span 8;
+      grid-area: 6 / 2 / 7 / span 15;
       img {
         width: 100%;
         height: 100%;
       }
     }
     .public {
-      grid-area: 3 / 6 / 4 / span 8;
-      font-weight: 400;
-      h2 {
-        margin: 0;
-        font-weight: 300;
+      grid-area: 2 / 6 / 3 / span 9;
+    }
+    .step-2 {
+      grid-area: 3 / 1 / 4 / -1;
+      font-weight: 300;
+      align-self: flex-end;
+      font-size: 1.25em;
+      margin-bottom: 1.5em;
+    }
+    .step-3 {
+      grid-area: 5 / 1 / 6 / -1;
+      font-weight: 300;
+      font-size: 1.25em;
+    }
+    .step-4 {
+      grid-area: 8 / 1 / 9 / -1;
+      font-weight: 300;
+      font-size: 1.25em;
+      align-items: flex-start;
+      margin-top: 1em;
+    }
+    .cloud {
+      grid-area: 2 / 6 / 5 / span 9;
+      img {
+        width: 100%;
+        height: 100%;
       }
     }
     .prime {
-      grid-area: 2 / 8 / 3 / 9;
+      grid-area: 3 / 8 / 4 / 9;
+      align-self: flex-start;
       color: $aqua;
       .form-control {
         color: $aqua;
         border: 0.1em solid $aqua;
       }
+      .popover-content {
+        width: 200px;
+      }
     }
     .base {
-      grid-area: 2 / 12 / 3 / 13;
+      grid-area: 3 / 12 / 4 / 13;
+      align-self: flex-start;
       color: #2C6960;
       .form-control {
         color: #2C6960;
@@ -179,8 +201,8 @@
       }
     }
     .alice-name {
-      grid-area: 2 / 4 / 3 / 6;
-      justify-content: flex-start;
+      grid-area: 2 / 1 / 3 / 5;
+      justify-content: flex-end;
     }
     .alice-secret-1 {
       grid-area: 3 / 4 / 4 / 5;
@@ -225,7 +247,7 @@
       grid-area: 7 / 8 / 8 / 9;
     }
     .bob-name {
-      grid-area: 2 / -2 / 3 / -5;
+      grid-area: 2 / -1 / 3 / -5;
       justify-content: flex-start;
     }
     .bob-secret-1 {
@@ -275,7 +297,7 @@
     display: none;
   }
   @media screen and (max-width: 600px) {
-    .directions, #diffie-hellman-grid {
+    .step-1, #diffie-hellman-grid {
       display: none;
     }
     .too-small {
