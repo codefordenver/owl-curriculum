@@ -125,29 +125,34 @@
        " without ever actually sharing it!"]
       [:p "Today, there are various key exchange methods that rely on different kinds of math. "
        [:span "This interactive demo is based on the Diffie-Hellman key exchange (DH), one of the earliest practical examples first introduced in 1976.*"]]]
-     [:div.col-xs-12.directions
-      [:h2.mixed-2 "Fill in the white boxes to create a shared secret key"]
-      [:h4 "Use the suggested numbers or try your own."
-       [:br] "Hover your mouse over "
+     [:div.col-xs-12.step-1
+      [:h2.mixed-2 "1. Enter the initial public and secret numbers"]
+      "Use the suggested numbers or try your own. Hover your mouse over the "
        [:span.pulse-shrink "\"pulsing\""]
-       " areas to learn more."]]
+       " areas to learn more."]
      [:div#diffie-hellman-grid
       [:div.border-1]
       [:div.border-2]
       [:div.cloud
        [:img {:src "img/experimental/cloud.png"}]]
       [:div.flex.public
+       [:h2 "PUBLIC"]]
+      [:div.step-2
+       [:h2.mixed-2 "2. Calculate a new public number for each side"]
+       "Each side raises the BASE # to their own SECRET #, and then \"mods\" (%) the result by the PRIME #."]
+      ; [:div.lines
+      ;  [:img {:src "img/experimental/lines.png"}]]
+      [:div.flex.step-3
        [:div
-        "SHARED IN"
-        [:h2 "PUBLIC"]]]
-      [:div.lines
-       [:img {:src "img/experimental/lines.png"}]]
+         "We use exponents and modulo because they're nearly impossible to \"reverse engineer.\" So Alice & Bob can exchange their public numbers without worrying that someone will use them to figure out their secret numbers."]
+       [:div
+        [:h2.mixed-2 "3. Exchange public numbers to calculate the shared secret"]]]
       [:div.flex.pa.prime
        [input-number "PRIME #" prime 29]]
       [:div.flex.pa.base
        [input-number "BASE #" base 8]]
       [:div.flex.pa.alice-name
-       [:h1 "ALICE"]]
+       [:h2 "ALICE"]]
       [:div.flex.pa.alice-secret-1
        [input-number "ALICE SECRET" alice-secret 47]]
       [:div.flex.pa.alice-secret-msg
@@ -168,11 +173,11 @@
       [:div.flex.alice-equal-1.equal-sign
        [:div "="]]
       [:div.flex.pa.alice-number.mixed-1
-       [known-number "ALICE'S NUMBER" (when (and @prime @base @alice-secret)
-                                        (exp-mod @base @alice-secret @prime))]]
+       [known-number "ALICE PUBLIC" (when (and @prime @base @alice-secret)
+                                      (exp-mod @base @alice-secret @prime))]]
       [:div.flex.pa.alice-bob-number.mixed-1
-       [known-number "BOB'S NUMBER" (when (and @prime @base @bob-secret)
-                                      (exp-mod @base @bob-secret @prime))]]
+       [known-number "BOB PUBLIC" (when (and @prime @base @bob-secret)
+                                    (exp-mod @base @bob-secret @prime))]]
       [:div.flex.alice-secret-3
        [:div.exp
         [known-number "" @alice-secret]]
@@ -188,7 +193,7 @@
                                                 @alice-secret
                                                 @prime))]]
       [:div.flex.pa.bob-name
-       [:h1 "BOB"]]
+       [:h2 "BOB"]]
       [:div.flex.pa.bob-secret-1
        [input-number "BOB SECRET" bob-secret 91]]
       [:div.flex.pa.bob-secret-msg
@@ -209,11 +214,11 @@
       [:div.flex.bob-equal-1.equal-sign
        [:div "="]]
       [:div.flex.pa.bob-number.mixed-1
-       [known-number "BOB'S NUMBER" (when (and @prime @base @bob-secret)
-                                      (exp-mod @base @bob-secret @prime))]]
+       [known-number "BOB PUBLIC" (when (and @prime @base @bob-secret)
+                                    (exp-mod @base @bob-secret @prime))]]
       [:div.flex.pa.bob-alice-number.mixed-1
-       [known-number "ALICE'S NUMBER" (when (and @prime @base @alice-secret)
-                                        (exp-mod @base @alice-secret @prime))]]
+       [known-number "ALICE PUBLIC" (when (and @prime @base @alice-secret)
+                                      (exp-mod @base @alice-secret @prime))]]
       [:div.flex.bob-secret-3
        [:div.exp
         [known-number "" @bob-secret]]
