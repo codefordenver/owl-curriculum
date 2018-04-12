@@ -17,34 +17,45 @@
       (.mod modulus)))
 
 (defn input-number [title value placeholder]
-  (let [prime-showing? (reagent/atom false)]
-    [:div.input-group.mb-3
-     [:div.input-group-prepend
-      [:input.form-control
-       {:type "number"
-        :placeholder placeholder
-        :min 1
-        :max 10000
-        :value @value
-        :on-change (fn [e]
-                     (let [input (-> e .-target .-value)]
-                       (if (= "" input)
-                         (reset! value nil)
-                         (reset! value (js/parseInt input)))))}]
-      (if (= value prime)
+  (let [prime-showing? (reagent/atom false)
+        base-showing? (reagent/atom false)
+        alice-secret-showing? (reagent/atom false)
+        bob-secret-showing? (reagent/atom false)
+        showing? (case title
+                       "PRIME #" prime-showing?
+                       "BASE #" base-showing?
+                       "ALICE SECRET" alice-secret-showing?
+                       "BOB SECRET" bob-secret-showing?)]
+    (fn []
+      [:div.input-group.mb-3
+       [:div.input-group-prepend
+        [:input.form-control
+         {:type "number"
+          :placeholder placeholder
+          :min 1
+          :max 10000
+          :value @value
+          :on-change (fn [e]
+                       (let [input (-> e .-target .-value)]
+                         (if (= "" input)
+                           (reset! value nil)
+                           (reset! value (js/parseInt input)))))}]
         [re-com/popover-anchor-wrapper
-             :showing? prime-showing?
+             :showing? showing?
              :position :below-center
              :anchor [:span.input-group-text.pulse
-                      {:on-mouse-over (handler-fn (reset! prime-showing? true))
-                       :on-mouse-out  (handler-fn (reset! prime-showing? false))}
+                      {:on-mouse-over (handler-fn (reset! showing? true))
+                       :on-mouse-out  (handler-fn (reset! showing? false))}
                       title]
              :popover [re-com/popover-content-wrapper
                        :close-button? false
                        :body [:div {:style {:text-align "center"
                                             :font-size "1.2em"}}
-                              "a \"prime\" number is only divisible by itself and 1"]]]
-        [:span.input-group-text title])]]))
+                                   (case title
+                                     "PRIME #" "Enter a \"prime\" number - a number that has no factors except itself and 1"
+                                     "BASE #" "Enter any random number"
+                                     "ALICE SECRET" "Never shared with Bob"
+                                     "BOB SECRET" "Never shared with Alice")]]]]])))
 
 (defn known-number [title & [value]]
   [:div.input-group.mb-3
@@ -52,6 +63,20 @@
     [:div.form-control
      (when value (str value))]
     [:span.input-group-text title]]])
+
+(defn mod-popover [showing?]
+  [re-com/popover-anchor-wrapper
+     :showing? showing?
+     :position :below-center
+     :anchor [:span.pulse
+              {:on-mouse-over (handler-fn (reset! showing? true))
+               :on-mouse-out  (handler-fn (reset! showing? false))}
+              "%"]
+     :popover [re-com/popover-content-wrapper
+               :close-button? false
+               :body [:div {:style {:text-align "center"}}
+                      [:h2 "\"modulo\" operator"]
+                      "returns the remainder after dividing two numbers"]]])
 
 (defn activity []
   (let [mod-showing-1? (reagent/atom false)
@@ -100,29 +125,36 @@
        " without ever actually sharing it!"]
       [:p "Today, there are various key exchange methods that rely on different kinds of math. "
        [:span "This interactive demo is based on the Diffie-Hellman key exchange (DH), one of the earliest practical examples first introduced in 1976.*"]]]
-     [:div.col-xs-12.directions
-      [:h2.mixed-2 "Fill in the white boxes to create a shared secret key"]
-      [:h4 "Use the suggested numbers or try your own."
-       [:br] "Hover your mouse over "
+     [:div.col-xs-12.step-1
+      [:h2.mixed-2 "1. Establish initial public and secret numbers"]
+      "Use the suggested numbers or try your own. Hover your mouse over the "
        [:span.pulse-shrink "\"pulsing\""]
-       " areas to learn more!"]]
+       " areas to learn more."]
      [:div#diffie-hellman-grid
       [:div.border-1]
       [:div.border-2]
       [:div.cloud
        [:img {:src "img/experimental/cloud.png"}]]
       [:div.flex.public
-       [:div
-        "SHARED IN"
-        [:h2 "PUBLIC"]]]
+       [:h2 "PUBLIC"]]
+      [:div.step-2
+       [:h2.mixed-2 "2. Each side calculates a new public number"]
+       "Each side raises the BASE # to their own SECRET #, and then \"mods\" (%) the result by the PRIME #."]
       [:div.lines
        [:img {:src "img/experimental/lines.png"}]]
+      [:div.flex.step-3
+       [:div
+        [:h2.mixed-2 "3. Alice & Bob exchange their new public numbers"]
+        "We use exponents and modulo in Step #2 because this combination of operations is nearly impossible to \"reverse engineer\" at larger values. So Alice & Bob can exchange their public numbers without worrying about someone else using them to figure out their secret numbers."]]
+      [:div.step-4
+        [:h2.mixed-2 "4. Each side calculates the shared secret key"]
+        "Each side uses the other's public number to calculate this shared secret key. This way, they will always arrive at the same value, without ever needing to expose it."]
       [:div.flex.pa.prime
        [input-number "PRIME #" prime 29]]
       [:div.flex.pa.base
        [input-number "BASE #" base 8]]
       [:div.flex.pa.alice-name
-       [:h1 "ALICE"]]
+       [:h2 "ALICE"]]
       [:div.flex.pa.alice-secret-1
        [input-number "ALICE SECRET" alice-secret 47]]
       [:div.flex.pa.alice-secret-msg
@@ -137,44 +169,22 @@
        [:div.exp
         [known-number "" @alice-secret]]
        [:div.mod
-        [re-com/popover-anchor-wrapper
-           :showing? mod-showing-1?
-           :position :below-center
-           :anchor [:span.pulse
-                    {:on-mouse-over (handler-fn (reset! mod-showing-1? true))
-                     :on-mouse-out  (handler-fn (reset! mod-showing-1? false))}
-                    "%"]
-           :popover [re-com/popover-content-wrapper
-                     :close-button? false
-                     :body [:div {:style {:text-align "center"}}
-                            [:h2 "\"modulo\" operator"]
-                            "returns the remainder after dividing two numbers"]]]]]
+        [mod-popover mod-showing-1?]]]
       [:div.flex.pa.alice-prime-1
        [known-number "PRIME #" @prime]]
       [:div.flex.alice-equal-1.equal-sign
        [:div "="]]
       [:div.flex.pa.alice-number.mixed-1
-       [known-number "ALICE'S NUMBER" (when (and @prime @base @alice-secret)
-                                        (exp-mod @base @alice-secret @prime))]]
+       [known-number "ALICE PUBLIC" (when (and @prime @base @alice-secret)
+                                      (exp-mod @base @alice-secret @prime))]]
       [:div.flex.pa.alice-bob-number.mixed-1
-       [known-number "BOB'S NUMBER" (when (and @prime @base @bob-secret)
-                                      (exp-mod @base @bob-secret @prime))]]
+       [known-number "BOB PUBLIC" (when (and @prime @base @bob-secret)
+                                    (exp-mod @base @bob-secret @prime))]]
       [:div.flex.alice-secret-3
        [:div.exp
         [known-number "" @alice-secret]]
        [:div.mod
-        [re-com/popover-anchor-wrapper
-           :showing? mod-showing-2?
-           :position :below-center
-           :anchor [:span.pulse
-                    {:on-mouse-over (handler-fn (reset! mod-showing-2? true))
-                     :on-mouse-out  (handler-fn (reset! mod-showing-2? false))}
-                    "%"]
-           :popover [re-com/popover-content-wrapper
-                     :close-button? false
-                     :body [:div {:style {:text-align "center"}}
-                            [:h2 "\"modulo\" operator"]
-                            "returns the remainder after dividing two numbers"]]]]]
+        [mod-popover mod-showing-2?]]]
       [:div.flex.pa.alice-prime-2
        [known-number "PRIME #" @prime]]
       [:div.flex.alice-equal-2.equal-sign
@@ -185,7 +195,7 @@
                                                 @alice-secret
                                                 @prime))]]
       [:div.flex.pa.bob-name
-       [:h1 "BOB"]]
+       [:h2 "BOB"]]
       [:div.flex.pa.bob-secret-1
        [input-number "BOB SECRET" bob-secret 91]]
       [:div.flex.pa.bob-secret-msg
@@ -200,44 +210,22 @@
        [:div.exp
         [known-number "" @bob-secret]]
        [:div.mod
-        [re-com/popover-anchor-wrapper
-           :showing? mod-showing-3?
-           :position :below-left
-           :anchor [:span.pulse
-                    {:on-mouse-over (handler-fn (reset! mod-showing-3? true))
-                     :on-mouse-out  (handler-fn (reset! mod-showing-3? false))}
-                    "%"]
-           :popover [re-com/popover-content-wrapper
-                     :close-button? false
-                     :body [:div {:style {:text-align "center"}}
-                            [:h2 "\"modulo\" operator"]
-                            "returns the remainder after dividing two numbers"]]]]]
+        [mod-popover mod-showing-3?]]]
       [:div.flex.pa.bob-prime-1
        [known-number "PRIME #" @prime]]
       [:div.flex.bob-equal-1.equal-sign
        [:div "="]]
       [:div.flex.pa.bob-number.mixed-1
-       [known-number "BOB'S NUMBER" (when (and @prime @base @bob-secret)
-                                      (exp-mod @base @bob-secret @prime))]]
+       [known-number "BOB PUBLIC" (when (and @prime @base @bob-secret)
+                                    (exp-mod @base @bob-secret @prime))]]
       [:div.flex.pa.bob-alice-number.mixed-1
-       [known-number "ALICE'S NUMBER" (when (and @prime @base @alice-secret)
-                                        (exp-mod @base @alice-secret @prime))]]
+       [known-number "ALICE PUBLIC" (when (and @prime @base @alice-secret)
+                                      (exp-mod @base @alice-secret @prime))]]
       [:div.flex.bob-secret-3
        [:div.exp
         [known-number "" @bob-secret]]
        [:div.mod
-        [re-com/popover-anchor-wrapper
-           :showing? mod-showing-4?
-           :position :below-left
-           :anchor [:span.pulse
-                    {:on-mouse-over (handler-fn (reset! mod-showing-4? true))
-                     :on-mouse-out  (handler-fn (reset! mod-showing-4? false))}
-                    "%"]
-           :popover [re-com/popover-content-wrapper
-                     :close-button? false
-                     :body [:div {:style {:text-align "center"}}
-                            [:h2 "\"modulo\" operator"]
-                            "returns the remainder after dividing two numbers"]]]]]
+        [mod-popover mod-showing-4?]]]
       [:div.flex.pa.bob-prime-2
        [known-number "PRIME #" @prime]]
       [:div.flex.bob-equal-2.equal-sign
