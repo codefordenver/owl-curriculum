@@ -126,7 +126,7 @@
       [:p "Today, there are various key exchange methods that rely on different kinds of math. "
        [:span "This interactive demo is based on the Diffie-Hellman key exchange (DH), one of the earliest practical examples first introduced in 1976.*"]]]
      [:div.col-xs-12.step-1
-      [:h2.mixed-2 "1. Enter the initial public and secret numbers"]
+      [:h2.mixed-2 "1. Establish initial public and secret numbers"]
       "Use the suggested numbers or try your own. Hover your mouse over the "
        [:span.pulse-shrink "\"pulsing\""]
        " areas to learn more."]
@@ -138,15 +138,17 @@
       [:div.flex.public
        [:h2 "PUBLIC"]]
       [:div.step-2
-       [:h2.mixed-2 "2. Calculate a new public number for each side"]
+       [:h2.mixed-2 "2. Each side calculates a new public number"]
        "Each side raises the BASE # to their own SECRET #, and then \"mods\" (%) the result by the PRIME #."]
-      ; [:div.lines
-      ;  [:img {:src "img/experimental/lines.png"}]]
+      [:div.lines
+       [:img {:src "img/experimental/lines.png"}]]
       [:div.flex.step-3
        [:div
-         "We use exponents and modulo because they're nearly impossible to \"reverse engineer.\" So Alice & Bob can exchange their public numbers without worrying that someone will use them to figure out their secret numbers."]
-       [:div
-        [:h2.mixed-2 "3. Exchange public numbers to calculate the shared secret"]]]
+        [:h2.mixed-2 "3. Alice & Bob exchange their new public numbers"]
+        "We use exponents and modulo in Step #2 because this combination of operations is nearly impossible to \"reverse engineer\" at larger values. So Alice & Bob can exchange their public numbers without worrying about someone else using them to figure out their secret numbers."]]
+      [:div.step-4
+        [:h2.mixed-2 "4. Each side calculates the shared secret key"]
+        "Each side uses the other's public number to calculate this shared secret key. This way, they will always arrive at the same value, without ever needing to expose it."]
       [:div.flex.pa.prime
        [input-number "PRIME #" prime 29]]
       [:div.flex.pa.base
