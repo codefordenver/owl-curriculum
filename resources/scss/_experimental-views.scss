@@ -118,43 +118,52 @@
       }
     }
     .alice-secret-msg, .bob-secret-msg {
-      text-align: left;
       font-weight: 400;
       span {
         font-weight: 500;
-        &:first-child {
-          font-weight: 700;
-        }
       }
+    }
+    .alice-secret-1, .bob-secret-1, .alice-secret-msg, .bob-secret-msg {
+      align-items: flex-start;
     }
 
     width: 100%;
     height: 45em;
     display: grid;
-    grid-template: 2fr 1fr 3fr 2fr 1fr 1fr 2fr 1fr / 1fr 1fr repeat(4, 2fr) 1.5em 1.5em repeat(2, 2fr) 1fr 1fr repeat(2, 2fr);
+    grid-template: 1fr 2fr 3fr 2fr 1fr 1fr 2fr 1fr / 2fr 2fr 4fr 4fr 2fr 1fr 1fr 4fr 1fr 1fr 1fr 4fr 1fr 1fr repeat(3, 2fr) 4fr 4fr;
 
-    .divider-1 {
-      grid-area: 2 / 8 / span 3 / 9;
-      border-left: 3px dashed $magenta;
+    .border-1 {
+      grid-area: 7 / 7 / 8 / span 3;
+      border: 3px dashed $magenta;
     }
-    .divider-2 {
-      grid-area: 7 / 8 / 8 / 9;
-      border-left: 3px dashed $magenta;
-    }
-    .hotspot-2 {
-      z-index: 10;
-      grid-area: 5 / 6 / 6 / span 4;
+    .border-2 {
+      grid-area: 7 / 11 / 8 / span 3;
+      border: 3px dashed $magenta;
     }
     .lines {
-      grid-area: 5 / 2 / 7 / span 10;
+      grid-area: 5 / 2 / 7 / span 15;
       img {
         width: 100%;
         height: 100%;
       }
     }
-
+    .cloud {
+      grid-area: 1 / 6 / 6 / span 8;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .public {
+      grid-area: 3 / 6 / 4 / span 8;
+      font-weight: 400;
+      h2 {
+        margin: 0;
+        font-weight: 300;
+      }
+    }
     .prime {
-      grid-area: 1 / 6 / 2 / 7;
+      grid-area: 2 / 8 / 3 / 9;
       color: $aqua;
       .form-control {
         color: $aqua;
@@ -162,23 +171,23 @@
       }
     }
     .base {
-      grid-area: 1 / 9 / 2 / 10;
+      grid-area: 2 / 12 / 3 / 13;
       color: #2C6960;
       .form-control {
         color: #2C6960;
         border: 0.1em solid #2C6960;
       }
     }
-
     .alice-name {
       grid-area: 2 / 4 / 3 / 6;
       justify-content: flex-start;
     }
     .alice-secret-1 {
-      grid-area: 3 / 3 / 4 / 4;
+      grid-area: 3 / 4 / 4 / 5;
     }
     .alice-secret-msg {
-      grid-area: 3 / 4 / 4 / span 3;
+      grid-area: 3 / 1 / 4 / span 3;
+      text-align: right;
     }
     .alice-base {
       grid-area: 4 / 1 / 5 / 3;
@@ -197,7 +206,7 @@
       grid-area: 4 / 5 / 5 / 6;
     }
     .alice-number {
-      grid-area: 4 / 6 / 5 / 7;
+      grid-area: 4 / 8 / 5 / 9;
     }
     .alice-bob-number {
       grid-area: 7 / 1 / 8 / 3;
@@ -212,18 +221,19 @@
     .alice-equal-2 {
       grid-area: 7 / 5 / 8 / 6;
     }
-    .alice-shared-secret {
-      grid-area: 7 / 6 / 8 / 7;
+    .alice-key {
+      grid-area: 7 / 8 / 8 / 9;
     }
     .bob-name {
       grid-area: 2 / -2 / 3 / -5;
       justify-content: flex-start;
     }
     .bob-secret-1 {
-      grid-area: 3 / -5 / 4 / -6;
+      grid-area: 3 / -3 / 4 / -5;
     }
     .bob-secret-msg {
-      grid-area: 3 / -5 / 4 / span 4;
+      grid-area: 3 / -3 / 4 / span 2;
+      text-align: left;
     }
     .bob-base {
       grid-area: 4 / -3 / 5 / -5;
@@ -242,7 +252,7 @@
       grid-area: 4 / -5 / 5 / -6;
     }
     .bob-number {
-      grid-area: 4 / -6 / 5 / -7;
+      grid-area: 4 / -8 / 5 / -9;
     }
     .bob-alice-number {
       grid-area: 7 / -3 / 8 / -5;
@@ -257,8 +267,8 @@
     .bob-equal-2 {
       grid-area: 7 / -5 / 8 / -6;
     }
-    .bob-shared-secret {
-      grid-area: 7 / -6 / 8 / -7;
+    .bob-key {
+      grid-area: 7 / -8 / 8 / -9;
     }
   }
   .too-small {

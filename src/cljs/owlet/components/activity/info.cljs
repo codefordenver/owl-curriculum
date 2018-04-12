@@ -40,7 +40,7 @@
                 (false? platform-free) [:span {:style {:color "green"
                                                        :font-weight "bold"}} "$"])
           (when platform-download
-                [:span " | " [:b "download required"]])]]
+                [:span " | " [:b "software required"]])]]
      [:br]
      [set-as-showdown "<span class=\"h3\">Summary</span><br>" summary]
      (when why

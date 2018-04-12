@@ -46,7 +46,7 @@
                 (false? platform-free) [:span {:style {:color "green"
                                                        :font-weight "bold"}} "$"])
           (when platform-download
-                [:span " | " [:b "download required"]])]]
+                [:span " | " [:b "software required"]])]]
       [:div.summary summary]
       (when tags
         (for [tag tags :let [name (:name tag)]]

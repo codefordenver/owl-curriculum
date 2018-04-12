@@ -7,14 +7,14 @@
   []
   [:button.btn-signup
    {:type     "button"
-    :on-click #(.show (auth0/lock "signup"))}
+    :on-click #(auth0/show-lock :initialScreen :signUp)}
    "Sign Up"])
 
 (defn login-button
   []
   [:button.btn-login
    {:type     "button"
-    :on-click #(.show (auth0/lock "login"))}
+    :on-click #(auth0/show-lock :initialScreen :login)}
    "Log in"])
 
 
