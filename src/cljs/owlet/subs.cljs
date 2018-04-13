@@ -39,3 +39,30 @@
 (reg-getter :subscriber-info [:app :route-opts])
 
 (reg-getter :on-app-failure [:on-app-failure])
+
+(rf/reg-sub
+  :filter-bar-terms
+  (fn [db _]
+    (if (nil? (:activities-by-filter db))
+      (:filter-bar-terms db)
+      (let [activities-by-filter (:activities-by-filter db)
+            filters (:display-name activities-by-filter)
+            checked? (fn [name]
+                       (if filters
+                         (clojure.string/includes? filters (:name name))
+                         false))
+            activity-branches (distinct (apply concat (map #(get-in % [:fields :branches])
+                                                           (:activities activities-by-filter))))
+            activity-platforms (distinct (map #(get-in % [:fields :platform])
+                                              (:activities activities-by-filter)))
+            activity-tags (distinct (apply concat (map #(get-in % [:fields :tags])
+                                                       (:activities activities-by-filter))))
+            branches (distinct (map #(hash-map :name (:name %) :type "Branch" :checked (checked? %))
+                                    activity-branches))
+            platforms (distinct (map #(hash-map :name (:name %) :type "Platform" :checked (checked? %))
+                                     activity-platforms))
+            tags (distinct (map #(hash-map :name (:name %) :type "Tag" :checked (checked? %))
+                                activity-tags))]
+         (filter (fn [t]
+                   (some #(= (:name t) (:name %)) (concat branches platforms tags)))
+                 (:filter-bar-terms db))))))

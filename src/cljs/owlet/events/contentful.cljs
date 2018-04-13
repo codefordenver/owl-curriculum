@@ -8,8 +8,7 @@
             [camel-snake-kebab.core :refer [->kebab-case]]
             [cuerdas.core :as str]
             [clojure.string :as string]
-            [owlet.helpers :refer
-             [keywordize-name remove-nil]]))
+            [owlet.helpers :refer [keywordize-name remove-nil]]))
 
 
 (defonce space-endpoint
@@ -130,28 +129,33 @@
   :show-branches
   (fn [_ _]
     {:dispatch-n (list [:set-active-view :branches-view]
-                       [:set-active-document-title! "Branches"])}))
+                       [:set-active-document-title! "Branches"]
+                       [:remove-filtered-activities]
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-branch
-  (fn [_ [_ route-param]]
+  (fn [_ [_ route-param use-normal]]
     {:dispatch-n (list [:set-active-view :filtered-activities-view "branch"]
                        [:filter-activities-by-search-term route-param]
-                       [:set-active-document-title! route-param])}))
+                       [:set-active-document-title! route-param]
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-platform
-  (fn [_ [_ route-param]]
+  (fn [_ [_ route-param use-normal]]
     {:dispatch-n (list [:set-active-view :filtered-activities-view "platform"]
                        [:filter-activities-by-search-term route-param]
-                       [:set-active-document-title! route-param])}))
+                       [:set-active-document-title! route-param]
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-tag
-  (fn [_ [_ route-param]]
+  (fn [_ [_ route-param use-normal]]
     {:dispatch-n (list [:set-active-view :filtered-activities-view "tag"]
                        [:filter-activities-by-search-term route-param]
-                       [:set-active-document-title! route-param])}))
+                       [:set-active-document-title! route-param]
+                       [:set-filter-bar-terms])}))
 
 (rf/reg-event-fx
   :show-activity
@@ -199,20 +203,30 @@
 ; search & filter
 
 (rf/reg-event-db
+  :remove-filtered-activities
+  (fn [db [_]]
+    (assoc db :activities-by-filter nil)))
+
+(rf/reg-event-db
   :filter-activities-by-search-term
   (fn [db [_ term]]
     (let [search-term (keywordize-name term)
           activities (:activities db)
           set-path (fn [path]
                     (set! (.-location js/window) (str "/#/" path)))]
-
       ;; by branch
       ;; ---------
 
       (if-let [filtered-set (search-term (:activities-by-branch db))]
         (do
           (set-path (str "branch/" (->kebab-case term)))
-          (assoc db :activities-by-filter filtered-set))
+          (assoc db :activities-by-filter (hash-map :filter-type "Branch"
+                                                    :preview-urls (:preview-urls filtered-set)
+                                                    :count (:count filtered-set)
+                                                    :display-name (:display-name filtered-set)
+                                                    :activities (:activities filtered-set)
+                                                    :pre-filter {:name (:display-name filtered-set)
+                                                                 :type "Branch"})))
 
         ;; by tag
         ;; --------
@@ -223,7 +237,10 @@
                   display-name (:name (first (filter #(= search-term (keyword-kebab (:name %))) tags)))]
               (set-path (str "tag/" (->kebab-case term)))
               (assoc db :activities-by-filter (hash-map :activities filtered-set
-                                                        :display-name (str/capital display-name))))
+                                                        :display-name (str/capital display-name)
+                                                        :filter-type "Tag"
+                                                        :pre-filter {:name display-name
+                                                                     :type "Tag"})))
 
             ;; by activity name (title)
             ;; ------------------------
@@ -253,5 +270,61 @@
                         (set-path (str "platform/" term))
                         (assoc db :activities-by-filter (hash-map :activities filtered-set
                                                                   :display-name platform-name
-                                                                  :description description)))
+                                                                  :description description
+                                                                  :filter-type "Platform"
+                                                                  :pre-filter {:name platform-name
+                                                                               :type "Platform"})))
                       (assoc db :activities-by-filter "error"))))))))))))
+
+(rf/reg-event-db
+  :filter-activities-by-selected-terms
+  (fn [db [_ selected-filters]]
+    (let [activities (:activities db)
+          set-path (fn [path]
+                    (set! (.-location js/window) (str "/#/" path)))
+          pre-filter (conj '() (get-in db [:activities-by-filter :pre-filter]))
+          filtered-act (filter (fn [a]
+                                 (every? true?
+                                         (map
+                                           (fn [t]
+                                             (case (:type t)
+                                               "Branch" (some #(= (:name %) (:name t)) (get-in a [:fields :branches]))
+                                               "Platform" (= (:name t) (get-in a [:fields :platform :name]))
+                                               "Tag" (some #(= (:name %) (:name t)) (get-in a [:fields :tags]))))
+                                           (remove nil? (concat pre-filter selected-filters)))))
+                               activities)]
+      (if (and (empty? selected-filters)
+               (every? nil? pre-filter))
+        (assoc db :active-view :branches-view
+                  :activities-by-filter nil)
+        (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
+                                                  :display-name (clojure.string/join ", " (map #(:name %)
+                                                                                               (if (empty? selected-filters)
+                                                                                                 pre-filter
+                                                                                                 (remove nil? (concat pre-filter selected-filters)))))
+                                                  :activities filtered-act
+                                                  :filters selected-filters
+                                                  :pre-filter (get-in db [:activities-by-filter :pre-filter]))
+                  :active-view :filtered-activities-view)))))
+
+(rf/reg-event-db
+  :set-filter-bar-terms
+  (fn [db _]
+    (let [{:keys [activity-branches activity-platforms tags filter-bar-terms]} db]
+        (if (nil? filter-bar-terms)
+          (as-> '() ts
+            (conj ts (map #(hash-map :name (:name %)
+                                     :type "Branch"
+                                     :checked false)
+                          activity-branches))
+            (conj ts (map #(hash-map :name (:name %)
+                                     :type "Platform"
+                                     :checked false)
+                          activity-platforms))
+            (conj ts (map #(hash-map :name (:name %)
+                                     :type "Tag"
+                                     :checked false)
+                          tags))
+            (distinct (apply concat ts))
+            (assoc db :filter-bar-terms (shuffle ts)))
+          db))))

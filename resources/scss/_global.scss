@@ -282,6 +282,7 @@ progress {
 // Top bar: Logo, Search, Navigation, Login
 
 .top-bar {
+  top: 0;
   background-color: $purple-light;
   position: fixed;
   width: 100%;
@@ -289,8 +290,66 @@ progress {
   a:hover {
     text-decoration: none;
   }
+  height: 74px;
 }
 
+#spacer {
+  height: 86px;
+}
+
+#filter-bar {
+  height: 70px;
+  font-size: .85em;
+  margin-top: 74px;
+  border-bottom: 1px solid #ADADAD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#filter-items {
+  width: 90%;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+#filter-items > * {
+  vertical-align: middle;
+}
+
+#filter-items::-webkit-scrollbar {
+  display: none;
+}
+
+.filter {
+  flex: 0 0 auto;
+  input[type="checkbox"] {
+      display: none;
+  }
+  input:checked + label {
+    background-color: $aqua;
+  }
+  label {
+    margin: 0 5px;
+    padding: 10px;
+    border: 1px solid #BFBFBF;
+    border-radius: 5px;
+    background-color: #F2F2F2;
+    cursor: pointer;
+  }
+}
+#arrow-left, #arrow-right {
+  display: inline-block;
+  width: 5%;
+  font-size: 40px;
+  margin: 0 5px 0 10px;
+  cursor: pointer;
+  text-align: center;
+  color: #BFBFBF;
+}
 // Logo
 
 .owlet-logo-div {
@@ -428,25 +487,25 @@ progress {
   .btn-login {
     color: $aqua;
     background-color: white;
-    height: 73px;
+    height: 74px;
   }
 
   .btn-logout {
     color: $magenta;
     background-color: white;
-    height: 73px;
+    height: 74px;
   }
 }
 
 .hidden-top-bar {
-  height: 50px;
+  height: 60px;
   padding-top: 0;
   padding-bottom: 0;
   .owlet-text p {
     display: none;
   }
   .btn-login, .btn-logout {
-    height: 50px;
+    height: 60px;
   }
 }
 
