@@ -276,9 +276,9 @@
                                                                                :type "Platform"})))
                       (assoc db :activities-by-filter "error"))))))))))))
 
-(rf/reg-event-fx
+(rf/reg-event-db
   :filter-activities-by-selected-terms
-  (fn [{db :db} [_ selected-filters]]
+  (fn [db [_ selected-filters]]
     (let [activities (:activities db)
           set-path (fn [path]
                     (set! (.-location js/window) (str "/#/" path)))
@@ -295,48 +295,35 @@
                                activities)]
       (if (and (empty? selected-filters)
                (every? nil? pre-filter))
-        {:db (assoc db :active-view :branches-view
-                       :activities-by-filter nil)
-         :dispatch [:set-filter-bar-terms]}
-        {:db (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
-                                                       :display-name (clojure.string/join ", " (map #(:name %)
-                                                                                                    (if (empty? selected-filters)
-                                                                                                      pre-filter
-                                                                                                      (remove nil? (concat pre-filter selected-filters)))))
-                                                       :activities filtered-act
-                                                       :filters selected-filters
-                                                       :pre-filter (get-in db [:activities-by-filter :pre-filter]))
-                       :active-view :filtered-activities-view)
-         :dispatch [:set-filter-bar-terms]}))))
+        (assoc db :active-view :branches-view
+                  :activities-by-filter nil)
+        (assoc db :activities-by-filter (hash-map :filter-type "Multiple"
+                                                  :display-name (clojure.string/join ", " (map #(:name %)
+                                                                                               (if (empty? selected-filters)
+                                                                                                 pre-filter
+                                                                                                 (remove nil? (concat pre-filter selected-filters)))))
+                                                  :activities filtered-act
+                                                  :filters selected-filters
+                                                  :pre-filter (get-in db [:activities-by-filter :pre-filter]))
+                  :active-view :filtered-activities-view)))))
 
 (rf/reg-event-db
   :set-filter-bar-terms
   (fn [db _]
-    (let [activities-by-filter (get-in db [:activities-by-filter :activities])
-          branches (:activity-branches db)
-          platforms (:activity-platforms db)
-          tags (:tags db)
-          filters (get-in db [:activities-by-filter :display-name])
-          filter-bar-terms ()]
-        (if (nil? (:filter-bar-terms db))
-          (as-> filter-bar-terms ts
+    (let [{:keys [activity-branches activity-platforms tags filter-bar-terms]} db]
+        (if (nil? filter-bar-terms)
+          (as-> '() ts
             (conj ts (map #(hash-map :name (:name %)
                                      :type "Branch"
-                                     :checked (if filters
-                                                (clojure.string/includes? filters (:name %))
-                                                false))
-                          branches))
+                                     :checked false)
+                          activity-branches))
             (conj ts (map #(hash-map :name (:name %)
                                      :type "Platform"
-                                     :checked (if filters
-                                                (clojure.string/includes? filters (:name %))
-                                                false))
-                          platforms))
+                                     :checked false)
+                          activity-platforms))
             (conj ts (map #(hash-map :name (:name %)
                                      :type "Tag"
-                                     :checked (if filters
-                                                (clojure.string/includes? filters (:name %))
-                                                false))
+                                     :checked false)
                           tags))
             (distinct (apply concat ts))
             (assoc db :filter-bar-terms (shuffle ts)))
