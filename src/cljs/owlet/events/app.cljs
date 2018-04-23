@@ -8,15 +8,6 @@
             [owlet.helpers :refer [keywordize-name]]))
 
 
-(defn note-pending
-  "Records a \"pending\" message (e.g. a keyword) in the :my-identity map in
-  the given db map, indicating to the GUI that the indicated process has
-  started but not yet completed.
-  "
-  [db msg]
-  (assoc-in db [:my-identity :pending] msg))
-
-
 (rf/reg-event-db
   :initialize-db
   (constantly db/default-db))

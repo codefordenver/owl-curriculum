@@ -52,7 +52,7 @@
     (-> @xfrms-atom (get-in pipeline-path) vals)
 
   You can replace an existing transform function by calling again with the
-  same f-key and other arguments. Its position in the pipeline will be
+  same f-key and same other arguments. Its position in the pipeline will be
   unchanged. If f is nil (or any non-function), then the key and any associated
   function will be removed from the pipeline.
   "
@@ -66,28 +66,51 @@
 
 
 (defn fx-pipeline-interceptor
-  "Creates a re-frame interceptor that applies a pipeline of functions, which
+  "Creates a re-frame interceptor that applies a pipeline of functions that
   transforms the :effects value in the context that flows through the
-  interceptor. The pipeline is constructed by repeated calls to
-  pipe-fx-transform! or pipe-transform! Then any event handler adorned with the
-  interceptor will run the :effects value and its event data through the
-  pipeline. (Here, \"event data\" means all but the first element of the event
-  vector.)
+  interceptor. The pipeline is constructed by your calls to pipe-fx-transform!
+  or pipe-transform! Then any event handler adorned with the interceptor will
+  run the :effects through the pipeline, allowing you to trigger arbitrary
+  effects.
 
-  Takes an arbitrary id you can use to identify the returned interceptor, and
-  a transforms atom, as provided to pipe-transform!.
+  Note the differences from reg-setter: First, this function creates an
+  interceptor, not a handler. It can be used as the second argument in the
+  registration of any event handler, i.e., in reg-setter,
+  re-frame.core/reg-event-db, re-frame.core/reg-event-fx,
+  or re-frame.core/reg-event-ctx.
+
+  Second, each function in your pipeline must transform its first argument,
+  an effects map, to another effects map. The effects map is like one you
+  would return from re-frame.core/reg-event-fx. This differs from setter
+  transform functions, which must transform the VALUE to \"set\" in app-db.
+
+  Third, every fx pipeline function must take exactly two arguments. The
+  second argument is the :coeffects map, like the first argument to a handler
+  registered by re-frame.core/reg-event-fx. This gives you access to the event
+  as well as to app-db as it existed when the handler was dispatched to. Each
+  function in a setter pipeline, on the other hand, takes the same number of
+  arguments equal to the count of the event vector. (The value to assign, plus
+  all but the first element from the event vector.)
+
+  Thus, a handler adorned by an fx-pipeline-interceptor result is strictly
+  more general than a reg-setter handler, since it can provide a new value
+  for the :db key in the returned effects map, but a setter cannot trigger an
+  arbitrary effect. It can depend upon more data as well, since it has access
+  to the entire :coeffects map.
+
+  Arguments: This function takes an arbitrary id you can use to identify the
+  returned interceptor, and a transforms atom, as provided to pipe-transform!.
   "
   [arbitrary-interceptor-id xfrms-atom]
   (rf/->interceptor
     :id arbitrary-interceptor-id
-    :after (fn [{{[event-id & rest-of-event-vec] :event} :coeffects,
-                 effects                                 :effects
+    :after (fn [{{[event-id] :event :as coeffects} :coeffects, effects :effects
                  :as context}]
              (assoc context
                :effects
-               (apply (pipeline-composer xfrms-atom [::fx event-id])
-                      effects
-                      rest-of-event-vec)))))
+               ((pipeline-composer xfrms-atom [::fx event-id])
+                effects
+                coeffects)))))
 
 
 (def transforms
@@ -114,14 +137,27 @@
           ::fx     (hash-map))))
 
 
+(defn paths-to-xfrm-fns
+  "Handy function to list the path vector to each transform function in the
+  given transforms atom, or in owlet.rf-util/transforms if none is provided.
+  This is useful for debugging.
+  "
+  ([] (paths-to-xfrm-fns transforms))
+  ([xfrms-atom]
+   (into [] (for [[type id-map]         @xfrms-atom
+                  [evt-or-qry-id f-map] id-map
+                  f-key                 (keys f-map)]
+              [type evt-or-qry-id f-key]))))
+
+
 (defn- piper!
   "Adds the given function to the end of the pipeline at path
-  [type-key evt-or-qry-key]. The pipeline is actually a map that maintains
+  [type-key evt-or-qry-id]. The pipeline is actually a map that maintains
   the order of it's key/value pairs. Argument f-key is the key of the given
   function in that map.
   "
-  [type-key evt-or-qry-key f-key f]
-  (pipe-transform! transforms [type-key evt-or-qry-key] f-key f))
+  [type-key evt-or-qry-id f-key f]
+  (pipe-transform! transforms [type-key evt-or-qry-id] f-key f))
 
 
 ;;;;

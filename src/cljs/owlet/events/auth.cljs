@@ -1,8 +1,7 @@
 (ns owlet.events.auth
   (:require [re-frame.core :as rf]
             [owlet.rf-util :refer [reg-setter fx-pipeline]]
-            [owlet.firebase :as fb]
-            [owlet.events.app :as app]))
+            [owlet.firebase :as fb]))
 
 
 (reg-setter :my-identity [:my-identity])
@@ -18,7 +17,7 @@
 (rf/reg-event-fx
   :auth0-authenticated
   (fn [{db :db} [_ {:keys [delegation-token]}]]
-    {:db               (app/note-pending db :log-in)
+    {:db (assoc-in db [:my-identity :auth-status] :pending-fb-sign-in)
      :firebase-sign-in [fb/firebase-auth-object
                         delegation-token
                         :firebase-sign-in-failed]}))
@@ -37,63 +36,92 @@
     {}))
 
 
-(defn- id-details
-  [fb-id]
-  (let [private-ref  (fb/path-str->db-ref (str "users/" (name fb-id)))
-        presence-ref (fb/path-str->db-ref (str "presence/" (name fb-id)))]
-    {:firebase-id      fb-id
-     :private-ref      private-ref
-     :presence-ref     presence-ref}))
+(defn init-my-identity
+  "Returns an :effects map (as returned by rf/reg-event-fx) based on the given
+  db (@app-db map), a possibly nil Firebase user id (fb-id), and a keyword used
+  to record the status of the current user's login. A nil fb-id indicates that
+  no user is logged in, so the returned :my-identity map will consist of just
+  the :auth-status value :not-logged-in. Listening to the user's private data
+  on Firebase is started if fb-id is not nil, or this listening is stopped
+  otherwise.
+  "
+  ([db]
+   (init-my-identity db nil :unused))
+
+  ([db fb-id status]
+   (if fb-id
+     (let [private-ref  (fb/path-str->db-ref (str "users/" (name fb-id)))
+           presence-ref (fb/path-str->db-ref (str "presence/" (name fb-id)))
+           new-db       (assoc db :my-identity {:firebase-id  fb-id
+                                                :private-ref  private-ref
+                                                :presence-ref presence-ref
+                                                :auth-status  status})]
+       {:db new-db
+        :start-authorized-listening new-db})
+
+     {:db (assoc db :my-identity {:auth-status :not-logged-in})
+      :stop-authorized-listening db})))
 
 
-(rf/reg-event-fx
-  :firebase-auth-change
-  (fn [cofx [_ fb-user]]
-    ; If I'm logged into firebase, fb-user is a JS object containing a string
-    ; in its uid property. Otherwise, fb-user is nil. We now record this ID in
-    ; subtree :my-identity. Thus, we know I am logged-in simply if and only if
-    ; (get-in db [:my-identity :firebase-id]) is not nil. If this value changed
-    ; then we also need to turn on/off listening for events about me or of
-    ; interest to me, which are dispatched by owlet-ui.firebase/on-change.
+(defn fb-user->id
+  "Extracts the user id string from the given Firebase User object and returns
+  it as a keyword. This is how we represent the current user in this app. See
+  https://firebase.google.com/docs/reference/js/firebase.User#uid
+  "
+  [fb-user]
+  (some-> fb-user .-uid keyword))
 
-    (let [new-fb-id    (some-> fb-user .-uid keyword)
-          old-identity (get-in cofx [:db :my-identity])]
 
-      ; Compare my new id with FORMER :firebase-id.
-      (if (= new-fb-id (:firebase-id old-identity))
-        {}                       ; No change in id. Do nothing.
-        (if new-fb-id            ; Id changed. I logged in or out.
+(defn firebase-auth-change
+  "Effect handler ultimately triggered by Firebase when the user logs in or
+  out, or when the app starts up, like when the page is refreshed. We depend
+  upon the value in app-db at [:my-identity :auth-status] and the existence of
+  the user id in the given Firebase User object to tell whether this is a
+  log-in, log-out, or the continuation of a logged-in state.
+  "
+  [{{{old-fb-id :firebase-id
+      status    :auth-status} :my-identity
+                              :as db} :db}  ; <-- coeffects
+   [_ fb-user]]                             ; <-- event w/FB User object from
+                                            ;     effect :firebase-sign-in, via
+                                            ;     event :auth0-authenticated.
+  (let [new-fb-id (fb-user->id fb-user)]
+    (cond
+      (nil? status)
+      ; App just started up. Henceforth, :auth-status' value will not be nil.
+      (init-my-identity db new-fb-id :already-logged-in)
 
-          ; I just now logged in.
-          (let [new-identity (id-details new-fb-id)]
-            {:db (assoc (:db cofx) :my-identity new-identity)
-             ; Note that this :my-identity subtree REPLACES the existing one,
-             ; if any. So it is important that this takes place BEFORE any
-             ; events that modify the subtree, such as produced by the :private
-             ; listener registration in :start-authorized-listening, below.
-             ; This is ensured here because both the change to app-db and the
-             ; registration are effects scheduled for the next tick. So any
-             ; event dispatched as the result of the latter cannot precede the
-             ; former.
-             :start-authorized-listening new-identity})
+      (nil? old-fb-id)
+      (init-my-identity db new-fb-id :just-logged-in)
 
-          ; I just now logged out.
-          {:db (assoc (:db cofx) :my-identity nil)
-           :stop-authorized-listening old-identity})))))
+      (nil? new-fb-id)
+      ; Just logged out.
+      (init-my-identity db)
+
+      :else
+      ; This shouldn't happen! the Firebase user id should only change from
+      ; nil to not nil or vice-versa.
+      (do
+        (js/console.log
+          "Error: Somehow logging in while another Firebase user is still "
+          "logged in! Logging out now.")
+        {:dispatch :log-out}))))
+; Used here:
+(rf/reg-event-fx :firebase-auth-change firebase-auth-change)
 
 
 (rf/reg-fx
   :start-authorized-listening
-  (fn [{:keys [private-ref presence-ref]}]
+  (fn [{{:keys [private-ref presence-ref]} :my-identity}]
     (fb/on-change "value" private-ref :private)
     (fb/note-presence-changes presence-ref)))
 
 
 (rf/reg-fx
   :stop-authorized-listening
-  (fn [{:keys [private-ref presence-ref]}]
-    (.off private-ref)
-    (.off presence-ref)))
+  (fn [{{:keys [private-ref presence-ref]} :my-identity}]
+    (when private-ref (.off private-ref))
+    (when presence-ref (.off presence-ref))))
     ; TODO: Does .off really work? Try logging out, :online is false -- OK.
     ;       Then disconnect from network, then reconnect. :online becomes true.
     ;       How? We're still logged out, so shouldn't know which user's :online
@@ -103,15 +131,16 @@
 (rf/reg-event-fx
   :log-out
   (fn [{{{:keys [presence-ref]} :my-identity :as db} :db} _]
-    {:db                      (app/note-pending db :log-out)
-     :firebase-reset-into-ref [presence-ref
-                               {:online             false
-                                :online-change-time fb/timestamp-placeholder}
-                               ;
-                               ; When finished with above update of location
-                               ; presence/<firebase-id>/, then dispatch an
-                               ; event to sign me out from Firebase:
-                               :then-sign-out]}))
+    (assoc (init-my-identity db)
+           :firebase-reset-into-ref
+           [presence-ref
+            {:online             false
+             :online-change-time fb/timestamp-placeholder}
+            ;
+            ; When finished with above update of location
+            ; presence/<firebase-id>/, then dispatch an
+            ; event to sign me out from Firebase:
+            :then-sign-out])))
 
 
 (rf/reg-event-fx
