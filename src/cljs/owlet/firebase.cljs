@@ -117,7 +117,7 @@
 
 
 (def firebase-firestore-ref
-  (js/firebase.firestore firebase-app))
+  (.firestore js/firebase firebase-app))
 
 
 ;  ;  ;  ;  ;  ;  ;  ;  ;   Firebase authorization   ;  ;  ;  ;  ;  ;  ;  ;  ;
@@ -573,4 +573,3 @@
       (-> url
         delete-file-at-url        ; Returns a promise.
         (then-dispatch event-id-args)))))
-
