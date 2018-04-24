@@ -28,7 +28,8 @@ var firebase = {
       "auth": function () {},
       "database": function () {},
       "messaging": function () {},
-      "storage": function () {}
+      "storage": function () {},
+      "firestore": function () {}
     },
     "registerService": function () {},
     "removeApp": function () {},
@@ -39,7 +40,7 @@ var firebase = {
   "User": {
     "Rc": function () {},
     "ib": {
-      "closure_listenable_926220": {},
+      "closure_listenable_668105": {},
       "constructor": {
         "Rc": function () {},
         "ib": {
@@ -68,7 +69,7 @@ var firebase = {
       },
       "Rc": function () {},
       "ib": {
-        "closure_listenable_926220": {},
+        "closure_listenable_668105": {},
         "constructor": {
           "Rc": function () {},
           "ib": {
@@ -253,7 +254,7 @@ var firebase = {
     "User": {
       "Rc": function () {},
       "ib": {
-        "closure_listenable_926220": {},
+        "closure_listenable_668105": {},
         "constructor": {
           "Rc": function () {},
           "ib": {
@@ -282,7 +283,7 @@ var firebase = {
         },
         "Rc": function () {},
         "ib": {
-          "closure_listenable_926220": {},
+          "closure_listenable_668105": {},
           "constructor": {
             "Rc": function () {},
             "ib": {
@@ -510,7 +511,7 @@ firebase.User.prototype = {
   "Za": function () {},
   "bb": function () {},
   "cc": function () {},
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "constructor": function () {},
   "dc": function () {},
   "delete": function () {},
@@ -556,7 +557,7 @@ firebase.User.prototype = {
   "va": function () {}
 };
 firebase.User.ib.constructor.prototype = {
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "constructor": function () {},
   "oa": function () {},
   "removeEventListener": function () {},
@@ -600,7 +601,7 @@ firebase.auth.Auth.prototype = {
   "bc": function () {},
   "cb": function () {},
   "checkActionCode": function () {},
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "confirmPasswordReset": function () {},
   "constructor": function () {},
   "createUserAndRetrieveDataWithEmailAndPassword": function () {},
@@ -656,7 +657,7 @@ firebase.auth.Auth.prototype = {
   "yc": function () {}
 };
 firebase.auth.Auth.ib.constructor.prototype = {
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "constructor": function () {},
   "oa": function () {},
   "removeEventListener": function () {},
@@ -954,7 +955,7 @@ firebase.default.User.prototype = {
   "Za": function () {},
   "bb": function () {},
   "cc": function () {},
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "constructor": function () {},
   "dc": function () {},
   "delete": function () {},
@@ -1000,7 +1001,7 @@ firebase.default.User.prototype = {
   "va": function () {}
 };
 firebase.default.User.ib.constructor.prototype = {
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "constructor": function () {},
   "oa": function () {},
   "removeEventListener": function () {},
@@ -1044,7 +1045,7 @@ firebase.default.auth.Auth.prototype = {
   "bc": function () {},
   "cb": function () {},
   "checkActionCode": function () {},
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "confirmPasswordReset": function () {},
   "constructor": function () {},
   "createUserAndRetrieveDataWithEmailAndPassword": function () {},
@@ -1100,7 +1101,7 @@ firebase.default.auth.Auth.prototype = {
   "yc": function () {}
 };
 firebase.default.auth.Auth.ib.constructor.prototype = {
-  "closure_listenable_926220": function () {},
+  "closure_listenable_668105": function () {},
   "constructor": function () {},
   "oa": function () {},
   "removeEventListener": function () {},
