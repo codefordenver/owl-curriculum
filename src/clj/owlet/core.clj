@@ -5,7 +5,8 @@
             [owlet.config :refer [env]]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
-            [mount.core :as mount])
+            [mount.core :as mount]
+            [dynadoc.core :as dynadoc])
   (:gen-class))
 
 (def cli-options
@@ -43,6 +44,7 @@
                         mount/start-with-args
                         :started)]
     (log/info component "started"))
+  (dynadoc/start {:port 5000})
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]
