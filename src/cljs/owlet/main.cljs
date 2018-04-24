@@ -21,9 +21,9 @@
             [owlet.views.unsubscribe :refer [unsubscribe-view]]
             [owlet.views.settings :refer [settings-view]]
             [owlet.views.filtered-activities :refer [filtered-activities-view]]
-            [owlet.async :as async]
-            [owlet.auth0 :as auth0]
             [owlet.config :as config]
+            [owlet.events.auth]
+            [owlet.auth0 :as auth0]
             [owlet.firebase :as fb]))
 
 (defmulti views identity)

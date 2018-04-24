@@ -47,7 +47,7 @@
                  [cljsjs/bootstrap "3.3.6-1"]
                  [cljsjs/chartjs "2.6.0-0"]
                  [cljsjs/simplemde "1.11.2-0"]
-                 [cljsjs/firebase "4.8.1-0"]
+                 [cljsjs/firebase "4.9.0-0"]
                  [cljsjs/showdown "1.4.2-0"]
                  [cljsjs/toastr "2.1.2-0"]
                  [org.clojure/core.async "0.3.442"]

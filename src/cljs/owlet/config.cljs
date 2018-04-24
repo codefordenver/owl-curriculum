@@ -36,6 +36,7 @@
   {:apiKey        "AIzaSyAbs6wXxPGX-8XEWR6nyj7iCETOL6dZjzY"
    :authDomain    "owlet-users.firebaseapp.com"
    :databaseURL   "https://owlet-users.firebaseio.com"
+   :projectId     "owlet-users"
    :storageBucket "owlet-users.appspot.com"})
 
 

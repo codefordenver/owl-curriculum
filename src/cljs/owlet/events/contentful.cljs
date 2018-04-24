@@ -36,9 +36,10 @@
 (reg-setter
   :get-content-from-contentful-failure
   [:on-app-failure]
-  (constantly {:show? true
-               :msg   (str "Not able to retrieve content from Contentful: "
-                           "Possibly missing ENV variables")}))
+  :transform-fn (constantly
+                  {:show? true
+                   :msg   (str "Not able to retrieve content from Contentful: "
+                               "Possibly missing ENV variables")}))
 
 
 (rf/reg-event-fx
