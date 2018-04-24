@@ -20,6 +20,8 @@
                  [mount "0.1.11"]
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.671" :scope "provided"]
+                 [org.clojure/core.specs.alpha "0.1.24"]
+                 [org.clojure/spec.alpha "0.1.143"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.4.0"]
                  [org.webjars.bower/tether "1.4.0"]
@@ -31,7 +33,6 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.6.1"]
                  [ring/ring-defaults "0.3.0"]
-                 [secretary "1.2.3"]
                  [selmer "1.10.8"]
                  [org.clojure/clojure "1.9.0-alpha15"]
                  [org.clojure/clojurescript "1.9.456"]
@@ -68,7 +69,8 @@
                  [environ "1.0.2"]
                  [metosin/compojure-api "1.1.9"]
                  [nilenso/mailgun "0.2.3"]
-                 [funcool/cuerdas "2.0.3"]]
+                 [funcool/cuerdas "2.0.3"]
+                 [dynadoc "RELEASE"]]
 
   :min-lein-version "2.0.0"
 
@@ -83,7 +85,8 @@
             [lein-cljsbuild "1.1.5"]
             [lein-sassc "0.10.4"]
             [lein-auto "0.1.2"]
-            [lein-kibit "0.1.2"]]
+            [lein-kibit "0.1.2"]
+            [dynadoc/lein-dynadoc "RELEASE"]]
 
   :sassc [{:src "resources/scss/main.scss"
            :output-to "resources/public/css/main.min.css"
