@@ -117,7 +117,7 @@
 
 
 (def firebase-firestore-ref
-  (js/firebase.firestore firebase-app))
+  (.firestore js/firebase firebase-app))
 
 
 ;  ;  ;  ;  ;  ;  ;  ;  ;   Firebase authorization   ;  ;  ;  ;  ;  ;  ;  ;  ;
