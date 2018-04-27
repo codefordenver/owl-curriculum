@@ -510,11 +510,11 @@ progress {
 }
 
 #confirm {
-  color: white;
+  color: black;
 }
 #confirm-message {
   position: absolute;
-  top: 70px;
+  top: 78px;
   left: calc(50vw - 135px);
   @media screen and (max-width: 767px) {
     left: calc(50vw - 215px);
