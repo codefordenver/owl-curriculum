@@ -128,8 +128,8 @@
      [:div.col-xs-12.step-1
       [:h2.mixed-2 "1. Establish initial public and secret numbers"]
       "Use the suggested numbers or try your own. Hover your mouse over the "
-       [:span.pulse-shrink "\"pulsing\""]
-       " areas to learn more."]
+      [:span.pulse-shrink "\"pulsing\""]
+      " areas to learn more."]
      [:div#diffie-hellman-grid
       [:div.border-1]
       [:div.border-2]
