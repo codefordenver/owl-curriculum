@@ -1,6 +1,8 @@
-.branchwrapper.col-xs-12.col-sm-6.col-lg-4 {
-  padding-right: inherit;
-  padding-left: inherit;
+.branchwrapper {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 #branches {
@@ -12,7 +14,6 @@
   }
   .branchwrap {
     border-radius: 7px;
-    margin: 15px 0;
     height: 117px;
     background-size: 100%;
     background-position: center;
@@ -55,7 +56,7 @@
 .counter {
   position: absolute;
   right: 25px;
-  bottom: 25px;
+  bottom: 9px;
   height: 40px;
   width: 40px;
   background-color: black;
@@ -67,4 +68,12 @@
     top: 10px;
     text-align: center;
   }
+}
+
+.rc-popover-anchor-wrapper, .rc-point-wrapper, .branchwrap {
+  width: 100%;
+}
+
+.popover {
+  max-width: 250px !important;
 }
