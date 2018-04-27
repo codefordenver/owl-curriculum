@@ -7,7 +7,7 @@
             [camel-snake-kebab.core :refer [->kebab-case]]))
 
 
-(defn branch [[color branch-name] branch-key]
+(defn branch [[color branch-name description] branch-key]
   (let [lines                (str/split (str/upper-case branch-name) " ")
         name-line1           (first lines)
         name-line2           (rest lines)
@@ -57,4 +57,4 @@
                           [:p counter]]]]]
             :popover [re-com/popover-content-wrapper
                       :close-button? false
-                      :body "Click for more info"]]]))))
+                      :body description]]]))))

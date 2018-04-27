@@ -13,9 +13,9 @@
       [:br]
       (doall
         (for [b (sort-by :name @activity-branches)
-                :let [pair (vector (:color b) (:name b))
-                      branch-key (->kebab-case (-> pair
+                :let [props (vector (:color b) (:name b) (:description b))
+                      branch-key (->kebab-case (-> props
                                                    second
                                                    keyword))]]
           ^{:key (gensym "branch-")}
-           [branch pair branch-key]))]]))
+           [branch props branch-key]))]]))
