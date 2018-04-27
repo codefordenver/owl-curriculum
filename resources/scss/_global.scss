@@ -510,23 +510,17 @@ progress {
 }
 
 #confirm {
-  color: white;
+  color: black;
+  font-size: 20px;
+  padding: 10px;
 }
-#confirm-message {
-  position: absolute;
-  top: 70px;
-  left: calc(50vw - 135px);
-  @media screen and (max-width: 767px) {
-    left: calc(50vw - 215px);
-  }
+
+#confirm-message, #g-recaptcha {
+  margin: 30px auto;
   display: block;
-  width: 430px;
+  text-align: center;
 }
 #g-recaptcha {
-  position: absolute;
-  top: 110px;
-  left: calc(50vw - 71px);
-  @media screen and (max-width: 767px) {
-    left: calc(50vw - 151px);
-  }
+  display: flex;
+  justify-content: center;
 }
