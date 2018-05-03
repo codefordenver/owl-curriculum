@@ -3,7 +3,7 @@
             [re-frame.core :as rf]))
 
 
-(defn simplemde [textarea-id codemirror-evt-type rf-evt-id & more-evt-args]
+(defn simplemde
   "Creates and returns a new Markdown editor, attaching it to the DOM element
   indicated by textarea-id. It makes use of an instance of CodeMirror to do the
   editing. When an event of the given type is fired by the instance, it will be
@@ -15,6 +15,7 @@
   keywords, strings, or symbols. The remaining arguments will be literally
   passed to the event vector.
   "
+  [textarea-id codemirror-evt-type rf-evt-id & more-evt-args]
   (let [area-id (name textarea-id)
 
         mde (js/SimpleMDE. (clj->js
