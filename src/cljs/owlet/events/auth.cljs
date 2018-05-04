@@ -71,45 +71,6 @@
   [fb-user]
   (some-> fb-user .-uid keyword))
 
-
-(defn firebase-auth-change
-  "Effect handler ultimately triggered by Firebase when the user logs in or
-  out, or when the app starts up, like when the page is refreshed. We depend
-  upon the value in app-db at [:my-identity :auth-status] and the existence of
-  the user id in the given Firebase User object to tell whether this is a
-  log-in, log-out, or the continuation of a logged-in state.
-  "
-  [{{{old-fb-id :firebase-id
-      status    :auth-status} :my-identity
-                              :as db} :db}  ; <-- coeffects
-   [_ fb-user]]                             ; <-- event w/FB User object from
-                                            ;     effect :firebase-sign-in, via
-                                            ;     event :auth0-authenticated.
-  (let [new-fb-id (fb-user->id fb-user)]
-    (cond
-      (nil? status)
-      ; App just started up. Henceforth, :auth-status' value will not be nil.
-      (init-my-identity db new-fb-id :already-logged-in)
-
-      (nil? old-fb-id)
-      (init-my-identity db new-fb-id :just-logged-in)
-
-      (nil? new-fb-id)
-      ; Just logged out.
-      (init-my-identity db)
-
-      :else
-      ; This shouldn't happen! the Firebase user id should only change from
-      ; nil to not nil or vice-versa.
-      (do
-        (js/console.log
-          "Error: Somehow logging in while another Firebase user is still "
-          "logged in! Logging out now.")
-        {:dispatch :log-out}))))
-; Used here:
-(rf/reg-event-fx :firebase-auth-change firebase-auth-change)
-
-
 (rf/reg-fx
   :start-authorized-listening
   (fn [{{:keys [private-ref presence-ref]} :my-identity}]
@@ -128,23 +89,71 @@
     ;       to set.
 
 
-(rf/reg-event-fx
-  :log-out
-  (fn [{{{:keys [presence-ref]} :my-identity :as db} :db} _]
-    (assoc (init-my-identity db)
-           :firebase-reset-into-ref
-           [presence-ref
-            {:online             false
-             :online-change-time fb/timestamp-placeholder}
-            ;
-            ; When finished with above update of location
-            ; presence/<firebase-id>/, then dispatch an
-            ; event to sign me out from Firebase:
-            :then-sign-out])))
+(defn log-out
+  [{{{:keys [presence-ref]} :my-identity :as db} :db} _]
+  (assoc (init-my-identity db)
+         :firebase-reset-into-ref
+         [presence-ref
+          {:online             false
+           :online-change-time fb/timestamp-placeholder}
+          ;
+          ; When finished with above update of location
+          ; presence/<firebase-id>/, then dispatch an
+          ; event to sign me out from Firebase:
+          :then-sign-out]))
+; Used here:
+(rf/reg-event-fx :log-out log-out)
 
 
 (rf/reg-event-fx
   :then-sign-out
   (fn [_ _]
     {:firebase-sign-out fb/firebase-auth-object}))
+
+
+(defn firebase-auth-change
+  "Effect handler ultimately triggered by Firebase when the user logs in or
+  out, or when the app starts up, like when the page is refreshed. We depend
+  upon the value in app-db at [:my-identity :auth-status] and the existence of
+  the user id in the given Firebase User object to tell whether this is a
+  log-in, log-out, or the continuation of a logged-in state.
+  "
+  [{{{old-fb-id :firebase-id
+      status    :auth-status} :my-identity
+     :as db} :db :as cofx}                  ; <-- coeffects
+   [_ fb-user]]                             ; <-- event w/FB User object from
+                                            ;     effect :firebase-sign-in, via
+                                            ;     event :auth0-authenticated.
+  (let [new-fb-id (fb-user->id fb-user)]
+    (cond
+      (nil? status)
+      ; App just started up. Henceforth, :auth-status' value will not be nil.
+      (init-my-identity db new-fb-id :already-logged-in)
+
+      (nil? old-fb-id)
+      (init-my-identity db new-fb-id :just-logged-in)
+
+      (nil? new-fb-id)
+      ; Just logged out.
+      (init-my-identity db)
+
+      (= old-fb-id new-fb-id)
+      ;; The Auth0 lock object probably has been assigned more than one
+      ;; .on("authenticated"...) listener, because owlet.main/view ran more
+      ;; than once, thus calling owlet.auth0/on-authenticated more than once.
+      ;; This can happen in development when the app hot-reloads code.
+      ;; Do nothing.
+      {}
+
+      :else
+      ; This shouldn't happen! the Firebase user id should only change from
+      ; nil to not nil or vice-versa.
+      (do
+        (js/console.log
+          "Error: Somehow trying to log in user" (name new-fb-id)
+          "while user" (name old-fb-id)
+          "is still logged in! Logging out now.")
+        (log-out cofx [:log-out])))))
+; Used here:
+(rf/reg-event-fx :firebase-auth-change firebase-auth-change)
 
