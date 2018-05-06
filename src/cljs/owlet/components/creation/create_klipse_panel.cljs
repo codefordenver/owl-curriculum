@@ -3,14 +3,17 @@
             [owlet.components.creation.custom-klipse-component :refer [custom-klipse-component]]
             [owlet.components.creation.create-klipse-code-validation :refer [create-klipse-code-validation-component]]
             [re-com.core :refer [h-box button]]
-            [owlet.components.creation.markdown-editor :refer [simplemde]]))
+            [owlet.components.creation.markdown-editor :refer [simplemde]]
+            [owlet.events.create-activity :as create]))
+
 
 (defn create-klipse-panel-component [id]
   (reagent/create-class
     {:component-did-mount
      (fn []
-       (let [smde-text1 (simplemde "text1")
-             smde-text2 (simplemde "text2")]))
+       (simplemde :text1 :blur ::create/text)
+       (simplemde :text2 :blur ::create/text))
+
      :reagent-render
      (fn [id]
       [:div.activity-creation-wrap
