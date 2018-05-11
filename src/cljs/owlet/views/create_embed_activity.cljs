@@ -18,7 +18,7 @@
    [:div.activity
     [:div.activity-wrap
      [:div.col-sm-12
-      [:h1 "creating: an embed-based activity guide"]
+      [:h1 "creating: general embedded activity"]
       [:div.activity-header.col-sm-12.col-lg-7
        [create-activity-title]]]
      [:div.activity-content.col-sm-12.col-lg-5

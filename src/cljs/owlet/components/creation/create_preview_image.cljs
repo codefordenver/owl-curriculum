@@ -4,7 +4,7 @@
             [re-frame.core :as rf]
             [re-com.core :refer [v-box h-box modal-panel button alert-box progress-bar]]))
 
-;TODO: add functionality for uploading to Contentful
+;TODO: add functionality for uploading to Firebase
 
 (def show-upload? (r/atom false))
 
