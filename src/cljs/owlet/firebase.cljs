@@ -117,7 +117,7 @@
 
 
 (def firebase-firestore-ref
-  (.firestore js/firebase firebase-app))
+ (.call (goog.object/get js/firebase "firestore") js/firebase firebase-app))
 
 
 ;  ;  ;  ;  ;  ;  ;  ;  ;   Firebase authorization   ;  ;  ;  ;  ;  ;  ;  ;  ;

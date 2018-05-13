@@ -30,11 +30,8 @@
                                         more-evt-args)]
                      (rf/dispatch rf-event)))]
     (-> mde
-      .-codemirror
+      (goog.object/get "codemirror")   ; Adv. optimization munges .-codemirror
       (.on (name codemirror-evt-type) listener))
-      ; Above .on requires the following line to be present in externs.js in
-      ; order for advanced optimization to work:
-      ; SimpleMDE.prototype.codemirror.on = function() {};
 
     mde))
 
