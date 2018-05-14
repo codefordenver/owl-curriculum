@@ -1,5 +1,4 @@
 (ns owlet.components.creation.markdown-editor
-  (:require-macros [purnam.core :refer [!>]])
   (:require cljsjs.simplemde
             [re-frame.core :as rf]))
 
@@ -30,6 +29,9 @@
                          rf-event (into [rf-evt-id users-text textarea-id]
                                         more-evt-args)]
                      (rf/dispatch rf-event)))]
-    (!> mde.codemirror.on (name codemirror-evt-type) listener)
+    (-> mde
+      (goog.object/get "codemirror")   ; Adv. optimization munges .-codemirror
+      (.on (name codemirror-evt-type) listener))
+
     mde))
 
