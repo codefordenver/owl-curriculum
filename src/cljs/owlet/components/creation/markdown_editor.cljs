@@ -7,13 +7,13 @@
   "Creates and returns a new Markdown editor, attaching it to the DOM element
   indicated by textarea-id. It makes use of an instance of CodeMirror to do the
   editing. When an event of the given type is fired by the instance, it will be
-  handled by firing a re-frame event with the given rf-evt-id. The remaining
-  members of the event vector will then be the current text in the editor, the
-  textarea-id, and any more event arguments you provide. For standard values of
-  codemirror-evt-type, see https://codemirror.net/doc/manual.html#events
+  handled by firing a re-frame event with the given rf-evt-id. Members of the
+  dispatched event vector will consist of the rf-evt-id, then data as follows:
+  The current text in the editor, then the textarea-id, then any more event
+  arguments you provide. For standard values of codemirror-evt-type, see
+  https://codemirror.net/doc/manual.html#events
   The textarea-id and codemirror-evt-type arguments may be provided as
-  keywords, strings, or symbols. The remaining arguments will be literally
-  passed to the event vector.
+  keywords, strings, or symbols.
   "
   [textarea-id codemirror-evt-type rf-evt-id & more-evt-args]
   (let [area-id (name textarea-id)

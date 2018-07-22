@@ -1,37 +1,39 @@
 (ns owlet.firebase
-  ;           (                           )
-  ;           )\ )   (    (       (    ( /(      )          (
-  ;          (()/(   )\   )(     ))\   )\())  ( /(   (     ))\
-  ;           /(_)) ((_) (()\   /((_) ((_)\   )(_))  )\   /((_)
-  ;          (_) _|  (_)  ((_) (_))   | |(_) ((_)_  ((_) (_))
-  ;           |  _|  | | | '_| / -_)  | '_ \ / _` | (_-< / -_)
-  ;           |_|    |_| |_|   \___|  |_.__/ \__,_| /__/ \___|
-  ;
+  ;;          (                           )
+  ;;          )\ )   (    (       (    ( /(      )          (
+  ;;         (()/(   )\   )(     ))\   )\())  ( /(   (     ))\
+  ;;          /(_)) ((_) (()\   /((_) ((_)\   )(_))  )\   /((_)
+  ;;         (_) _|  (_)  ((_) (_))   | |(_) ((_)_  ((_) (_))
+  ;;          |  _|  | | | '_| / -_)  | '_ \ / _` | (_-< / -_)
+  ;;          |_|    |_| |_|   \___|  |_.__/ \__,_| /__/ \___|
+  ;;
   "Utilities for working with the Firebase backend-as-a-service platform.
   See https://firebase.google.com
   "
+  (:require-macros [owlet.firebase :refer [then-> then->>]])
   (:require [owlet.config :refer [firebase-app-init]]
             [owlet.async :refer [repeatedly-running]]
             [reagent.ratom :refer-macros [reaction]]
             [re-frame.core :as rf]
 
-            ; These are all provided by the cljsjs/firebase dependency.
-            ; Don't :require cljsjs.firebase. It causes firebase.firestore
-            ; to be undefined.
-            [firebase.app]          ; Must be first.
+            ;; These are all provided by the cljsjs/firebase dependency.
+            ;; Don't :require cljsjs.firebase. It causes firebase.firestore
+            ;; to be undefined.
+            [firebase.app]                        ; Must be first.
             [firebase.auth]
             [firebase.database]
             [firebase.storage]
-            [firebase.firestore]))
+            [firebase.firestore]
+            [clojure.string :as str]))
 
 
 (defonce firebase-app
-  ; The global firebase.app.App instance for use by this application.
-  ; There must be only one with a particular name.
-  ; See https://firebase.google.com/docs/reference/js/firebase.app.App.html .
+  ;; The global firebase.app.App instance for use by this application.
+  ;; There must be only one with a particular name.
+  ;; See https://firebase.google.com/docs/reference/js/firebase.app.App.html .
   (.initializeApp js/firebase
-                  (clj->js firebase-app-init)         ; Options.
-                  "owlet.firebase/firebase-app"))     ; Just a name.
+                  (clj->js firebase-app-init)     ; Options.
+                  "owlet.firebase/firebase-app")) ; Just a name.
 
 
 (def timestamp-placeholder
@@ -41,35 +43,60 @@
   (-> js/firebase .-database .-ServerValue .-TIMESTAMP))
 
 
-(defn then-dispatch
-  "Given a JS Promise or firebase.Promise object, returns it or, if the second
-  argument is not empty, returns a new Promise that will dispatch the re-frame
-  event when the given Promise has completed, i.e., it calls something like
-  (dispatch [:an-event-id rslt-map ...]).
+(defn apply-constructor [ctor & args]
+  "Just like cljs.core/apply, but its first argument must be a JS constructor.
+  Evaluates the constructor with argument list formed by prepending intervening
+  arguments to the final argument, and returns the resulting instance.
+  "
+  (let [js-args (apply array (apply apply list args))
+        inst (js/Object.create (.-prototype ctor))]
+    (.apply ctor inst js-args)
+    inst))
 
-  Here, :an-event-id is the given value of completed-event-id, rslt-map will
-  have value {:ok-value v} or {:error-reason r}, and \"...\" are extra event
-  args to be dispatched, if any. The value v in rslt-map {:ok-value v} will
-  be the result from the given promise when it is fulfilled. If instead the
-  promise rejected, the dispatched event will have rslt-map {:error-reason r},
-  where r is an instance of firebase.FirebaseError, indicating the reason for
-  rejection provided by the promise.
+
+(defn- dispatch-value
+  "Helper function to package the given value into an event vector that
+  looks like [:the-event-id value :arg1 :arg2] (where more-args here is
+  [:arg1 arg2]). Then the vector is dispatched.
+  "
+  [value event-id more-args]
+  (-> [event-id value]
+    (into more-args)                      ; Appends each arg onto event vector.
+    rf/dispatch))
+
+
+(defn then-dispatch
+  " May be called as (then-dispatch a-promise :an-event-id ...) or as
+  (then-dispatch a-promise [:an-event-id ...]). Given a js/Promise or
+  firebase.Promise object, returns it or, if there is a second (non-falsey)
+  argument, returns a new Promise that will dispatch a re-frame event when the
+  given Promise has completed. That is, it calls something like
+  (dispatch [:an-event-id rslt-map ...]), for example.
+
+  Here, :an-event-id is the given value of event-id. The rslt-map will have
+  value {:ok-value v} or {:error-reason r}. Finally, the '...' in this example
+  represents any extra data values you may provide to fill out the dispatched
+  event vector, i.e, starting with the third element of the vector. The value v
+  in rslt-map {:ok-value v} will be the result from the given promise when it
+  is fulfilled. If instead the promise rejected, then the dispatched event will
+  have rslt-map {:error-reason r}, where r is an instance of
+  firebase.FirebaseError, giving the reason for rejection provided by the
+  promise.
 
   See https://firebase.google.com/docs/reference/js/firebase.Promise
   and https://firebase.google.com/docs/reference/js/firebase.FirebaseError
   "
-  [promise [completed-event-id & event-args]]
-  (if completed-event-id
-    (letfn [(callback [flag]
-              (fn [value-or-reason]
-                (-> [completed-event-id {flag value-or-reason}]
-                  (into event-args)  ; Appends event vector with args.
-                  rf/dispatch)))]
-      (.then promise (callback :ok-value) (callback :error-reason)))
-    promise))
+  [promise & [event-id :as id-and-args]]
+  (let [[id & args] (if (sequential? event-id)
+                      event-id
+                      id-and-args)]
+    (if id
+      (let [callback (fn [kw] #(dispatch-value {kw %} id args))]
+        (.then promise (callback :ok-value) (callback :error-reason)))
+      promise)))
 
 
-;  ;  ;  ;  ;  ;  ;  ;  ;   Defining Firebase refs   ;  ;  ;  ;  ;  ;  ;  ;  ;
+;;;; Defining Firebase refs
 
 
 (def firebase-auth-object
@@ -85,7 +112,7 @@
   (-> firebase-app .database .ref))
 
 
-(defn vec->path-str
+(defn seq->path-str
   "Given a sequence of keywords, strings, or symbols (e.g. a path vector for
   get-in), returns a string suitable for use as a Firebase path argument.
   "
@@ -99,6 +126,22 @@
   "
   ([rel-path] (path-str->db-ref firebase-db-ref rel-path))
   ([db-ref rel-path] (.child db-ref rel-path)))
+
+
+(def firebase-firestore-ref
+  "A Firebase ref (a firebase.firestore.Firestore instance) referring to the
+  root of the Firestore database for this firebase-app.
+  "
+  (.call (goog.object/get js/firebase "firestore") js/firebase firebase-app))
+
+
+(defn path-str->path-seq
+  "Parses the given \"/\"-separated path string into a sequence of names.
+  Leading, trailing, and duplicate separators are ignored. Thus, no string in
+  the returned sequence will be empty.
+  "
+  [path-str]
+  (remove empty? (str/split path-str #"/+")))
 
 
 (def firebase-storage-ref
@@ -116,11 +159,7 @@
   (-> firebase-app .storage (.refFromURL url)))
 
 
-(def firebase-firestore-ref
- (.call (goog.object/get js/firebase "firestore") js/firebase firebase-app))
-
-
-;  ;  ;  ;  ;  ;  ;  ;  ;   Firebase authorization   ;  ;  ;  ;  ;  ;  ;  ;  ;
+;;;; Firebase authorization
 
 
 (defn sign-in
@@ -148,17 +187,17 @@
 
 (rf/reg-fx
   :firebase-sign-in
-  ; A list must be provided to this effect function, as for function sign-in,
-  ; above. E.g., your reg-event-fx registered function could return
-  ; {:firebase-sign-in  [fb/firebase-auth-object a-token :some-event]}
+  ;; A list must be provided to this effect function, as for function sign-in,
+  ;; above. E.g., your reg-event-fx registered function could return
+  ;; {:firebase-sign-in  [fb/firebase-auth-object a-token :some-event]}
   (partial apply sign-in))
 
 
 (rf/reg-fx
   :firebase-sign-out
-  ; The desired firebase.auth.Auth instance must be provided for this effect.
-  ; E.g., your reg-event-fx registered function could return
-  ; {:firebase-sign-out fb/firebase-auth-object}.
+  ;; The desired firebase.auth.Auth instance must be provided for this effect.
+  ;; E.g., your reg-event-fx registered function could return
+  ;; {:firebase-sign-out fb/firebase-auth-object}.
   (memfn signOut))
 
 
@@ -177,7 +216,7 @@
                            (apply vector event-id fb-user-obj args)))))
 
 
-;  ;  ;  ;  ;  ;  ;  ;  Communicating with Firebase DB  ;  ;  ;  ;  ;  ;  ;  ;
+;;;; Communicating with Firebase Database
 
 
 (def legal-db-value?
@@ -224,20 +263,20 @@
 (rf/reg-fx
   :firebase-reset-ref
 
-  ; [db-ref v & event-id-args]
-  ;
-  ; Asynchronously assigns the given clojure value at the given Firebase
-  ; database reference. Any remaining arguments provided will become the
-  ; contents of an event vector to be dispatched upon completion. E.g.
-  ; [:given-event-id "an arg for handler"] would be dispatched.
-  ;
-  ; Note that the Clojure value v must pass precondition legal-db-value?. If
-  ; it is nil, the location corresponding to the ref will be deleted. The same
-  ; applies to empty collections as values, like [], {}, or #{}. (The Firebase
-  ; database does not store null values or empty collections.)
-  ;
-  ; Returns a js/Promise, which will perform (or has performed) the db-ref.set
-  ; method call.
+  ;; [db-ref v & event-id-args]
+  ;;
+  ;; Asynchronously assigns the given clojure value at the given Firebase
+  ;; database reference. Any remaining arguments provided will become the
+  ;; contents of an event vector to be dispatched upon completion. E.g.
+  ;; [:given-event-id "an arg for handler"] would be dispatched.
+  ;;
+  ;; Note that the Clojure value v must pass precondition legal-db-value?. If
+  ;; it is nil, the location corresponding to the ref will be deleted. The same
+  ;; applies to empty collections as values, like [], {}, or #{}. (The Firebase
+  ;; database does not store null values or empty collections.)
+  ;;
+  ;; Returns a js/Promise, which will perform (or has performed) the db-ref.set
+  ;; method call.
 
   (partial apply reset-ref))
 
@@ -248,27 +287,27 @@
 (rf/reg-fx
   :firebase-reset-into-ref
 
-  ; [db-ref v & event-id-args]
-  ;
-  ; Asynchronously merges the key/values of the given associative Clojure value
-  ; v (say a map or vector) into the given Firebase database reference. Any
-  ; values at keys not present in the Clojure value will not be changed. Any
-  ; remaining arguments provided will become the contents of an event vector to
-  ; be dispatched upon completion. E.g. [:given-event-id "an arg for handler"]
-  ; would be dispatched.
-  ;
-  ; Note that the Clojure value v must pass precondition legal-db-value?. If it
-  ; is nil, the location corresponding to the ref will be deleted. The same
-  ; applies to empty collections as values, like [], {}, or #{}. (The Firebase
-  ; database does not store null values or empty collections.)
-  ;
-  ; Returns a js/Promise, which will perform (or has performed) the
-  ; db-ref.update method call.)
+  ;; [db-ref v & event-id-args]
+  ;;
+  ;; Asynchronously merges the key/values of the given associative Clojure
+  ;; value v (say a map or vector) into the given Firebase database reference.
+  ;; Any values at keys not present in the Clojure value will not be changed.
+  ;; Any remaining arguments provided will become the contents of an event
+  ;; vector to be dispatched upon completion.
+  ;; E.g. [:given-event-id "an arg for handler"] would be dispatched.
+  ;;
+  ;; Note that the Clojure value v must pass precondition legal-db-value?. If
+  ;; it is nil, the location corresponding to the ref will be deleted. The same
+  ;; applies to empty collections as values, like [], {}, or #{}. (The Firebase
+  ;; database does not store null values or empty collections.)
+  ;;
+  ;; Returns a js/Promise, which will perform (or has performed) the
+  ;; db-ref.update method call.)
 
   (partial apply reset-into-ref))
 
 
-(defn on-change
+(defn on-db-change
   "This is the preferred way to keep your re-frame app continuously updated
   to changes occurring in the Firebase node indicated by the given ref.
   Argument db-ref is the ref of the node to be observed. When a change happens
@@ -287,8 +326,8 @@
   \"child_changed\", \"child_removed\", or \"child_moved\", as in
   firebase.database.Reference's on() method. Use \"value\", for instance, if
   you want to capture changes to a single node in the database, or
-  \"child_changed\" to watch for changes to individual children of the node. See
-  https://firebase.google.com/docs/reference/js/firebase.database.Reference#on
+  \"child_changed\" to watch for changes to individual children of the node.
+  See https://firebase.google.com/docs/reference/js/firebase.database.Reference#on
 
   Returns the callback function passed to the ref's .on method. It can be used
   to turn off observation as follows:
@@ -429,7 +468,249 @@
                  (.toString %)))))
 
 
-;  ;  ;  ;  ;  ;  ;  Communicating with Firebase Storage   ;  ;  ;  ;  ;  ;  ;
+;;;; Communicating with Firebase Firestore
+
+
+;; Todo  apply-setter-promise for CollectionReference using .add & .set
+;; Todo  Move owlet.firebase and owlet.rf-util to a new repo
+;; Todo  swap (in the Clojure atom sense) a DocumentReference using Transaction
+;; Todo  (Possible?) Update one or more DocumentReferences based on the values
+;; Todo    from one or more DocumentReferences, all in a single Transaction
+
+
+(defprotocol IFirebase
+  "Functions for communicating with Firebase consistently, conveniently, and
+  idiomatically.
+  "
+  (path-seq->ref [this-ref path-seq]
+    "Given a path sequence of strings, keywords, or symbols, returns a
+    reference at the path relative to the given reference. The returned
+    reference might be of a different type than the given one.
+    ")
+  (ask-promise [this-ref query]
+    "Returns a promise to obtain a value from the given reference. The result
+    from the promise will be a ClojureScript primitive value or map.
+
+    For a DocumentReference, the given query may be nil, resulting in the
+    entire document, or it may be a sequence of strings, keywords, or symbols
+    indicating a path to a field in the document, or it may be a path string
+    consisting of \".\"-separated field names.
+
+    For a CollectionReference, the given query may be nil, resulting in a
+    map of document ids to documents for all documents in the collection, or it
+    may be a function that takes a CollectionReference and returns an instance
+    of firebase.firestore.Query. Such a query function results in a similar
+    map, but filtered or ordered by your function.
+    ")
+  (apply-setter-promise [this-ref setter clj-val]
+    "Calls the given setter function on the given reference and the given
+    Clojure data, after first being translated to a JavaScript value. For a
+    DocumentReference, for example, the setter could be (memfn set js-val) or
+    (memfn update js-val). Returns the return value of the setter call.
+    ")
+  (on-change-dispatch [this-ref [event-id & args]]
+    "When the referred-to document or collection changes, a re-frame event like
+    the given sequence is dispatched, with the new value of the document or
+    collection inserted as the second element of the event. The value will be a
+    Clojure map. A no-arg unsubscribe function is returned, which will cancel
+    this listening when called.
+    "))
+
+
+(def ^private col-doc-col-doc-etc
+  "An infinite sequence of functions that respectively instantiate a
+  CollectionReference, a DocumentReference, a CollectionReference, a
+  DocumentReference, ...
+  "
+  (cycle [(memfn collection name-arg) (memfn doc name-arg)]))
+
+
+(defn- path-seq-etc->ref
+  "Given a path sequence of strings, keywords, or symbols, returns a reference
+  (a DocumentReference or CollectionReference) at the path relative to the
+  given reference. The third arg. must be an infinite sequence of alternating
+  functions that instantiate references, such as col-doc-col-doc-etc, above.
+  "
+  [ref path-seq coll-doc-etc]
+  (letfn [(next-ref [ref-obj [f path-elem]]
+            (f ref-obj (name path-elem)))]
+    (reduce next-ref ref (map vector coll-doc-etc path-seq))))
+
+
+(defn- docSnap->id-data-pair
+  "Given a DocumentSnapshot, returns a vector of two items: The first is the
+  id string of the document in the parent collection. The second is the
+  document translated to Clojure data.
+  "
+  [snap]
+  [(keyword (.-id snap))
+   (js->clj (.data snap) :keywordize-keys true)])
+
+
+(extend-protocol IFirebase
+
+  firebase.firestore.Firestore
+
+  (path-seq->ref [this path-seq]
+    (path-seq-etc->ref this path-seq col-doc-col-doc-etc))
+
+  (ask-promise [this query]
+    (-> "owlet.firebase/deref was called on a Firestore object "
+      (str "instead of a CollectionReference or a DocumentReference.")
+      js/Error.
+      throw))
+
+  (apply-setter-promise [this setter clj-val]
+    (-> "owlet.firebase/reset or reset-into was called on a Firestore "
+      (str "object instead of a DocumentReference.")
+      js/Error.
+      throw))
+
+  (on-change-dispatch [this [event-id & args]]
+    (-> "owlet.firebase/on-change was called on a Firestore object "
+      (str "instead of a CollectionReference or a DocumentReference.")
+      js/Error.
+      throw))
+
+  firebase.firestore.DocumentReference
+
+  (path-seq->ref [this path-seq]
+    (path-seq-etc->ref this path-seq col-doc-col-doc-etc))
+
+  (ask-promise [this path-in-doc]
+    (letfn [(use-get-or-data [path-arg]
+              (cond
+                (string? path-arg)
+                (use-get-or-data (remove empty? (str/split path-arg #"\.+")))
+
+                (and (sequential? path-arg) (seq path-arg))
+                (fn [snap]
+                  (->> path-arg
+                    (map name)
+                    (apply-constructor js/firebase.firestore.FieldPath)
+                    (.get snap)))
+
+                :else
+                (memfn data)))]
+      (-> this
+        .get
+        (then->
+          ((use-get-or-data path-in-doc))
+          (js->clj :keywordize-keys true)))))
+
+  (apply-setter-promise [this setter clj-val]
+    (setter this (clj->js clj-val)))
+
+  (on-change-dispatch [this [event-id & args]]
+    (.onSnapshot this
+      #(dispatch-value {:ok-value (.data %)} event-id args)
+      #(dispatch-value {:error-reason %} event-id args)))
+
+  firebase.firestore.CollectionReference
+
+  (path-seq->ref [this path-seq]
+    (path-seq-etc->ref this path-seq (rest col-doc-col-doc-etc)))
+
+  (ask-promise [this query-fn]
+    (let [q-fn (if (nil? query-fn)
+                 identity
+                 (do
+                   (assert
+                     (fn? query-fn)
+                     (str "Second argument to ask-promise must be nil or a "
+                          "function that takes a CollectionReference and "
+                          "returns an instance of firebase.firestore.Query."))
+                   query-fn))]
+      (-> this
+        q-fn
+        .get
+        (then->>
+          .-docs
+          (map docSnap->id-data-pair)
+          (into (array-map))))))
+
+  (apply-setter-promise [this setter clj-val]
+    (-> "owlet.firebase/reset or reset-into was called on a"
+      (str " CollectionReference object instead of a DocumentReference.")
+      js/Error.
+      throw))
+
+  (on-change-dispatch [this [event-id & args]]
+    (.onSnapshot this
+      #(amap (.-docChanges %) i ret
+         (as-> (aget ret i) -v-
+           {:ok-value    (-> -v- .-doc .data)
+            :change-type (-> -v- .-type)}
+           (dispatch-value -v- event-id args)))
+      #(dispatch-value {:error-reason %} event-id args))))
+
+
+(defn path-str->ref
+  "Given a path string, returns a reference at the path relative to the given
+  reference. If no reference is provided, the value of firebase-firestore-ref
+  is used. The returned reference might be of a different type than the given
+  one.
+  "
+  ([path-str]
+   (path-str->ref firebase-firestore-ref path-str))
+
+  ([fs-ref path-str]
+   (path-seq->ref fs-ref (path-str->path-seq path-str))))
+
+
+(defn ask
+  "Asynchronously obtains the value at the given reference, then, using the
+  given re-frame event arguments, dispatches the value (wrapped in a
+  {:ok-value v} or {:error-reason r} map) as the second member of the event.
+  This wrapping and dispatching is just as in function then-dispatch. A Promise
+  is returned, which will perform the dispatch. If no event-args are provided,
+  the returned Promise instead just contains the unwrapped Clojure value and no
+  dispatch is performed.
+
+  For a DocumentReference, the given query may be nil, resulting in the
+  entire document, or it may be a sequence of strings, keywords, or symbols
+  indicating a path to a field in the document, or it may be a path string
+  consisting of \".\"-separated field names.
+
+  For a CollectionReference, the given query may be nil, resulting in a
+  map of document ids to documents for all documents in the collection, or it
+  may be a function that takes a CollectionReference and returns an instance
+  of firebase.firestore.Query. Such a query function results in a similar
+  map, but filtered or ordered by your function.
+  "
+  [fs-ref query & event-args]
+  (-> fs-ref
+    (ask-promise query)
+    (then-dispatch event-args)))
+
+
+(defn reset
+  [fs-ref clj-val & event-args]
+  (-> fs-ref
+    (apply-setter-promise (memfn set js-val) clj-val)
+    (then-dispatch event-args)))
+
+
+(defn reset-into
+  [fs-ref clj-val & event-args]
+  (-> fs-ref
+    (apply-setter-promise (memfn update js-val) clj-val)
+    (then-dispatch event-args)))
+
+
+(defn on-change
+  "When the referred-to document or collection changes, a re-frame event with
+  the given id and arguments is dispatched with the new value of the document
+  or collection (wrapped in a {:ok-value v} or {:error-reason r} map) inserted
+  as the second element of the event, as in function then-dispatch. A no-arg
+  unsubscribe function is returned, which will cancel the listening when
+  called.
+  "
+  [fs-ref event-id & args]
+  (on-change-dispatch fs-ref (cons event-id args)))
+
+
+;;;; Communicating with Firebase Storage
 
 
 (defn upload-file
@@ -440,8 +721,7 @@
   function is provided, a function logging a message to the console is used. If
   a :complete-with-snapshot function is provided, it will be called upon
   completion of the upload with the UploadTaskSnapshot provided by the
-  UploadTask. See
-  https://firebase.google.com/docs/reference/js/firebase.storage.UploadTaskSnapshot
+  UploadTask. See https://firebase.google.com/docs/reference/js/firebase.storage.UploadTaskSnapshot
   A 0-arg \"unsubscribe\" function is returned from upload-file, which will
   remove all (next, error, or complete) callbacks from the running task, if
   called.

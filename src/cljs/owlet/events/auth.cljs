@@ -74,7 +74,7 @@
 (rf/reg-fx
   :start-authorized-listening
   (fn [{{:keys [private-ref presence-ref]} :my-identity}]
-    (fb/on-change "value" private-ref :private)
+    (fb/on-db-change "value" private-ref :private)
     (fb/note-presence-changes presence-ref)))
 
 
