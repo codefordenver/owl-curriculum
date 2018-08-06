@@ -3,7 +3,7 @@
             [re-frame.core :as rf]
             [camel-snake-kebab.core :refer [->kebab-case]]
             [owlet.config :as config]
-            [owlet.rf-util :refer [reg-setter]]
+            [re-futil.getter-setter-pipeline :refer [reg-setter]]
             [owlet.db :as db]
             [owlet.helpers :refer [keywordize-name]]))
 

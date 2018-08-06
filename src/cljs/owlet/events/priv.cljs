@@ -1,7 +1,7 @@
 (ns owlet.events.priv
   (:require [re-frame.core :as rf]
             [owlet.firebase :as fb]
-            [owlet.rf-util :as rf-util]))
+            [re-futil.getter-setter-pipeline :as pipeline]))
 
 
 (defn path-str->my-db-ref
@@ -63,13 +63,13 @@
     (assoc-in effects [:db :my-identity :auth-status] :obtained-private-data)))
 
 ; Used here:
-(rf-util/pipe-fx-transform!
+(pipeline/pipe-fx-transform!
   :private                             ; Handler registered in owlet.auth.
   ::inc-login-count                    ; Label for this transform function.
   inc-login-count)                     ; Maybe do app-db & Firebase updates.
 
 
-(rf-util/pipe-setter-transform!
+(pipeline/pipe-setter-transform!
   :private                             ; Handler registered in owlet.auth.
   ::roles->set                         ; Label for this transform func.
   #(update % :roles (comp set keys)))  ; Transform fn converts roles to a set.

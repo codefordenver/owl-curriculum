@@ -1,6 +1,6 @@
 (ns owlet.events.auth
   (:require [re-frame.core :as rf]
-            [owlet.rf-util :refer [reg-setter fx-pipeline]]
+            [re-futil.getter-setter-pipeline :refer [reg-setter fx-pipeline]]
             [owlet.firebase :as fb]))
 
 

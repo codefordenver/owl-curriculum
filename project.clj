@@ -86,7 +86,12 @@
             [lein-sassc "0.10.4"]
             [lein-auto "0.1.2"]
             [lein-kibit "0.1.2"]
-            [dynadoc/lein-dynadoc "RELEASE"]]
+            [dynadoc/lein-dynadoc "RELEASE"]
+            [lein-tools-deps "0.4.1"]]
+
+  :middleware [lein-tools-deps.plugin/resolve-dependencies-with-deps-edn]
+
+  :lein-tools-deps/config {:config-files [:install :user :project]}
 
   :sassc [{:src "resources/scss/main.scss"
            :output-to "resources/public/css/main.min.css"

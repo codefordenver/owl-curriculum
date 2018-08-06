@@ -1,7 +1,7 @@
 (ns owlet.subs
   (:require [re-frame.core :as rf]
             [owlet.config :as config]
-            [owlet.rf-util :refer [reg-getter]]))
+            [re-futil.getter-setter-pipeline :refer [reg-getter]]))
 
 
 (reg-getter :active-view [:active-view])

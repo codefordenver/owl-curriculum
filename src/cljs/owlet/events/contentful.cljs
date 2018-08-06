@@ -4,7 +4,7 @@
             [ajax.core :as ajax :refer [GET POST PUT]]
             [owlet.db :as db]
             [owlet.config :as config]
-            [owlet.rf-util :refer [reg-setter]]
+            [re-futil.getter-setter-pipeline :refer [reg-setter]]
             [camel-snake-kebab.core :refer [->kebab-case]]
             [cuerdas.core :as str]
             [clojure.string :as string]

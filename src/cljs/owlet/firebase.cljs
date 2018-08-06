@@ -10,11 +10,12 @@
   "Utilities for working with the Firebase backend-as-a-service platform.
   See https://firebase.google.com
   "
-  (:require-macros [owlet.firebase :refer [then-> then->>]])
-  (:require [owlet.config :refer [firebase-app-init]]
-            [owlet.async :refer [repeatedly-running]]
-            [reagent.ratom :refer-macros [reaction]]
+  (:require [clojure.string :as str]
             [re-frame.core :as rf]
+            [re-futil.promise :as prom]
+            [re-futil.js-help :refer [apply-constructor]]
+            [owlet.config :refer [firebase-app-init]]
+            [owlet.async :refer [repeatedly-running]]
 
             ;; These are all provided by the cljsjs/firebase dependency.
             ;; Don't :require cljsjs.firebase. It causes firebase.firestore
@@ -23,8 +24,10 @@
             [firebase.auth]
             [firebase.database]
             [firebase.storage]
-            [firebase.firestore]
-            [clojure.string :as str]))
+            [firebase.firestore])
+
+  (:require-macros [re-futil.promise-macros :refer [then-> then->>]]
+                   [reagent.ratom :refer [reaction]]))
 
 
 (defonce firebase-app
@@ -41,59 +44,6 @@
   with the date/time when the assignment took place there.
   "
   (-> js/firebase .-database .-ServerValue .-TIMESTAMP))
-
-
-(defn apply-constructor [ctor & args]
-  "Just like cljs.core/apply, but its first argument must be a JS constructor.
-  Evaluates the constructor with argument list formed by prepending intervening
-  arguments to the final argument, and returns the resulting instance.
-  "
-  (let [js-args (apply array (apply apply list args))
-        inst (js/Object.create (.-prototype ctor))]
-    (.apply ctor inst js-args)
-    inst))
-
-
-(defn- dispatch-value
-  "Helper function to package the given value into an event vector that
-  looks like [:the-event-id value :arg1 :arg2] (where more-args here is
-  [:arg1 arg2]). Then the vector is dispatched.
-  "
-  [value event-id more-args]
-  (-> [event-id value]
-    (into more-args)                      ; Appends each arg onto event vector.
-    rf/dispatch))
-
-
-(defn then-dispatch
-  " May be called as (then-dispatch a-promise :an-event-id ...) or as
-  (then-dispatch a-promise [:an-event-id ...]). Given a js/Promise or
-  firebase.Promise object, returns it or, if there is a second (non-falsey)
-  argument, returns a new Promise that will dispatch a re-frame event when the
-  given Promise has completed. That is, it calls something like
-  (dispatch [:an-event-id rslt-map ...]), for example.
-
-  Here, :an-event-id is the given value of event-id. The rslt-map will have
-  value {:ok-value v} or {:error-reason r}. Finally, the '...' in this example
-  represents any extra data values you may provide to fill out the dispatched
-  event vector, i.e, starting with the third element of the vector. The value v
-  in rslt-map {:ok-value v} will be the result from the given promise when it
-  is fulfilled. If instead the promise rejected, then the dispatched event will
-  have rslt-map {:error-reason r}, where r is an instance of
-  firebase.FirebaseError, giving the reason for rejection provided by the
-  promise.
-
-  See https://firebase.google.com/docs/reference/js/firebase.Promise
-  and https://firebase.google.com/docs/reference/js/firebase.FirebaseError
-  "
-  [promise & [event-id :as id-and-args]]
-  (let [[id & args] (if (sequential? event-id)
-                      event-id
-                      id-and-args)]
-    (if id
-      (let [callback (fn [kw] #(dispatch-value {kw %} id args))]
-        (.then promise (callback :ok-value) (callback :error-reason)))
-      promise)))
 
 
 ;;;; Defining Firebase refs
@@ -253,7 +203,7 @@
          db-ref]}
   (-> db-ref
     (fb-setter (clj->js v))
-    (then-dispatch event-id-args)))
+    (prom/then-dispatch event-id-args)))
 
 
 (def reset-ref
@@ -472,7 +422,7 @@
 
 
 ;; Todo  apply-setter-promise for CollectionReference using .add & .set
-;; Todo  Move owlet.firebase and owlet.rf-util to a new repo
+;; Todo  Move owlet.firebase to repo codefordenver/re-futil
 ;; Todo  swap (in the Clojure atom sense) a DocumentReference using Transaction
 ;; Todo  (Possible?) Update one or more DocumentReferences based on the values
 ;; Todo    from one or more DocumentReferences, all in a single Transaction
@@ -603,8 +553,8 @@
 
   (on-change-dispatch [this [event-id & args]]
     (.onSnapshot this
-      #(dispatch-value {:ok-value (.data %)} event-id args)
-      #(dispatch-value {:error-reason %} event-id args)))
+      #(prom/dispatch-value {:ok-value (.data %)} event-id args)
+      #(prom/dispatch-value {:error-reason %} event-id args)))
 
   firebase.firestore.CollectionReference
 
@@ -641,8 +591,8 @@
          (as-> (aget ret i) -v-
            {:ok-value    (-> -v- .-doc .data)
             :change-type (-> -v- .-type)}
-           (dispatch-value -v- event-id args)))
-      #(dispatch-value {:error-reason %} event-id args))))
+           (prom/dispatch-value -v- event-id args)))
+      #(prom/dispatch-value {:error-reason %} event-id args))))
 
 
 (defn path-str->ref
@@ -662,10 +612,10 @@
   "Asynchronously obtains the value at the given reference, then, using the
   given re-frame event arguments, dispatches the value (wrapped in a
   {:ok-value v} or {:error-reason r} map) as the second member of the event.
-  This wrapping and dispatching is just as in function then-dispatch. A Promise
-  is returned, which will perform the dispatch. If no event-args are provided,
-  the returned Promise instead just contains the unwrapped Clojure value and no
-  dispatch is performed.
+  This wrapping and dispatching is just as in function
+  re-futil.promises/then-dispatch. A Promise is returned, which will perform
+  the dispatch. If no event-args are provided, the returned Promise instead
+  just contains the unwrapped Clojure value and no dispatch is performed.
 
   For a DocumentReference, the given query may be nil, resulting in the
   entire document, or it may be a sequence of strings, keywords, or symbols
@@ -681,30 +631,30 @@
   [fs-ref query & event-args]
   (-> fs-ref
     (ask-promise query)
-    (then-dispatch event-args)))
+    (prom/then-dispatch event-args)))
 
 
 (defn reset
   [fs-ref clj-val & event-args]
   (-> fs-ref
     (apply-setter-promise (memfn set js-val) clj-val)
-    (then-dispatch event-args)))
+    (prom/then-dispatch event-args)))
 
 
 (defn reset-into
   [fs-ref clj-val & event-args]
   (-> fs-ref
     (apply-setter-promise (memfn update js-val) clj-val)
-    (then-dispatch event-args)))
+    (prom/then-dispatch event-args)))
 
 
 (defn on-change
   "When the referred-to document or collection changes, a re-frame event with
   the given id and arguments is dispatched with the new value of the document
   or collection (wrapped in a {:ok-value v} or {:error-reason r} map) inserted
-  as the second element of the event, as in function then-dispatch. A no-arg
-  unsubscribe function is returned, which will cancel the listening when
-  called.
+  as the second element of the event, as in function
+  re-futil.promises/then-dispatch. A no-arg unsubscribe function is returned,
+  which will cancel the listening when called.
   "
   [fs-ref event-id & args]
   (on-change-dispatch fs-ref (cons event-id args)))
@@ -835,21 +785,21 @@
 (rf/reg-fx
   :delete-file-at-url
 
-  ; Called with either a URL string or a vector containing the URL, an event
-  ; id, and any event arguments. Returns a Promise containing void, which will
-  ; attempt to delete the file at the given URL. The resulting promise resolves
-  ; if the deletion succeeded and rejects if it failed, including if the file
-  ; referred-to by the URL didn't exist.
-  ;
-  ; If you provide an event id as the second member of the vector argument,
-  ; then the handler for that event will be dispatched-to after the attempt to
-  ; delete succeeds or fails. The second member of the dispatched event vector
-  ; will be a \"rslt-map\", as in function then-dispatch. Remaining members in
-  ; the given vector argument will become the remaining members of the
-  ; dispatched event vector.
+  ;; Called with either a URL string or a vector containing the URL, an event
+  ;; id, and any event arguments. Returns a Promise containing void, which will
+  ;; attempt to delete the file at the given URL. The resulting promise
+  ;; resolves if the deletion succeeded and rejects if it failed, including if
+  ;; the file referred-to by the URL didn't exist.
+  ;;
+  ;; If you provide an event id as the second member of the vector argument,
+  ;; then the handler for that event will be dispatched-to after the attempt to
+  ;; delete succeeds or fails. The second member of the dispatched event vector
+  ;; will be a \"rslt-map\", as in function re-futil.promises/then-dispatch.
+  ;; Remaining members in the given vector argument will become the remaining
+  ;; members of the dispatched event vector.
 
   (fn [url-etc]
     (let [[url & event-id-args] (if (string? url-etc) [url-etc] url-etc)]
       (-> url
         delete-file-at-url        ; Returns a promise.
-        (then-dispatch event-id-args)))))
+        (prom/then-dispatch event-id-args)))))
