@@ -1,0 +1,3 @@
+{:deps
+ {org.codefordenver/re-futil {:git/url "https://github.com/codefordenver/re-futil"
+                              :sha     "fba91d168ed893a5a1d07fd34d05dc2fb740861f"}}}
