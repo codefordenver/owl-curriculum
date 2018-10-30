@@ -1,5 +1,9 @@
 # Owlet
 
+Owlet is a collection of  web-based self-guided activities designed for middle and high school students to learn technology skills through creative exploration. [These slides](http://slides.com/michellelim-2/owlet-overview#/) explain the motivation behind the project.
+
+![](./ScreenShot_2018-10-29.png)
+
 Generated using [Luminus](http://www.luminusweb.net/) version 2.9.11.68
 
 ## To run the app locally:
