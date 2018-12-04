@@ -24,7 +24,7 @@
             [:div.welcome-text
              [:h1 [:mark "Welcome to Owlet!"]]
              [:p "Explore free, self-guided projects for creative learning in "
-              [:b "STEM: Science, Technology, Engineering, Art, and Math!"]]
+              [:b "STEAM: Science, Technology, Engineering, Art, and Math!"]]
              [:p "Explora proyectos creativos para aprender ciencia, tecnología, arte y mate. ¡Gratis!"]
              [signup-button]
              [:a {:href "/#/branches"}
