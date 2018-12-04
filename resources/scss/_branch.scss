@@ -162,6 +162,9 @@ span.platform-details {
   .platform-wrap {
     margin-top: 15px;
     font-size: 0.65em;
+    .rc-popover-anchor-wrapper .display-inline-flex {
+      width: initial;
+    }
   }
   .platform {
     margin: 3px 0 0 0;
