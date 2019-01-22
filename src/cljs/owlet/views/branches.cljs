@@ -9,8 +9,6 @@
     [:div#branches
      [email-notification]
      [:section
-      [:h1#title [:mark "Get started by choosing a branch below"]]
-      [:br]
       (doall
         (for [b (sort-by :name @activity-branches)
                 :let [props (vector (:color b) (:name b) (:description b))
