@@ -1,8 +1,10 @@
 (ns owlet.components.filter-bar
   (:require [reagent.core :as reagent]
+            [re-com.core :as re-com :refer-macros [handler-fn]]
             [re-frame.core :as rf]
             [cljsjs.jquery]
-            [goog.string :as goog-string]))
+            [goog.string :as goog-string]
+            [clojure.string :as str]))
 
 (defn element-is-in-view [el]
   (let [rect (.getBoundingClientRect el)
@@ -36,41 +38,28 @@
 (defn filter-bar []
   (if (some #(= @(rf/subscribe [:active-view]) %) [:branches-view :filtered-activities-view])
     [:div#filter-bar
-     [:span#arrow-left.arrow {:on-click #(scroll-filters {:direction {:right? false}})}
-      (goog-string/unescapeEntities "&lt;")]
-     [:div#filter-items
-      (doall
-        (for [term @(rf/subscribe [:filter-bar-terms])
-              :let [name (:name term)
-                    type (:type term)
-                    filter-term (hash-map :name (:name term)
-                                          :type (:type term))]]
-           (when-not (= filter-term (:pre-filter @(rf/subscribe [:activities-by-filter])))
-             (case type
-               "Branch"   ^{:key (gensym "branch-")}
-                           [:div.filter
-                            [:input {:id (str name "-filter")
-                                     :type "checkbox"
-                                     :on-click #(toggle-filter % filter-term)
-                                     :defaultChecked (is-checked? filter-term)}]
-                            [:label {:for (str name "-filter")}
-                             (clojure.string/upper-case name)]]
-               "Platform" ^{:key (gensym "platform-")}
-                           [:div.filter
-                            [:input {:id (str name "-filter")
-                                     :type "checkbox"
-                                     :on-click #(toggle-filter % filter-term)
-                                     :defaultChecked (is-checked? filter-term)}]
-                            [:label {:for (str name "-filter")}
-                             (clojure.string/upper-case name)]]
-               "Tag"      ^{:key (gensym "tag-")}
-                           [:div.filter
-                            [:input {:id (str name "-filter")
-                                     :type "checkbox"
-                                     :on-click #(toggle-filter % filter-term)
-                                     :defaultChecked (is-checked? filter-term)}]
-                            [:label {:for (str name "-filter")}
-                             (clojure.string/upper-case name)]]))))]
-     [:span#arrow-right.arrow {:on-click #(scroll-filters {:direction {:right? true}})}
-      (goog-string/unescapeEntities "&gt;")]]
+     [:span#filters-description "What are you looking for specifically?"]
+     [:a#show-filters-link  {:on-click #(rf/dispatch [:toggle-filter-bar])}  "Explore/refine topic"]
+     [:div#filter-items-container-positioned-parent
+     (when @(rf/subscribe [:show-filter-bar?])
+         [:div#filter-items-container
+          [:div#filter-items
+            (doall
+              (for [term @(rf/subscribe [:filter-bar-terms])
+                    :let [name (:name term)
+                          type (:type term)
+                          filter-term (hash-map :name (:name term)
+                                                :type (:type term))]]
+                 (when-not (= filter-term (:pre-filter @(rf/subscribe [:activities-by-filter])))
+                    ^{:key (gensym (str (str/lower-case type) "-"))}
+                     [:div
+                      [:div.filter
+                       [:input {:id (str name "-filter")
+                                :type "checkbox"
+                                :on-click #(toggle-filter % filter-term)
+                                :defaultChecked (is-checked? filter-term)}]
+                       [:label {:for (str name "-filter")}
+                        name]]]
+                     )))]
+          [:div#filter-button-container [re-com/button :on-click #(rf/dispatch [:toggle-filter-bar]) :label "I want to learn these"]]])]]
     [:div#spacer]))

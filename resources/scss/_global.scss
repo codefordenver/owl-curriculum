@@ -290,42 +290,95 @@ progress {
   a:hover {
     text-decoration: none;
   }
-  height: 74px;
+  height: $top-bar-height+px;
 }
 
 #spacer {
   height: 86px;
 }
 
+#top-image {
+  background-image: url("/img/sunrise-over-earth.jpg");
+  width: 100%;
+  height: 200px;
+  position: relative;
+  top: $top-bar-height+px;
+  text-align: center;
+  font: 400 42px sans-serif;
+  color: #ffffff;
+  background-color: black;
+  padding-top: 79px;
+}
+
+#filters-description, #show-filters-link {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#filters-description {
+  font-weight: 500;
+}
+
+#show-filters-link {
+  color: #0275d8;
+  font-weight: 400;
+}
+
+#filter-bar, #filter-items-container {
+  background-color: #EDEDED;
+  border-radius: 7px;
+  border-bottom: 1px solid #CDCDCD;
+}
+
 #filter-bar {
-  height: 70px;
-  font-size: .85em;
+  margin: auto;
+  max-width: 890px;
   margin-top: 74px;
   border-bottom: 1px solid #ADADAD;
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#filter-items-container {
+  position: absolute;
+  z-index: 15;
+  width:100%;
+  margin-top: -5px;
+  padding: 10px 20px 10px 20px;
+}
+
+#filter-items-container-positioned-parent {
+  position: relative;
+  width: 100%;
 }
 
 #filter-items {
-  width: 90%;
+  position: relative;
+  max-height: 300px;
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  flex-direction: row;
+  overflow-y: scroll;
+  justify-content: space-between;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+  background-color: #DEDEDE;
+  border: 1px solid #BEBEBE;
+  border-radius: 7px;
 }
 
 #filter-items > * {
-  vertical-align: middle;
-}
-
-#filter-items::-webkit-scrollbar {
-  display: none;
+  flex-basis: 33%;
+  text-align: center;
 }
 
 .filter {
-  flex: 0 0 auto;
+  margin: 10px auto;
+  width: 200px;
   input[type="checkbox"] {
       display: none;
   }
@@ -333,14 +386,32 @@ progress {
     background-color: $aqua;
   }
   label {
+    width: 100%;
+    text-align: center;
     margin: 0 5px;
     padding: 10px;
     border: 1px solid #BFBFBF;
     border-radius: 5px;
-    background-color: #F2F2F2;
+    background-color: white;
     cursor: pointer;
+    color: #468ee5;
+    font-weight: 400;
+    font-size: 18px;
   }
 }
+
+#filter-button-container {
+  text-align: center;
+}
+
+#filter-button-container button {
+  background-color: #468ee5;
+  font-size: 18px;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 #arrow-left, #arrow-right {
   display: inline-block;
   width: 5%;

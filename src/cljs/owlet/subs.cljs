@@ -4,6 +4,8 @@
             [owlet.rf-util :refer [reg-getter]]))
 
 
+(reg-getter :show-filter-bar? [:show-filter-bar?])
+
 (reg-getter :active-view [:active-view])
 
 (reg-getter :my-id [:my-identity :firebase-id])

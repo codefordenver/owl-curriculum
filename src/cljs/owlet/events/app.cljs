@@ -15,7 +15,6 @@
 
 (reg-setter :set-loading-state! [:app :loading?])
 
-
 (rf/reg-event-db
   :set-active-view
   (fn [db [_ active-view opts]]
@@ -37,8 +36,13 @@
       (assoc-in db [:app :title] title))))
 
 
-(reg-setter :show-bg-img-upload [:showing-bg-img-upload])
+(reg-setter :set-show-filter-bar [:show-filter-bar?])
 
+(rf/reg-event-db :toggle-filter-bar
+  (fn [db _]
+    (update-in db [:show-filter-bar?] not)))
+
+(reg-setter :show-bg-img-upload [:showing-bg-img-upload])
 
 (rf/reg-event-fx
   :update-user-background!
@@ -48,29 +52,29 @@
     ; update the user's data in the Firebase database, which will automatically
     ; cause app-db to be similarly updated, thanks to the effect
     ; :start-authorized-listening and the handler :private.
-    (let [old-url        (:background-image-url  private)
-          old-name       (:background-image-name private)
-          old-image-info {:background-image-url  old-url
-                          :background-image-name old-name}
-          new-image-info {:background-image-url  url
-                          :background-image-name filename}]
+      (let [old-url        (:background-image-url  private)
+            old-name       (:background-image-name private)
+            old-image-info {:background-image-url  old-url
+                            :background-image-name old-name}
+            new-image-info {:background-image-url  url
+                            :background-image-name filename}]
 
-      {:firebase-reset-into-ref
-       [private-ref new-image-info            ; Where and what to save.
-        :user-background-saved new-image-info old-image-info]
-                                              ; Event to dispatch when complete.
-       :dispatch
-       [:show-bg-img-upload false]})))
+        {:firebase-reset-into-ref
+         [private-ref new-image-info            ; Where and what to save.
+          :user-background-saved new-image-info old-image-info]
+                                                ; Event to dispatch when complete.
+         :dispatch
+         [:show-bg-img-upload false]})))
 
-(rf/reg-event-fx
-  :user-background-saved
-  (fn [_ [_ {err :error-reason} new-image-info old-image-info]]
-    ; Called after an attempt to update the Firebase db with the URL and
-    ; filename of a new background image for the user, we delete the old image
-    ; file if the update was successful, or we delete the new image file if
-    ; there was an error.
+  (rf/reg-event-fx
+    :user-background-saved
+    (fn [_ [_ {err :error-reason} new-image-info old-image-info]]
+      ; Called after an attempt to update the Firebase db with the URL and
+      ; filename of a new background image for the user, we delete the old image
+      ; file if the update was successful, or we delete the new image file if
+      ; there was an error.
 
-    (letfn [(same-image-name-in [& infos]
+      (letfn [(same-image-name-in [& infos]
               ; Return true iff all the infos maps refer to the same filename.
               (apply = (map :background-image-name infos)))]
 
