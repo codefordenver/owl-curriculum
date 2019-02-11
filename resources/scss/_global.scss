@@ -383,7 +383,8 @@ progress {
       display: none;
   }
   input:checked + label {
-    background-color: $aqua;
+    background-color: $purple-light;
+    color: white;
   }
   label {
     width: 100%;
