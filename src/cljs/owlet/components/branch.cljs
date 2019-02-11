@@ -8,7 +8,7 @@
 
 
 (defn branch [[color branch-name description] branch-key]
-  (let [lines                (str/split (str/upper-case branch-name) " ")
+  (let [lines                (str/split branch-name " ")
         name-line1           (first lines)
         name-line2           (rest lines)
         hover-image          (reagent/atom "")
@@ -33,7 +33,7 @@
                                branch-key
                                :preview-urls
                                set)]
-        [:div.branchwrapper.col-xs-12.col-md-6.col-lg-4
+        [:div.branchwrapper
          [re-com/popover-anchor-wrapper
             :showing? showing?
             :position :below-center
@@ -48,11 +48,11 @@
                                                         color
                                                         " 25%, rgba(0,0,0,0) 75%")}}
                         [:a.branch {:href (str "#/branch/" (->kebab-case branch-name))}
-                         [:h2 [:mark name-line1]
+                         [:h2 [:span name-line1]
                           (when (<= 1 (count name-line2))
                             [:span
                              [:br]
-                             [:mark (str/join " " name-line2)]])]
+                             [:span (str/lower-case (str/join " " name-line2))]])]
                          [:div.counter
                           [:p counter]]]]]
             :popover [re-com/popover-content-wrapper

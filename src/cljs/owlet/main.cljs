@@ -63,8 +63,11 @@
       [:div#main
        [error]
        [:div.outer-height-wrap
-        [top-bar]
-        [filter-bar]
+         [top-bar]
+        (when (some #(= @(rf/subscribe [:active-view]) %) [:branches-view :filtered-activities-view])
+         [:div#top-image
+          "What would you like to learn today?"])
+          [filter-bar]
         [:div.inner-height-wrap
            [:div.content
               (when @loading?
